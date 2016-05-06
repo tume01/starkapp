@@ -4,6 +4,8 @@ from services.BungalowsService import BungalowsService
 
 def index(request):
 
-    x = Bungalowservice()
+    bungalow_service = BungalowsService()
 
-    return HttpResponse(y)
+    bungalows = bungalow_service.getBungalows()
+
+    return HttpResponse(bungalows)

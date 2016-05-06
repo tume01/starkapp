@@ -4,10 +4,7 @@ class BungalowsService(object):
 
     """docstring for BungalowsService"""
 
-    __bungalow_repository = None
-
-    def __init__(self):
-        self.__bungalow_repository = BungalowsRepository()
+    __bungalow_repository = BungalowsRepository.BungalowsRepository()
 
     def create(self, insert_data):
         return self.__bungalow_repository.create(insert_data)
