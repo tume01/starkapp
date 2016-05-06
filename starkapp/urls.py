@@ -17,5 +17,5 @@ from django.conf.urls import url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^bungalows/', 'bungalows.views.index', name='bungalows_index')
 ]

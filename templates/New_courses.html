@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+Usuario: cursos
+{% endblock %}
+
+{% block head_dahsboard %}
+Cursos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Inscripción
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Cursos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Nueva Inscripción
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+<!-- Page Content -->
+                <div class="content content-narrow">
+                    <div class="block block-bordered">
+                        <div class="block-header">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title"></h3>
+                        </div>
+
+                        <!-- Block v2 -->
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Curso elegido</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="example-input1-group1" placeholder="Username" disabled="" value="Taller de dibujo">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Sede elegida</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="example-input1-group1" placeholder="Username" disabled="" value="Sede principal">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-datetimepicker3">Fecha de inscripción</label>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="example-datetimepicker3" placeholder="Seleccione una fecha y hora..">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Duración</label>
+                                            <div class="col-md-4">
+                                                <div class="input-group">
+
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="example-input1-group1" placeholder="Username" disabled="" value="3 días">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="mega-bio">Observaciones</label>
+                                                <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="8" placeholder="Ingrese alguna observación adicional que debamos tener en cuenta para atenderlo mejor."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Precio</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="example-input1-group1" placeholder="Curso" disabled="" value="S/. 50">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-xs-2 col-xs-offset-4"><!-- type="submit" -->
+                                        <a href='{% url "courses-u" %}'><button class="btn btn-danger" type="button" ><i class="fa fa-times push-5-r"></i> Cancelar</button></a>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <a href='{% url "courses-u" %}'><button class="btn btn-success" type="button"><i class="fa fa-check push-5-r"></i> Inscribirse</button></a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- END Block v2 -->                        
+                    </div>  
+                </div>
+                <!-- END Page Content -->
+
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}
