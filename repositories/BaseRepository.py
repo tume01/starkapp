@@ -1,6 +1,6 @@
-from contracts.repositories import AbstractBaseRepository
+from contracts.repositories.AbstractBaseRepository import AbstractBaseRepository
 
-class BaseRepository():
+class BaseRepository(AbstractBaseRepository):
 
     __model = None
 
