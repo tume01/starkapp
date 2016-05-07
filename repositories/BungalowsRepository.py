@@ -21,7 +21,7 @@ class BungalowsRepository():
     def create(self, create_data):
         new_element = self.__model()
 
-        for key, value in enumerate(create_data):
+        for key, value in create_data.items():
             new_element.__setattr__(key, value)
 
         return new_element.save()

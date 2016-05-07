@@ -116,51 +116,23 @@ Lista de bungalows
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="font-w600">Sede Principal</td>
-                                        <td class="font-w600">Bungalow 103</td>
-                                        <td class="hidden-xs">6 personas</td>
-                                        <td class="hidden-xs">VIP</td>
-                                        <td class="hidden-xs"><span class="label label-danger">Ocupado</span></td>
-                                        <td class="text-center">400</td>
-                                        <td class="text-center">
-                                            <div class="btn-group">
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="font-w600">Sede Principal</td>
-                                        <td class="font-w600">Bungalow 104</td>
-                                        <td class="hidden-xs">3 personas</td>
-                                        <td class="hidden-xs">Premium</td>
-                                        <td class="hidden-xs"><span class="label label-success">Disponible</span></td>
-                                        <td class="text-center">250</td>
-                                        <td class="text-center">
-                                            <div class="btn-group">
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">3</td>
-                                        <td class="font-w600">Sede Principal</td>
-                                        <td class="font-w600">Bungalow 105</td>
-                                        <td class="hidden-xs">3 personas</td>
-                                        <td class="hidden-xs">Especial</td>
-                                        <td class="hidden-xs"><span class="label label-success">Disponible</span></td>
-                                        <td class="text-center">200</td>
-                                        <td class="text-center">
-                                            <div class="btn-group">
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>                                    
+                                    {% for bungalow in bungalows %}
+                                        <tr>
+                                            <td class="text-center">{{bungalow.id}}</td>
+                                            <td class="font-w600">Sede Principal</td>
+                                            <td class="font-w600">Bungalow {{bungalow.number}}</td>
+                                            <td class="hidden-xs">6 personas</td>
+                                            <td class="hidden-xs">VIP</td>
+                                            <td class="hidden-xs"><span class="label label-danger">{{bungalow.status}}</span></td>
+                                            <td class="text-center">400</td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </td>    
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>

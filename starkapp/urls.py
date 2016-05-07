@@ -15,7 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^bungalows/', 'bungalows.views.index', name='bungalows_index')
+    url(r'^bungalows/create/insert', 'bungalows.views.insert', name='bungalows_insert'),
+    url(r'^bungalows/create', 'bungalows.views.create_index', name='bungalows_create'),
+    url(r'^bungalows/', 'bungalows.views.index', name='bungalows-a'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
