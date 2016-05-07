@@ -1,11 +1,13 @@
 from django.template import loader
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from services.BungalowsService import BungalowsService
+from django.views.decorators.http import require_http_methods
 
+@require_http_methods(['GET'])
 def index(request):
-
-    template = loader.get_template('Index_bungalows_a.html')
 
     bungalow_service = BungalowsService()
 
@@ -13,22 +15,22 @@ def index(request):
 
     context = {
         'bungalows' : bungalows,
-        "titulo" : 'titulo'
+        'titulo' : 'titulo'
     }
 
-    return HttpResponse(template.render(context, request))
+    return render(request, 'Admin/Bungalows/index_bungalow.html', context) 
 
+@require_http_methods(['GET'])
 def create_index(request):
 
-    template = loader.get_template('New_bungalows.html')
-
     context = {
-        "titulo" : 'titulo'
+        'titulo' : 'titulo'
     }
 
-    return HttpResponse(template.render(context, request))
+    return render(request, 'Admin/Bungalows/new_bungalow.html', context)
 
-def insert(request):
+@require_http_methods(['POST'])
+def create_bungalow(request):
 
     insert_data = {}
 
@@ -44,13 +46,4 @@ def insert(request):
 
     bungalow_service.create(insert_data)
 
-    template = loader.get_template('Index_bungalows_a.html')
-
-    bungalows = bungalow_service.getBungalows()
-
-    context = {
-        'bungalows' : bungalows,
-        "titulo" : 'titulo'
-    }
-
-    return HttpResponse(template.render(context, request))     
+    return HttpResponseRedirect(reverse('bungalows:index'))
