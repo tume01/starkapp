@@ -1,5 +1,3 @@
-import abc
-
 class AbstractBaseRepository():
     __model = None
 
