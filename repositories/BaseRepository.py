@@ -14,7 +14,7 @@ class BaseRepository(AbstractBaseRepository):
         return self.__model.objects.all()
 
     def find(self, find_id):
-        return self.__model.objects.filter(id=find_id)
+        return self.__model.objects.get(id=find_id)
 
     def create(self, create_data):
         new_element = self.__model()
