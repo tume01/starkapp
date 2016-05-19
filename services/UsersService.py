@@ -20,6 +20,8 @@ class UsersService(object):
 
     def validateUser(self, id, password):
         user = self.__user_repository.find(id)
-        if (user == None) return None
-        if (user.password != password) return None        
+        if (user == None):
+            return None
+        if (user.password != password):
+            return None        
         return user.UserType
