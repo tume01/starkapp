@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block head_title %}
+Usuario: membresía
+{% endblock %}
+
+{% block head_dahsboard %}
+Membresía
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista de invitados
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Membresía
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de historico de invitados
+{% endblock %}
+
+{% block content %}
+
+                <!-- Page Content -->
+                <div class="content content-narrow">
+                    <!-- Simple Table Full -->
+                    <div class="block">
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action='{% url "promotions:index" %}' method="post" >
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
+                                            <div class="col-md-9">
+                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="iniDate" placeholder="Desde">
+                                                    <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                                    <input class="form-control" type="text" id="example-daterange2" name="endDate" placeholder="hasta">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Seleccione una sede</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="sede" name="example-select" size="1">
+                                                    <option value="0">Sede principal</option>
+                                                    <option value="1">Sede #1</option>
+                                                    <option value="2">Sede #2</option>
+                                                    <option value="3">Sede #3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-8 col-lg-offset-4">
+                                            <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="block block-bordered">
+                        <!--<div class="block-header">
+                            <h3 class="block-title">Simple Table <small>Full</small></h3>
+                        </div>-->
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th class="hidden-xs" style="width: 20%;">Nombres</th>
+                                        <th class="hidden-xs" style="width: 20%;">Apellidos</th>
+                                        <th class="hidden-xs" style="width: 15%;">DNI</th>
+                                        <th class="hidden-xs" style="width: 15%;">Fecha de ingreso</th>
+                                        <th class="hidden-xs" style="width: 15%;">Fecha de salida</th>
+                                        <th class="hidden-xs" style="width: 15%;">Sede</th>
+                                        <th >Acción</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for guest in guests %} 
+                                    <tr>
+                                        <td class="hidden-xs">{{guest.id}}</td>
+                                        <td class="font-w600">{{guest.nombres}}</td>
+                                        <td class="hidden-xs">{{guest.apellidos}}</td>
+                                        <td class="hidden-xs">{{guest.dni}}</td>
+                                        <td class="hidden-xs">{{guest.ingreso}}</td>
+                                        <td class="hidden-xs">{{guest.salida}}</td>
+                                        <td class="hidden-xs">{{guest.sede}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Invitado"><i class="fa fa-pencil"></i></button>
+                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Eliminar Invitado"><i class="fa fa-times"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>
+                <!-- END Page Content -->
+
+                {% endblock %}
