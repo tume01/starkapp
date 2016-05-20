@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class Membership_applicationConfig(AppConfig):
+class MembershipApplicationConfig(AppConfig):
     name = 'membership_application'
