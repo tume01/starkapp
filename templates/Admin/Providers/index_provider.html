@@ -66,8 +66,12 @@ Lista de proveedores
                                     {% for provider in proveedores %}
                                     <tr>
                                         <td class="text-center">{{provider.idProvider}}</td>
-                                        <td class="text-center">{{provider.idProvider}}</td>
                                         <td class="font-w600">{{provider.businessName}}</td> 
+                                        {% if provider.status == 0 %}
+                                        <td class="text-center">Inactivo</td>
+                                        {% else %}
+                                        <td class="text-center">Activo</td>
+                                        {% endif %}
                                         <td class="hidden-xs">{{provider.contactName}}</td>
                                         <td class="text-center">{{provider.contactPhone}}</td>
                                         <td class="text-center">{{provider.email}}</td>
