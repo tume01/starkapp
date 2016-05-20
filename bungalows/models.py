@@ -8,7 +8,7 @@ class BungalowType(models.Model):
     capacity = models.IntegerField()
 
 class Bungalow(models.Model):
-    bungalow_type_id = models.ForeignKey(BungalowType, on_delete=models.CASCADE)
+    bungalow_type = models.ForeignKey(BungalowType, on_delete=models.CASCADE)
     #ambiente = models.ForeignKey("Ambiente", on_delete=models.CASCADE)
 
     status = models.IntegerField()
