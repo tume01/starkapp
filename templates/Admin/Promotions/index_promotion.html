@@ -1,0 +1,89 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: promociones
+{% endblock %}
+
+{% block head_dahsboard %}
+Promociones
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de promociones
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Promociones
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de promociones
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+    <!-- Simple Table Full -->
+    <div class="block">
+        <div class="block-content">
+            <form class="form" action="base_forms_pickers_more.html" method="post" onsubmit="return false;">
+                <div class="row">
+                </div>
+                <div class="row">
+                    <div class="col-lg-9">
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+            </form>
+        </div>
+    </div>
+    <div class="block block-bordered">
+
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Promocion</th>
+                                        <th>Descuento</th>                                       
+                                        <th>Acción</th>                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for promotion in promotions %}                                       
+                                        <tr>
+                                            <td class="hidden-xs">{{promotion.id}}</td>
+                                            <td class="font-w600">{{promotion.descripcion}}</td>
+                                            <td class="font-w600">{{promotion.porcentaje}} %</td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Eliminar Promoción"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </td>    
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>
+                <!-- END Page Content -->
+
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}
