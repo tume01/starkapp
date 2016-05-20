@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bungalows',
+    'products',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -79,8 +80,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'starkapp',
-        'USER': 'root',
-        'PASSWORD': 'Cohello19',
+        'USER': 'jroot',
+        'PASSWORD': 'jroot',
         'HOST': '127.0.0.1',
         'PORT': '',
     }

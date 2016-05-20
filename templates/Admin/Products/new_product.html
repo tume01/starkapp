@@ -1,0 +1,131 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: productos
+{% endblock %}
+
+{% block head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de productos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de productos
+{% endblock %}
+
+{% block content %}
+     <div class="content content-narrow">
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-header bg-gray-lighter">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action='{% url "products:insert" %}' method="post" >
+                            {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-text-input">Nombre del producto</label>
+                                            <div class="col-sm-12">
+                                                <input class="form-control" id="example-text-input" name="name" placeholder="" type="text">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-5">
+
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Proveedor</label>
+                                            <div class="col-md-12">
+                                                <select class="form-control" id="example-select" name="example-select" size="1">
+                                                    <option value="0">2 personas</option>
+                                                    <option value="1">3 personas</option>
+                                                    <option value="2">4 personas</option>
+                                                    <option value="3">5 personas</option>
+                                                    <option value="4">6 personas</option>
+                                                    <option value="5">7 personas</option>
+                                                    <option value="6">8 personas</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Stock actual</label>
+                                            <div class="col-sm-12">
+                                                <input class="form-control" id="example-text-input" name="name" placeholder="" type="text">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Stock minimo</label>
+                                            <div class="col-sm-12">
+                                                <input class="form-control" id="example-text-input" name="name" placeholder="" type="text">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Tipo Producto</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="status" size="1">
+                                                    <option value="1">Disponible</option>
+                                                    <option value="2">Mantenimiento</option>
+                                                    <option value="3">Próximamente</option>
+                                                    <option value="4">Detenido</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+
+                                
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                       <div class="form-group">
+                                        <div class="col-xs-12">
+                                            <label for="mega-bio">Descripcion</label>
+                                            <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="8" placeholder="Ingrese alguna descripcion acerca del producto"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-danger" type=""><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
+                                    </div>                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>    
+
+{% endblock %}
