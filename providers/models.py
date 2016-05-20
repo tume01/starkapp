@@ -7,7 +7,7 @@ class Provider(models.Model):
     idProvider = models.IntegerField()
     ruc = models.IntegerField()
     businessName = models.CharField(max_length=200)
-    status = models.BinaryField() #Binario por estado 0->Inactivo 1->Activo    
+    status = models.IntegerField() #Binario por estado 0->Inactivo 1->Activo    
     province = models.CharField(max_length=100)
     distric = models.CharField(max_length=100)
     registrationDate = models.DateField(auto_now=False, auto_now_add=True)

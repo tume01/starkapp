@@ -55,6 +55,7 @@ Lista de proveedores
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th>Nombre de Concesionarios</th>
+                                        <th>Estado</th>
                                         <th class="hidden-xs">Contacto</th>
                                         <th>Teléfono</th>
                                         <th>Correo Electrónico</th>
@@ -62,8 +63,9 @@ Lista de proveedores
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for provider in providers %}
+                                    {% for provider in proveedores %}
                                     <tr>
+                                        <td class="text-center">{{provider.idProvider}}</td>
                                         <td class="text-center">{{provider.idProvider}}</td>
                                         <td class="font-w600">{{provider.businessName}}</td> 
                                         <td class="hidden-xs">{{provider.contactName}}</td>
