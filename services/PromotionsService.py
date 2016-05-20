@@ -1,6 +1,6 @@
 from repositories import PromotionsRepository
 
-class PromotionService(object):
+class PromotionsService(object):
 
     """docstring for PromotionssService"""
 
