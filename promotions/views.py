@@ -36,9 +36,9 @@ def edit_index(request):
         'promotion' : promotion,
     }
 
-    return render(request, 'Admin/Discounts/new_promotion.html', context)
+    return render(request, 'Admin/Discounts/edit_promotion.html', context)
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def delete_promotion(request):
 
     insert_data = {}
@@ -49,7 +49,7 @@ def delete_promotion(request):
 
     promotion_service = PromotionService()
 
-    promotion_service.delete(insert_data)
+    promotion_service.update(insert_data)
 
     return HttpResponseRedirect(reverse('promotions:index'))
 
