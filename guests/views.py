@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from services.PromotionsService import PromotionsService
 from django.views.decorators.http import require_http_methods
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def index(request):
 
     guest_service = GuestService()
@@ -19,7 +19,22 @@ def index(request):
     """
     userId = 1
 
-    guests = guest_service.getGuests(userId)
+    filter_guest = {}
+
+    filter_guest["iniDate"] = request.POST['iniDate']
+
+    filter_guest["endDate"] = request.POST['endDate']
+
+    filter_guest["sede"] = request.POST['sede']
+
+    guests = guest_service.getGuests(userId, filter_guest)
+
+    """
+    guests debe tener:
+    id, nombres, apellidos, dni de la tabla guest
+    ingreso, salida de la tabla ingreso ingreso
+    sede que es el nombre de la tabla sede
+    """
 
     context = {
         'guests' : guests,
