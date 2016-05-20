@@ -1,0 +1,162 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Usuario: proveedores
+{% endblock %}
+
+{% block head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Editar proveedor
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Edición de proveedor
+{% endblock %}
+
+{% block content %}
+
+                                      <!-- Page Content -->
+                <div class="content content-narrow">
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-header bg-gray-lighter">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Bungalow elegido</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bed"></i></span>
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="example-input1-group1" placeholder="Username" disabled="" value="Bungalows 103">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-datetimepicker3">Fecha de reserva</label>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="example-datetimepicker3" placeholder="Seleccione una fecha.." value="01/02/2016"> </input>
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group">
+                                            <label class="col-xs-12">Servicios extra</label>
+                                            <div class="col-xs-6">
+                                                <div class="checkbox">
+                                                    <label for="example-checkbox1">
+                                                        <input type="checkbox" id="example-checkbox1" name="example-checkbox1" value="option1" checked=""> Cable
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="example-checkbox2">
+                                                        <input type="checkbox" id="example-checkbox2" name="example-checkbox2" value="option2"> Jacuzzi
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="example-checkbox3">
+                                                        <input type="checkbox" id="example-checkbox3" name="example-checkbox3" value="option3" checked=""> Cobertor eléctrico
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <div class="checkbox">
+                                                    <label for="example-checkbox4">
+                                                        <input type="checkbox" id="example-checkbox4" name="example-checkbox1" value="option4" checked=""> Wi-Fi
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="example-checkbox5">
+                                                        <input type="checkbox" id="example-checkbox5" name="example-checkbox2" value="option5"> Servicio al cuarto
+                                                    </label>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label for="example-checkbox6">
+                                                        <input type="checkbox" id="example-checkbox6" name="example-checkbox3" value="option6"> Juegos de mesa
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Días de reserva</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="example-select" name="example-select" size="1">
+                                                    <option value="1">1 día</option>
+                                                    <option value="2">2 días</option>
+                                                    <option value="3" selected="">3 días</option>
+                                                    <option value="4">4 días</option>
+                                                    <option value="5">5 días</option>
+                                                    <option value="6">6 días</option>
+                                                    <option value="7">7 días</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="mega-bio">Observaciones</label>
+                                                <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="8" placeholder="Ingrese alguna observación adicional que debamos tener en cuenta para atenderlo mejor.">Deseo 2 cobtertores eléctricos extra</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Precio</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="example-input1-group1" placeholder="Username" disabled="" value="S/. 400">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                
+                                    <div class="col-xs-2 col-xs-offset-4"><!-- type="submit" -->
+                                        <a href='{% url "historic-bungalows-u"%}'><button class="btn btn-danger" type="button" ><i class="fa fa-times push-5-r"></i> Cancelar</button></a>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <a href='{% url "historic-bungalows-u"%}'><button class="btn btn-success" type="button"><i class="fa fa-check push-5-r"></i> Editar</button></a>
+                                    </div>
+                                                                        
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>
+                <!-- END Page Content --> 
+
+                {% endblock %}
