@@ -33,8 +33,6 @@ def create_index(request):
 def create_provider(request):
 
     insert_data = {}
-
-    insert_data["idProvider"] = request.POST['idProvider']
     insert_data["ruc"] = request.POST['ruc']
     insert_data["businessName"] = request.POST['businessName']
     insert_data["status"] = request.POST['status']
