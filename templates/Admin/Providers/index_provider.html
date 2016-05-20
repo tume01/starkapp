@@ -25,122 +25,63 @@ Lista de proveedores
 <!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
 
 <!-- Page Content -->
-<div class="content">
-    <!-- Simple Table Full -->
-    <div class="block">
-        <div class="block-content">
-            <form class="form" action="base_forms_pickers_more.html" method="post" onsubmit="return false;">
-                <div class="row">
-                    <div class="col-lg-2">
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label" >Seleccione un tipo</label>
-                            <select class="form-control" id="example-select" name="example-select" size="1">
-                                <option value="0">Parejas</option>
-                                <option value="1">Especial</option>
-                                <option value="2">Premium</option>
-                                <option value="3">VIP</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label">Nombre Miembro</label>
-                            <input class="form-control" type="text" id="pro_Codigo" name="pro_Codigo"   >
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-
-                        <div class="form-group">
-                            <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
-                            <div class="col-xs-12">
-                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                    <input class="form-control" type="text" id="example-daterange1" name="example-daterange1" placeholder="Desde">
-                                    <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                    <input class="form-control" type="text" id="example-daterange2" name="example-daterange2" placeholder="hasta">
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <label class="col-xs-12" for="example-select">Seleccione una sede</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="example-select" name="example-select" size="1">
-                                    <option value="0">Todas las sedes</option>
-                                    <option value="1">Sede principal</option>
-                                    <option value="2">Sede #1</option>
-                                    <option value="3">Sede #2</option>
-                                    <option value="4">Sede #3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-9">
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="form-group">
-                            <div class="col-lg-8 col-lg-offset-4">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <br>
-
-            </form>
-        </div>
-    </div>
-    <div class="block block-bordered">
+                <!-- Page Content -->
+                <div class="content content-narrow">
+                    <!-- Simple Table Full -->
+                    <div class="block">
                         <!--<div class="block-header">
                             <h3 class="block-title">Simple Table <small>Full</small></h3>
                         </div>-->
-
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <ul class="nav-header pull-right">
+                            <li class="visible-xs">
+                            <!-- Toggle class helper (for .js-header-search below), functionality initialized in App() -> uiToggleClass() -->
+                            <button class="btn btn-default" data-toggle="class-toggle" data-target=".js-header-search" data-class="header-search-xs-visible" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            </li>
+                            <li class="js-header-search header-search">
+                                <form class="form-horizontal" action="base_pages_search.html" method="post">
+                                    <div class="form-material form-material-primary input-group remove-margin-t remove-margin-b">
+                                        <input class="form-control" type="text" id="base-material-text" name="base-material-text" placeholder="Buscar productos o servicios">
+                                        <span class="input-group-addon"><i class="si si-magnifier"></i></span>
+                                    </div>
+                                </form>
+                            </li>
+                            </ul>
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th>Sede</th>
-                                        <th>Bungalow</th>
-                                        <th class="hidden-xs">Capacidad</th>
-                                        <th class="hidden-xs">Tipo</th>
-                                        <th class="hidden-xs">Estado</th>
-                                        <th>Precio (S/.)</th>
-                                        <th >Acción</th>                                        
+                                        <th>Nombre de Concesionarios</th>
+                                        <th class="hidden-xs">Contacto</th>
+                                        <th>Teléfono</th>
+                                        <th>Correo Electrónico</th>
+                                        <th class="text-center" style="width: 10%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for bungalow in bungalows %}
-                                        <tr>
-                                            <td class="text-center">{{bungalow.id}}</td>
-                                            <td class="font-w600">Sede Principal</td>
-                                            <td class="font-w600">Bungalow {{bungalow.number}}</td>
-                                            <td class="hidden-xs">6 personas</td>
-                                            <td class="hidden-xs">VIP</td>
-                                            <td class="hidden-xs"><span class="label label-danger">{{bungalow.status}}</span></td>
-                                            <td class="text-center">400</td>
-                                            <td class="text-center">
-                                                <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-                                                </div>
-                                            </td>    
-                                        </tr>
+                                    {% for provider in providers %}
+                                    <tr>
+                                        <td class="text-center">{{provider.idProvider}}</td>
+                                        <td class="font-w600">{{provider.businessName}}</td> 
+                                        <td class="hidden-xs">{{provider.contactName}}</td>
+                                        <td class="text-center">{{provider.contactPhone}}</td>
+                                        <td class="text-center">{{provider.email}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <a href="./Edit_Providers_Product.html"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
+                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <!-- END Simple Table Full -->
-                </div>
-                <!-- END Page Content -->
-
-                <!-- HASTA AQUÍ -->       
+                </div>     
 
                 {% endblock %}

@@ -40,6 +40,8 @@ def create_bungalow(request):
 
     insert_data["status"] = request.POST['status']
 
+    insert_data["bungalow_type_id"] = 1
+
     insert_data["bungalow_type_id_id"] = 1
 
     bungalow_service = BungalowsService()
