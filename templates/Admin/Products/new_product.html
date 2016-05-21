@@ -35,7 +35,7 @@ Lista de productos
                             </ul>
                         </div>
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "products:insert" %}' method="post" >
+                            <form class="form-horizontal push-10-t push-10">
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-4">
@@ -51,17 +51,11 @@ Lista de productos
                                     <div class="col-sm-5">
 
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-select">Proveedor</label>
+                                            <label class="col-xs-12" for="select2Provider34">Proveedor</label>
                                             <div class="col-md-12">
-                                                <select class="form-control" id="example-select" name="example-select" size="1">
-                                                    <option value="0">2 personas</option>
-                                                    <option value="1">3 personas</option>
-                                                    <option value="2">4 personas</option>
-                                                    <option value="3">5 personas</option>
-                                                    <option value="4">6 personas</option>
-                                                    <option value="5">7 personas</option>
-                                                    <option value="6">8 personas</option>
-                                                </select>
+                                                <select class="form-control" multiple="multiple" id="select2Provider34" >
+                                                    <option value="null">dfdsfdsfds</option>
+                                                </select> 
                                             </div>
                                         </div>
                                     </div>
@@ -93,10 +87,9 @@ Lista de productos
                                             <label class="col-xs-12" for="example-select">Tipo Producto</label>
                                             <div class="col-sm-12">
                                                 <select class="form-control" id="example-select" name="status" size="1">
-                                                    <option value="1">Disponible</option>
-                                                    <option value="2">Mantenimiento</option>
-                                                    <option value="3">Próximamente</option>
-                                                    <option value="4">Detenido</option>
+                                                    {% for i in product_types%}
+                                                        <option value="1">{{i.name}}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                         </div>
@@ -114,13 +107,20 @@ Lista de productos
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-danger" type=""><i class="fa fa-times push-5-r"></i> Cancelar</button>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-sm-4">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button class="btn btn-success" type="button"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                        </div>  
+                                        <div class="col-sm-2">
+                                            <button class="btn btn-danger" type="button"><i class="fa fa-check push-5-r"></i> Cancelar</button>
+                                        </div> 
+                                        <div class="col-sm-4">
+                                        </div>                                  
                                     </div>
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
-                                    </div>                                    
                                 </div>
                             </form>
                         </div>
@@ -128,4 +128,6 @@ Lista de productos
                     <!-- END Mega Form -->
                 </div>    
 
+
 {% endblock %}
+
