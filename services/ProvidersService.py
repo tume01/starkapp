@@ -17,3 +17,6 @@ class ProvidersService(object):
 
     def getProviders(self):
         return self.__provider_repository.all()
+
+    def find(self,id):
+        return self.__provider_repository.find(id)

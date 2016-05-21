@@ -53,10 +53,39 @@ def create_provider(request):
     return HttpResponseRedirect(reverse('providers:index'))
 
 @require_http_methods(['GET'])
-def edit(request,pk):
+def edit_index(request,id):
+
+    provider_service = ProvidersService()
+
+
+    provider = provider_service.find(id)
 
     context = {
+        'provider' : provider,
         'titulo' : 'titulo'
     }
 
-    return render(request, 'Admin/Providers/new_provider.html', context)
+    return render(request, 'Admin/Providers/edit_provider.html', context)
+
+@require_http_methods(['POST'])
+def edit_provider(request,id):
+
+    insert_data = {}
+    insert_data["ruc"] = request.POST['ruc']
+    insert_data["businessName"] = request.POST['businessName']
+    insert_data["status"] = request.POST['status']
+    insert_data["distric"] = request.POST['distric']    
+    insert_data["province"] = request.POST['province']
+    insert_data["address"] = request.POST['address']
+    insert_data["phone"] = request.POST['phone'] 
+    insert_data["email"] = request.POST['email']
+    insert_data["registrationDate"] = request.POST['registrationDate']
+    insert_data["contactName"] = request.POST['contactName'] 
+    insert_data["contactPhone"] = request.POST['contactPhone']
+    insert_data["effectiveTime"] = request.POST['effectiveTime']    
+
+    provider_service = ProvidersService()
+
+    provider_service.update(id,insert_data)
+
+    return HttpResponseRedirect(reverse('providers:index'))
