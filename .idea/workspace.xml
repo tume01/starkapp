@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7a800fe8-811d-4850-8106-94929bce5f5c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/admin.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/apps.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/migrations/0001_initial.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/migrations/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/models.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/tests.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/urls.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/providers/views.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repositories/ProvidersRepository.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/services/ProvidersService.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Admin/Layouts/base_a.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Admin/Providers/edit_provider.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Admin/Providers/index_provider.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/templates/Admin/Providers/new_provider.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/starkapp/settings.py" afterPath="$PROJECT_DIR$/starkapp/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/starkapp/urls.py" afterPath="$PROJECT_DIR$/starkapp/urls.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/Admin/Layouts/base.html" afterPath="$PROJECT_DIR$/templates/Admin/Layouts/base.html" />
@@ -396,6 +382,14 @@
       <option name="presentableId" value="Default" />
       <updated>1463716174135</updated>
     </task>
+    <task id="LOCAL-00001" summary="Merge remote-tracking branch 'refs/remotes/origin/TeamTaco' into LinuxWindowsTest&#10;&#10;&#10;">
+      <created>1463795117369</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1463795117369</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -431,6 +425,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge remote-tracking branch 'refs/remotes/origin/TeamTaco' into LinuxWindowsTest&#10;&#10;&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'refs/remotes/origin/TeamTaco' into LinuxWindowsTest&#10;&#10;&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />

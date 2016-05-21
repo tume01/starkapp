@@ -443,6 +443,17 @@
                                     </ul>
                         </li>
                         <li>
+                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "providers:index" %}'>Consultar proveedores</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "providers:create_index" %}'>Agregar proveedor</a>
+                                </li>
+                            </ul>
+                        </li> 
+                        <li>
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
                             <ul>
                                 <li>
@@ -515,17 +526,6 @@
                                 <li>
                                     <a href=''>Registrar Afiliados</a>
                                 </li>
-                            </ul>
-                        </li>         
-                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Promociones</span></a>
-                            <ul>                                        
-                                <li>
-                                   <a href='{% url 'promotions:index' %}'>Lista de promociones</a> 
-                                </li>
-                                <li>
-                                    <a href=''>Registrar promoción</a>
-                                </li> 
                             </ul>
                         </li>                                                            
 
