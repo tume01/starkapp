@@ -54,7 +54,9 @@ Lista de productos
                                             <label class="col-xs-12" for="select2Provider34">Proveedor</label>
                                             <div class="col-md-12">
                                                 <select class="form-control" multiple="multiple" id="select2Provider34" >
-                                                    <option value="null">dfdsfdsfds</option>
+                                                    {% for i in providers %}
+                                                        <option value="{{i.id}}">{{i.businessName}}</option>
+                                                    {% endfor %}
                                                 </select> 
                                             </div>
                                         </div>
@@ -88,7 +90,7 @@ Lista de productos
                                             <div class="col-sm-12">
                                                 <select class="form-control" id="example-select" name="status" size="1">
                                                     {% for i in product_types%}
-                                                        <option value="1">{{i.name}}</option>
+                                                        <option value="{{i.id}}">{{i.name}}</option>
                                                     {% endfor %}
                                                 </select>
                                             </div>

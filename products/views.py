@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.ProductsService import ProductsService
 from services.ProductTypesService import ProductTypesService
+from services.ProvidersService import ProvidersService
 from django.views.decorators.http import require_http_methods
 
 @require_http_methods(['GET'])
@@ -24,12 +25,15 @@ def index(request):
 @require_http_methods(['GET'])
 def create_index(request):
 
-    product_types_service = ProductTypesService()
+    providers_service = ProvidersService()
+    providers = providers_service.getActiveProviders()
 
+    product_types_service = ProductTypesService()
     product_types = product_types_service.getProductTypes()
 
     context = {
         'product_types' : product_types,
+        'providers' : providers,
         'titulo' : 'titulo'
     }
 
