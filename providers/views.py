@@ -51,3 +51,12 @@ def create_provider(request):
     provider_service.create(insert_data)
 
     return HttpResponseRedirect(reverse('providers:index'))
+
+@require_http_methods(['GET'])
+def edit(request,pk):
+
+    context = {
+        'titulo' : 'titulo'
+    }
+
+    return render(request, 'Admin/Providers/new_provider.html', context)
