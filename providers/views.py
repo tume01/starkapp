@@ -86,6 +86,6 @@ def edit_provider(request,id):
 
     provider_service = ProvidersService()
 
-    provider_service.update(id,insert_data)
+    provider_service.update(request.POST['id'],insert_data)
 
     return HttpResponseRedirect(reverse('providers:index'))
