@@ -25,8 +25,6 @@
 
     <!-- Bootstrap and OneUI CSS framework -->
     <link rel="stylesheet" href='{% static "assets/css/bootstrap.min.css" %}'>
-    <link rel="stylesheet" href='{% static "assets/js/plugins/select2/select2.min.css" %}'>
-
     <link rel="stylesheet" id="css-main" href='{% static "assets/css/oneui.css" %}'>
 
 </head>
@@ -445,6 +443,17 @@
                                     </ul>
                         </li>
                         <li>
+                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "providers:index" %}'>Consultar proveedores</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "providers:create_index" %}'>Agregar proveedor</a>
+                                </li>
+                            </ul>
+                        </li> 
+                        <li>
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
                             <ul>
                                 <li>
@@ -751,14 +760,12 @@
         <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.full.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
-
-        <script src='{% static "assets/js/product.js" %}'></script>
 
         <!-- Page JS Code -->
         <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script>

@@ -1,0 +1,162 @@
+{% extends 'Admin/Layouts/base_a.html' %}
+
+{% block head_title %}
+Usuario: proveedores
+{% endblock %}
+
+{% block head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Editar proveedor
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Edición de proveedor
+{% endblock %}
+
+{% block content %}
+
+                <div class="content content-narrow">
+                    <div class="block">
+                        <div class="block-header">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                            </ul>
+                            <!--<h3 class="block-title">MANTENIMIENTO PROVEEDORES</h3>-->
+                        </div>
+
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action='{% url "providers:insert" %}' method="post" >
+                            {% csrf_token %}                            
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <div class="col-xs-6">
+                                                <label for="ruc">R.U.C.:</label>
+                                                <input class="form-control" type="text" id="ruc" name="ruc" placeholder="Ingrese el RUC.." >
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <label for="businessName">Razón Social</label>
+                                                <input class="form-control" type="text" id="businessName" name="businessName" placeholder="Ingrese el nombre de su compañía..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="status">Estado</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="status" name="status" size="1" placeholder="Seleccione un estado..">        
+                                                    <option value="0">Activo</option>
+                                                    <option value="1">Inactivo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <div class="col-xs-6">
+                                                <label for="province">Provincia:</label>
+                                                <input class="form-control" type="text" id="province" name="province" placeholder="Ingrese la provincia..">
+                                            </div>
+                                            <div class="col-xs-6">
+                                                <label for="distric">Distrito</label>
+                                                <input class="form-control" type="text" id="distric" name="distric" placeholder="Ingrese el distrito..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="example-datetimepicker3">Fecha de Registro</label>
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha..">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="address">Dirección</label>
+                                                <input class="form-control" type="text" id="address" name="address" placeholder="Ingrese la dirección..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="phone">Teléfono</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="phone" name="phone" placeholder="Ingrese el teléfono..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="effectiveTime">Tiempo de Vigencia</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control" type="text" id="effectiveTime" name="effectiveTime" placeholder="Ingrese el tiempo de vigencia..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="email">Correo</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="email" name="email" placeholder="Ingrese el email..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="contactName">Nombre de contacto</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" type="text" id="contactName" name="contactName" placeholder="Ingrese nombre de contacto..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="contactPhone">Número de contacto</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" type="text" id="contactPhone" name="contactPhone" placeholder="Ingrese el número de contacto..">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <div class="form-group">
+                                        
+                                        <div class="col-xs-2 col-xs-offset-3">
+                                            <button class="btn btn-primary" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <button class="btn btn-warning" type=""><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                        </div>
+                                        
+                                    </div>
+                            </form>
+                        </div>
+                    </div>  
+                </div>
+
+                {% endblock %}
