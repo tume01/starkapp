@@ -54,3 +54,7 @@ def create_index(request):
     }
 
     return render(request, 'Admin/Activities/new_activity.html', context)
+
+@require_http_methods(['POST'])
+def delete(request):
+    pass
