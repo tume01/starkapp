@@ -23,13 +23,13 @@ def index(request):
         'promotions' : promotions,
     }
 
-    return render(request, 'Admin/Discounts/index_promotion.html', context) 
+    return render(request, 'Admin/Promotions/index_promotion.html', context) 
 
 
 @require_http_methods(['GET'])
 def create_index(request):
 
-    return render(request, 'Admin/Discounts/new_promotion.html', context)
+    return render(request, 'Admin/Promotions/new_promotion.html', context)
 
 @require_http_methods(['GET'])
 def edit_index(request):
@@ -44,7 +44,7 @@ def edit_index(request):
         'promotion' : promotion,
     }
 
-    return render(request, 'Admin/Discounts/edit_promotion.html', context)
+    return render(request, 'Admin/Promotions/edit_promotion.html', context)
 
 @require_http_methods(['POST'])
 def delete_promotion(request):
