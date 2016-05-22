@@ -52,10 +52,7 @@ Creación de proveedores
                                         <div class="form-group">
                                             <label class="col-xs-12" for="status">Estado</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" id="status" name="status" size="1" placeholder="Seleccione un estado..">        
-                                                    <option value="1">Activo</option>
-                                                    <option value="0">Inactivo</option>
-                                                </select>
+                                                {{form.status}}
                                             </div>
                                         </div>
                                     </div>
@@ -66,24 +63,20 @@ Creación de proveedores
                                         <div class="form-group">
                                             <div class="col-xs-6">
                                                 <label for="province">Provincia:</label>
-                                                <input class="form-control" type="text" id="province" name="province" placeholder="Ingrese la provincia..">
+                                                {{form.province}}
                                             </div>
                                             <div class="col-xs-6">
                                                 <label for="distric">Distrito</label>
-                                                <input class="form-control" type="text" id="distric" name="distric" placeholder="Ingrese el distrito..">
+                                                {{form.distric}}
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-sm-5">
                                         <div class="form-group">
-                                            <div class="col-xs-12">
-                                                <label for="example-datetimepicker3">Fecha de Registro</label>
-                                                <div class=" input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                                    <input class="form-control" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha..">
-                                                    <span class="input-group-addon">
-                                                        <span class="fa fa-calendar"></span>
-                                                    </span>
-                                                </div>
+                                            <div class="col-xs-9">
+                                                <label for="registrationDate">Fecha de Registro</label>
+                                                    <input class="js-datepicker form-control" data-date-format="yyyy-mm-dd" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha..">
                                             </div>
                                         </div>
                                     </div>

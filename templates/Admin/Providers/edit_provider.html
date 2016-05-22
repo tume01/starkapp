@@ -84,14 +84,9 @@ Edición de proveedor
                                     </div>
                                     <div class="col-sm-5">
                                         <div class="form-group">
-                                            <div class="col-xs-12">
-                                                <label for="example-datetimepicker3">Fecha de Registro</label>
-                                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                                    <input class="form-control" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha.." value = '{{ provider.registrationDate }}'>
-                                                    <span class="input-group-addon">
-                                                        <span class="fa fa-calendar"></span>
-                                                    </span>
-                                                </div>
+                                            <div class="col-xs-9">
+                                                <label for="registrationDate">Fecha de Registro</label>
+                                                    <input class="js-datepicker form-control" data-date-format="yyyy-mm-dd" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha.." value = '{{ provider.registrationDate }}' >             
                                             </div>
                                         </div>
                                     </div>
