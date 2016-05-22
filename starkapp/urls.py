@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^bungalows', include('bungalows.urls')),
+    url(r'^events', include('events.urls')),
 ]
 
 if settings.DEBUG:

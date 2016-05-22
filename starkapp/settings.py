@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bungalows',
+    'events'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -62,6 +63,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.csrf',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -80,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'starkapp',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'blackfeather14',
         'HOST': '127.0.0.1',
         'PORT': '',
     }
