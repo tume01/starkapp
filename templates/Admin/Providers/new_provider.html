@@ -40,11 +40,11 @@ Creación de proveedores
                                         <div class="form-group">
                                             <div class="col-xs-6">
                                                 <label for="ruc">R.U.C.:</label>
-                                                <input class="form-control" type="text" id="ruc" name="ruc" placeholder="Ingrese el RUC.." >
+                                                {{form.ruc}}
                                             </div>
                                             <div class="col-xs-6">
-                                                <label for="businessName">Razón Social</label>
-                                                <input class="form-control" type="text" id="businessName" name="businessName" placeholder="Ingrese el nombre de su compañía..">
+                                                <label for="businessName">Razón Social</label> 
+                                                {{form.businessName}}
                                             </div>
                                         </div>
                                     </div>
@@ -78,7 +78,7 @@ Creación de proveedores
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label for="example-datetimepicker3">Fecha de Registro</label>
-                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                <div class=" input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
                                                     <input class="form-control" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha..">
                                                     <span class="input-group-addon">
                                                         <span class="fa fa-calendar"></span>
@@ -87,7 +87,8 @@ Creación de proveedores
                                             </div>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
+
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <div class="form-group">
@@ -106,6 +107,7 @@ Creación de proveedores
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <div class="form-group">
@@ -124,6 +126,7 @@ Creación de proveedores
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <div class="form-group">
