@@ -34,10 +34,11 @@ def create_index(request):
 @require_http_methods(['GET'])
 def edit_index(request):
 
+    id_promotion = request.POST['id']
+
     promotion_service = PromotionsService()
 
-    promotion = promotion_service.getPromotion()
-    #que se hace aqui?, getPromotion(id) o getPromotions()
+    promotion = promotion_service.getPromotion(id_promotion)
 
     context = {
         'promotion' : promotion,
@@ -48,16 +49,15 @@ def edit_index(request):
 @require_http_methods(['POST'])
 def delete_promotion(request):
 
-    insert_data = {}
+    edit_data = {}
 
-    insert_data["id"] = request.POST['id']
+    edit_data["id"] = request.POST['id']
 
-    insert_data["estado"] = 0
+    edit_data["status"] = 0
 
     promotion_service = PromotionsService()
 
-    promotion_service.update(insert_data)
-    #delete en lugar de update
+    promotion_service.update(edit_data)
 
     return HttpResponseRedirect(reverse('promotions:index'))
 
@@ -67,11 +67,11 @@ def create_promotion(request):
 
     insert_data = {}
 
-    insert_data["descripcion"] = request.POST['descripcion']
+    insert_data["description"] = request.POST['description']
 
-    insert_data["porcentaje"] = request.POST['porcentaje']
+    insert_data["percentage"] = request.POST['percentage']
 
-    insert_data["estado"] = 1
+    insert_data["status"] = 1
 
     promotion_service = PromotionsService()
 
@@ -83,16 +83,16 @@ def create_promotion(request):
 @require_http_methods(['POST'])
 def edit_promotion(request):
 
-    insert_data = {}
+    edit_data = {}
 
-    insert_data["descripcion"] = request.POST['descripcion']
+    edit_data["description"] = request.POST['description']
 
-    insert_data["porcentaje"] = request.POST['porcentaje']
+    edit_data["percentage"] = request.POST['percentage']
 
-    insert_data["id"] = request.POST['id']
+    edit_data["id"] = request.POST['id']
 
     promotion_service = PromotionsService()
 
-    promotion_service.update(insert_data)
+    promotion_service.update(edit_data)
 
     return HttpResponseRedirect(reverse('promotions:index'))

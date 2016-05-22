@@ -50,7 +50,6 @@ Lista de promociones
         </div>
     </div>
     <div class="block block-bordered">
-
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
                             <table class="table table-bordered table-striped js-dataTable-simple">
@@ -66,8 +65,8 @@ Lista de promociones
                                     {% for promotion in promotions %}                                       
                                         <tr>
                                             <td class="hidden-xs">{{promotion.id}}</td>
-                                            <td class="font-w600">{{promotion.descripcion}}</td>
-                                            <td class="font-w600">{{promotion.porcentaje}} %</td>
+                                            <td class="font-w600">{{promotion.description}}</td>
+                                            <td class="font-w600">{{promotion.percentage}} %</td>
                                             <td class="text-center">
                                                 <div class="btn-group">
                                                     <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button>
