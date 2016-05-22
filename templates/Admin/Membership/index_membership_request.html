@@ -1,31 +1,33 @@
-{% extends 'base.html' %}
+{% extends 'Admin/Layouts/base.html' %}
 
 {% block head_title %}
-Usuario: membresía
+Admin: solicitudes de membresías
 {% endblock %}
 
 {% block head_dahsboard %}
-Membresía
+Solicitud de Membresía
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista de invitados
+Lista completa de solicitudes de membresía
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Membresía
+Solicitud de membresía
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de historico de invitados
+Lista de solicitudes de membresía
 {% endblock %}
 
 {% block content %}
 
-                <!-- Page Content -->
-                <div class="content content-narrow">
-                    <!-- Simple Table Full -->
-                    <div class="block">
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+    <!-- Simple Table Full -->
+    <div class="block">
                         <div class="block-content">
                             <form class="form-horizontal push-10-t push-10" action='{% url "promotions:index" %}' method="post" >
                                 <div class="row">
@@ -45,12 +47,9 @@ Lista de historico de invitados
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Seleccione una sede</label>
                                             <div class="col-sm-6">
-                                                <select class="form-control" id="sede" name="example-select" size="1">
-                                                    <option value="0">Sede principal</option>
-                                                    <option value="1">Sede #1</option>
-                                                    <option value="2">Sede #2</option>
-                                                    <option value="3">Sede #3</option>
-                                                </select>
+
+
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -64,42 +63,36 @@ Lista de historico de invitados
                             </form>
                         </div>
                     </div>
-                    <div class="block block-bordered">
-                        <!--<div class="block-header">
-                            <h3 class="block-title">Simple Table <small>Full</small></h3>
-                        </div>-->
+    <div class="block block-bordered">
+
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th class="hidden-xs" style="width: 20%;">Nombres</th>
-                                        <th class="hidden-xs" style="width: 20%;">Apellidos</th>
-                                        <th class="hidden-xs" style="width: 15%;">DNI</th>
-                                        <th class="hidden-xs" style="width: 15%;">Fecha de ingreso</th>
-                                        <th class="hidden-xs" style="width: 15%;">Fecha de salida</th>
-                                        <th class="hidden-xs" style="width: 15%;">Sede</th>
-                                        <th >Acción</th> 
+                                        <th>Tipo</th>
+                                        <th>Invitados</th>                                       
+                                        <th>Precio</th>  
+                                        <th>Tipo de Cobro</th>  
+                                        <th>Acciones</th>                                      
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for guest in guests %} 
-                                    <tr>
-                                        <td class="hidden-xs">{{guest.id}}</td>
-                                        <td class="font-w600">{{guest.nombres}}</td>
-                                        <td class="hidden-xs">{{guest.apellidos}}</td>
-                                        <td class="hidden-xs">{{guest.dni}}</td>
-                                        <td class="hidden-xs">{{guest.ingreso}}</td>
-                                        <td class="hidden-xs">{{guest.salida}}</td>
-                                        <td class="hidden-xs">{{guest.sede}}</td>
-                                        <td class="text-center">
-                                            <div class="btn-group">
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Invitado"><i class="fa fa-pencil"></i></button>
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Eliminar Invitado"><i class="fa fa-times"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    {% for membreshipType in membreshipTypes %}                                       
+                                        <tr>
+                                            <td class="hidden-xs">{{membreshipType.id}}</td>
+                                            <td class="font-w600">{{membreshipType.name}}</td>
+                                            <td class="font-w600">{{membreshipType.guests}} %</td>
+                                            <td class="font-w600">{{membreshipType.price}} %</td>
+                                            <td class="font-w600">{{membreshipType.billing}} %</td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Eliminar Tipo"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </td>    
+                                        </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
@@ -108,5 +101,7 @@ Lista de historico de invitados
                     <!-- END Simple Table Full -->
                 </div>
                 <!-- END Page Content -->
+
+                <!-- HASTA AQUÍ -->       
 
                 {% endblock %}
