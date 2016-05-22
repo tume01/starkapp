@@ -1,0 +1,71 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: tipos de membresia
+{% endblock %}
+
+{% block head_dahsboard %}
+Tipos de Membresía
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de tipos de membresía
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Tipos de membresía
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de tipos de membresía
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+    <!-- Simple Table Full -->
+    <div class="block block-bordered">
+
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Tipo</th>
+                                        <th>Invitados</th>                                       
+                                        <th>Precio</th>  
+                                        <th>Tipo de Cobro</th>  
+                                        <th>Acciones</th>                                      
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for membreshipType in membreshipTypes %}                                       
+                                        <tr>
+                                            <td class="hidden-xs">{{membreshipType.id}}</td>
+                                            <td class="font-w600">{{membreshipType.name}}</td>
+                                            <td class="font-w600">{{membreshipType.guests}} %</td>
+                                            <td class="font-w600">{{membreshipType.price}} %</td>
+                                            <td class="font-w600">{{membreshipType.billing}} %</td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Eliminar Tipo"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </td>    
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>
+                <!-- END Page Content -->
+
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}
