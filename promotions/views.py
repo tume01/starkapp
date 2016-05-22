@@ -6,10 +6,16 @@ from django.core.urlresolvers import reverse
 from services.PromotionsService import PromotionsService
 from django.views.decorators.http import require_http_methods
 
+
+#
+# Nombres de atributos en ingles, fijate mis models porsiacaso
+# request deberia ser con Promotions y no Discounts
+#
+
 @require_http_methods(['GET'])
 def index(request):
 
-    promotion_service = PromotionService()
+    promotion_service = PromotionsService()
 
     promotions = promotion_service.getPromotions()
 
@@ -30,7 +36,7 @@ def edit_index(request):
 
     id_promotion = request.POST['id']
 
-    promotion_service = PromotionService()
+    promotion_service = PromotionsService()
 
     promotion = promotion_service.getPromotion(id_promotion)
 
@@ -49,7 +55,7 @@ def delete_promotion(request):
 
     edit_data["status"] = 0
 
-    promotion_service = PromotionService()
+    promotion_service = PromotionsService()
 
     promotion_service.update(edit_data)
 
@@ -67,7 +73,7 @@ def create_promotion(request):
 
     insert_data["status"] = 1
 
-    promotion_service = PromotionService()
+    promotion_service = PromotionsService()
 
     promotion_service.create(insert_data)
 
@@ -85,7 +91,7 @@ def edit_promotion(request):
 
     edit_data["id"] = request.POST['id']
 
-    promotion_service = PromotionService()
+    promotion_service = PromotionsService()
 
     promotion_service.update(edit_data)
 
