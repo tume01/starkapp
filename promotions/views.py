@@ -7,11 +7,6 @@ from services.PromotionsService import PromotionsService
 from django.views.decorators.http import require_http_methods
 
 
-#
-# Nombres de atributos en ingles, fijate mis models porsiacaso
-# request deberia ser con Promotions y no Discounts
-#
-
 @require_http_methods(['GET'])
 def index(request):
 

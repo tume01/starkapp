@@ -496,7 +496,13 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Membresía</span></a>
-                            <ul>                                        
+                            <ul>      
+                                <li>
+                                    <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
+                                </li>
+                                <li>
+                                    <a href='{% url 'memberships:type/create_index' %}'>Nuevo tipo de membresía</a> 
+                                </li>                                     
                                 <li>
                                     <a href=''>Pagos de membresía</a> 
                                 </li>

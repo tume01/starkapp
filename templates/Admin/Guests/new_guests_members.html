@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block head_title %}
-Usuario: membresía
+Admin: invitados
 {% endblock %}
 
 {% block head_dahsboard %}
-Membresía
+Ingreso
 {% endblock %}
 
 {% block function_head_dahsboard %}
@@ -13,7 +13,7 @@ Invitados
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Membresía
+Ingreso
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
@@ -43,7 +43,7 @@ Nuevo Invitado
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user-plus"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="nombres" placeholder="Nombre de invitado" >
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="names" placeholder="Nombre de invitado" >
                                                 </div>
                                             </div>
                                         </div>
@@ -54,7 +54,7 @@ Nuevo Invitado
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user-plus"></i></span>
-                                                    <input class="form-control" type="text" id="example-input2-group1" name="apellidos" placeholder="Aspellidos de invitado" >
+                                                    <input class="form-control" type="text" id="example-input2-group1" name="surnames" placeholder="Apellidos de invitado" >
                                                 </div>
                                             </div>
                                         </div>
@@ -72,16 +72,14 @@ Nuevo Invitado
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                
-                                <div class="form-group">                                
-                                    <div class="col-xs-2 col-xs-offset-4"> <!-- type="submit" -->
-                                        <button class="btn btn-danger" type=""><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                </div>                                
+                               <div class="form-group">
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "promotions:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
                                     </div>
-                                    <div class="col-xs-2">
-                                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
-                                    </div>                                                                                                             
-                                                                      
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
+                                    </div>                                    
                                 </div>
                             </form>
                         </div>
