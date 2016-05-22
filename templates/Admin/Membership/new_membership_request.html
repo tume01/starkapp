@@ -1,0 +1,94 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: tipos de membresias
+{% endblock %}
+
+{% block head_dahsboard %}
+Tipos de membresía
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de tipos de membresías
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Tipos de membresías
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de tipos de membresías
+{% endblock %}
+
+{% block content %}
+     <div class="content content-narrow">
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-header bg-gray-lighter">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action='{% url "membershipType:edit" %}' method="post" >
+                            {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Tipo de membresía</label>
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Tipo de mebresía"  type="text" value= "{{membershipType.name}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Invitados</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-number-input" name="guests" placeholder="Invitados" value= "{{membershipType.guests}}"  type="number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>          
+                                <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Precio</label>
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group2" name="price" placeholder="Precio"  type="number" value= "{{membershipType.price}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input2">Tipo de cobro</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-number-input2" name="billing" placeholder="Tipo de cobro" value= "{{membershipType.billing}}"  type="number">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                               
+                                <div class="form-group">
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-danger" type=""><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
+                                    </div>                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>    
+
+{% endblock %}

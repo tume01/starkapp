@@ -29,9 +29,13 @@ def index(request):
 @require_http_methods(['GET'])
 def create_index(request):
 
+    context = {
+        'titulo' : 'titulo'
+    }
+
     return render(request, 'Admin/Promotions/new_promotion.html', context)
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def edit_index(request):
 
     id_promotion = request.POST['id']
@@ -51,13 +55,13 @@ def delete_promotion(request):
 
     edit_data = {}
 
-    edit_data["id"] = request.POST['id']
+    id_edit = request.POST['id']
 
     edit_data["status"] = 0
 
     promotion_service = PromotionsService()
 
-    promotion_service.update(edit_data)
+    promotion_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('promotions:index'))
 
@@ -89,10 +93,10 @@ def edit_promotion(request):
 
     edit_data["percentage"] = request.POST['percentage']
 
-    edit_data["id"] = request.POST['id']
+    id_edit = request.POST['id']
 
     promotion_service = PromotionsService()
 
-    promotion_service.update(edit_data)
+    promotion_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('promotions:index'))
