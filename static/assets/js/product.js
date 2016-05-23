@@ -54,11 +54,8 @@ $('#SaveProduct').click(function(){
     });
 
 	xhr.done(function(data) {
-		//window.location="/professor/courses/topic/"+$("#topicId").val()+"/"+$("#courseId").val();
-		//window.location="/professor/courses/6/edit";
 		console.log('done='+data);
 		//window.location="/professor/courses/topic/"+$("#topicId").val()+"/"+$("#courseId").val();
-		//window.location="/professor/courses/"+$("#topicId").val()+"/edit";
     });
 
     xhr.fail(function(xhr, status, text){
