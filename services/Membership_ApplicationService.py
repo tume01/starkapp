@@ -17,3 +17,9 @@ class Membership_ApplicationService(object):
 
     def getMembership_Applications(self):
         return self.__membership_application_repository.all()
+
+    def getMembership_Application(self,id):
+        return self.__membership_application_repository.find(id)
+
+    def filter(self, filters):
+        return self.__membership_application_repository.filter(filters)
