@@ -17,3 +17,6 @@ class FineService(object):
 
     def getFines(self):
         return self.__fine_repository.all()
+
+    def getFine(self, id):
+        return self.__fine_repository.find(id)

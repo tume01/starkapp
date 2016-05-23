@@ -5,6 +5,7 @@ class FineType(models.Model):
     #name = models.CharField(max_length=100)
     reason = models.TextField(max_length=200)
     price = models.FloatField()
+    status = models.IntegerField()
     #capacity = models.IntegerField()
 
 class Fine(models.Model):
