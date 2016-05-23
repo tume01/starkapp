@@ -17,3 +17,6 @@ class ActivityService(object):
 
     def getBungalows(self):
         return self.__activity_repository.all()
+
+    def filter(self, filters):
+        return self.__activity_repository.filter(filters)
