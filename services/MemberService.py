@@ -18,4 +18,7 @@ class MembersService(object):
     def getMembers(self):
         return self.__member_repository.all()
 
+    def getMember(self,id):
+        return self.__member_repository.find(id)
+
     
