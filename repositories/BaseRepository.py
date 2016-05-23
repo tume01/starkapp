@@ -22,7 +22,9 @@ class BaseRepository(AbstractBaseRepository):
         for key, value in create_data.items():
             new_element.__setattr__(key, value)
 
-        return new_element.save()
+        new_element.save()
+
+        return new_element
 
     def update(self, update_id, update_data):
         selected_element = self.model.objects.get(id=update_id)
@@ -30,7 +32,12 @@ class BaseRepository(AbstractBaseRepository):
         for key, value in update_data.items():
             selected_element.__setattr__(key, value)
 
-        return selected_element.save()
+        selected_element.save()
+
+        return selected_element
 
     def delete(self, element):
-        return self.model.objects.filter(id=element).delete()
+        return self.model.objects.get(id=element).delete()
+
+    def filter(self, filters):
+        return self.model.objects.filter(**filters)
