@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bungalows',
     'users',
+    'promotions',
+    'membership_application',
+    'memberships',
+    'fine',    
 ]
 
 MIDDLEWARE_CLASSES = [

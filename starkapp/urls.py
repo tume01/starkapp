@@ -20,6 +20,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^bungalows', include('bungalows.urls')),
+    url(r'^promotions', include('promotions.urls')),
+    url(r'^memberships', include('memberships.urls')),
+    url(r'^membership_application', include('membership_application.urls')),
+    url(r'^fine', include('fine.urls')),
 ]
 
 if settings.DEBUG:

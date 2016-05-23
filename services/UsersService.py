@@ -18,6 +18,9 @@ class UsersService(object):
     def getUsers(self):
         return self.__user_repository.all()
 
+    def getUser(self,id):
+        return self.__user_repository.find(id)
+
     def validateUser(self, id, password):
         user = self.__user_repository.find(id)
         if (user == None):

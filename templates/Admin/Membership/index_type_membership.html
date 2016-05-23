@@ -1,0 +1,95 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: tipos de membresia
+{% endblock %}
+
+{% block head_dahsboard %}
+Tipos de Membresía
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de tipos de membresía
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Tipos de membresía
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de tipos de membresía
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+    <!-- Simple Table Full -->
+    <div class="block block-bordered">
+        <form id="myFormDelete" action="{% url "memberships:type/delete" %} " method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid1" name="id"/>
+            </form>
+            <form id="myFormEdit" action="{% url "memberships:type/edit_index" %} " method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid2" name="id"/>
+            </form>
+
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Invitados</th>                                       
+                                        <th>Precio</th>  
+                                        <th>Tipo de Cobro</th>  
+                                        <th>Acciones</th>                                      
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for membershipType in membershipTypes %}                                       
+                                        <tr>
+                                            <td style="display: none;" class="hidden-xs">{{membershipType.id}}</td>
+                                            <td class="font-w600">{{membershipType.name}}</td>
+                                            <td class="font-w600">{{membershipType.guests}} %</td>
+                                            <td class="font-w600">{{membershipType.price}} %</td>
+                                            <td class="font-w600">{{membershipType.billing}} %</td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-default editar" data-id="{{membershipType.id}}" type="button"  data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
+
+                                    <button class="btn btn-xs btn-default eliminar" data-id="{{membershipType.id}}" type="button" data-toggle="tooltip" title="Eliminar Tipo"><i class="fa fa-times"></i></button>
+                                                </div>
+                                            </td>    
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>
+                <!-- END Page Content -->
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+    $(document).ready(function () {
+        $('.editar').click(function (e) {
+            var id = $(this).attr("data-id")          
+            $('#hid2').val(id)
+            document.forms["myFormEdit"].submit();    
+
+        });
+        $('.eliminar').click(function (e) {
+           var id = $(this).attr("data-id")          
+            $('#hid1').val(id)
+            document.forms["myFormDelete"].submit();          
+        });
+        
+    });
+    </script>
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}
