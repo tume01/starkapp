@@ -33,4 +33,7 @@ class BaseRepository(AbstractBaseRepository):
         return selected_element.save()
 
     def delete(self, element):
-        return self.model.objects.filter(id=element).delete()
+        return self.model.objects.get(id=element).delete()
+
+    def filter(self, filters):
+        return self.model.objects.filter(**filters)
