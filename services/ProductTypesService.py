@@ -15,3 +15,6 @@ class ProductTypesService(object):
 
     def getProductTypes(self):
         return self.__product_type_repository.all()
+
+    def find(self,id):
+        return self.__product_type_repository.find(id)

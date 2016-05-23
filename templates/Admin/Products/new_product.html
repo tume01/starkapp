@@ -42,7 +42,7 @@ Lista de productos
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-text-input">Nombre del producto</label>
                                             <div class="col-sm-12">
-                                                <input class="form-control" id="example-text-input" name="name" placeholder="" type="text">
+                                                <input class="form-control" name="name" id="name" placeholder="" type="text">
                                                 <div class="help-block"></div>
                                             </div>
                                         </div>
@@ -53,7 +53,7 @@ Lista de productos
                                         <div class="form-group">
                                             <label class="col-xs-12" for="select2Provider34">Proveedor</label>
                                             <div class="col-md-12">
-                                                <select class="form-control" multiple="multiple" id="select2Provider34" >
+                                                <select class="form-control" multiple="multiple" id="select2Provider" >
                                                     {% for i in providers %}
                                                         <option value="{{i.id}}">{{i.businessName}}</option>
                                                     {% endfor %}
@@ -65,12 +65,20 @@ Lista de productos
                                     
                                 </div>
                                 <div class="row">
-                                    
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Precio</label>
+                                            <div class="col-sm-12">
+                                                <input class="form-control" name="price" id="price" placeholder="" type="text">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Stock actual</label>
                                             <div class="col-sm-12">
-                                                <input class="form-control" id="example-text-input" name="name" placeholder="" type="text">
+                                                <input class="form-control" name="actualStock" id="actualStock" placeholder="" type="text">
                                                 <div class="help-block"></div>
                                             </div>
                                         </div>
@@ -79,7 +87,7 @@ Lista de productos
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Stock minimo</label>
                                             <div class="col-sm-12">
-                                                <input class="form-control" id="example-text-input" name="name" placeholder="" type="text">
+                                                <input class="form-control" name="minStock" id="minStock" placeholder="" type="text">
                                                 <div class="help-block"></div>
                                             </div>
                                         </div>
@@ -88,7 +96,7 @@ Lista de productos
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Tipo Producto</label>
                                             <div class="col-sm-12">
-                                                <select class="form-control" id="example-select" name="status" size="1">
+                                                <select class="form-control" name="selectProductType" id="selectProductType" size="1">
                                                     {% for i in product_types%}
                                                         <option value="{{i.id}}">{{i.name}}</option>
                                                     {% endfor %}
@@ -105,7 +113,7 @@ Lista de productos
                                        <div class="form-group">
                                         <div class="col-xs-12">
                                             <label for="mega-bio">Descripcion</label>
-                                            <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="8" placeholder="Ingrese alguna descripcion acerca del producto"></textarea>
+                                            <textarea class="form-control input-lg" name="description" id="description" rows="8" placeholder="Ingrese alguna descripcion acerca del producto"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -115,7 +123,7 @@ Lista de productos
                                         <div class="col-sm-4">
                                         </div>
                                         <div class="col-sm-2">
-                                            <button class="btn btn-success" type="button"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                            <button class="btn btn-success" type="button" id="SaveProduct"><i class="fa fa-check push-5-r"></i> Guardar</button>
                                         </div>  
                                         <div class="col-sm-2">
                                             <button class="btn btn-danger" type="button"><i class="fa fa-check push-5-r"></i> Cancelar</button>

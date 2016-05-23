@@ -8,6 +8,8 @@ from services.ProductTypesService import ProductTypesService
 from services.ProvidersService import ProvidersService
 from django.views.decorators.http import require_http_methods
 
+import json
+
 @require_http_methods(['GET'])
 def index(request):
 
@@ -43,23 +45,31 @@ def create_index(request):
 def create_product(request):
 
     insert_data = {}
+    req = json.loads( request.body.decode('utf-8') )
 
-    insert_data["name"] = request.POST['name']
+    insert_data["name"] = req.get("name")
+    insert_data["minimum_stock"] = req.get("minStock")
+    insert_data["actual_stock"] = req.get("actualStock")
+    insert_data["description"] = req.get("description")
+    #insert_data["provider"] = req.get("providers")
+    insert_data["price"] = req.get("price")
+    insert_data["status"] = 1 #1 means active
 
-    insert_data["description"] = request.POST['description']
-
-    insert_data["price"] = request.POST['price']
-
-    insert_data["anual_price"] = request.POST['anual_price']
-
-    insert_data["minimum_price"] = request.POST['minimum_price']
-
-    insert_data["status"] = request.POST['status']
-
-    insert_data["product_type_id"] = request.POST['product_type_id']
+    product_types_service = ProductTypesService()
+    product_type = product_types_service.find(req.get("productType"))
+    insert_data["product_type"] = product_type
 
     product_service = ProductsService()
+    product_service.create(insert_data)  
 
-    product_service.create(insert_data)
+    providers_service = ProvidersService() 
+    list_providers = []
 
-    return HttpResponseRedirect(reverse('products:index'))
+    for i in req.get("providers"):
+        list_providers.add(providers_service.find(i))
+   
+
+    print(list_providers)
+
+    return HttpResponse(req)
+    #return HttpResponseRedirect(reverse('products:index'))

@@ -15,3 +15,6 @@ class ProductsService(object):
 
     def getProducts(self):
         return self.__product_repository.all()
+
+    def find(self,id):
+        return self.__product_repository.find(id)
