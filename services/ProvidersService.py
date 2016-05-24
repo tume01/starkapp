@@ -4,6 +4,7 @@ class ProvidersService(object):
 
     """docstring for ProvidersService"""
 
+
     __provider_repository = ProvidersRepository.ProvidersRepository()
 
     def create(self, insert_data):
@@ -23,3 +24,6 @@ class ProvidersService(object):
 
     def find(self,id):
         return self.__provider_repository.find(id)
+
+    def find_ruc(self, find_ruc):
+        return self.__provider_repository.find_ruc(find_ruc)

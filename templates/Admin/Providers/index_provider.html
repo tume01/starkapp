@@ -44,7 +44,7 @@ Lista de proveedores
                             <li class="js-header-search header-search">
                                 <form class="form-horizontal" action="base_pages_search.html" method="post">
                                     <div class="form-material form-material-primary input-group remove-margin-t remove-margin-b">
-                                        <input class="form-control" type="text" id="base-material-text" name="base-material-text" placeholder="Buscar productos o servicios">
+                                        <input class="form-control" type="text" id="base-material-text" name="base-material-text" placeholder="Buscar proveedores">
                                         <span class="input-group-addon"><i class="si si-magnifier"></i></span>
                                     </div>
                                 </form>
@@ -77,7 +77,7 @@ Lista de proveedores
                                         <td class="text-center">{{provider.email}}</td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a href="./Edit_Providers_Product.html"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
+                                                <a href='{% url "providers:edit" provider.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
                                                 <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button>
                                             </div>
                                         </td>
