@@ -13,7 +13,7 @@ from django.views.decorators.http import require_http_methods
 def index(request):
 
     context = {
-        'titulo' : 'tittle'
+        'titulo': 'tittle'
     }
 
     return render(request, 'Admin/Activities/index_activity.html', context)
@@ -24,8 +24,24 @@ def create_activity(request):
     form = ActivityForm(request.POST)
 
     context = {
-        'titulo' : 'titulo'
+        'titulo': 'titulo'
     }
+
+    if validateForm(form, request):
+
+        price = form.cleaned_data['price']
+        attendance = form.cleaned_data['attendance']
+        start_date = form.cleaned_data['start_date']
+        end_date   = form.cleaned_data['end_date']
+
+        return render(request, 'Admin/Activities/new_activity.html', context)
+
+    else:
+
+        return HttpResponseRedirect(reverse('activities:index'))
+
+        
+def validateForm(form, request):
 
     if form.is_valid():
 
@@ -40,50 +56,56 @@ def create_activity(request):
                 for error_message in instance_error:
 
                     messages.error(request, (error_message))
+    
+        return request                    
 
-        return render(request, 'Admin/Activities/new_activity.html', context)
-
-    else:
-        return HttpResponseRedirect(reverse('activities:index'))
-        
-
+    return False
 
 @require_http_methods(['GET'])
 def create_index(request):
 
     context = {
-        'titulo' : 'tittle'
+        'titulo': 'tittle'
     }
 
     return render(request, 'Admin/Activities/new_activity.html', context)
 
 @require_http_methods(['POST'])
 def delete(request):
-    pass
+    
+    activity_id = request.POST['id']
+
+    activity_service = ActivityService()
+
+    activity = activity_service.delete(activity_id)
+
+    return HttpResponseRedirect(reverse('activities:index'))
 
 
 @require_http_methods(['GET'])
 def update_index(request):
+
+    activity_service = ActivityService()
     
+    activity_id = request.GET['id']
+
+    activity  = activity_service.find(activity_id)
+
     context = {
-        'titulo' : 'tittle'
+        'titulo': 'tittle',
+        'activity': activity
     }
+
+    return render(request, 'Admin/Activities/edit_activity.html', context)
+
+@require_http_methods(['POST'])
+def update(request):
+
+    activity_id = request.POST['id']
 
     activity_service = ActivityService()
 
-    update_data = {}
+    activity = activity_service.update(activity_id, update_data)
 
-    update_data["start_date"] = datetime(2015, 1, 1)
-    update_data["end_date"] = datetime(2015, 2, 2)
-    update_data["attendance"] = 2
-    update_data["price"] = 2
+    return HttpResponseRedirect(reverse('activities:index'))
 
-    filters = {
-        "price" : 2,
-    }
- 
-    activities  = activity_service.filter(filters)
-
-    print(activities)
-
-    return HttpResponse(activities)
