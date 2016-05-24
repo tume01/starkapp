@@ -12,8 +12,10 @@ urlpatterns = [
     url(r'^filter', views.filter, name='filter'),
     url(r'^user/filter', views.user_filter, name='user_filter'),
     url(r'^user', views.user_index, name='user_index'),
+
+    url(r'^objection/index', views.objection_index, name='objection_index'),
+    url(r'^objection/insert', views.create_objection, name='objection_insert'),
+
     url(r'^index', views.index, name='index'),
 
-    url(r'^objection/insert', views.create_objection, name='objection_insert'),
-    url(r'^objection', views.objection_index, name='objection_index'),
 ]

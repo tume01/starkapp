@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.MembershipTypeService import MembershipTypeService
+from services.ObjectionService import ObjectionsService
 from django.views.decorators.http import require_http_methods
 
 @require_http_methods(['GET'])
@@ -103,3 +104,21 @@ def edit_membership_type(request):
     membership_type_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('memberships:type/index'))
+
+
+@require_http_methods(['POST'])
+def membership_accept(request):
+
+    application_id = request.POST['id']
+
+    insert_data = {}
+
+    objection_service = ObjectionsService()
+
+    objections = objection_service.getMembership(application_id)
+
+    context = {
+        'objections' : objections,
+    }
+
+    return render(request, 'Admin/Membership/index_membership_approval.html', context)

@@ -24,25 +24,15 @@ Nueva solicitud de membresía
      <div class="content content-narrow">
                     <!-- Mega Form -->                        
                     <div class="block-content">
-                                <div class="row">
+                                <div class="row">                                   
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Nombres</label>
-                                            <div class="col-md-12">
-                                               <div class="input-group">
-                                                    <label class="col-xs-12" for="example-select">{{membership_application.names}}</label>
-                                                </div>
-                                            </div>
+                                        <label class="col-xs-12" for="example-select"> Nombres: {{membership_application.firstName}}</label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Apellidos</label>
-                                            <div class="col-md-12">
-                                               <div class="input-group">
-                                                     <label class="col-xs-12" for="example-select">{{membership_application.surnames}}</label>
-                                                </div>
-                                            </div>
+                                        <label class="col-xs-12" for="example-select"> Apellidos: {{membership_application.lastName}}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -52,6 +42,15 @@ Nueva solicitud de membresía
                             <form class="form-horizontal push-10-t push-10" action='{% url "membership_application:objection_insert" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
+                                     <div class="col-lg-6" style="display: none;">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input0-group1" name="id_membership" placeholder="ID"  type="number" value= "{{membership_application.id}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Comentarios</label>
@@ -63,12 +62,13 @@ Nueva solicitud de membresía
                                 </div>                   
                                 <div class="form-group">
                                     <div class="col-xs-6">
-                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:index_user" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:user_index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
                                     </div>
                                     <div class="col-xs-6">
                                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
                                     </div>                                    
                                 </div>
+
                             </form>
                         </div>
                     </div>

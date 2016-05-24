@@ -73,7 +73,7 @@ Lista de solicitudes de membresía
                 {% csrf_token %}  
                 <input type="hidden" id="hid2" name="id"/>
             </form>
-             <form id="myFormClose" action="{% url "membership_application:edit_index" %} " method="post">
+             <form id="myFormClose" action="{% url "memberships:accept" %} " method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid3" name="id"/>
             </form>

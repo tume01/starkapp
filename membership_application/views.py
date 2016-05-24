@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MembershipTypeService import MembershipTypeService
+from services.ObjectionService import ObjectionsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
 
@@ -76,6 +77,10 @@ def create_index(request):
 @require_http_methods(['POST'])
 def edit_index(request):
 
+    membership_type_service = MembershipTypeService()
+
+    types = membership_type_service.getMembershipTypes()
+
     member_application_service = Membership_ApplicationService()
 
     membershipId = request.POST['id']
@@ -87,6 +92,7 @@ def edit_index(request):
     membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%m/%d/%Y')
 
     context = {
+        'types' : types,
         'membership_application' : membership_application,
     }
 
@@ -112,6 +118,8 @@ def delete_membership_application(request):
 def create_membership_application(request):
 
     insert_data = {}
+ 
+    insert_data["membership_type_id"] = request.POST['membership_type']
 
     insert_data["firstName"] = request.POST['firstName']
 
@@ -138,6 +146,8 @@ def create_membership_application(request):
 def edit_membership_application(request):
 
     insert_data = {}
+
+    insert_data["membership_type_id"] = request.POST['membership_type']
 
     insert_data["firstName"] = request.POST['firstName']
 
@@ -218,13 +228,13 @@ def create_objection(request):
 
     insert_data["comments"] = request.POST['comments']
 
-    id_application = request.POST['id']
+    insert_data["membership_application_id"] = request.POST['id_membership']
 
-    #objection_service = ObjectionService()
+    objection_service = ObjectionsService()
 
-    #objection_service.create(id_application, insert_data)
+    objection_service.create(insert_data)
 
-    return HttpResponseRedirect(reverse('membership_application:index'))
+    return HttpResponseRedirect(reverse('membership_application:user_index'))
 
 
 @require_http_methods(['POST'])
@@ -234,10 +244,10 @@ def objection_index(request):
 
     requestId = request.POST['id']
 
-    membership_application = member_application_service.getRequest(requestId)
+    membership_application = member_application_service.getMembership_Application(requestId)
 
     context = {
         'membership_application' : membership_application,
     }
 
-    return HttpResponseRedirect(reverse('membership_application:index'))
+    return render(request, 'Objections_members.html', context)
