@@ -17,3 +17,6 @@ class UsersService(object):
 
     def getTypes(self):
         return self.__user_type_repository.all()
+
+    def getType(self, id):
+        return self.__user_type_repository.find(id)
