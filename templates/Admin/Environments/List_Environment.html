@@ -22,25 +22,6 @@ Lista de ambientes
 
 {% block content %}
 
-
-
-                <div class="content bg-gray-lighter">
-                    <div class="row items-push">
-                        <div class="col-sm-7">
-                            <h1 class="page-heading">
-                                Ambientes <small>Lista completa de ambientes</small>
-                            </h1>
-                        </div>
-                        <div class="col-sm-5 text-right hidden-xs">
-                            <ol class="breadcrumb push-10-t">
-                                <li>Ambientes</li>
-                                <li><a class="link-effect" href="">Lista de ambientes</a></li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-                <!-- END Page Header -->
-
                 <!-- Page Content -->
                 <div class="content">
                     <!-- Simple Table Full -->
@@ -61,12 +42,13 @@ Lista de ambientes
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for environment in environments %}
                                     <tr>
                                         <td class="text-center">1</td>
                                         <td class="font-w600">Sede principal</td>
-                                        <td class="hidden-xs">Zona de bungalows</td>
+                                        <td class="hidden-xs">{{ environment.name }}</td>
                                         <td class="hidden-xs">
-                                            <span class="label label-danger">Ocupado</span>
+                                            <span class="label label-danger">{{ environment.status }}</span>
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group">
@@ -74,7 +56,8 @@ Lista de ambientes
                                                 <button class="btn btn-xs btn-default" type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-times"></i></button>
                                             </div>
                                         </td>
-                                    </tr>                                    
+                                    </tr>
+                                    {%endfor%}
                                 </tbody>
                             </table>
                         </div>

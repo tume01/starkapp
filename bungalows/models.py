@@ -9,7 +9,7 @@ class BungalowType(models.Model):
 
 class Bungalow(models.Model):
     bungalow_type = models.ForeignKey(BungalowType, on_delete=models.CASCADE)
-    environment = models.ForeignKey(x.Environment, on_delete=models.CASCADE)
+    #environment = models.ForeignKey(x.Environment, on_delete=models.CASCADE)
     status = models.IntegerField()
     location = models.CharField(max_length=200)
     number = models.IntegerField()

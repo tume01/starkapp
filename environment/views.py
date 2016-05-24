@@ -32,6 +32,37 @@ def create_index(request):
     return render(request, 'Admin/Environments/Create_Environment.html', context)
 
 @require_http_methods(['POST'])
+def edit_index(request):
+
+    id_environment= request.POST['id']
+
+    environment_service = EnvironmentService()
+
+    environment = environment_service.getEnvironment(id_environment)
+
+    context = {
+        'environment' : environment,
+    }
+
+    return render(request, 'Admin/Environments/Edit_Environment.html', context)
+
+@require_http_methods(['POST'])
+def delete_environment(request):
+
+    edit_data = {}
+
+    id_edit = request.POST['id']
+
+    edit_data["status"] = 0
+
+    environment_service = EnvironmentService()
+
+    environment_service.update(id_edit, edit_data)
+
+    return HttpResponseRedirect(reverse('environment:index'))
+
+
+@require_http_methods(['POST'])
 def create_environment(request):
 
     insert_data = {}
@@ -51,5 +82,27 @@ def create_environment(request):
     environment_service = EnvironmentService()
 
     environment_service.create(insert_data)
+
+    return HttpResponseRedirect(reverse('environment:index'))
+
+
+@require_http_methods(['POST'])
+def edit_environment(request):
+
+    edit_data = {}
+
+    edit_data["description"] = request.POST['description']
+
+    edit_data["name"] = request.POST['name']
+
+    edit_data["capacity"] = request.POST['capacity']
+
+    edit_data["status"] = request.POST['status']
+
+    id_edit = request.POST['id']
+
+    environment_service = EnvironmentService()
+
+    environment_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('environment:index'))
