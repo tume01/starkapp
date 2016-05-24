@@ -44,7 +44,7 @@ Lista de ambientes
                                 <tbody>
                                     {% for environment in environments %}
                                     <tr>
-                                        <td class="text-center">1</td>
+                                        <td class="text-center">{{environment.id}}</td>
                                         <td class="font-w600">Sede principal</td>
                                         <td class="hidden-xs">{{ environment.name }}</td>
                                         <td class="hidden-xs">
@@ -52,8 +52,8 @@ Lista de ambientes
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a href="environment:edit_index"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Ambiente"><i class="fa fa-pencil"></i></button></a>
-                                                <a href="environment:delete"><button class="btn btn-xs btn-default" type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-times"></i></button></a>
+                                                <a href='{% url "environment:edit_index"%}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Ambiente"><i class="fa fa-pencil"></i></button></a>
+                                                <a href='{% url "environment:delete"%}'><button class="btn btn-xs btn-default" type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-times"></i></button></a>
                                             </div>
                                         </td>
                                     </tr>
