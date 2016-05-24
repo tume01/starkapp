@@ -17,3 +17,6 @@ class PromotionsService(object):
 
     def getPromotion(self, id):
         return self.__promotion_repository.find(id)
+
+    def filter(self,filters):
+        return self.__promotion_repository.filter(filters)
