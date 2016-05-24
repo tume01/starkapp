@@ -28,10 +28,10 @@ Lista de solicitudes de membresía
 <div class="content">
     <!-- Simple Table Full -->
     <div class="block block-bordered">
-         <form id="myFormDelete" action="{% url "membership_application:delete" %} " method="post">
+         <form id="myFormDelete" action="{% url "membership_application:approve" %} " method="post">
                 {% csrf_token %}  
-                <input type="hidden" id="hid1" name="id"/>
-            </form>
+                <input type="hidden" id="hid1" value="{{id}}" name="id"/>
+
 
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
@@ -49,15 +49,13 @@ Lista de solicitudes de membresía
                                     {% endfor %}
                                 </tbody>
                             </table>
-                            <div class="form-group">
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
-                                    </div>
+                            <div class="form-group">                                    
                                     <div class="col-xs-6">
                                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Aceptar</button>
                                     </div>                                    
                             </div>
                         </div>
+                                    </form>
                     </div>
                     <!-- END Simple Table Full -->
                 </div>

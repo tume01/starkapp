@@ -113,12 +113,34 @@ def membership_accept(request):
 
     insert_data = {}
 
-    objection_service = ObjectionsService()
+    #objection_service = ObjectionsService()
 
-    objections = objection_service.getMembership(application_id)
+    #objections = objection_service.getMembership(application_id)
 
     context = {
-        'objections' : objections,
+        #'objections' : objections,
+        'id' : application_id,
     }
 
     return render(request, 'Admin/Membership/index_membership_approval.html', context)
+
+
+
+@require_http_methods(['POST'])
+def create_membership(request):
+
+    insert_data = {}
+
+    insert_data["initialDate"] =  datetime.strptime(request.POST['initialDate'], '%m/%d/%Y')
+
+    insert_data["finalDate"] =  datetime.strptime(request.POST['finalDate'], '%m/%d/%Y')
+
+    insert_data["status"] = 1
+
+    insert_data["membership_type_id"] = request.POST['id']
+
+    membership_service = MembershipService()
+
+    membership_service.create(insert_data)
+
+    return HttpResponseRedirect(reverse('membership_application:index'))

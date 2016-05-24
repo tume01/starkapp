@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^type/delete', views.delete_membership_type, name='type/delete'),
     url(r'^type', views.membership_type_index, name='type/index'),
 
-   url(r'^accept', views.membership_accept, name='accept'),
+    url(r'^accept', views.membership_accept, name='accept'),
+
+    url(r'^create/insert', views.create_membership, name='insert'),
 
 ]
