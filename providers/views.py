@@ -45,7 +45,7 @@ def create_provider(request):
             provider_service = ProvidersService()
             
             providerRuc = provider_service.find_ruc(request.POST['ruc'])
-            print("HOla :D")
+            
             if(providerRuc == None):
 
                 insert_data = {}
@@ -86,8 +86,10 @@ def edit_index(request,id):
 
 
     provider = provider_service.find(id)
+    form = ProviderForm(provider)
 
     context = {
+        'form' : form,
         'provider' : provider,
         'titulo' : 'titulo'
     }
