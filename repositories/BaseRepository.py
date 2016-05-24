@@ -25,7 +25,7 @@ class BaseRepository(AbstractBaseRepository):
         return new_element.save()
 
     def update(self, update_id, update_data):
-        selected_element = self.__model.objects.filter(id=update_id)
+        selected_element = self.__model.objects.get(id=update_id)
         
         for key, value in update_data.items():
             selected_element.__setattr__(key, value)
