@@ -15,5 +15,13 @@ class ObjectionsService(object):
     def delete(self, id):
         return self.__objection_repository.delete(id)
 
-    def getMembership(self, id):
+    def getObjection(self, id):
         return self.__objection_repository.find(id)
+
+    def getObjections(self, id):
+        return self.__objection_repository.all()
+
+    def getObjectionByApplicationId(self, id):
+        filter_objection = {}
+        filter_objection['membership_application'] = id
+        return self.__objection_repository.filter(filter_objection)
