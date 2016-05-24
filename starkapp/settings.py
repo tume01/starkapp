@@ -40,9 +40,10 @@ INSTALLED_APPS = [
     'bungalows',
     'users',
     'promotions',
-    'membership_application',
     'memberships',
+    'membership_application',
     'fine',    
+    'objection', 
 ]
 
 MIDDLEWARE_CLASSES = [
