@@ -21,6 +21,7 @@ def index(request):
 
     return render(request, 'Admin/Environments/List_Environment.html', context)
 
+
 @require_http_methods(['GET'])
 def create_index(request):
 
@@ -31,20 +32,24 @@ def create_index(request):
     return render(request, 'Admin/Environments/Create_Environment.html', context)
 
 @require_http_methods(['POST'])
-def create_bungalow(request):
+def create_environment(request):
 
     insert_data = {}
 
-    insert_data["number"] = request.POST['number']
+    insert_data["name"] = request.POST['name']
 
-    insert_data["location"] = request.POST['location']
+    #insert_data["sede"] = request.POST['sede']
+
+    insert_data["description"] = request.POST['description']
 
     insert_data["status"] = request.POST['status']
 
-    insert_data["bungalow_type_id"] = 1
+    insert_data["capacity"] = request.POST['capacity']
 
-    bungalow_service = EnvironmentService()
+    insert_data["environment_id"] = request.POST['number']
 
-    bungalow_service.create(insert_data)
+    environment_service = EnvironmentService()
+
+    environment_service.create(insert_data)
 
     return HttpResponseRedirect(reverse('environment:index'))
