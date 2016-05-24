@@ -55,7 +55,7 @@ $('#SaveProduct').click(function(){
 
 	xhr.done(function(data) {
 		console.log('done='+data);
-		//window.location="/professor/courses/topic/"+$("#topicId").val()+"/"+$("#courseId").val();
+		window.location="/products";
     });
 
     xhr.fail(function(xhr, status, text){

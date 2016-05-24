@@ -51,7 +51,6 @@ def create_product(request):
     insert_data["minimum_stock"] = req.get("minStock")
     insert_data["actual_stock"] = req.get("actualStock")
     insert_data["description"] = req.get("description")
-    #insert_data["provider"] = req.get("providers")
     insert_data["price"] = req.get("price")
     insert_data["status"] = 1 #1 means active
 
@@ -62,22 +61,26 @@ def create_product(request):
     product_service = ProductsService()
     pr = product_service.create(insert_data)  
 
-    #print(pr.id)
-
     providers_service = ProvidersService() 
     list_providers = []
 
     for i in req.get("providers"):
         list_providers.append(providers_service.find(i))
 
-    #pr.provider = list_providers
-
-    #print(pr)
     insert_data["provider"] = list_providers
     product_service.update(pr.id, insert_data)
    
+    return HttpResponseRedirect(reverse('products:index'))
 
-    #print(list_providers)
+@require_http_methods(['POST'])
+def update_product(request):
 
-    return HttpResponse(req)
-    #return HttpResponseRedirect(reverse('products:index'))
+    update_data = {}
+    req = json.loads( request.body.decode('utf-8') )
+
+    update_data["name"] = req.get("name")
+    update_data["minimum_stock"] = req.get("minStock")
+    update_data["actual_stock"] = req.get("actualStock")
+    update_data["description"] = req.get("description")
+    update_data["price"] = req.get("price")
+    update_data["status"] = 1 #1 means active
