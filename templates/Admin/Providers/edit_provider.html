@@ -86,7 +86,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <div class="col-xs-9">
                                                 <label for="registrationDate">Fecha de Registro</label>
-                                                    <input class="js-datepicker form-control" data-date-format="yyyy-mm-dd" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha.." value = '{{ provider.registrationDate }}' >             
+                                                    <input class="js-datepicker form-control" data-date-format="yyyy-mm-dd" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha.." value = '{{ provider.registrationDate|date:"Y-m-d" }}' >             
                                             </div>
                                         </div>
                                     </div>

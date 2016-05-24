@@ -7,6 +7,8 @@ class Provider(models.Model):
 
     status_choices = ((0,'Inactivo'),(1,'Activo'),)
 
+
+
     ruc = models.BigIntegerField(null=False, blank=False)
     businessName = models.CharField(null=False, blank=False,max_length=120)
     status = models.IntegerField(choices=status_choices,default=1) #Binario por estado 0->Inactivo 1->Activo    
