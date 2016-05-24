@@ -1,9 +1,9 @@
 from django.db import models
-from memberships import models.Membership
+from memberships import models as x
 
 # Create your models here.
 class Member(models.Model):
-    membership = models.ForeignKey(Membership, on_delete=models.CASCADE)
+    membership = models.ForeignKey(x.Membership, on_delete=models.CASCADE)
     name=models.TextField(max_length=200)
     surname=models.TextField(max_length=200)
     dni=models.IntegerField()
