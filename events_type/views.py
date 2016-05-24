@@ -74,3 +74,19 @@ def create_eventstype(request):
         events_type_service.create(insert_data)
 
         return HttpResponseRedirect(reverse('events_type:index'))
+
+@require_http_methods(['POST'])
+def update(request,id):
+
+    events_type_service = EventsTypeService()
+
+    events_type_service.
+
+    context = {
+        'titulo' : 'titulo',
+        'id'
+    }
+
+    insert_data = {}
+
+    return HttpResponse('insert_data')

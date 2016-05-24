@@ -59,7 +59,7 @@ Crear tipo de eventos
                                         {% endif %}
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a href='{% url "events_type:update" %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
+                                                <a href="/eventstype/edit/{{type.id}}" ><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
                                                 <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button>
                                             </div>
                                         </td>
