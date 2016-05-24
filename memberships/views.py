@@ -13,11 +13,6 @@ def membership_type_index(request):
 
     types = membership_type_service.getMembershipTypes()
 
-    """
-    types debe tener:
-    id, name, guests, price, tipoCobro (billing) de tipo membresia
-    """
-
     context = {
         'membershipTypes' : types,
     }
