@@ -9,4 +9,10 @@ urlpatterns = [
     url(r'^type/edit/insert', views.edit_user_type, name='type/edit'),
     url(r'^type/edit', views.edit_user_type_index, name='type/edit_index'),
     url(r'^type', views.user_type_index, name='type/index'),
+    url(r'^edit/insert', views.edit_user, name='edit'),
+    url(r'^edit', views.edit_user_index, name='edit_index'),
+    url(r'^create/insert', views.create_user, name='insert'),
+    url(r'^create', views.create_user_index, name='create_index'),
+    url(r'^', views.user_index, name='index'),
+
 ]

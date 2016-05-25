@@ -40,11 +40,11 @@ Lista de miembros
                 {% csrf_token %}  
                 <input type="hidden" id="hid3" name="id"/>
             </form>
-            <form id="myFormUser" action=" " method="post">
+            <form id="myFormUser" action="{% url 'users:edit_index' %}" method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid4" name="id"/>
             </form>
-            <form id="myFormFine" action=" " method="post">
+            <form id="myFormFine" action=" {% url 'fine:create_index' %}" method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid5" name="id"/>
             </form>
@@ -74,7 +74,7 @@ Lista de miembros
                                     <button class="btn btn-xs btn-default editar" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Miembro"><i class="fa fa-pencil"></i></button>
                                     <button class="btn btn-xs btn-default eliminar" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Eliminar Miembro"><i class="fa fa-pencil"></i></button>
                                     <button class="btn btn-xs btn-default membre" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Membresia"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Crear Usuario"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-pencil"></i></button>
                                     <button class="btn btn-xs btn-default fine" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Agregar Multa"><i class="fa fa-pencil"></i></button>
                                 </div>
                             </td>    
