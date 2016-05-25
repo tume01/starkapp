@@ -14,11 +14,17 @@ import json
 def index(request):
 
     product_service = ProductsService()
+    providers_service = ProvidersService()
+    product_types_service = ProductTypesService()
 
     products = product_service.getProducts()
+    all_providers = providers_service.getActiveProviders()
+    all_product_types = product_types_service.getProductTypes()
 
     context = {
         'products' : products,
+        'all_providers' : all_providers,
+        'all_product_types' : all_product_types,
         'titulo' : 'titulo'
     }
 
