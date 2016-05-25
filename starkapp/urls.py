@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^bungalows', include('bungalows.urls')),
-    url(r'^servicios', include('servicios.urls')),
+    url(r'^servicios', include('servicios.urls'))
 ]
 
 if settings.DEBUG:

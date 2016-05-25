@@ -487,11 +487,12 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar servicios</a>
+                                    <a href="{% url 'servicios:index' %}">Consultar Servicios</a>
                                 </li>
                                 <li>
-                                    <a href=''>Ver solicitudes de servicios</a>
+                                    <a href='{% url "servicios:create_index" %}'>Crear Servicios</a>
                                 </li>
+                                
                             </ul>
                         </li>
                         <li>
