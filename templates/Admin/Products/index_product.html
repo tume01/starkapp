@@ -1,0 +1,153 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: productos
+{% endblock %}
+
+{% block head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de productos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de productos
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+                <!-- Page Content -->
+                <div class="content content-narrow">
+                    <!-- Simple Table Full -->
+                    <div class="block">
+                        <!--<div class="block-header">
+                            <h3 class="block-title">Simple Table <small>Full</small></h3>
+                        </div>-->
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label class="col-xs-12" for="example-text-input">Nombre del producto</label>
+                                    <div class="col-xs-12">
+                                        <input class="form-control" name="name" id="name" placeholder="" type="text">
+                                        <div class="help-block"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="col-xs-12" >Proveedor</label>
+                                        <div class="col-xs-12">
+                                            <select class="form-control" multiple="multiple" id="select2Provider">
+                                                {% for prov in all_providers %}
+                                                    <option value="{{prov.id}}">{{prov.businessName}}</option>
+                                                {% endfor %}    
+                                            </select> 
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-5">
+                                    <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Tipo Producto</label>
+                                            <div class="col-xs-12">
+                                                <select class="form-control" name="selectProductType" id="selectProductType" size="1">
+                                                    <option value="0">Seleccione un Tipo de Producto</option>
+                                                    {% for ptype in all_product_types%}
+                                                        <option value="{{ptype.id}}">{{ptype.name}}</option>
+                                                    {% endfor %}
+                                                    
+                                                </select>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                            <br>
+                            <!--
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label class="col-xs-12" for="example-text-input">Rango Stock Actual</label>
+                                    <div class="col-xs-5">
+                                        <input class="form-control" name="name" id="name" placeholder="" type="text">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input class="form-control" name="name" id="name" placeholder="" type="text">
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            -->
+
+                            <div class="row">
+                                <div class="col-lg-9">
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="col-lg-8 col-lg-offset-4">
+                                            <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                        <div class="block">    
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Nombre de producto</th>
+                                        <th>Precio</th>
+                                        <th class="hidden-xs">Stock Actual</th>
+                                        <th>Stock Minimo</th>
+                                        <th>Estado</th>
+                                        <th class="text-center" style="width: 10%;">Descripcion</th>
+                                        <th class="text-center" style="width: 10%;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for p in products %}
+                                    <tr>
+                                        <td class="text-center">{{p.id}}</td>
+                                        <td class="font-w600">{{p.name}}</td>
+                                        <td class="text-center">{{p.price}}</td> 
+                                        <td class="text-center">{{p.actual_stock}}</td>
+                                        <td class="text-center">{{p.minimum_stock}}</td>  
+                                        {% if p.status == 0 %}
+                                        <td class="text-center">Inactivo</td>
+                                        {% else %}
+                                        <td class="text-center">Activo</td>
+                                        {% endif %}
+                                        <td class="hidden-xs">{{p.description}}</td>
+                                        <td class="text-center">    
+                                            <div class="btn-group">
+                                                <a href='{% url "products:edit" p.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
+
+                                                <a href='{% url "products:delete" p.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>     
+
+
+<!-- HASTA AQUÍ -->       
+{% endblock %}
