@@ -11,4 +11,5 @@ class Activity(models.Model):
     end_date = models.DateTimeField()
     attendance = models.IntegerField()
     start_date = models.DateTimeField()
+    name = models.CharField(max_length=250)
     price = models.DecimalField(max_digits=6, decimal_places=2)

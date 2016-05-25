@@ -15,8 +15,11 @@ class ActivityService(object):
     def delete(self, id):
         return self.__activity_repository.delete(id)
 
-    def getBungalows(self):
+    def getActivities(self):
         return self.__activity_repository.all()
 
     def filter(self, filters):
         return self.__activity_repository.filter(filters)
+
+    def getActivity(self, id):
+        return self.__activity_repository.find(id)

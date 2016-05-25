@@ -1,1 +1,141 @@
-edit_activity.html
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: bungalows
+{% endblock %}
+
+{% block head_dahsboard %}
+{{activity.name}}
+{% endblock %}
+
+{% block function_head_dahsboard %}
+
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Actividades
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+{{activity.name}}
+{% endblock %}
+
+{% block content %}
+<div class="content content-narrow">
+    <div class="content">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-warning" role="alert">
+                    {{msg.message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="block block-bordered">
+        <div class="block-header">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                </li>
+            </ul>
+            <h3 class="block-title"></h3>
+        </div>
+
+        <!-- Block v2 -->
+        <div class="block-content">
+            <form class="form-horizontal push-10-t push-10" action='{% url "activities:update" activity.id%}' method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <label for="mega-firstname">Nombre</label>
+                                <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Ingrese un nombre.." value="{{activity.name}}" >
+                            </div>
+                            <div class="col-xs-6">
+                                <label for="attendance">Capacidad</label>
+                                <input class="form-control input-lg" type="text" id="attendance" name="attendance" placeholder="Ingrese capacidad de actividad.." value="{{activity.attendance}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="price">Precio</label>
+                                <input class="form-control input-lg" type="text" id="price" name="price" placeholder="Ingrese precio de actividad.." value="{{activity.price}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="mega-lastname">Fecha/Hora Inicio Actividad</label>
+                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha.." value="{{activity.start_date}}">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="mega-lastname">Fecha/Hora Fin Actividad</label>
+                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha.." value="{{activity.end_date}}">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group">
+                            <label class="col-xs-12">Tipo</label>
+                            <div class="col-xs-12">
+                                <label class="css-input css-radio css-radio-warning push-10-r">
+                                    <input type="radio" name="mega-gender-group"><span></span> Curso
+                                </label>
+                                <label class="css-input css-radio css-radio-warning">
+                                    <input type="radio" name="mega-gender-group"><span></span> Actividad
+                                </label>
+                                <label class="css-input css-radio css-radio-warning">
+                                    <input type="radio" name="mega-gender-group"><span></span> Evento
+                                </label>
+                            </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-4">
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href="{% url 'activities:index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
+                    </div>
+                    <div class="col-xs-4">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- END Block v2 -->
+
+
+    </div>
+</div>
+{% endblock %}

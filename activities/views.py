@@ -1,5 +1,6 @@
 from datetime import datetime
 from .forms import ActivityForm
+import json
 from django.template import loader
 from django.shortcuts import render
 from django.contrib import messages
@@ -14,7 +15,11 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @require_http_methods(['GET'])
 def index(request):
 
-    activities = ActivityService()
+    activity_service = ActivityService()
+
+    filters = getActivityFilters(request)
+
+    activities = activity_service.filter(filters)
 
     paginator = Paginator(activities, 10)
 
@@ -36,6 +41,32 @@ def index(request):
 
     return render(request, 'Admin/Activities/index_activity.html', context)
 
+def getActivityFilters(request):
+
+
+    filters = {}
+
+    if request.GET.get('name'):
+        filters['name'] = request.GET.get('name')
+
+    if request.GET.get('price'):
+        filters['price'] = request.GET.get('price')
+
+    if request.GET.get('start_date'):
+        start_date = datetime.strptime(request.GET.get('start_date'), "%m/%d/%Y")
+
+        filters['start_date__gte'] = start_date
+
+    if request.GET.get('end_date'):
+        end_date = datetime.strptime(request.GET.get('end_date'), "%m/%d/%Y")
+
+        filters['end_date__lte'] = end_date
+
+    if request.GET.get('attendance'):
+        filters['attendance'] = request.GET.get('end_date')
+
+    return filters
+
 @require_http_methods(['POST'])
 def create_activity(request):
 
@@ -46,16 +77,19 @@ def create_activity(request):
     }
 
     request = FormValidator.validateForm(form, request)
+
     if not request:
 
         activity_service = ActivityService()
 
+        name = form.cleaned_data['name']
         price = form.cleaned_data['price']
         attendance = form.cleaned_data['attendance']
         start_date = form.cleaned_data['start_date']
         end_date   = form.cleaned_data['end_date']
 
         insert_data = {
+            'name': name,
             'price': price,
             'attendance': attendance,
             'start_date': start_date,
@@ -69,27 +103,6 @@ def create_activity(request):
     else:
 
         return render(request, 'Admin/Activities/new_activity.html', context)
-
-
-def validateForm(form, request):
-
-    if form.is_valid():
-
-        errors = form.errors.as_data()
-
-        for error in errors:
-
-            validation_instance = errors[error]
-
-            for instance_error in validation_instance:
-
-                for error_message in instance_error:
-
-                    messages.error(request, (error_message))
-
-        return request
-
-    return False
 
 @require_http_methods(['GET'])
 def create_index(request):
@@ -113,13 +126,11 @@ def delete(request):
 
 
 @require_http_methods(['GET'])
-def update_index(request):
+def update_index(request, activity_id):
 
     activity_service = ActivityService()
 
-    activity_id = request.GET.get('id')
-
-    activity  = activity_service.find(activity_id)
+    activity  = activity_service.getActivity(activity_id)
 
     context = {
         'titulo': 'tittle',
@@ -129,9 +140,9 @@ def update_index(request):
     return render(request, 'Admin/Activities/edit_activity.html', context)
 
 @require_http_methods(['POST'])
-def update(request):
+def update(request, activity_id):
 
-    activity_id = request.POST['id']
+    activity_id = request.GET.get('activity_id')
 
 
     form = ActivityForm(request.POST)
@@ -139,7 +150,9 @@ def update(request):
     activity_service = ActivityService()
 
     if FormValidator.validateForm(form, request):
-
+        context = {
+            'titutlo': 'titulo'
+        }
         return render(request, 'Admin/Activities/new_activity.html', context)
 
     else:
@@ -150,14 +163,14 @@ def update(request):
         start_date = form.cleaned_data['start_date']
         end_date   = form.cleaned_data['end_date']
 
-        insert_data = {
+        update_date = {
             'price': price,
             'attendance': attendance,
             'start_date': start_date,
             'end_date': end_date
         }
 
-        activity_service.create(insert_data)
+        activity_service.update(activity_id, update_date)
 
         return HttpResponseRedirect(reverse('activities:index'))
 
