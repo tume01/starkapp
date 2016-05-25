@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bungalows',
     'activities',
-    'events_type'
+    'events_type',
+    'providers',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -82,7 +83,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'starkapp',
         'USER': 'root',
+<<<<<<< HEAD
         'PASSWORD': 'blackfeather14',
+=======
+        'PASSWORD': 'Cohello19',
+>>>>>>> 5b9736082923d125fc3ed148b347075d965d1ca3
         'HOST': '127.0.0.1',
         'PORT': '',
     }
