@@ -46,7 +46,7 @@ Lista de usuarios
                         {% for user in users %}                                       
                         <tr>
                             <td class="font-w600">{{user.name}}</td>
-                            <td class="font-w600">{{user.user_type_id}}</td>
+                            <td class="font-w600">{{user.user_type.description}}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-default editar" data-id="{{user.id}}" type="button"  data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
