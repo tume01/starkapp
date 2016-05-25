@@ -55,6 +55,40 @@ $('#SaveProduct').click(function(){
 
 	xhr.done(function(data) {
 		console.log('done='+data);
+		window.location = "/products";
+    });
+
+    xhr.fail(function(xhr, status, text){
+        console.log("Error " + xhr.readyState + " " +text);
+
+    });
+
+    return xhr;
+});
+
+$('#EditProduct').click(function(){
+	console.log('click editar');
+	data = {};
+	data.name = $('#name').val();
+	data.actualStock = $('#actualStock').val();
+	data.minStock = $('#minStock').val();
+	data.productType = $('#selectProductType').val();
+	data.description = $('#description').val();
+	data.providers = $('#select2Provider').val();
+	data.price = $('#price').val();
+
+	console.log(data);
+
+	var xhr = $.ajax({
+	    type: "POST", 
+	    url: "/products/edit/update/"+ $('#idProduct').val(), //url que procesa
+	    dataType: "text",
+	    data: JSON.stringify(data),
+	    contentType: "application/json; charset=utf-8",
+    });
+
+    xhr.done(function(data) {
+		console.log('done='+data);
 		window.location="/products";
     });
 
@@ -64,4 +98,5 @@ $('#SaveProduct').click(function(){
     });
 
     return xhr;
+
 });

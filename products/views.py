@@ -70,10 +70,31 @@ def create_product(request):
     insert_data["provider"] = list_providers
     product_service.update(pr.id, insert_data)
    
-    return HttpResponseRedirect(reverse('products:index'))
+    return HttpResponse(json.dumps(req), content_type='application/json')
+
+@require_http_methods(['GET'])
+def edit_index(request, id):
+
+    product_service = ProductsService()
+    product_type_service = ProductTypesService()
+    provider_service = ProvidersService()
+
+
+    product = product_service.find(id)
+    all_providers = provider_service.getActiveProviders()
+    all_product_types = product_type_service.getProductTypes()
+
+    context = {
+        'product' : product,
+        'all_providers' : all_providers,
+        'all_product_types' : all_product_types,
+        'titulo' : 'titulo'
+    }
+
+    return render(request, 'Admin/Products/edit_product.html', context)
 
 @require_http_methods(['POST'])
-def update_product(request):
+def edit_product(request, id):
 
     update_data = {}
     req = json.loads( request.body.decode('utf-8') )
@@ -83,4 +104,12 @@ def update_product(request):
     update_data["actual_stock"] = req.get("actualStock")
     update_data["description"] = req.get("description")
     update_data["price"] = req.get("price")
-    update_data["status"] = 1 #1 means active
+
+    product_types_service = ProductTypesService()
+    product_type = product_types_service.find(req.get("productType"))
+    update_data["product_type"] = product_type
+
+    product_service = ProductsService()
+    pr = product_service.update(id, update_data) 
+
+    return HttpResponse(json.dumps(req), content_type='application/json')
