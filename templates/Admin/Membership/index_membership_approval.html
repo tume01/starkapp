@@ -1,7 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
 {% block head_title %}
-Admin: solicitudes de membresías
+Admin: solicitud de membresía
 {% endblock %}
 
 {% block head_dahsboard %}
@@ -9,7 +9,7 @@ Solicitud de Membresía
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de solicitudes de membresía
+Lista completa de objeciones
 {% endblock %}
 
 {% block sub_head_dahsboard %}
@@ -17,7 +17,7 @@ Solicitud de membresía
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de solicitudes de membresía
+Lista de objeciones
 {% endblock %}
 
 {% block content %}
@@ -28,12 +28,10 @@ Lista de solicitudes de membresía
 <div class="content">
     <!-- Simple Table Full -->
     <div class="block block-bordered">
-         <form id="myFormDelete" action="{% url "membership_application:delete" %} " method="post">
+         <form id="myFormDelete" action="{% url "membership_application:approve" %} " method="post">
                 {% csrf_token %}  
-                <input type="hidden" id="hid1" name="id"/>
-            </form>
-
-                        <div class="block-content">
+                <input type="hidden" id="hid1" value="{{id}}" name="id"/>
+                            <div class="form-group">     
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
@@ -48,16 +46,22 @@ Lista de solicitudes de membresía
                                         </tr>
                                     {% endfor %}
                                 </tbody>
-                            </table>
-                            <div class="form-group">
-                                    <div class="col-xs-6">
+                            </table> 
+
+                                                       <div class="block-content">
+                            <div class="form-group">     
+                            <div class="col-xs-6">
                                         <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
-                                    </div>
+                                    </div>                               
                                     <div class="col-xs-6">
                                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Aceptar</button>
-                                    </div>                                    
-                            </div>
+                                    </div>  
+                                    </div> 
+                                </div>         
+
+                           
                         </div>
+                                    </form>
                     </div>
                     <!-- END Simple Table Full -->
                 </div>

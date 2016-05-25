@@ -4,7 +4,12 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.MembershipTypeService import MembershipTypeService
+from services.Membership_ApplicationService import Membership_ApplicationService
+from services.MembershipService import MembershipService
 from services.ObjectionService import ObjectionsService
+from services.MemberService import MembersService
+from services.UsersService import UsersService
+from datetime import datetime
 from django.views.decorators.http import require_http_methods
 
 @require_http_methods(['GET'])
@@ -115,10 +120,131 @@ def membership_accept(request):
 
     objection_service = ObjectionsService()
 
-    objections = objection_service.getMembership(application_id)
+    objections = objection_service.getObjectionByApplicationId(application_id)
 
     context = {
         'objections' : objections,
+        'id' : application_id,
     }
 
     return render(request, 'Admin/Membership/index_membership_approval.html', context)
+
+
+
+@require_http_methods(['POST'])
+def create_membership(request):
+
+    #Datos de la membresia
+
+    insert_data = {}
+
+    insert_data["initialDate"] =  datetime.strptime(request.POST['initialDate'], '%m/%d/%Y')
+
+    insert_data["finalDate"] =  datetime.strptime(request.POST['finalDate'], '%m/%d/%Y')
+
+    insert_data["status"] = 1
+
+    insert_data["membership_type_id"] = request.POST['membership_type_id']
+
+    membership_service = MembershipService()
+
+    membership = membership_service.create(insert_data)
+
+    #Datos del usuario
+
+    insert_data = {}
+
+    insert_data["name"] = request.POST['dni']
+
+    insert_data["password"] = 1111
+
+    insert_data["user_type_id"] = 1
+
+    user_service = UsersService()
+
+    user = user_service.create(insert_data)
+
+    #Datos del miembro
+
+    insert_data = {}
+
+    insert_data["user_id"] = user.id
+
+    insert_data["membership_id"] = membership.id
+
+    insert_data["name"] = request.POST['name']
+
+    insert_data["surname"] = request.POST['surname']
+
+    insert_data["dni"] = request.POST['dni']
+
+    insert_data["phone"] = request.POST['phone']
+
+    insert_data["address"] = request.POST['address']
+
+    insert_data["email"] = request.POST['email']
+
+    insert_data["state"] = 1
+
+    member_service = MembersService()
+
+    member_service.create(insert_data)
+
+    #Elimino solicitud
+
+    id_application = request.POST['id']
+
+    insert_data = {}
+
+    insert_data["status"] = 0
+
+    member_application_service = Membership_ApplicationService()
+
+    member_application_service.update(id_application, insert_data)
+
+    return HttpResponseRedirect(reverse('membership_application:index'))
+
+
+@require_http_methods(['POST'])
+def membership_edit_index(request):
+
+    membership_service = MembershipService()
+
+    membershipId = request.POST['id']
+
+    membership = membership_service.getMembership(membershipId)
+
+    membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+
+    membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+
+    membership_type_service = MembershipTypeService()
+
+    types = membership_type_service.getMembershipTypes()
+
+    context = {
+        'membership' : membership,
+        'types' : types,
+    }
+
+    return render(request, 'Admin/Membership/edit_membership.html', context)
+
+
+@require_http_methods(['POST'])
+def membership_edit(request):
+
+    edit_data = {}
+
+    edit_data["initialDate"] =  datetime.strptime(request.POST['initialDate'], '%m/%d/%Y')
+
+    edit_data["finalDate"] =  datetime.strptime(request.POST['finalDate'], '%m/%d/%Y')
+
+    edit_data["membership_type_id"] = request.POST['membership_type_id']
+
+    id_edit = request.POST['id']
+
+    membership_service = MembershipService()
+
+    membership_service.update(id_edit, edit_data)
+
+    return HttpResponseRedirect(reverse('members:index'))

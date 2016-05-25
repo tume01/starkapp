@@ -10,4 +10,6 @@ urlpatterns = [
     url(r'^type/edit', views.edit_type_index, name='edit_type_index'),
     url(r'^type/delete', views.delete_type, name='delete_type'),
     url(r'^type', views.type_index, name='index_type'),
+    url(r'^create/insert', views.create, name='insert'),
+    url(r'^create', views.create_index, name='create_index'),
 ]
