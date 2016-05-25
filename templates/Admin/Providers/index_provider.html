@@ -56,6 +56,7 @@ Lista de proveedores
                                         <th class="text-center">#</th>
                                         <th>Nombre de Concesionarios</th>
                                         <th>Estado</th>
+                                        <th class="hidden-xs">Fecha de registro </th>
                                         <th class="hidden-xs">Contacto</th>
                                         <th>Teléfono</th>
                                         <th>Correo Electrónico</th>
@@ -72,13 +73,18 @@ Lista de proveedores
                                         {% else %}
                                         <td class="text-center">Activo</td>
                                         {% endif %}
+                                        <td class="hidden-xs">{{provider.registrationDate|date:"Y-m-d"}}</td>
                                         <td class="hidden-xs">{{provider.contactName}}</td>
                                         <td class="text-center">{{provider.contactPhone}}</td>
                                         <td class="text-center">{{provider.email}}</td>
                                         <td class="text-center">
                                             <div class="btn-group">
                                                 <a href='{% url "providers:edit" provider.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Proveedor"><i class="fa fa-pencil"></i></button></a>
+
                                                 <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Proveedor"><i class="fa fa-times"></i></button>
+
+                                                <!--<button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Proveedor"><i class="fa fa-times"></i></button>-->
+
                                             </div>
                                         </td>
                                     </tr>

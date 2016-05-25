@@ -34,20 +34,18 @@ Edición de proveedor
                         </div>
 
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "providers:update" %}' method="post" >
-                            {% csrf_token %}
-                            <!-- hidden value for id -->
-                            <input type="hidden" name="id" value='{{provider.id}}'>                            
+                            <form class="form-horizontal push-10-t push-10" action='{% url "providers:update" id %}' method="post" >
+                            {% csrf_token %}                       
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <div class="col-xs-6">
-                                                <label for="ruc">R.U.C.:</label>
-                                                <input class="form-control" type="text" id="ruc" name="ruc" placeholder="Ingrese el RUC.." value = '{{provider.ruc}}'>
+                                                <label for="ruc">R.U.C.</label>
+                                                {{form.ruc}}                                                
                                             </div>
                                             <div class="col-xs-6">
                                                 <label for="businessName">Razón Social</label>
-                                                <input class="form-control" type="text" id="businessName" name="businessName" placeholder="Ingrese el nombre de su compañía.." value = '{{provider.businessName}}'>
+                                                {{form.businessName}}
                                             </div>
                                         </div>
                                     </div>
@@ -55,15 +53,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <label class="col-xs-12" for="status">Estado</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control" id="status" name="status" size="1" placeholder="Seleccione un estado.."> 
-                                                {% if provider.status == 1 %}       
-                                                    <option  value="1" selected>Activo</option>
-                                                    <option value="0">Inactivo</option>
-                                                {% else %}
-                                                    <option  value="1" >Activo</option>
-                                                    <option value="0" selected>Inactivo</option>
-                                                {% endif %}
-                                                </select>
+                                                {{form.status}}
                                             </div>
                                         </div>
                                     </div>
@@ -74,11 +64,11 @@ Edición de proveedor
                                         <div class="form-group">
                                             <div class="col-xs-6">
                                                 <label for="province">Provincia:</label>
-                                                <input class="form-control" type="text" id="province" name="province" placeholder="Ingrese la provincia.." value = '{{ provider.province }}'>
+                                                {{form.province}}
                                             </div>
                                             <div class="col-xs-6">
                                                 <label for="distric">Distrito</label>
-                                                <input class="form-control" type="text" id="distric" name="distric" placeholder="Ingrese el distrito.." value = '{{ provider.distric }}'>
+                                                {{form.distric}}
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +76,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <div class="col-xs-9">
                                                 <label for="registrationDate">Fecha de Registro</label>
-                                                    <input class="js-datepicker form-control" data-date-format="yyyy-mm-dd" type="text" id="registrationDate" name="registrationDate" placeholder="Ingrese una fecha.." value = '{{ provider.registrationDate }}' >             
+                                                    {{form.registrationDate}}             
                                             </div>
                                         </div>
                                     </div>
@@ -96,7 +86,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label for="address">Dirección</label>
-                                                <input class="form-control" type="text" id="address" name="address" placeholder="Ingrese la dirección.." value='{{ provider.address }}'>
+                                                {{form.address}}
                                             </div>
                                         </div>
                                     </div>
@@ -104,7 +94,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <label class="col-xs-12" for="phone">Teléfono</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="text" id="phone" name="phone" placeholder="Ingrese el teléfono.." value = '{{ provider.phone }}'>
+                                                {{form.phone}}
                                             </div>
                                         </div>
                                     </div>
@@ -114,7 +104,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <label class="col-xs-12" for="effectiveTime">Tiempo de Vigencia</label>
                                             <div class="col-sm-6">
-                                                <input class="form-control" type="text" id="effectiveTime" name="effectiveTime" placeholder="Ingrese el tiempo de vigencia.." value = '{{ provider.effectiveTime }}'>
+                                                {{form.effectiveTime}}
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +112,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <label class="col-xs-12" for="email">Correo</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="text" id="email" name="email" placeholder="Ingrese el email.." value = '{{ provider.email }}'>
+                                                {{form.email}}
                                             </div>
                                         </div>
                                     </div>
@@ -132,7 +122,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <label class="col-xs-12" for="contactName">Nombre de contacto</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" type="text" id="contactName" name="contactName" placeholder="Ingrese nombre de contacto.." value='{{ provider.contactName }}'>
+                                                {{form.contactName}}
                                             </div>
                                         </div>
                                     </div>
@@ -140,7 +130,7 @@ Edición de proveedor
                                         <div class="form-group">
                                             <label class="col-xs-12" for="contactPhone">Número de contacto</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" type="text" id="contactPhone" name="contactPhone" placeholder="Ingrese el número de contacto.." value = '{{ provider.contactPhone }}'>
+                                                {{form.contactPhone}}
                                             </div>
                                         </div>
                                     </div>

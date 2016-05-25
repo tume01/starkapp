@@ -45,7 +45,7 @@ def create_provider(request):
             provider_service = ProvidersService()
             
             providerRuc = provider_service.find_ruc(request.POST['ruc'])
-            print("HOla :D")
+            
             if(providerRuc == None):
 
                 insert_data = {}
@@ -84,36 +84,55 @@ def edit_index(request,id):
 
     provider_service = ProvidersService()
 
-
     provider = provider_service.find(id)
 
+    #Falta validación de try except dentro de base repository
+    if (provider == None):
+        return render(request, 'Admin/Providers/index_provider.html', context)
+
+    form = ProviderForm(instance=provider)
+
     context = {
-        'provider' : provider,
+        'form' : form,
         'titulo' : 'titulo'
     }
 
     return render(request, 'Admin/Providers/edit_provider.html', context)
 
 @require_http_methods(['POST'])
-def edit_provider(request):
+def edit_provider(request,id):
 
-    insert_data = {}
-    insert_data["id"] = request.POST['id']
-    insert_data["ruc"] = request.POST['ruc']
-    insert_data["businessName"] = request.POST['businessName']
-    insert_data["status"] = request.POST['status']
-    insert_data["distric"] = request.POST['distric']    
-    insert_data["province"] = request.POST['province']
-    insert_data["address"] = request.POST['address']
-    insert_data["phone"] = request.POST['phone'] 
-    insert_data["email"] = request.POST['email']
-    insert_data["registrationDate"] = request.POST['registrationDate']
-    insert_data["contactName"] = request.POST['contactName'] 
-    insert_data["contactPhone"] = request.POST['contactPhone']
-    insert_data["effectiveTime"] = request.POST['effectiveTime']    
 
-    provider_service = ProvidersService()
+    if request.POST:
+        form = ProviderForm(request.POST)
+        print(request.POST)
+        #print(form['ruc'])
+        if form.is_valid():
+            #form.save()
 
-    provider_service.update(request.POST['id'],insert_data)
+            insert_data = {}
+            insert_data["ruc"] = request.POST['ruc']
+            insert_data["businessName"] = request.POST['businessName']
+            insert_data["status"] = request.POST['status']
+            insert_data["distric"] = request.POST['distric']    
+            insert_data["province"] = request.POST['province']
+            insert_data["address"] = request.POST['address']
+            insert_data["phone"] = request.POST['phone'] 
+            insert_data["email"] = request.POST['email']
+            insert_data["registrationDate"] = request.POST['registrationDate']
+            insert_data["contactName"] = request.POST['contactName'] 
+            insert_data["contactPhone"] = request.POST['contactPhone']
+            insert_data["effectiveTime"] = request.POST['effectiveTime']    
 
-    return HttpResponseRedirect(reverse('providers:index'))
+            provider_service = ProvidersService()
+
+            provider_service.update(id,insert_data)
+
+            return HttpResponseRedirect(reverse('providers:index'))
+        else:
+            #form = ProviderForm()
+            errors = form.errors.as_data()
+            for error in errors:
+                print(error)
+            context = {'form' : form}
+            return render(request, 'Admin/Providers/edit_provider.html', context)
