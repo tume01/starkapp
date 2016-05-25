@@ -42,9 +42,12 @@ INSTALLED_APPS = [
     'promotions',
     'memberships',
     'membership_application',
-    'fine',    
-    'objection', 
-    'members', 
+    'fine',
+    'objection',
+    'members',
+    'activities',
+    'events_type',
+    'providers',
 ]
 
 MIDDLEWARE_CLASSES = [

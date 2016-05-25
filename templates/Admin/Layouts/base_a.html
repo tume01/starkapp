@@ -443,6 +443,17 @@
                                     </ul>
                         </li>
                         <li>
+                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "providers:index" %}'>Consultar proveedores</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "providers:create_index" %}'>Agregar proveedor</a>
+                                </li>
+                            </ul>
+                        </li> 
+                        <li>
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
                             <ul>
                                 <li>
@@ -496,66 +507,27 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Membresía</span></a>
-                            <ul>      
+                            <ul>                                        
                                 <li>
-                                    <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
-                                </li>
-                                <li>
-                                    <a href='{% url 'memberships:type/create_index' %}'>Nuevo tipo de membresía</a> 
-                                </li>                                     
-                                <li>
-                                    <a href='{% url 'membership_application:index' %}'>Solicitudes de membresía</a> 
+                                    <a href=''>Pagos de membresía</a> 
                                 </li>
                                 <li> 
-                                    <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
+                                    <a href=''>Lista de invitados</a>
                                 </li>
                                 <li>
-                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía (User)</a> 
-                                </li>
-                                <li>
-                                    <a href='{% url 'members:index' %}'>Miembros</a>
-                                </li>                                
-                            </ul>
-                        </li> 
-                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Usuarios</span></a>
-                            <ul>
-                                <li>
-                                    <a href='{% url 'users:type/index' %}'>Tipos de usuario</a>
-                                </li>
-                                <li>
-                                    <a href='{% url 'users:type/create_index' %}'>Registrar tipos de usuario</a>
-                                </li>
-                                <li>
-                                    <a href='{% url 'users:index' %}'>Usuarios</a>
-                                </li>
-                                <li>
-                                    <a href='{% url 'users:create_index' %}'>Registrar usuario (Externo)</a>
-                                </li>
-                            </ul>
-                        </li>        
-                          <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Promociones</span></a>
-                            <ul>                                        
-                                <li>
-                                   <a href='{% url 'promotions:index' %}'>Lista de promociones</a> 
-                                </li>
-                                <li>
-                                    <a href='{% url "promotions:create_index" %}'>Registrar promoción</a>
+                                    <a href=''>Registrar invitados</a>
                                 </li> 
-                            </ul>
-                        </li>
-                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Multas</span></a>
-                            <ul>                                        
                                 <li>
-                                   <a href='{% url 'fine:index_type' %}'>Lista de tipos</a> 
+                                    <a href=''>Consultar socios en objeciones</a>
                                 </li>
                                 <li>
-                                    <a href='{% url "fine:create_type_index" %}'>Registrar tipo</a>
-                                </li> 
+                                    <a href=''>Afiliados</a>
+                                </li>
+                                <li>
+                                    <a href=''>Registrar Afiliados</a>
+                                </li>
                             </ul>
-                        </li>   
+                        </li>                                                            
 
                     </ul>
                 </div>
@@ -805,8 +777,8 @@
         </script>
 
         <!-- Page JS Plugins -->
-        <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-        <script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
 
     </body>
     </html>
