@@ -11,6 +11,8 @@ from services.MemberService import MembersService
 from services.UsersService import UsersService
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
+from Adapters.FormValidator import FormValidator
+from .forms import MembershipTypeForm
 
 @require_http_methods(['GET'])
 def membership_type_index(request):
@@ -70,45 +72,73 @@ def delete_membership_type(request):
 @require_http_methods(['POST'])
 def create_membership_type(request):
 
-    insert_data = {}
+    form = MembershipTypeForm(request.POST)
 
-    insert_data["name"] = request.POST['name']
+    request = FormValidator.validateForm(form, request)
 
-    insert_data["guests"] = request.POST['guests']
+    if not request:
 
-    insert_data["price"] = request.POST['price']
+        insert_data = {}
 
-    insert_data["billing"] = request.POST['billing']
+        insert_data["name"] = form.cleaned_data['name']
 
-    insert_data["status"] = 1
+        insert_data["guests"] = form.cleaned_data['guests']
 
-    membership_type_service = MembershipTypeService()
+        insert_data["price"] = form.cleaned_data['price']
 
-    membership_type_service.create(insert_data)
+        insert_data["billing"] = form.cleaned_data['billing']
 
-    return HttpResponseRedirect(reverse('memberships:type/index'))
+        insert_data["status"] = 1
+
+        membership_type_service = MembershipTypeService()
+
+        membership_type_service.create(insert_data)
+
+        return HttpResponseRedirect(reverse('memberships:type/index'))
+
+    else:
+
+        context = {
+            'titulo' : 'titulo'
+        }
+    
+        return render(request, 'Admin/Membership/new_type_membership.html', context)
 
 
 @require_http_methods(['POST'])
 def edit_membership_type(request):
 
-    edit_data = {}
-
-    edit_data["name"] = request.POST['name']
-
-    edit_data["guests"] = request.POST['guests']
-
-    edit_data["price"] = request.POST['price']
-
-    edit_data["billing"] = request.POST['billing']
+    form = MembershipTypeForm(request.POST)
 
     id_edit = request.POST['id']
 
     membership_type_service = MembershipTypeService()
 
-    membership_type_service.update(id_edit, edit_data)
+    if FormValidator.validateForm(form, request):
 
-    return HttpResponseRedirect(reverse('memberships:type/index'))
+        membership_type = membership_type_service.getType(id_edit)
+
+        context = {
+            'membershipType' : membership_type,
+        }
+
+        return render(request, 'Admin/Membership/edit_type_membership.html', context)
+
+    else:
+
+        edit_data = {}
+
+        edit_data["name"] = request.POST['name']
+
+        edit_data["guests"] = request.POST['guests']
+
+        edit_data["price"] = request.POST['price']
+
+        edit_data["billing"] = request.POST['billing']
+        
+        membership_type_service.update(id_edit, edit_data)
+
+        return HttpResponseRedirect(reverse('memberships:type/index'))
 
 
 @require_http_methods(['POST'])
