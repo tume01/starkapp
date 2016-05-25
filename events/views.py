@@ -15,14 +15,40 @@ def index(request):
 
     event_service = EventsService()
 
-    events = event_service.getEvents()
+    filters = getActivityFilters(request)
+
+    events = event_service.filter(filters)
 
     context = {
         'events' : events,
         'titulo' : 'titulo'
     }
 
-    return render(request, 'Admin/Events/index_event.html', context) 
+    return render(request, 'Admin/Events/index_event.html', context)
+
+
+def getActivityFilters(request):
+
+    filters = {}
+
+    if request.GET.get('seat'):
+        filters['seat'] = request.GET.get('seat')
+
+    #if request.GET.get('type'):
+     #   filters['type'] = request.GET.get('type')
+
+    if request.GET.get('start_date'):
+        start_date = datetime.datetime.strptime(request.GET.get('start_date'), "%m/%d/%Y")
+
+        filters['start_date__gte'] = start_date
+
+    if request.GET.get('end_date'):
+        end_date = datetime.datetime.strptime(request.GET.get('end_date'), "%m/%d/%Y")
+
+        filters['end_date__lte'] = end_date
+
+    return filters
+
 
 @require_http_methods(['GET'])
 def create_index(request):
