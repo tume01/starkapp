@@ -1,3 +1,27 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: Tipo de eventos
+{% endblock %}
+
+{% block head_dahsboard %}
+Tipo de eventos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de tipo de eventos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Tipo de eventos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de tipo de eventos
+{% endblock %}
+
+{% block content %}
+
 <!-- Page Content -->
                 <div class="content">
                     <div class="block">
@@ -11,14 +35,17 @@
                         </div>
 
                         <!-- Block v2 -->
+
+                        {% for type in event_type %}
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
-                                <div class="row">
+                            <form class="form-horizontal push-10-t push-10" action="{% url 'events_type:update' type.id %}" method="post">
+                            {% csrf_token %}
+                                <div class="row">   
                                     <div class="col-sm-7">
                                         <div class="form-group">
                                             <div class="col-xs-6">
                                                 <label for="mega-firstname">Codigo</label>
-                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter your firstname.." value="001" disabled>
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="id" placeholder="{{type.id}}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -28,7 +55,7 @@
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label for="mega-firstname">Nombre</label>
-                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter your firstname.." value="tipo 1">
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="name" placeholder="{{type.name}}" value="{{type.name}}">
                                             </div>
 
                                         </div>
@@ -37,12 +64,21 @@
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label for="mega-firstname">Descripcion</label>
-                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter your firstname.." value="descripcion test">
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="description" placeholder="{{type.description}}" value="{{type.description}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="mega-firstname">Estado</label>
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="status" placeholder="{{type.status}}" value="{{type.status}}">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                </div>
+                        </div>
+                        {% endfor %}
                                 <div class="form-group">
                                     <div class="col-xs-3">
                                     </div>
@@ -60,3 +96,4 @@
                                 </div>
                             </form>
                         </div>
+{% endblock %}

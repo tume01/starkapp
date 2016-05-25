@@ -18,4 +18,5 @@ class EventsTypeService(object):
     def getEventsType(self):
         return self.__eventsType_repository.all()
 
-    def filter(self, )
+    def filter(self, filters):
+        return self.__eventsType_repository.filter(filters)

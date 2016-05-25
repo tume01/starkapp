@@ -75,18 +75,42 @@ def create_eventstype(request):
 
         return HttpResponseRedirect(reverse('events_type:index'))
 
-@require_http_methods(['POST'])
-def update(request,id):
+@require_http_methods(['GET'])
+def update_index(request,type_id):
 
     events_type_service = EventsTypeService()
 
-    events_type_service.
+
+    filters = {
+        'id' : type_id
+    }
+
+    event_type   =  events_type_service.filter(filters)
 
     context = {
         'titulo' : 'titulo',
-        'id'
+        'event_type' : event_type
     }
+
+    return render(request,'Admin/Events_type/edit_events_type.html',context)
+
+
+@require_http_methods(['POST'])
+@csrf_protect
+def update_eventstype(request,type_id):
 
     insert_data = {}
 
-    return HttpResponse('insert_data')
+    insert_data["name"] = request.POST["name"]
+
+    insert_data["description"] = request.POST["description"]
+
+    insert_data["status"] = request.POST["status"]
+
+    events_type_service = EventsTypeService()
+
+    id_type = int('0' + type_id)
+
+    events_type_service.update(id_type,insert_data)
+
+    return HttpResponseRedirect(reverse('events_type:index'))
