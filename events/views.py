@@ -45,6 +45,8 @@ def create_event(request):
 
     insert_data = {} 
 
+
+
     if not form.is_valid():
 
         errors =  form.errors.as_data()
@@ -63,27 +65,79 @@ def create_event(request):
 
     else:
 
+        insert_data["name"] = request.POST.get('name')
+
+        insert_data["description"] = request.POST.get('description') 
+
+        insert_data["ruc"]  = request.POST.get('ruc')
+
+        insert_data["seat"] = request.POST.get('seat')
+     
+        #insert_data["start_date"] = datetime.datetime.strptime(request.POST.get('start_date'),"%Y-%m-%d").date()
+
+        #insert_data["end_date"] = datetime.datetime.strptime(request.POST.get('end_date'),"%Y-%m-%d").date()
+        
+        insert_data["start_date"] = "2000-01-01"
+
+        insert_data["end_date"] = "2000-01-20"
+
+        insert_data["assistance"] = 20
+
+        insert_data["price"] = request.POST.get('price')
+
+        insert_data["status"] = 1
+
+        #insert_data["event_type_id"] = 1
+
+        event_service = EventsService()
+
+        event_service.create(insert_data)
+
+
         return HttpResponseRedirect(reverse('events:index'))
 
 
-    # form_name.er
 
-    # insert_data["description"] = request.POST.get('description')
- 
-    # insert_data["start_date"] = datetime.datetime.strptime(request.POST.get('start_date'),"%Y-%m-%d").date()
+    return HttpResponseRedirect(reverse('events:index'))
 
-    # insert_data["end_date"] = datetime.datetime.strptime(request.POST.get('end_date'),"%Y-%m-%d").date()
+@require_http_methods(['GET'])
+def update_index(request,event_id):
 
-    # insert_data["assistance"] = 20
+    events_service = EventsService()
 
-    # insert_data["price"] = request.POST.get('price')
 
-    # insert_data["status"] = 1
+    filters = {
+        'id' : event_id
+    }
 
-    # insert_data["event_type_id"] = 1
+    events = events_service.filter(filters)
 
-    # event_service = EventsService()
+    context = {
+        'titulo' : 'titulo',
+        'events' : events
+    }
 
-    # event_service.create(insert_data)
+    return render(request,'Admin/Events/edit_event.html',context)
+
+
+@require_http_methods(['POST'])
+@csrf_protect
+def update_events(request,type_id):
+
+    insert_data = {}
+
+    insert_data["name"] = request.POST["name"]
+
+    insert_data["description"] = request.POST["description"]
+
+    insert_data["status"] = request.POST["status"]
+
+    insert_data[""]
+
+    events_type_service = EventsTypeService()
+
+    id_type = int('0' + type_id)
+
+    events_type_service.update(id_type,insert_data)
 
     return HttpResponseRedirect(reverse('events:index'))

@@ -7,12 +7,14 @@ class EventType(models.Model):
     description = models.TextField(max_length=200)
 
 class Event(models.Model):
-    event_type_id   =   models.ForeignKey(EventType, on_delete=models.CASCADE)
+    #event_type_id   =   models.ForeignKey(EventType, on_delete=models.CASCADE)
     #environment    =   models.ForeignKey(Environment, on_delete=models.CASCADE)
     #user           =   models.ForeignKey(User, on_delete=models.CASCADE)
 
     name        =   models.CharField(max_length=100)
     description =   models.CharField(max_length=200)
+    ruc         =   models.CharField(max_length=8)
+    seat        =   models.CharField(max_length=20)
     start_date  =   models.DateField()
     end_date    =   models.DateField()
     assistance  =   models.IntegerField()

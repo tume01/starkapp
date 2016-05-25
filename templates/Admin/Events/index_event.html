@@ -111,7 +111,7 @@ Lista de Eventos
                                         </td>
                                         <td class="hidden-xs">{{event.price}}</td>
                                         <td class="hidden-xs">{{event.start_date}}</td>
-                                        <td> <a href=''><button class="btn btn-sm btn-success"> Inscribirse</button></a></td>
+                                        <td> <a href='{% url "events:update_index" event.id %}'><button class="btn btn-sm btn-success"> Editar</button></a></td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

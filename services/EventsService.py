@@ -17,3 +17,6 @@ class EventsService(object):
 
     def getEvents(self):
         return self.__event_repository.all()
+
+    def filter(self,filters):
+        return self.__event_repository.filter(filters)
