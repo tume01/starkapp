@@ -251,3 +251,22 @@ def objection_index(request):
     }
 
     return render(request, 'Objections_members.html', context)
+
+
+@require_http_methods(['POST'])
+def approve_membership_application(request):
+
+    id_application = request.POST['id']
+
+    member_application_service = Membership_ApplicationService()
+
+    membership_application =  member_application_service.getMembership_Application(id_application)
+
+    context = {
+        'titulo' : 'titulo',
+        'membership_application' : membership_application,
+    }
+
+    return render(request, 'Admin/Membership/new_membership_member.html', context)
+
+

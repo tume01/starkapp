@@ -1,6 +1,6 @@
 from repositories import UserTypeRepository
 
-class UsersService(object):
+class UsersTypeService(object):
 
     """docstring for UserTypeService"""
 

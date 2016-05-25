@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'membership_application',
     'fine',    
     'objection', 
+    'members', 
 ]
 
 MIDDLEWARE_CLASSES = [
