@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'membership_application',
     'fine',    
     'objection', 
+    'members', 
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -86,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'starkapp',
         'USER': 'root',
-        'PASSWORD': '1111',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '',
     }

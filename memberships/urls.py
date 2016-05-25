@@ -13,6 +13,9 @@ urlpatterns = [
 
     url(r'^accept', views.membership_accept, name='accept'),
 
+    url(r'^edit/index', views.membership_edit_index, name='edit/index'),
+    url(r'^edit', views.membership_edit, name='edit'),
+
     url(r'^create/insert', views.create_membership, name='insert'),
 
 ]

@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^memberships', include('memberships.urls')),
     url(r'^membership_application', include('membership_application.urls')),
     url(r'^fine', include('fine.urls')),
+    url(r'^members', include('members.urls')),
     url(r'^users', include('users.urls')),
 ]
 

@@ -4,13 +4,9 @@ from . import views
 app_name = 'members'
 
 urlpatterns = [
-    url(r'^create/insert', views.create_member, name='insert'),
-    url(r'^create', views.create_member_index, name='create_index'),
     url(r'^edit/insert', views.edit_member, name='edit'),
     url(r'^edit', views.edit_member_index, name='edit_index'),
     url(r'^delete', views.delete_member, name='delete'),
     url(r'^', views.member_index, name='index'),
-
-   url(r'^accept', views.membership_accept, name='accept'),
 
 ]
