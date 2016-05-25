@@ -19,6 +19,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    url(r'^products/', include('products.urls')),
+    url(r'^activities', include('activities.urls')),
+    url(r'^eventstype', include('events_type.urls')),
     url(r'^bungalows/', include('bungalows.urls')),
     url(r'^promotions/', include('promotions.urls')),
     url(r'^memberships/', include('memberships.urls')),
