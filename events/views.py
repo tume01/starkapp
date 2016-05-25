@@ -65,21 +65,17 @@ def create_event(request):
 
     else:
 
-        insert_data["name"] = request.POST.get('name')
+        insert_data["name"] = form.cleaned_data.get('name')
 
-        insert_data["description"] = request.POST.get('description') 
+        insert_data["description"] = form.cleaned_data.get('description') 
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
         insert_data["seat"] = request.POST.get('seat')
      
-        #insert_data["start_date"] = datetime.datetime.strptime(request.POST.get('start_date'),"%Y-%m-%d").date()
+        insert_data["start_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
 
-        #insert_data["end_date"] = datetime.datetime.strptime(request.POST.get('end_date'),"%Y-%m-%d").date()
-        
-        insert_data["start_date"] = "2000-01-01"
-
-        insert_data["end_date"] = "2000-01-20"
+        insert_data["end_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")   
 
         insert_data["assistance"] = 20
 
@@ -96,9 +92,6 @@ def create_event(request):
 
         return HttpResponseRedirect(reverse('events:index'))
 
-
-
-    return HttpResponseRedirect(reverse('events:index'))
 
 @require_http_methods(['GET'])
 def update_index(request,event_id):
@@ -122,22 +115,56 @@ def update_index(request,event_id):
 
 @require_http_methods(['POST'])
 @csrf_protect
-def update_events(request,type_id):
+def update_events(request, event_id):
 
-    insert_data = {}
+    form = EventForm(request.POST)
 
-    insert_data["name"] = request.POST["name"]
+    context = {
+        'titulo' : 'titulo'
+    }
 
-    insert_data["description"] = request.POST["description"]
+    if not form.is_valid():
 
-    insert_data["status"] = request.POST["status"]
+        errors =  form.errors.as_data()
 
-    insert_data[""]
+        for error in errors:
 
-    events_type_service = EventsTypeService()
+            validation_instance = errors[error]
 
-    id_type = int('0' + type_id)
+            for instance_error in validation_instance:
 
-    events_type_service.update(id_type,insert_data)
+                for error_message in instance_error:
+
+                    messages.error(request,(error_message))
+
+        return render(request,'Admin/Events/edit_event.html',context)
+
+    else:
+
+        insert_data = {}
+
+        insert_data["name"] = request.POST.get('name')
+
+        insert_data["description"] = request.POST.get('description') 
+
+        insert_data["ruc"]  = request.POST.get('ruc')
+
+        insert_data["seat"] = request.POST.get('seat')
+         
+        insert_data["start_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
+
+        insert_data["end_date"] = form.cleaned_data.get("end_date","%Y/%m/%d")   
+
+        insert_data["assistance"] = request.POST.get("assistance")
+
+        insert_data["price"] = request.POST.get('price')
+
+        insert_data["status"] = 1
+
+        events_service = EventsService()
+
+        id_type = int('0' + event_id)
+
+        events_service.update(id_type,insert_data)
 
     return HttpResponseRedirect(reverse('events:index'))

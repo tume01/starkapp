@@ -47,9 +47,7 @@ Lista de Eventos
                             <div class="col-sm-7">
                                 <select class="form-control" id="example-select" name="example-select" size="1">
                                     <option value="0">Sede principal</option>
-                                    <option value="1">Sede #1</option>
-                                    <option value="2">Sede #2</option>
-                                    <option value="3">Sede #3</option>
+                                    <option value="1">Camacho</option>
                                 </select>
                             </div>
                         </div>
@@ -109,7 +107,7 @@ Lista de Eventos
                                                 <span class="label label-success">Privado</span>
                                             {% endif %}
                                         </td>
-                                        <td class="hidden-xs">{{event.price}}</td>
+                                        <td class="hidden-xs">{{event.seat}}</td>
                                         <td class="hidden-xs">{{event.start_date}}</td>
                                         <td> <a href='{% url "events:update_index" event.id %}'><button class="btn btn-sm btn-success"> Editar</button></a></td>
                                     </tr>

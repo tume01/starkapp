@@ -59,11 +59,11 @@ Nueva Inscripción
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Tipo de evento</label>
-                                            <div class="col-md-10">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="event_type_id" placeholder="Tipo de evento">
-                                                </div>
+                                            <div class="col-sm-7">
+                                                <select class="form-control" id="example-select" name="event_type_id" size="1">
+                                                    <option value="0">Sede principal</option>
+                                                    <option value="1">Camacho</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="number" id="example-input1-group1" name="ruc" placeholder="Sede Principal" >
+                                                    <input class="form-control" type="number" maxlength="8" id="example-input1-group1" name="ruc" placeholder="R.U.C" >
                                                 </div>
                                             </div>
                                         </div>
