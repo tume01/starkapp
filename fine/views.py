@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.FineTypeService import FineTypeService
+from services.FineService import FineService
 from django.views.decorators.http import require_http_methods
 
 
@@ -95,3 +96,40 @@ def edit_type(request):
     fine_type_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('fine:index_type'))
+
+
+@require_http_methods(['POST'])
+def create_index(request):
+
+    member_id = request.POST['id']
+
+    fine_type_service = FineTypeService()
+
+    types = fine_type_service.getFines()
+
+    context = {
+        'member_id' : member_id,
+        'types' : types,
+        'titulo' : 'titulo'
+    }
+
+    return render(request, 'Admin/Fines/new_fine.html', context)
+
+@require_http_methods(['POST'])
+def create(request):
+
+    insert_data = {}
+
+    insert_data["status"] = 1
+
+    insert_data["observations"] = request.POST['observations']
+
+    insert_data["fine_type_id_id"] = request.POST['fine_type_id_id']
+
+    insert_data["member_id"] = request.POST['member_id']
+
+    fine_service = FineService()
+
+    fine_service.create(insert_data)
+
+    return HttpResponseRedirect(reverse('members:index'))

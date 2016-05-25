@@ -8,6 +8,7 @@ from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MembershipService import MembershipService
 from services.ObjectionService import ObjectionsService
 from services.MemberService import MembersService
+from services.UsersService import UsersService
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
 
@@ -149,9 +150,25 @@ def create_membership(request):
 
     membership = membership_service.create(insert_data)
 
+    #Datos del usuario
+
+    insert_data = {}
+
+    insert_data["name"] = request.POST['dni']
+
+    insert_data["password"] = 1111
+
+    insert_data["user_type_id"] = 1
+
+    user_service = UsersService()
+
+    user = user_service.create(insert_data)
+
     #Datos del miembro
 
     insert_data = {}
+
+    insert_data["user_id"] = user.id
 
     insert_data["membership_id"] = membership.id
 
