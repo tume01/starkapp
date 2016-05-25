@@ -19,7 +19,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^bungalows', include('bungalows.urls')),
+    url(r'^bungalows/', include('bungalows.urls')),
+    url(r'^providers/', include('providers.urls')),
 ]
 
 if settings.DEBUG:
