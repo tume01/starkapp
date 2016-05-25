@@ -85,7 +85,7 @@ def edit_index(request,id):
     provider_service = ProvidersService()
 
     provider = provider_service.find(id)
-
+    print(id)
     #Falta validación de try except dentro de base repository
     if (provider == None):
         return render(request, 'Admin/Providers/index_provider.html', context)
@@ -93,6 +93,7 @@ def edit_index(request,id):
     form = ProviderForm(instance=provider)
 
     context = {
+        'id' : id,
         'form' : form,
         'titulo' : 'titulo'
     }
