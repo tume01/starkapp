@@ -19,7 +19,7 @@ def index(request):
         'titulo' : 'titulo'
     }
 
-    return render(request, 'Admin/Providers/index_provider.html', context) 
+    return render(request, 'Admin/Providers/index_provider.html', context)
 
 @require_http_methods(['GET'])
 def create_index(request):
@@ -43,24 +43,24 @@ def create_provider(request):
             #form.save()
 
             provider_service = ProvidersService()
-            
+
             providerRuc = provider_service.find_ruc(request.POST['ruc'])
-            
+
             if(providerRuc == None):
 
                 insert_data = {}
                 insert_data["ruc"] = request.POST['ruc']
                 insert_data["businessName"] = request.POST['businessName']
                 insert_data["status"] = request.POST['status']
-                insert_data["distric"] = request.POST['distric']    
+                insert_data["distric"] = request.POST['distric']
                 insert_data["province"] = request.POST['province']
                 insert_data["address"] = request.POST['address']
-                insert_data["phone"] = request.POST['phone'] 
+                insert_data["phone"] = request.POST['phone']
                 insert_data["email"] = request.POST['email']
                 insert_data["registrationDate"] = request.POST['registrationDate']
-                insert_data["contactName"] = request.POST['contactName'] 
+                insert_data["contactName"] = request.POST['contactName']
                 insert_data["contactPhone"] = request.POST['contactPhone']
-                insert_data["effectiveTime"] = request.POST['effectiveTime']    
+                insert_data["effectiveTime"] = request.POST['effectiveTime']
 
                 provider_service = ProvidersService()
 
@@ -85,14 +85,15 @@ def edit_index(request,id):
     provider_service = ProvidersService()
 
     provider = provider_service.find(id)
-
+    print(id)
     #Falta validación de try except dentro de base repository
     if (provider == None):
-        return render(request, 'Admin/Providers/index_provider.html', context)
+        return HttpResponseRedirect(reverse('providers:index'))
 
     form = ProviderForm(instance=provider)
 
     context = {
+        'id' : id,
         'form' : form,
         'titulo' : 'titulo'
     }
@@ -114,15 +115,15 @@ def edit_provider(request,id):
             insert_data["ruc"] = request.POST['ruc']
             insert_data["businessName"] = request.POST['businessName']
             insert_data["status"] = request.POST['status']
-            insert_data["distric"] = request.POST['distric']    
+            insert_data["distric"] = request.POST['distric']
             insert_data["province"] = request.POST['province']
             insert_data["address"] = request.POST['address']
-            insert_data["phone"] = request.POST['phone'] 
+            insert_data["phone"] = request.POST['phone']
             insert_data["email"] = request.POST['email']
             insert_data["registrationDate"] = request.POST['registrationDate']
-            insert_data["contactName"] = request.POST['contactName'] 
+            insert_data["contactName"] = request.POST['contactName']
             insert_data["contactPhone"] = request.POST['contactPhone']
-            insert_data["effectiveTime"] = request.POST['effectiveTime']    
+            insert_data["effectiveTime"] = request.POST['effectiveTime']
 
             provider_service = ProvidersService()
 
