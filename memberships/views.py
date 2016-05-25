@@ -128,13 +128,13 @@ def edit_membership_type(request):
 
         edit_data = {}
 
-        edit_data["name"] = request.POST['name']
+        edit_data["name"] = form.cleaned_data['name']
 
-        edit_data["guests"] = request.POST['guests']
+        edit_data["guests"] = form.cleaned_data['guests']
 
-        edit_data["price"] = request.POST['price']
+        edit_data["price"] = form.cleaned_data['price']
 
-        edit_data["billing"] = request.POST['billing']
+        edit_data["billing"] = form.cleaned_data['billing']
         
         membership_type_service.update(id_edit, edit_data)
 
