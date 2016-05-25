@@ -496,27 +496,66 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Membresía</span></a>
-                            <ul>                                        
+                            <ul>      
                                 <li>
-                                    <a href=''>Pagos de membresía</a> 
+                                    <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
+                                </li>
+                                <li>
+                                    <a href='{% url 'memberships:type/create_index' %}'>Nuevo tipo de membresía</a> 
+                                </li>                                     
+                                <li>
+                                    <a href='{% url 'membership_application:index' %}'>Solicitudes de membresía</a> 
                                 </li>
                                 <li> 
-                                    <a href=''>Lista de invitados</a>
+                                    <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
                                 </li>
                                 <li>
-                                    <a href=''>Registrar invitados</a>
-                                </li> 
-                                <li>
-                                    <a href=''>Consultar socios en objeciones</a>
+                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía (User)</a> 
                                 </li>
                                 <li>
-                                    <a href=''>Afiliados</a>
+                                    <a href='{% url 'members:index' %}'>Miembros</a>
+                                </li>                                
+                            </ul>
+                        </li> 
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Usuarios</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url 'users:type/index' %}'>Tipos de usuario</a>
                                 </li>
                                 <li>
-                                    <a href=''>Registrar Afiliados</a>
+                                    <a href='{% url 'users:type/create_index' %}'>Registrar tipos de usuario</a>
+                                </li>
+                                <li>
+                                    <a href='{% url 'users:index' %}'>Usuarios</a>
+                                </li>
+                                <li>
+                                    <a href='{% url 'users:create_index' %}'>Registrar usuario (Externo)</a>
                                 </li>
                             </ul>
-                        </li>                                                            
+                        </li>        
+                          <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Promociones</span></a>
+                            <ul>                                        
+                                <li>
+                                   <a href='{% url 'promotions:index' %}'>Lista de promociones</a> 
+                                </li>
+                                <li>
+                                    <a href='{% url "promotions:create_index" %}'>Registrar promoción</a>
+                                </li> 
+                            </ul>
+                        </li>
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Multas</span></a>
+                            <ul>                                        
+                                <li>
+                                   <a href='{% url 'fine:index_type' %}'>Lista de tipos</a> 
+                                </li>
+                                <li>
+                                    <a href='{% url "fine:create_type_index" %}'>Registrar tipo</a>
+                                </li> 
+                            </ul>
+                        </li>   
 
                     </ul>
                 </div>
