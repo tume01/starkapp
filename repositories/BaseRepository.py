@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from contracts.repositories.AbstractBaseRepository import AbstractBaseRepository
 
 class BaseRepository(AbstractBaseRepository):
@@ -14,7 +15,10 @@ class BaseRepository(AbstractBaseRepository):
         return self.model.objects.all()
 
     def find(self, find_id):
-        return self.model.objects.get(id=find_id)
+        try:
+            return self.model.objects.get(id=find_id)
+        except ObjectDoesNotExist:
+            return None
 
     def create(self, create_data):
         new_element = self.model()
@@ -28,7 +32,7 @@ class BaseRepository(AbstractBaseRepository):
 
     def update(self, update_id, update_data):
         selected_element = self.model.objects.get(id=update_id)
-        
+
         for key, value in update_data.items():
             selected_element.__setattr__(key, value)
 
