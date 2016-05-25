@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 from services.UserTypeService import UsersTypeService
 from services.UsersService import UsersService
 from django.views.decorators.http import require_http_methods
+from Adapters.FormValidator import FormValidator
+from .forms import UserForm, UserTypeForm
 
 
 @require_http_methods(['GET'])
@@ -50,31 +52,60 @@ def edit_user_type_index(request):
 @require_http_methods(['POST'])
 def create_user_type(request):
 
-    insert_data = {}
+    form = UserTypeForm(request.POST)
 
-    insert_data["description"] = request.POST['description']
+    request = FormValidator.validateForm(form, request)
 
-    user_type_service = UsersTypeService()
+    if not request:
 
-    user_type_service.create(insert_data)
+        insert_data = {}
 
-    return HttpResponseRedirect(reverse('users:type/index'))
+        insert_data["description"] = form.cleaned_data['description']
+
+        user_type_service = UsersTypeService()
+
+        user_type_service.create(insert_data)
+
+        return HttpResponseRedirect(reverse('users:type/index'))
+
+    else:
+
+        context = {
+            'titulo' : 'titulo'
+        }
+
+        return render(request, 'Admin/Users/new_type_user.html', context)
+
 
 
 @require_http_methods(['POST'])
 def edit_user_type(request):
 
-    edit_data = {}
-
-    edit_data["description"] = request.POST['description']
+    form = UserTypeForm(request.POST)
 
     id_edit = request.POST['id']
 
     user_type_service = UsersTypeService()
 
-    user_type_service.update(id_edit, edit_data)
+    if FormValidator.validateForm(form, request):
 
-    return HttpResponseRedirect(reverse('users:type/index'))
+        user_type = user_type_service.getType(id_edit)
+
+        context = {
+            'type' : user_type
+        }
+
+        return render(request, 'Admin/Users/edit_type_user.html', context)
+
+    else:
+
+        edit_data = {}
+
+        edit_data["description"] = form.cleaned_data['description']
+
+        user_type_service.update(id_edit, edit_data)
+
+        return HttpResponseRedirect(reverse('users:type/index'))
 
 
 
@@ -101,21 +132,42 @@ def edit_user_index(request):
 @require_http_methods(['POST'])
 def edit_user(request):
 
-    edit_data = {}
-
-    edit_data["name"] = request.POST['name']
-
-    edit_data["password"] = request.POST['password']
-
-    edit_data["user_type_id"] = request.POST['user_type_id']
+    form = UserForm(request.POST)
 
     id_edit = request.POST['id']
 
     user_service = UsersService()
 
-    user_service.update(id_edit, edit_data)
+    user_type_service = UsersTypeService()
 
-    return HttpResponseRedirect(reverse('users:index'))
+    if FormValidator.validateForm(form, request):
+
+        user = user_service.getUser(id_edit)
+
+        types = user_type_service.getTypes()
+
+        context = {
+            'user' : user,
+            'types' : types,
+        }
+
+        return render(request, 'Admin/Users/edit_user.html', context)
+
+    else:
+
+        edit_data = {}
+
+        edit_data["name"] = form.cleaned_data['name']
+
+        edit_data["password"] = form.cleaned_data['password']
+
+        user_type = user_type_service.getType(form.cleaned_data['user_type'])
+
+        edit_data["user_type"] = user_type
+
+        user_service.update(id_edit, edit_data)
+
+        return HttpResponseRedirect(reverse('users:index'))
 
 
 @require_http_methods(['GET'])
@@ -136,19 +188,41 @@ def create_user_index(request):
 @require_http_methods(['POST'])
 def create_user(request):
 
-    insert_data = {}
+    form = UserForm(request.POST)
 
-    insert_data["name"] = request.POST['name']
+    request = FormValidator.validateForm(form, request)
 
-    insert_data["password"] = request.POST['password']
+    user_type_service = UsersTypeService()
 
-    insert_data["user_type_id"] = request.POST['user_type_id']
+    if not request:
 
-    user_service = UsersService()
+        insert_data = {}
 
-    user_service.create(insert_data)
+        insert_data["name"] = form.cleaned_data['name']
 
-    return HttpResponseRedirect(reverse('members:index'))
+        insert_data["password"] = form.cleaned_data['password']
+
+        user_type = user_type_service.getType(form.cleaned_data['user_type'])
+
+        insert_data["user_type"] = user_type
+
+        user_service = UsersService()
+
+        user_service.create(insert_data)
+
+        return HttpResponseRedirect(reverse('users:index'))
+
+    else:
+
+        types = user_type_service.getTypes()
+
+        context = {
+            'titulo' : 'titulo',
+            'types' : types
+        }
+
+        return render(request, 'Admin/Users/new_user.html', context)
+
 
 
 @require_http_methods(['GET'])
@@ -158,10 +232,10 @@ def user_index(request):
 
     users = user_service.getUsers()
 
-    user_type_service = UsersTypeService()
+    #user_type_service = UsersTypeService()
 
-    for user in users:
-        user.user_type_id = user_type_service.getType(user.user_type_id).description
+    #for user in users:
+        #user.user_type = user_type_service.getType(user.user_type_id).description
 
     context = {
         'users' : users,
