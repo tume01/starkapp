@@ -1,10 +1,12 @@
 from repositories import ServiciosRepository
+from repositories import ServicioTypesRepository
 
 class ServiciosService(object):
 
     """docstring for ServiciosService"""
 
     __servicio_repository = ServiciosRepository.ServiciosRepository()
+    __servicio_type_repository = ServicioTypesRepository.ServicioTypesRepository()
 
     def create(self, insert_data):
         return self.__servicio_repository.create(insert_data)
@@ -17,3 +19,6 @@ class ServiciosService(object):
 
     def getServicios(self):
         return self.__servicio_repository.all()
+
+    def getServicioTypes(self):
+        return self.__servicio_type_repository.all()
