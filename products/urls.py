@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^create', views.create_index, name='create_index'),
     url(r'^edit/(?P<id>\d+)$', views.edit_index, name='edit'),
     url(r'^edit/update/(?P<id>\d+)$', views.edit_product, name='update'),
+    url(r'^delete/update/(?P<id>\d+)$', views.delete_product, name='delete'),
     url(r'^', views.index, name='index'),
 ]
