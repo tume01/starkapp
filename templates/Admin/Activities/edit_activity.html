@@ -107,15 +107,11 @@ Actividades
                 <div class="form-group">
                             <label class="col-xs-12">Tipo</label>
                             <div class="col-xs-12">
-                                <label class="css-input css-radio css-radio-warning push-10-r">
-                                    <input type="radio" name="mega-gender-group"><span></span> Curso
-                                </label>
-                                <label class="css-input css-radio css-radio-warning">
-                                    <input type="radio" name="mega-gender-group"><span></span> Actividad
-                                </label>
-                                <label class="css-input css-radio css-radio-warning">
-                                    <input type="radio" name="mega-gender-group"><span></span> Evento
-                                </label>
+                                <select class="form-control" id="activity_type" name="activity_type">
+                                    {% for activity_type in activity_types %}       
+                                    <option value="{{activity_type.id}}" {% if activity_type.id == activity.activity_type_id %} selected="selected" {% endif %}>{{activity_type.name}}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                 </div>
                 <div class="form-group">
@@ -138,4 +134,9 @@ Actividades
 
     </div>
 </div>
+<script type="text/javascript">
+    $(".js-datetimepicker").each(function() {    
+        $(this).datepicker('setDate', $(this).val());
+    });
+</script>
 {% endblock %}

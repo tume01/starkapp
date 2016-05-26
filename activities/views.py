@@ -9,6 +9,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from adapters.FormValidator import FormValidator
 from services.ActivityService import ActivityService
+from services.ActivityTypeService import ActivityTypeService
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -81,19 +82,24 @@ def create_activity(request):
     if not request:
 
         activity_service = ActivityService()
+        activity_types_service = ActivityTypeService()
 
         name = form.cleaned_data['name']
         price = form.cleaned_data['price']
         attendance = form.cleaned_data['attendance']
         start_date = form.cleaned_data['start_date']
         end_date   = form.cleaned_data['end_date']
+        activity_type_id = form.cleaned_data['activity_type'] 
+
+        activity_type = activity_types_service.getActivityType(activity_type_id)
 
         insert_data = {
             'name': name,
             'price': price,
             'attendance': attendance,
             'start_date': start_date,
-            'end_date': end_date
+            'end_date': end_date,
+            'activity_type': activity_type
         }
 
         activity_service.create(insert_data)
@@ -107,8 +113,13 @@ def create_activity(request):
 @require_http_methods(['GET'])
 def create_index(request):
 
+    activity_types_service = ActivityTypeService()
+
+    activity_types = activity_types_service.getActivityTypes()
+
     context = {
-        'titulo': 'tittle'
+        'titulo': 'tittle',
+        'activity_types': activity_types,
     }
 
     return render(request, 'Admin/Activities/new_activity.html', context)
@@ -129,12 +140,15 @@ def delete(request):
 def update_index(request, activity_id):
 
     activity_service = ActivityService()
+    activity_types_service = ActivityTypeService()
 
     activity  = activity_service.getActivity(activity_id)
+    activity_types = activity_types_service.getActivityTypes()
 
     context = {
         'titulo': 'tittle',
-        'activity': activity
+        'activity': activity,
+        'activity_types': activity_types
     }
 
     return render(request, 'Admin/Activities/edit_activity.html', context)
@@ -142,12 +156,7 @@ def update_index(request, activity_id):
 @require_http_methods(['POST'])
 def update(request, activity_id):
 
-    activity_id = request.GET.get('activity_id')
-
-
     form = ActivityForm(request.POST)
-
-    activity_service = ActivityService()
 
     if FormValidator.validateForm(form, request):
         context = {
@@ -158,23 +167,20 @@ def update(request, activity_id):
     else:
         activity_service = ActivityService()
 
+        name = form.cleaned_data['name']
         price = form.cleaned_data['price']
         attendance = form.cleaned_data['attendance']
         start_date = form.cleaned_data['start_date']
         end_date   = form.cleaned_data['end_date']
 
-        update_date = {
+        update_data = {
+            'name': name,
             'price': price,
+            'end_date': end_date,
             'attendance': attendance,
             'start_date': start_date,
-            'end_date': end_date
         }
 
-        activity_service.update(activity_id, update_date)
+        activity_service.update(activity_id, update_data)
 
         return HttpResponseRedirect(reverse('activities:index'))
-
-    activity = activity_service.update(activity_id, update_data)
-
-    return HttpResponseRedirect(reverse('activities:index'))
-

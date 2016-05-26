@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'objection',
     'members',
     'activities',
+    'activity_types',
     'events_type',
     'providers',
 ]
