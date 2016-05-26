@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bungalows',
+    'events_type',
+    'events'
 ]
 
 MIDDLEWARE_CLASSES = [

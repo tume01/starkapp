@@ -33,15 +33,6 @@ Editar Inscripción
                             </ul>
                             <h3 class="block-title"></h3>
                         </div>
-
-                        {% if messages %}
-                            {% for msg in messages %}       
-                                <div class="alert alert-warning" role="alert">
-                                    {{msg.message}}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-
                         <!-- Block v2 -->
                         {% for event in events %}
                         <div class="block-content">
@@ -65,7 +56,10 @@ Editar Inscripción
                                             <div class="col-md-10">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="event_type_id" placeholder="{{event.event_type_id}}">
+                                                    <select class="form-control" id="example-select" value="{{event.event_type_id}}" placeholder="{{event.event_type_id}}" name="event_type" size="1">
+                                                        <option value="1">Privado</option>
+                                                        <option value="2">Público</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -76,7 +70,7 @@ Editar Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="user_id" placeholder="usuario" value="usuario" >
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="user_id" placeholder="DNI del usuario" value="{{event.user_id}}" >
                                                 </div>
                                             </div>
                                         </div>
@@ -89,6 +83,7 @@ Editar Inscripción
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
                                                     <input class="form-control" type="number" id="example-input1-group1" name="ruc" placeholder="{{event.ruc}}" value="{{event.ruc}}" >
                                                 </div>
+                                                <label>Si el evento es para una empresa llenar este campo</label>
                                             </div>
                                         </div>
                                     </div>
@@ -122,7 +117,7 @@ Editar Inscripción
                                             <label class="col-xs-12" for="example-datetimepicker3">Fechas del Evento</label>
                                             <div class="col-md-6">
                                                 <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="start_date" placeholder="{{event.start_date}}" value="{{event.start_date}}">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="start_date" placeholder="{{event.start_date}}" value="{{event.start_date}}.format('m/%d/%Y %H:%M %p')">
                                                     <span class="input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </span>
@@ -130,7 +125,7 @@ Editar Inscripción
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="end_date" placeholder="{{event.end_date}}" value="{{event.end_date}}" >
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="end_date" placeholder="{{event.end_date}}" value="{{event.end_date}}.format('m/%d/%Y %H:%M %p')">
                                                     <span class="input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </span>
@@ -145,6 +140,25 @@ Editar Inscripción
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                                     <input class="form-control" type="number" id="example-input1-group1" name="assistance" placeholder="{{event.assistance}}" value="{{event.assistance}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Estado</label>
+                                            <div class="col-md-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
+                                                    <select class="form-control" id="example-select" value="{{event.status}}" placeholder="{{event.status}}" name="status" size="1">
+                                                        {% if event.status == 0 %}
+                                                            <option value="0">Activo</option>
+                                                            <option value="1">Cancelado</option>
+                                                        {% else %}
+                                                            <option value="1">Cancelado</option>
+                                                            <option value="0">Activo</option>
+                                                        {% endif %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -174,11 +188,11 @@ Editar Inscripción
                                 </div>
                                 
                                 <div class="form-group">
-                                    <div class="col-xs-2 col-xs-offset-4"><!-- type="submit" -->
-                                        <a href="{% url 'events:index' %}"><button class="btn btn-danger" type="button" ><i class="fa fa-times push-5-r"></i> Retirarse</button></a>
-                                    </div>
                                     <div class="col-xs-2">
-                                        <a href=''><button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Inscribirse</button></a>
+                                        <a href=''><button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                                    </div>
+                                    <div class="col-xs-2 col-xs-offset-4"><!-- type="submit" -->
+                                        <a href="{% url 'events:index' %}"><button class="btn btn-danger" type="button" ><i class="fa fa-times push-5-r"></i> Cancelar</button></a>
                                     </div>
                                 </div>
                             </form>

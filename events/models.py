@@ -1,13 +1,8 @@
 from django.db import models
-
-# Create your models here.
-
-class EventType(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField(max_length=200)
+from events_type.models import EventsType
 
 class Event(models.Model):
-    #event_type_id   =   models.ForeignKey(EventType, on_delete=models.CASCADE)
+    event_type  =   models.ForeignKey(EventsType, on_delete=models.CASCADE,default=None)
     #environment    =   models.ForeignKey(Environment, on_delete=models.CASCADE)
     #user           =   models.ForeignKey(User, on_delete=models.CASCADE)
 

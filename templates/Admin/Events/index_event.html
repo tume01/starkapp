@@ -23,57 +23,75 @@ Lista de Eventos
 {% block content %}
 
 <!-- Page Content -->
-<div class="content content-narrow">
+<div class="content">
     <!-- Simple Table Full -->
     <div class="block">
         <div class="block-content">
             <form class="form" action="{% url 'events:index' %}.html" method="get">
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
                             <div class="col-md-11">
                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                    <input class="form-control" type="text" id="example-daterange1" name="start_date" placeholder="Desde">
+                                    <input class="form-control" type="text" value="" id="example-daterange1" name="start_date" placeholder="Desde">
                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                    <input class="form-control" type="text" id="example-daterange2" name="end_date" placeholder="hasta">
+                                    <input class="form-control" type="text" value="" id="example-daterange2" name="end_date" placeholder="hasta">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-xs-12" for="example-select">Seleccione una sede</label>
                             <div class="col-sm-7">
-                                <select class="form-control" id="example-select" name="seat" size="1">
-                                    <option value="sede">Sede</option>
-                                    <option value="principal">Principal</option>
+                                <select class="form-control" id="example-select" name="seat" value="" size="1">
+                                    <option value="">Seleccionar</option>
+                                    <option value="Sede">Sede</option>
+                                    <option value="Principal">Principal</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-xs-12" for="example-select">Seleccione un tipo</label>
                             <div class="col-sm-6">
-                                <select class="form-control" id="example-select" name="type" size="1">
-                                    <option value="0">Público</option>
+                                <select class="form-control" id="example-select"  value="" name="type" size="1">
+                                    <option value="">Seleccionar</option>
                                     <option value="1">Privado</option>                            
+                                    <option value="2">Público</option>
                                 </select>
                             </div>
                         </div>
-                    </div>                   
-                </div>
-                <hr>
-                <div class="row">
-                    <div class="form-group">                        
-                        <div class="col-lg-8 col-lg-offset-4">
-                            <button href="" class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Seleccione un Estado</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="example-select" name="status" value="" size="1">
+                                    <option value="">Seleccionar</option>
+                                    <option value="0">Activo</option>
+                                    <option value="1">Cancelado</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">                         
+                            <div class="col-lg-3">
+                                <button href="" class="btn btn-sm btn-primary" type="submit" margin="50px">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
+            </div>
+            <hr>
         </div>
     </div>
     <div class="block block-bordered">
@@ -86,9 +104,10 @@ Lista de Eventos
                                 <thead>
                                     <tr>
                                         <th class="text-center" style="width: 5%;">#</th>
-                                        <th class="hidden-xs" style="width: 30%;">Nombre</th>
+                                        <th class="hidden-xs" style="width: 20%;">Nombre</th>
                                         <th class="hidden-xs" style="width: 30%;">Descripcion</th>
                                         <th class="hidden-xs" style="width: 10%;">Tipo</th>
+                                        <th class="hidden-xs" style="width: 10%;">Estado</th>
                                         <th class="hidden-xs" style="width: 10%;">Sede</th>
                                         <th class="hidden-xs" style="width: 40%;">Fecha Inicio</th>
                                         <th class="text-center">Acción </th>
@@ -101,15 +120,28 @@ Lista de Eventos
                                         <td class="font-w600">{{event.name}}</td>
                                         <td class="hidden-xs">{{event.description}}</td>
                                         <td class="hidden-xs">
-                                            {% if event.event_type_id == 0%}
-                                                <span class="label label-success">Público</span>
+                                            {% if event.event_type_id == 2%}
+                                                <span>Público</span>
                                             {% else %}
-                                                <span class="label label-success">Privado</span>
+                                                <span>Privado</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="hidden-xs">
+                                            {% if event.status == 0%}
+                                                <span class="label label-warning">Activo</span>
+                                            {% else %}
+                                                <span class="label label-danger">Cancelado</span>
                                             {% endif %}
                                         </td>
                                         <td class="hidden-xs">{{event.seat}}</td>
                                         <td class="hidden-xs">{{event.start_date}}</td>
-                                        <td> <a href='{% url "events:update_index" event.id %}'><button class="btn btn-warning"> Editar</button></a><a href=''><button class="btn btn-danger"> Delete</button></a></td>
+                                        <!--<td> <a href='{% url "events:update_index" event.id %}'><button class="btn btn-warning"> Editar</button></a><a href=''><button class="btn btn-danger"> Delete</button></a></td>-->
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <a href="{% url 'events:update_index' event.id %}" ><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
+                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button>
+                                            </div>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>

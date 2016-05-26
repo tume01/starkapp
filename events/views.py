@@ -34,8 +34,11 @@ def getActivityFilters(request):
     if request.GET.get('seat'):
         filters['seat'] = request.GET.get('seat')
 
-    #if request.GET.get('type'):
-     #   filters['type'] = request.GET.get('type')
+    if request.GET.get('type'):
+        filters['event_type_id'] = request.GET.get('type')
+
+    if request.GET.get('status'):
+        filters['status'] = request.GET.get('status')
 
     if request.GET.get('start_date'):
         start_date = datetime.datetime.strptime(request.GET.get('start_date'), "%m/%d/%Y")
@@ -72,7 +75,6 @@ def create_event(request):
     insert_data = {} 
 
 
-
     if not form.is_valid():
 
         errors =  form.errors.as_data()
@@ -103,18 +105,17 @@ def create_event(request):
 
         insert_data["end_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")   
 
-        insert_data["assistance"] = 20
+        insert_data["assistance"] = request.POST.get('assistance')
 
         insert_data["price"] = request.POST.get('price')
 
-        insert_data["status"] = 1
+        insert_data["status"] = 0
 
-        #insert_data["event_type_id"] = 1
+        insert_data["event_type_id"] = request.POST.get('event_type')
 
         event_service = EventsService()
 
         event_service.create(insert_data)
-
 
         return HttpResponseRedirect(reverse('events:index'))
 
@@ -149,48 +150,42 @@ def update_events(request, event_id):
         'titulo' : 'titulo'
     }
 
-    if not form.is_valid():
+    insert_data = {}
 
-        errors =  form.errors.as_data()
-
-        for error in errors:
-
-            validation_instance = errors[error]
-
-            for instance_error in validation_instance:
-
-                for error_message in instance_error:
-
-                    messages.error(request,(error_message))
-
-        return render(request,'Admin/Events/edit_event.html',context)
-
-    else:
-
-        insert_data = {}
-
+    if request.POST.get('name'):
         insert_data["name"] = request.POST.get('name')
 
+    if request.POST.get('description'):
         insert_data["description"] = request.POST.get('description') 
 
+    if request.POST.get('ruc'):
         insert_data["ruc"]  = request.POST.get('ruc')
 
+    if request.POST.get('seat'):
         insert_data["seat"] = request.POST.get('seat')
          
-        insert_data["start_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
+    if request.POST.get("start_date"):
+        insert_data["start_date"] = datetime.datetime.strptime(request.POST.get("start_date"),"%m/%d/%Y %H:%M %p").date()
 
-        insert_data["end_date"] = form.cleaned_data.get("end_date","%Y/%m/%d")   
+    if request.POST.get("end_date"):
+        insert_data["end_date"] = datetime.datetime.strptime(request.POST.get("end_date"),"%m/%d/%Y %H:%M %p").date()
 
+    if request.POST.get("assistance"):
         insert_data["assistance"] = request.POST.get("assistance")
 
+    if request.POST.get('price'):
         insert_data["price"] = request.POST.get('price')
 
-        insert_data["status"] = 1
+    if request.POST.get('event_type'):
+        insert_data["event_type_id"] = request.POST.get('event_type')
 
-        events_service = EventsService()
+    if request.POST.get('status'):
+        insert_data["status"] = request.POST.get('status')
 
-        id_type = int('0' + event_id)
+    events_service = EventsService()
 
-        events_service.update(id_type,insert_data)
+    id_type = int('0' + event_id)
+
+    events_service.update(id_type,insert_data)
 
     return HttpResponseRedirect(reverse('events:index'))

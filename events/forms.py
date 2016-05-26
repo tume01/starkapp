@@ -8,6 +8,7 @@ class EventForm(forms.Form):
     price       = forms.FloatField(error_messages={'required': "El precio es obligatorio."})
     start_date	= forms.DateTimeField(input_formats=["%m/%d/%Y %H:%M %p"])
     end_date 	= forms.DateTimeField(input_formats=["%m/%d/%Y %H:%M %p"])
+    event_type  = forms.CharField(error_messages={'required' : "El tipo de evento es obligatorio."})
     #status      = forms.IntegerField(error_messages={'required': "La estado es obligatorio."})
 
 
