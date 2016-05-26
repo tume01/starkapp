@@ -22,12 +22,30 @@ Multa
 
 {% block content %}
      <div class="content content-narrow">
+         <div class="content">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{msg.message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
                             <form class="form-horizontal push-10-t push-10" action='{% url "fine:insert" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
+                                            <div class="col-lg-6" style="display: none;">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input0-group1" name="member_id" placeholder="ID"  type="number" value= "{{member_id}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Observación</label>
