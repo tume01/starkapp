@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from adapters.FormValidator import FormValidator
+from Adapters.FormValidator import FormValidator
 from services.ActivityService import ActivityService
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
