@@ -97,6 +97,10 @@ def create_event(request):
 
         insert_data["description"] = form.cleaned_data.get('description') 
 
+        insert_data["environment_id"] = form.cleaned_data.get('environment') 
+
+        insert_data["user_id"] = form.cleaned_data.get('user') 
+
         insert_data["ruc"]  = request.POST.get('ruc')
 
         insert_data["seat"] = request.POST.get('seat')
@@ -160,6 +164,14 @@ def update_events(request, event_id):
 
     if request.POST.get('ruc'):
         insert_data["ruc"]  = request.POST.get('ruc')
+
+    if request.POST.get('environment'):
+
+        insert_data["environment_id"] = request.POST.get('environment') 
+
+    if request.POST.get('user'):
+        
+        insert_data["user_id"] = request.POST.get('user') 
 
     if request.POST.get('seat'):
         insert_data["seat"] = request.POST.get('seat')
