@@ -274,9 +274,10 @@ def create_objection(request):
 
     form = oforms.ObjectionForm(request.POST)
 
+    requestId = request.POST['id_membership']
+
     request = FormValidator.validateForm(form, request)
 
-    requestId = int(request.POST['id'])
 
     if not request:
 
@@ -284,7 +285,7 @@ def create_objection(request):
 
         insert_data["comments"] = form.cleaned_data['comments']
 
-        insert_data["membership_application_id"] = form.cleaned_data['id_membership']
+        insert_data["membership_application_id"] = requestId
 
         objection_service = ObjectionsService()
 
@@ -309,7 +310,7 @@ def objection_index(request):
 
     member_application_service = Membership_ApplicationService()
 
-    requestId = int(request.POST['id'])
+    requestId = request.POST['id']
 
     membership_application = member_application_service.getMembership_Application(requestId)
 
@@ -323,7 +324,7 @@ def objection_index(request):
 @require_http_methods(['POST'])
 def approve_membership_application(request):
 
-    id_application = int(request.POST['id'])
+    id_application = request.POST['id']
 
     member_application_service = Membership_ApplicationService()
 
