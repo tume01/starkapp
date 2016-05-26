@@ -1,0 +1,99 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: Tipo de eventos
+{% endblock %}
+
+{% block head_dahsboard %}
+Tipo de eventos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de tipo de eventos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Tipo de eventos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de tipo de eventos
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+                <div class="content">
+                    <div class="block">
+                        <div class="block-header">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title">Tipo de Evento</h3>
+                        </div>
+
+                        <!-- Block v2 -->
+
+                        {% for type in event_type %}
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action="{% url 'events_type:update' type.id %}" method="post">
+                            {% csrf_token %}
+                                <div class="row">   
+                                    <div class="col-sm-7">
+                                        <div class="form-group">
+                                            <div class="col-xs-6">
+                                                <label for="mega-firstname">Codigo</label>
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="id" placeholder="{{type.id}}" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="mega-firstname">Nombre</label>
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="name" placeholder="{{type.name}}" value="{{type.name}}">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="mega-firstname">Descripcion</label>
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="description" placeholder="{{type.description}}" value="{{type.description}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="mega-firstname">Estado</label>
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="status" placeholder="{{type.status}}" value="{{type.status}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        {% endfor %}
+                                <div class="form-group">
+                                    <div class="col-xs-3">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#createModal"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <a href="./Concessionaire.html"><button class="btn btn-warning" type="submit"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <a href="./Concessionaire.html"><button class="btn btn-danger" type="submit"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
+                                    </div>
+                                    <div class="col-xs-3">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+{% endblock %}

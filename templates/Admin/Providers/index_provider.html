@@ -1,0 +1,99 @@
+{% extends 'Admin/Layouts/base_a.html' %}
+
+{% block head_title %}
+Admin: proveedores
+{% endblock %}
+
+{% block head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de proveedores
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de proveedores
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+                <!-- Page Content -->
+                <div class="content content-narrow">
+                    <!-- Simple Table Full -->
+                    <div class="block">
+                        <!--<div class="block-header">
+                            <h3 class="block-title">Simple Table <small>Full</small></h3>
+                        </div>-->
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <ul class="nav-header pull-right">
+                            <li class="visible-xs">
+                            <!-- Toggle class helper (for .js-header-search below), functionality initialized in App() -> uiToggleClass() -->
+                            <button class="btn btn-default" data-toggle="class-toggle" data-target=".js-header-search" data-class="header-search-xs-visible" type="button">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            </li>
+                            <li class="js-header-search header-search">
+                                <form class="form-horizontal" action="base_pages_search.html" method="post">
+                                    <div class="form-material form-material-primary input-group remove-margin-t remove-margin-b">
+                                        <input class="form-control" type="text" id="base-material-text" name="base-material-text" placeholder="Buscar proveedores">
+                                        <span class="input-group-addon"><i class="si si-magnifier"></i></span>
+                                    </div>
+                                </form>
+                            </li>
+                            </ul>
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Nombre de Concesionarios</th>
+                                        <th>Estado</th>
+                                        <th class="hidden-xs">Fecha de registro </th>
+                                        <th class="hidden-xs">Contacto</th>
+                                        <th>Teléfono</th>
+                                        <th>Correo Electrónico</th>
+                                        <th class="text-center" style="width: 10%;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for provider in proveedores %}
+                                    <tr>
+                                        <td class="text-center">{{provider.id}}</td>
+                                        <td class="font-w600">{{provider.businessName}}</td> 
+                                        {% if provider.status == 0 %}
+                                        <td class="text-center">Inactivo</td>
+                                        {% else %}
+                                        <td class="text-center">Activo</td>
+                                        {% endif %}
+                                        <td class="hidden-xs">{{provider.registrationDate|date:"Y-m-d"}}</td>
+                                        <td class="hidden-xs">{{provider.contactName}}</td>
+                                        <td class="text-center">{{provider.contactPhone}}</td>
+                                        <td class="text-center">{{provider.email}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <a href='{% url "providers:edit" provider.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Proveedor"><i class="fa fa-pencil"></i></button></a>
+
+                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Proveedor"><i class="fa fa-times"></i></button>
+
+                                                <!--<button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Proveedor"><i class="fa fa-times"></i></button>-->
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>     
+
+                {% endblock %}
