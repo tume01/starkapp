@@ -41,3 +41,4 @@ class BaseRepository(AbstractBaseRepository):
 
     def filter(self, filters):
         return self.model.objects.filter(**filters)
+

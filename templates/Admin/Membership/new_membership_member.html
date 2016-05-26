@@ -1,0 +1,132 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: membresia
+{% endblock %}
+
+{% block head_dahsboard %}
+Membresía
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Nueva membresía
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Membresía
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Nueva membresía
+{% endblock %}
+
+{% block content %}
+     <div class="content content-narrow">
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action='{% url "memberships:insert" %}' method="post" >
+                            {% csrf_token %}
+                             <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group" style="display: none;">
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="id"  value="{{membership_application.id}}"  type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display: none;">
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="membership_type_id"  value="{{membership_application.membership_type_id}}" type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-number-input">Nombres</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombres" value="{{membership_application.firstName}}"  type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Apellidos</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-input2-group1" name="surname" placeholder="Apellidos" value="{{membership_application.lastName}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>          
+                                <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">DNI</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI" value="{{membership_application.dni}}" type="number" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input2">Direccion</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-input1-group2" name="address" placeholder="Direccion" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>        
+                                 <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Teléfono</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-number1-group2" name="phone" placeholder="Teléfono"  type="number" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input2">Correo</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-input1-group2" name="email" placeholder="Correo" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>        
+                                 <div class="row">
+                                   <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-daterange1">Duración de la membresía</label>
+                                            <div class="col-md-8">
+                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" placeholder="Desde">
+                                                    <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" placeholder="hasta">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    
+                                <div class="form-group">
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
+                                    </div>                                    
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>    
+
+{% endblock %}
