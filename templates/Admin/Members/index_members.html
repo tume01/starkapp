@@ -48,6 +48,10 @@ Lista de miembros
                 {% csrf_token %}  
                 <input type="hidden" id="hid5" name="id"/>
             </form>
+            <form id="myFormFines" action=" {% url 'fine:index' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="hid6" name="id"/>
+            </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
             <table class="table table-bordered table-striped js-dataTable-simple">
@@ -71,11 +75,12 @@ Lista de miembros
                             <td class="font-w600">{{member.email}}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <button class="btn btn-xs btn-default editar" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Miembro"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default eliminar" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Eliminar Miembro"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-xs btn-default editar" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Miembro"><i class="fa fa-user"></i></button>
+                                    <button class="btn btn-xs btn-default eliminar" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Eliminar Miembro"><i class="fa fa-user-times"></i></button>
                                     <button class="btn btn-xs btn-default membre" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Membresia"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default fine" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Agregar Multa"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-xs btn-default fine" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Agregar Multa"><i class="fa fa-warning"></i></button>
+                                    <button class="btn btn-xs btn-default fines" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Ver Multas"><i class="fa fa-navicon"></i></button>
                                 </div>
                             </td>    
                         </tr>
@@ -119,7 +124,13 @@ Lista de miembros
             $('#hid5').val(id)
             document.forms["myFormFine"].submit();    
 
-        });     
+        });
+        $('.fines').click(function (e) {
+            var id = $(this).attr("data-id")
+            $('#hid6').val(id)
+            document.forms["myFormFines"].submit();
+
+        });
         
     });
     </script>

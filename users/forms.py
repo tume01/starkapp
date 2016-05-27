@@ -1,5 +1,20 @@
 from django import forms
+from django.core.validators import RegexValidator
 
 class UserForm(forms.Form):
-    name = forms.CharField(max_length=200, error_messages={'required': 'El campo usuario es requerido', 'max_length': 'El campo usuario debe tener una longitud maxima de 200 caracteres'})
-    password = forms.CharField(max_length=200, error_messages={'required': 'El campo contraseña es requerido', 'max_length': 'El campo contraseña debe tener una longitud maxima de 200 caracteres'})
+    #alphabetic = RegexValidator(r'^[a-zA-Z]*$', 'Only alphabetic characters are allowed.')
+    # validators=[alphabetic],
+
+    name = forms.CharField(max_length=200,
+                           error_messages={'required': 'El campo usuario es requerido',
+                                           'max_length': 'El campo usuario debe tener una longitud maxima de 200 caracteres'})
+    password = forms.CharField(max_length=200,
+                               error_messages={'required': 'El campo contraseña es requerido',
+                                               'max_length': 'El campo contraseña debe tener una longitud maxima de 200 caracteres'})
+
+    user_type = forms.IntegerField(error_messages={'required': 'El campo tipo de usuario es requerido'})
+
+class UserTypeForm(forms.Form):
+    description = forms.CharField(max_length=200,
+                           error_messages={'required': 'El campo descripcion es requerido',
+                                           'max_length': 'El campo descripcion debe tener una longitud maxima de 200 caracteres'})

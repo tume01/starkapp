@@ -10,4 +10,4 @@ class Membership_Application(m.Model):
     comments = m.CharField(max_length=200)
     initialDate = m.DateField()
     finalDate = m.DateField()
-    status = m.CharField(max_length=20)
+    status = m.IntegerField()

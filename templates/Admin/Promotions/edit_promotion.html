@@ -22,6 +22,15 @@ Lista de promociones
 
 {% block content %}
      <div class="content content-narrow">
+                    <div class="content">
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{msg.message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
@@ -50,20 +59,21 @@ Lista de promociones
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Descuento</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" id="example-number-input" name="percentage" placeholder="Descuento" value= "{{promotion.percentage}}"  type="number">
+                                            <div class="col-sm-4">
+                                                <input class="form-control" id="example-number-input" name="percentage" placeholder="Descuento" value= "{{promotion.percentage}}"  type="number" step="any" style="text-align:right;">
                                                 <div class="help-block">Agregue el %</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>                            
-                                <div class="form-group">
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "promotions:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
-                                    </div>
-                                    <div class="col-xs-6">
+                                <div class="form-group">                    
+                                    <div class="col-xs-2 col-xs-offset-4">
                                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
-                                    </div>                                    
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "promotions:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                    </div>
+
                                 </div>
                             </form>
                         </div>

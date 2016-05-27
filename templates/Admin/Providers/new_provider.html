@@ -1,0 +1,156 @@
+{% extends 'Admin/Layouts/base_a.html' %}
+
+{% block head_title %}
+Admin: proveedores
+{% endblock %}
+
+{% block head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Nuevo proveedor
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Creación de proveedores
+{% endblock %}
+
+{% block content %}
+<div class="content content-narrow">
+    <div class="block">
+        <div class="block-header">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                </li>
+            </ul>
+            <!--<h3 class="block-title">MANTENIMIENTO PROVEEDORES</h3>-->
+        </div>
+
+        <div class="block-content">
+            <form class="form-horizontal push-10-t push-10" action='{% url "providers:insert" %}' method="post" >
+                {% csrf_token %}                            
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <label for="ruc">R.U.C.:</label>
+                                {{form.ruc}}
+                            </div>
+                            <div class="col-xs-6">
+                                <label for="businessName">Razón Social</label> 
+                                {{form.businessName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="status">Estado</label>
+                            <div class="col-sm-9">
+                                {{form.status}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <div class="col-xs-6">
+                                <label for="province">Provincia:</label>
+                                {{form.province}}
+                            </div>
+                            <div class="col-xs-6">
+                                <label for="distric">Distrito</label>
+                                {{form.distric}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <div class="col-xs-9">
+                                <label for="registrationDate">Fecha de Registro</label>
+                                {{form.registrationDate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="address">Dirección</label>
+                                {{form.address}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="phone">Teléfono</label>
+                            <div class="col-sm-9">
+                                {{form.phone}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="effectiveTime">Tiempo de Vigencia</label>
+                            <div class="col-sm-6">
+                                {{form.effectiveTime}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="email">Correo</label>
+                            <div class="col-sm-9">
+                                {{form.email}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="contactName">Nombre de contacto</label>
+                            <div class="col-sm-8">
+                                {{form.contactName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="contactPhone">Número de contacto</label>
+                            <div class="col-sm-9">
+                                {{form.contactPhone}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">                    
+                    <div class="col-xs-2 col-xs-offset-4">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-danger" type=""><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>  
+</div>
+
+{% endblock %}

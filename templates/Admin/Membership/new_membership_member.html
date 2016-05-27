@@ -22,6 +22,15 @@ Nueva membresía
 
 {% block content %}
      <div class="content content-narrow">
+         <div class="content">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-warning" role="alert">
+                    {{msg.message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+        </div>
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
@@ -115,13 +124,14 @@ Nueva membresía
                                         </div>
                                     </div>
                                 </div>                    
-                                <div class="form-group">
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                <div class="form-group">                    
+                                    <div class="col-xs-2 col-xs-offset-4">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
                                     </div>
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
-                                    </div>                                    
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                    </div>
+
                                 </div>
                             </form>
                         </div>
