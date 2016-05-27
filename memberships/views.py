@@ -1,5 +1,6 @@
 from django.template import loader
 from django.shortcuts import render
+from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -66,9 +67,29 @@ def delete_membership_type(request):
 
     edit_data["status"] = 0
 
-    membership_type_service = MembershipTypeService()
+    membership_service = MembershipService()
 
-    membership_type_service.update(id_edit, edit_data)
+    membership_application_service = Membership_ApplicationService()
+
+    filter_data = {}
+
+    filter_data["membership_type_id"] = id_edit
+
+    filter_data["status"] = 1
+
+    members = membership_service.filter(filter_data)
+
+    membership_applications = membership_application_service.filter(filter_data)
+
+    print("Members:")
+    print(members)
+    print(membership_applications)
+
+    if (len(members) == 0 and len(membership_applications) == 0):
+
+        membership_type_service = MembershipTypeService()
+
+        membership_type_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('memberships:type/index'))
 
