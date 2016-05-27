@@ -34,16 +34,16 @@ Lista de proveedores
                     <div class="col-lg-2">
                         <div class="form-group">
                             <div class="col-xs-10">
-                                <label class="control-label" for="filtro-ruc">RUC</label>
-                                <input class="form-control" type="text" id="filtro-ruc" name="filtro-ruc">
+                                <label class="control-label" for="filter-ruc">RUC</label>
+                                <input class="form-control" type="text" id="filter-ruc" name="filter-ruc">
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-2">
                         <div class="form-group">
-                            <div class="col-sm-12">
-                                <label class="control-label">Estado</label>
-                                <select class="form-control" id="example-select" name="example-select" size="1">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="filter-status">Estado</label>
+                                <select class="form-control" id="filter-status" name="filter-status" size="1">
                                     <option value="0">Inactivo</option>
                                     <option value="1">Activo</option>
                                 </select>
@@ -52,18 +52,20 @@ Lista de proveedores
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label class="control-label">Proveedor</label>
-                            <input class="form-control" type="text" id="pro_Codigo" name="pro_Codigo">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="filter-businessName">Proveedor</label>
+                                <input class="form-control" type="text" id="filter-businessName" name="filter-businessName">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label class="control-label" for="example-daterange1">Fechas de registro</label>                            
+                                <label class="control-label" for="filter-registrationDate">Fechas de registro</label>
                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                    <input class="form-control" type="text" id="example-daterange1" name="example-daterange1" placeholder="Desde">
+                                    <input class="form-control" type="text" id="filter-registrationDate1" name="filter-registrationDate1" placeholder="Desde">
                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                    <input class="form-control" type="text" id="example-daterange2" name="example-daterange2" placeholder="hasta">
+                                    <input class="form-control" type="text" id="filter-registrationDate2" name="filter-registrationDate2" placeholder="hasta">
                                 </div>
                             </div>
                         </div>
@@ -73,28 +75,24 @@ Lista de proveedores
                     <div class="col-lg-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label class="control-label" for="nombre-contacto">Nombre de contacto</label>
-                                <input class="form-control" type="text" id="nombre-contacto" name="nombre-contacto">
+                                <label class="control-label" for="filter-contactName">Nombre de contacto</label>
+                                <input class="form-control" type="text" id="filter-contactName" name="filter-contactName">
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-3">
                         <div class="form-group">
-                            <label class="col-xs-12 control-label" for="example-select">Provincia</label>
-                            <div class="col-sm-10">
-                                <input class="form-control" type="text" id="provincia" name="provincia">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="filter-province">Provincia</label>
+                                <input class="form-control" type="text" id="filter-province" name="filter-province">
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-9">
-                    </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-3 col-xs-offset-9">
                         <div class="form-group">
-                            <div class="col-lg-8 col-lg-offset-4">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
-                            </div>
+                            <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
                         </div>
                     </div>
                 </div>
