@@ -497,8 +497,20 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos y Servicios</span></a>
                             <ul>
+                                <li>
+                                    <a href='{% url "products:index" %}'>Consultar productos</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "products:create_index" %}'>Crear productos</a>
+                                </li>
+                                <li>
+                                    <a href=''>Consultar servicios</a>
+                                </li>
+                                <li>
+                                    <a href=''>Crear servicios</a>
+                                </li>
                                 <li>
                                     <a href=''>Consultar servicios</a>
                                 </li>

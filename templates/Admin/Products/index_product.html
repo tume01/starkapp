@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
 
 {% block head_title %}
 Admin: productos
@@ -38,7 +38,7 @@ Lista de productos
                                 <div class="col-lg-3">
                                     <label class="col-xs-12" for="example-text-input">Nombre del producto</label>
                                     <div class="col-xs-12">
-                                        <input class="form-control" name="name" id="name" placeholder="" type="text">
+                                        <input class="form-control" name="f_name" id="f_name" placeholder="" type="text">
                                         <div class="help-block"></div>
                                     </div>
                                 </div>
@@ -47,7 +47,7 @@ Lista de productos
                                     <div class="form-group">
                                         <label class="col-xs-12" >Proveedor</label>
                                         <div class="col-xs-12">
-                                            <select class="form-control" multiple="multiple" id="select2Provider">
+                                            <select class="form-control" multiple="multiple" id="f_select2Provider">
                                                 {% for prov in all_providers %}
                                                     <option value="{{prov.id}}">{{prov.businessName}}</option>
                                                 {% endfor %}    
@@ -60,7 +60,7 @@ Lista de productos
                                     <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Tipo Producto</label>
                                             <div class="col-xs-12">
-                                                <select class="form-control" name="selectProductType" id="selectProductType" size="1">
+                                                <select class="form-control" name="f_selectProductType" id="f_selectProductType" size="1">
                                                     <option value="0">Seleccione un Tipo de Producto</option>
                                                     {% for ptype in all_product_types%}
                                                         <option value="{{ptype.id}}">{{ptype.name}}</option>
@@ -72,23 +72,45 @@ Lista de productos
                                 </div>
                             </div>
                             <br>
-                            <!--
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label class="col-xs-12" for="example-text-input">Rango Stock Actual</label>
                                     <div class="col-xs-5">
-                                        <input class="form-control" name="name" id="name" placeholder="" type="text">
+                                        <input class="form-control" name="f_range_stock_min" id="f_range_stock_min" placeholder="" type="text">
                                     </div>
                                     <div class="col-xs-2">
                                         <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
                                     </div>
                                     <div class="col-xs-5">
-                                        <input class="form-control" name="name" id="name" placeholder="" type="text">
+                                        <input class="form-control" name="f_range_stock_max" id="f_range_stock_max" placeholder="" type="text">
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label class="css-input css-checkbox css-checkbox-primary">
+                                    <input type="checkbox" id="f_active" name="f_active"><span></span> Activo
+                                    </label>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label class="col-xs-12" for="example-text-input">Rango Precios</label>
+                                    <div class="col-xs-5">
+                                        <input class="form-control" name="f_range_price_min" id="f_range_price_min" placeholder="" type="text">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input class="form-control" name="f_range_price_max" id="f_range_price_max" placeholder="" type="text">
                                     </div>
                                     
                                 </div>
                             </div>
-                            -->
+                            <div class="row">
+                                
+                            </div>
+
 
                             <div class="row">
                                 <div class="col-lg-9">
@@ -96,7 +118,7 @@ Lista de productos
                                 <div class="col-lg-3">
                                     <div class="form-group">
                                         <div class="col-lg-8 col-lg-offset-4">
-                                            <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                                            <button class="btn btn-sm btn-primary" type=button id="filterProduct">Buscar</button>
                                         </div>
                                     </div>
                                 </div>
