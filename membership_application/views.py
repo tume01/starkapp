@@ -169,15 +169,17 @@ def edit_membership_application(request):
 
     form = MembershipApplicationForm(request.POST)
 
-    request = FormValidator.validateForm(form, request)
-
     id_application = request.POST['id']
+
+    membership_type_id = request.POST['membership_type']
+
+    request = FormValidator.validateForm(form, request)    
 
     if not request:
 
         insert_data = {}
 
-        insert_data["membership_type_id"] = form.cleaned_data['membership_type']
+        insert_data["membership_type_id"] = membership_type_id
 
         insert_data["firstName"] = form.cleaned_data['firstName']
 
@@ -187,9 +189,9 @@ def edit_membership_application(request):
 
         insert_data["dni"] = form.cleaned_data['dni']
 
-        insert_data["initialDate"] = datetime.strptime(form.cleaned_data['initialDate'], '%m/%d/%Y')
+        insert_data["initialDate"] = form.cleaned_data['initialDate']
 
-        insert_data["finalDate"] = datetime.strptime(form.cleaned_data['finalDate'], '%m/%d/%Y')
+        insert_data["finalDate"] = form.cleaned_data['finalDate']
 
         member_application_service = Membership_ApplicationService()
 
