@@ -161,7 +161,7 @@ def create(request2):
 
         insert_data = {}
 
-        insert_data["status"] = 1
+        insert_data["status"] = 'Pendiente de Pago'
 
         insert_data["observations"] = form.cleaned_data['observations']
 
