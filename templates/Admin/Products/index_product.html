@@ -1,5 +1,8 @@
 {% extends 'Admin/Layouts/base_a.html' %}
 
+{% load staticfiles %}
+
+
 {% block head_title %}
 Admin: productos
 {% endblock %}
@@ -25,53 +28,55 @@ Lista de productos
 <!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
 
 <!-- Page Content -->
-                <!-- Page Content -->
-                <div class="content content-narrow">
-                    <!-- Simple Table Full -->
-                    <div class="block">
-                        <!--<div class="block-header">
-                            <h3 class="block-title">Simple Table <small>Full</small></h3>
-                        </div>-->
-                        <div class="block-content">
-                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <label class="col-xs-12" for="example-text-input">Nombre del producto</label>
-                                    <div class="col-xs-12">
-                                        <input class="form-control" name="f_name" id="f_name" placeholder="" type="text">
-                                        <div class="help-block"></div>
-                                    </div>
-                                </div>
 
-                                <div class="col-lg-4">
-                                    <div class="form-group">
-                                        <label class="col-xs-12" >Proveedor</label>
-                                        <div class="col-xs-12">
-                                            <select class="form-control" multiple="multiple" id="f_select2Provider">
-                                                {% for prov in all_providers %}
-                                                    <option value="{{prov.id}}">{{prov.businessName}}</option>
-                                                {% endfor %}    
-                                            </select> 
-                                        </div>
-                                    </div>
-                                </div>
+<!-- Page Content -->
+<div class="content content-narrow">
+    <!-- Simple Table Full -->
+    <div class="block">
+        <div class="block-header">
+            <h3 class="block-title">Filtros</h3>
+        </div>
+        <div class="block-content">
+            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+            <div class="row">
+                <div class="col-lg-3">                                    
+                    <div class="col-xs-12">
+                        <label class="control-label" for="name">Nombre del producto</label>
+                        <input class="form-control" name="name" id="name" placeholder="" type="text">
+                        <div class="help-block"></div>
+                    </div>
+                </div>
 
-                                <div class="col-lg-5">
-                                    <div class="form-group">
-                                            <label class="col-xs-12" for="example-select">Tipo Producto</label>
-                                            <div class="col-xs-12">
-                                                <select class="form-control" name="f_selectProductType" id="f_selectProductType" size="1">
-                                                    <option value="0">Seleccione un Tipo de Producto</option>
-                                                    {% for ptype in all_product_types%}
-                                                        <option value="{{ptype.id}}">{{ptype.name}}</option>
-                                                    {% endfor %}
-                                                    
-                                                </select>
-                                            </div>
-                                        </div>
-                                </div>
-                            </div>
-                            <br>
+                <div class="col-lg-4">
+                    <div class="form-group">                                        
+                        <div class="col-xs-12">
+                            <label class="control-label" for="select2Provider">Proveedor</label>
+                            <select class="form-control" multiple="multiple" id="select2Provider">
+                                {% for prov in all_providers %}
+                                <option value="{{prov.id}}">{{prov.businessName}}</option>
+                                {% endfor %}    
+                            </select> 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="form-group">                                            
+                        <div class="col-xs-12">
+                            <label class="control-label" for="selectProductType">Tipo Producto</label>
+                            <select class="form-control" name="selectProductType" id="selectProductType" size="1">
+                                <option value="0">Seleccione un Tipo de Producto</option>
+                                {% for ptype in all_product_types%}
+                                <option value="{{ptype.id}}">{{ptype.name}}</option>
+                                {% endfor %}                                                    
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+                            <!--
+
                             <div class="row">
                                 <div class="col-lg-3">
                                     <label class="col-xs-12" for="example-text-input">Rango Stock Actual</label>
@@ -112,6 +117,7 @@ Lista de productos
                             </div>
 
 
+
                             <div class="row">
                                 <div class="col-lg-9">
                                 </div>
@@ -120,56 +126,109 @@ Lista de productos
                                         <div class="col-lg-8 col-lg-offset-4">
                                             <button class="btn btn-sm btn-primary" type=button id="filterProduct">Buscar</button>
                                         </div>
+
+                        -->
+
+                        <div class="row">
+                            <div class="col-lg-3 col-lg-offset-9">
+                                <div class="form-group">
+                                    <div class="col-lg-8">
+                                        <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+
                                     </div>
                                 </div>
                             </div>
-                            <br>
                         </div>
+                        <br>
                     </div>
-                        <div class="block">    
-                            <table class="table table-bordered table-striped js-dataTable-simple">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">#</th>
-                                        <th>Nombre de producto</th>
-                                        <th>Precio</th>
-                                        <th class="hidden-xs">Stock Actual</th>
-                                        <th>Stock Minimo</th>
-                                        <th>Estado</th>
-                                        <th class="text-center" style="width: 10%;">Descripcion</th>
-                                        <th class="text-center" style="width: 10%;">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for p in products %}
-                                    <tr>
-                                        <td class="text-center">{{p.id}}</td>
-                                        <td class="font-w600">{{p.name}}</td>
-                                        <td class="text-center">{{p.price}}</td> 
-                                        <td class="text-center">{{p.actual_stock}}</td>
-                                        <td class="text-center">{{p.minimum_stock}}</td>  
-                                        {% if p.status == 0 %}
-                                        <td class="text-center">Inactivo</td>
-                                        {% else %}
-                                        <td class="text-center">Activo</td>
-                                        {% endif %}
-                                        <td class="hidden-xs">{{p.description}}</td>
-                                        <td class="text-center">    
-                                            <div class="btn-group">
-                                                <a href='{% url "products:edit" p.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
+                </div>
+                <div class="block">    
+                    <table class="table table-bordered table-striped js-dataTable-simple">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Nombre de producto</th>
+                                <th>Precio</th>
+                                <th class="hidden-xs">Stock Actual</th>
+                                <th>Stock Minimo</th>
+                                <th>Estado</th>
+                                <th class="text-center" style="width: 10%;">Descripcion</th>
+                                <th class="text-center" style="width: 10%;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in products %}
+                            <tr>
+                                <td class="text-center">{{p.id}}</td>
+                                <td class="font-w600">{{p.name}}</td>
+                                <td class="text-center">{{p.price}}</td> 
+                                <td class="text-center">{{p.actual_stock}}</td>
+                                <td class="text-center">{{p.minimum_stock}}</td>  
+                                {% if p.status == 0 %}
+                                <td class="text-center">Inactivo</td>
+                                {% else %}
+                                <td class="text-center">Activo</td>
+                                {% endif %}
+                                <td class="hidden-xs">{{p.description}}</td>
+                                <td class="text-center">    
+                                    <div class="btn-group">
+                                        <a href='{% url "products:edit" p.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
 
-                                                <a href='{% url "products:delete" p.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- END Simple Table Full -->
-                </div>     
+                                        <a href='{% url "products:delete" p.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END Simple Table Full -->
+        </div>     
 
 
-<!-- HASTA AQUÍ -->       
-{% endblock %}
+        <!-- HASTA AQUÍ -->       
+        {% endblock %}
+
+{% block scripts %}
+
+                <!-- Page Plugins -->
+                <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+                <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+                <script>
+                    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        <script src='{% static "assets/js/product.js" %}'></script>
+        <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+
+        {% endblock %}
