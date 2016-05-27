@@ -36,7 +36,8 @@ Lista de ambientes
 
                         <!-- Block v2 -->
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                            <form class="form-horizontal push-10-t push-10" action="'{% url "environment:insert" %}'" method="post">
+                            {% csrf_token %}
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <div class="form-group">
@@ -96,13 +97,10 @@ Lista de ambientes
                                     <div class="col-xs-3">
                                     </div>
                                     <div class="col-xs-2">
-                                        <a href="./Enviroments.html"><button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#createModal"><i class="fa fa-check push-5-r"></i> Crear</button></a>
+                                        <button class="btn btn-primary" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button></a>
                                     </div>
                                     <div class="col-xs-2">
-                                        <a href="./Enviroments.html"><button class="btn btn-warning" type="submit"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <a href="./Enviroments.html"><button class="btn btn-danger" type="submit"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
+                                        <button class="btn btn-warning" type="submit" onclick="location.href='{% url "environment:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
                                     </div>
                                     <div class="col-xs-3">
                                     </div>

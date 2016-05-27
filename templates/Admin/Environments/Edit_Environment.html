@@ -36,7 +36,8 @@ Editar reserva
 
                         <!-- Block v2 -->
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+                            <form class="form-horizontal push-10-t push-10" action='{% url "environment:edit" %}' method="post" >
+                            {% csrf_token %}
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <div class="form-group">

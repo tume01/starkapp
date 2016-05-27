@@ -26,6 +26,14 @@ Lista de ambientes
                 <div class="content">
                     <!-- Simple Table Full -->
                     <div class="block">
+                        <form id="myFormDelete" action="{% url "environment:delete" %} " method="post">
+                {% csrf_token %}  
+                            <input type="hidden" id="hid1" name="id"/>
+                        </form>
+                        <form id="myFormEdit" action="{% url "environment:edit_index" %} " method="post">
+                            {% csrf_token %}  
+                            <input type="hidden" id="hid2" name="id"/>
+                        </form>
                         <!--<div class="block-header">
                             <h3 class="block-title">Simple Table <small>Full</small></h3>
                         </div>-->

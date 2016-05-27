@@ -73,11 +73,11 @@ def create_environment(request):
 
     insert_data["description"] = request.POST['description']
 
-    insert_data["status"] = request.POST['status']
+    insert_data["status"] = 1
 
     insert_data["capacity"] = request.POST['capacity']
 
-    insert_data["environment_id"] = request.POST['number']
+    #insert_data["environment_id"] = request.POST['number']
 
     environment_service = EnvironmentService()
 
