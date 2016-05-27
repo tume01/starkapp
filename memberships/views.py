@@ -171,7 +171,7 @@ def create_membership(request):
     form = MembershipForm(request.POST)
     form2 = mForms.MemberForm(request.POST)
 
-    membershipId = request.POST['id']
+    membershipApplicationId = request.POST['id']
 
     if (not FormValidator.validateForm(form,request)
         and not FormValidator.validateForm(form2,request)):
@@ -234,7 +234,7 @@ def create_membership(request):
 
         #Elimino solicitud
 
-        id_application = membershipId
+        id_application = membershipApplicationId
 
         insert_data = {}
 
@@ -249,13 +249,14 @@ def create_membership(request):
     else:
         member_application_service = Membership_ApplicationService()
 
-        membershipApplications = member_application_service.getMembership_Applications()
-
+        membershipApplication = member_application_service.getMembership_Application(membershipApplicationId)
+    
         context = {
-            'membershipApplications': membershipApplications,
+            'titulo': 'titulo',
+            'membership_application': membershipApplication,
         }
 
-        return render(request, 'Admin/Membership/index_membership_request.html', context)
+        return render(request, 'Admin/Membership/new_membership_member.html', context)
 
 
 
