@@ -17,3 +17,6 @@ class EnvironmentService(object):
 
     def getEnvironment(self):
         return self.__environment_repository.all()
+
+    def getEnviromentById(self, environment_id):
+        return self.__environment_repository.find(environment_id)
