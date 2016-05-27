@@ -24,21 +24,25 @@ var ProviderFormValidation = function() {
             rules: {
                 'name': {
                     required: true,
-                    minlength: 11
+                    maxlength: 20
                 },
                 'attendance': {
-                    required: true
-                    //email: true
+                    required: true,
+                    maxlength:5,
+                    number:true
                 },
                 'price': {
-                    required: true
+                    required: true,
+                    maxlength: 5,
+                    number:true
                 },
                 /*'val-confirm-password': {
                     required: true,
                     equalTo: '#val-password'
                 },*/
                 'start_date': {
-                    required: true
+                    required: true,
+
                 },
                 'end_date' : {
                     required: true
@@ -50,12 +54,17 @@ var ProviderFormValidation = function() {
             messages: {
                 'name': {
                     required: 'Por favor ingrese un Nombre',
+                    maxlength: 'Por favor ingrese maximo 20 caracteres',
                 },
                 'attendance': {
-                    required: 'Por favor ingrese una capacidad'
+                    required: 'Por favor ingrese una capacidad',
+                    maxlength: 'Por favor ingrese maximo 5 caracteres',
+                    number: 'Por favor ingrese solo números'
                 },
                 'price': {
-                    required: 'Por favor ingrese un precio'
+                    required: 'Por favor ingrese un precio',
+                    maxlength: 'Por favor ingrese maximo 5 caracteres',
+                    number: 'Por favor ingrese solo números'
                 },
                 'start_date': {
                     required: 'Por favor ingrese una fecha de inicio'
