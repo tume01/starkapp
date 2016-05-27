@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from adapters.FormValidator import FormValidator
+from Adapters.FormValidator import FormValidator
 from services.ActivityService import ActivityService
 from services.ActivityTypeService import ActivityTypeService
 from django.views.decorators.http import require_http_methods
@@ -89,7 +89,7 @@ def create_activity(request):
         attendance = form.cleaned_data['attendance']
         start_date = form.cleaned_data['start_date']
         end_date   = form.cleaned_data['end_date']
-        activity_type_id = form.cleaned_data['activity_type'] 
+        activity_type_id = form.cleaned_data['activity_type']
 
         activity_type = activity_types_service.getActivityType(activity_type_id)
 
