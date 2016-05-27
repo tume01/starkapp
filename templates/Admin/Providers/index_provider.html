@@ -31,9 +31,9 @@ Lista de proveedores
         <div class="block-content">
             <form class="form" action="base_forms_pickers_more.html" method="post" onsubmit="return false;">
                 <div class="row">
-                    <div class="col-lg-2">
+                    <div class="col-lg-4">
                         <div class="form-group">
-                            <div class="col-xs-10">
+                            <div class="col-xs-8">
                                 <label class="control-label" for="filter-ruc">RUC</label>
                                 <input class="form-control" type="text" id="filter-ruc" name="filter-ruc">
                             </div>
@@ -50,7 +50,7 @@ Lista de proveedores
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-5">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label class="control-label" for="filter-businessName">Proveedor</label>
@@ -58,6 +58,8 @@ Lista de proveedores
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
                             <div class="col-xs-12">
@@ -70,8 +72,6 @@ Lista de proveedores
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
                             <div class="col-xs-12">
@@ -89,10 +89,13 @@ Lista de proveedores
                         </div>
                     </div>
                 </div>
+                <br>
                 <div class="row">
-                    <div class="col-lg-3 col-xs-offset-9">
+                    <div class="col-lg-3 col-lg-offset-9">
                         <div class="form-group">
-                            <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                            <div class="col-lg-8">
+                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -110,22 +113,7 @@ Lista de proveedores
                         </div>-->
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-                            <ul class="nav-header pull-right">
-                                <li class="visible-xs">
-                                    <!-- Toggle class helper (for .js-header-search below), functionality initialized in App() -> uiToggleClass() -->
-                                    <button class="btn btn-default" data-toggle="class-toggle" data-target=".js-header-search" data-class="header-search-xs-visible" type="button">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </li>
-                                <li class="js-header-search header-search">
-                                    <form class="form-horizontal" action="base_pages_search.html" method="post">
-                                        <div class="form-material form-material-primary input-group remove-margin-t remove-margin-b">
-                                            <input class="form-control" type="text" id="base-material-text" name="base-material-text" placeholder="Buscar proveedores">
-                                            <span class="input-group-addon"><i class="si si-magnifier"></i></span>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
+                            
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
                                     <tr>
