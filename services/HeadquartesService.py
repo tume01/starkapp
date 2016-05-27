@@ -1,6 +1,6 @@
 from repositories import HeadquartersRepository
 
-class HeadqueartesService(object):
+class HeadquearterService(object):
 
 	__headquarters_repository = HeadquartersRepository.HeadquartersRepository()
 

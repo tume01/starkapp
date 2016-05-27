@@ -108,7 +108,7 @@ def create_activity(request):
 def create_index(request):
 
     context = {
-        'titulo': 'tittle'
+        'titulo': 'title'
     }
 
     return render(request, 'Admin/Activities/new_activity.html', context)
