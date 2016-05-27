@@ -6,7 +6,7 @@ class Provider(models.Model):
     #ambiente = models.ForeignKey("Ambiente", on_delete=models.CASCADE)
 
     status_choices = ((0,'Inactivo'),(1,'Activo'),)
-
+    effectiveTime_choices = ((30,'1 Mes'),(90,'3 Meses'),(180,'6 Meses'),(365,'12 meses'),)
 
 
     ruc = models.BigIntegerField(null=False, blank=False)
@@ -17,7 +17,7 @@ class Provider(models.Model):
     registrationDate = models.DateField(auto_now=False, auto_now_add=False)
     address = models.CharField(max_length=200)    
     phone= models.BigIntegerField()
-    effectiveTime = models.IntegerField() #Tiempo de vigencia en días
+    effectiveTime = models.IntegerField(choices=effectiveTime_choices,default=30) #Tiempo de vigencia en días
     email= models.EmailField()    
     contactName = models.CharField(null=False, blank=False,max_length=120)
     contactPhone = models.BigIntegerField(null=False, blank=False)
