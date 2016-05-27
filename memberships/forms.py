@@ -1,4 +1,5 @@
 from django import forms
+from datetime import datetime
 from django.core.validators import RegexValidator
 
 class MembershipTypeForm(forms.Form):
@@ -23,6 +24,11 @@ class MembershipTypeForm(forms.Form):
 
 class MembershipForm(forms.Form):
 
-    initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'})
-    finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'})
+    initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'}, input_formats=['%m/%d/%Y'])
+    finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'}, input_formats=['%m/%d/%Y'])
 
+    def clean_finalDate(self):
+        data = self.cleaned_data['finalDate']
+        if data < datetime.now().date():
+            raise forms.ValidationError("La fecha final no puede ser menor a la de hoy")
+        return data
