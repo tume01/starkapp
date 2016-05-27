@@ -69,6 +69,8 @@ def delete_membership_type(request):
 
     membership_service = MembershipService()
 
+    membership_application_service = Membership_ApplicationService()
+
     filter_data = {}
 
     filter_data["membership_type_id"] = id_edit
@@ -77,10 +79,13 @@ def delete_membership_type(request):
 
     members = membership_service.filter(filter_data)
 
+    membership_applications = membership_application_service.filter(filter_data)
+
     print("Members:")
     print(members)
+    print(membership_applications)
 
-    if (len(members) == 0):
+    if (len(members) == 0 and len(membership_applications) == 0):
 
         membership_type_service = MembershipTypeService()
 
