@@ -26,11 +26,11 @@ Lista de ambientes
                 <div class="content">
                     <!-- Simple Table Full -->
                     <div class="block">
-                        <form id="myFormDelete" action="{% url "environment:delete" %} " method="post">
-                {% csrf_token %}  
+                        <form id="myFormDelete" action={% url "environment:delete" %} method="post">
+                        {% csrf_token %}  
                             <input type="hidden" id="hid1" name="id"/>
                         </form>
-                        <form id="myFormEdit" action="{% url "environment:edit_index" %} " method="post">
+                        <form id="myFormEdit" action={% url "environment:edit_index" %} method="post">
                             {% csrf_token %}  
                             <input type="hidden" id="hid2" name="id"/>
                         </form>
@@ -60,8 +60,9 @@ Lista de ambientes
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a href='{% url "environment:edit_index"%}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Ambiente"><i class="fa fa-pencil"></i></button></a>
-                                                <a href='{% url "environment:delete"%}'><button class="btn btn-xs btn-default" type="button" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-times"></i></button></a>
+                                                <button class="btn btn-xs btn-default editar" data-id="{{environment.id}}" type="button"  data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></button>
+
+                                                <button class="btn btn-xs btn-default eliminar" data-id="{{environment.id}}" type="button" data-toggle="tooltip" title="Eliminar"><i class="fa fa-times"></i></button>
                                             </div>
                                         </td>
                                     </tr>

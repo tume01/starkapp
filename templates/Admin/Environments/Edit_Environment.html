@@ -24,19 +24,19 @@ Editar reserva
 
                 <!-- Page Content -->
                 <div class="content">
+                    <div class="content">
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{msg.message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                     <div class="block">
-                        <div class="block-header">
-                            <ul class="block-options">
-                                <li>
-                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                                </li>
-                            </ul>
-                            <h3 class="block-title">AMBIENTES</h3>
-                        </div>
-
                         <!-- Block v2 -->
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "environment:edit" %}' method="post" >
+                            <form class="form-horizontal push-10-t push-10" action={% url "environment:edit" %} method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-sm-7">
@@ -101,9 +101,6 @@ Editar reserva
                                     </div>
                                     <div class="col-xs-2">
                                         <a href="./Enviroments.html"><button class="btn btn-warning" type="submit"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <a href="./Enviroments.html"><button class="btn btn-danger" type="submit"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
                                     </div>
                                     <div class="col-xs-3">
                                     </div>
