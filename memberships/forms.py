@@ -2,7 +2,7 @@ from django import forms
 from django.core.validators import RegexValidator
 
 class MembershipTypeForm(forms.Form):
-    alphabetic = RegexValidator(r'^[a-zA-Z]*$', 'Only alphabetic characters are allowed.')
+    alphabetic = RegexValidator(r'^[a-zA-Z]*$', 'Solo caracteres alfabeticos estan perimitidos para los campos Nombre y Apellidos.')
 
     name = forms.CharField(max_length=200, validators=[alphabetic], error_messages={'required': 'El campo Tipo de Membresia es requerido', 'max_length': 'El campo Tipo de Membresia debe tener una longitud maxima de 200 caracteres'})
     guests = forms.IntegerField(error_messages={'required': 'El campo Invitados es requerido'})
