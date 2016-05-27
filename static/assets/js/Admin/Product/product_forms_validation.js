@@ -21,83 +21,48 @@ var ProductFormValidation = function() {
                 elem.closest('.help-block').remove();
             },
             rules: {
-                'ruc': {
-                    required: true,
-                    minlength: 11
+                'name': {
+                    required: true                    
                 },
-                'businessName': {
+                'select2Provider': {
                     required: true
                     //email: true
                 },
-                'province': {
+                'price': {
                     required: true                    
                 },
                 /*'val-confirm-password': {
                     required: true,
                     equalTo: '#val-password'
                 },*/
-                'distric': {
+                'actualStock': {
                     required: true
                 },
-                'registrationDate' : {
+                'minStock' : {
                     required: true
                 },
-                'address': {
+                'selectProductType': {
                     required: true
-                },
-                'phone': {
-                    required: true,
-                    minlength: 7
-                },
-                'effectiveTime': {
-                    required: true
-                },
-                'email': {
-                    required: true,
-                    email: true
-                },
-                'contactName': {
-                    required: true
-                },
-                'contactPhone': {
-                    required: true,
-                    minlength: 7
                 }
             },
             messages: {
-                'ruc': {
-                    required: 'Por favor ingrese un RUC',
-                    minlength: 'El RUC debe tener 11 caracteres'
+                'name': {
+                    required: 'Por favor ingrese un nombre'                    
                 },
-                'businessName': {
-                    required: 'Por favor ingrese una razón social'                    
+                'select2Provider': {
+                    required: 'Por favor seleccione al menos un proveedor'                    
                 },
-                'province': {
-                    required: 'Por favor ingrese una provincia'                    
+                'price': {
+                    required: 'Por favor ingrese un precio'                    
                 },
-                'distric': {
-                    required: 'Por favor ingrese un distrito'
+                'actualStock': {
+                    required: 'Por favor ingrese el stock actual'
                 },
-                'registrationDate': {
-                    required: 'Por favor seleccione una fecha'
+                'minStock': {
+                    required: 'Por favor ingrese un stock mínimo'
                 },
-                'address': {
-                    required: 'Por favor ingrese una dirección'
-                },
-                'phone': {
-                    required: 'Por favor ingrese un teléfono',
-                    minlength: 'El teléfono debe tener mínimo 7 caracteres'
-                },
-                'effectiveTime': {
-                    required: 'Por favor ingrese tiempo de vigencia'
-                },
-                'email': 'Por favor ingrese un email válido',
-                'contactName': {
-                    required: 'Por favor ingrese un nombre de contacto'
-                },
-                'contactPhone': {
-                    required: 'Por favor ingrese un teléfono de contacto',
-                    minlength: 'El teléfono de contacto debe tener mínimo 7 caracteres'
+                'selectProductType': {
+                    required: 'Por favor seleecione un tipo de producto'
                 }
                 /*
                 'val-confirm-password': {
