@@ -11,3 +11,4 @@ class Servicio(models.Model):
 
     name = models.CharField(max_length=100)
     price = models.FloatField()
+    deleted = models.BooleanField(default=False)

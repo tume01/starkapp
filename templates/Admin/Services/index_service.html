@@ -53,8 +53,8 @@ Lista de servicios
                                             <td class="hidden-xs">{{servicio.price}}</td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Servicio"><i class="fa fa-pencil"></i></button>
-                                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Servicio"><i class="fa fa-times"></i></button>
+                                                    <a href="{% url 'servicios:update_index' servicio.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Servicio"><i class="fa fa-pencil"></i></button></a>
+                                                    <a href="{% url 'servicios:delete' servicio.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Servicio"><i class="fa fa-times"></i></button></a>
                                                 </div>
                                             </td>    
                                         </tr>

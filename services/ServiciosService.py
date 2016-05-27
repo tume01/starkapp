@@ -15,10 +15,21 @@ class ServiciosService(object):
         return self.__servicio_repository.update(id, update_data)
 
     def delete(self, id):
-        return self.__servicio_repository.delete(id)
+
+        update_data = {
+            'deleted': True,
+        }
+
+        return self.update(id, update_data)
+
+    def filter(self, filters):
+        return self.__servicio_repository.filter(filters)
 
     def getServicios(self):
-        return self.__servicio_repository.all()
+        return self.filter({'deleted': False})
 
     def getServicioTypes(self):
         return self.__servicio_type_repository.all()
+
+    def findServicio(self, id):
+        return self.__servicio_repository.find(id)

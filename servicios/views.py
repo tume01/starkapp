@@ -1,3 +1,7 @@
+from .forms import UpdateServicioForm
+from .forms import ServicioForm
+from adapters.FormValidator import FormValidator
+
 from django.template import loader
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -39,16 +43,88 @@ def create_index(request):
 @require_http_methods(['POST'])
 def create_servicio(request):
 
-    insert_data = {}
+    form = ServicioForm(request.POST)
 
-    insert_data["name"] = request.POST['name']
+    context = {
+        'titulo': 'titulo'
+    }
 
-    insert_data["price"] = request.POST['price']
-
-    insert_data["servicio_type_id"] = request.POST['id_servicio']
+    request = FormValidator.validateForm(form, request)
 
     servicio_service = ServiciosService()
 
-    servicio_service.create(insert_data)
+    if not request:
+
+        name = form.cleaned_data['name']
+        price = form.cleaned_data['price']
+        servicio_type_id = form.cleaned_data['id_servicio']
+
+        insert_data = {
+            'name': name,
+            'price': price,
+            'servicio_type_id': servicio_type_id
+        }
+
+        servicio_service.create(insert_data)
+
+        return HttpResponseRedirect(reverse('servicios:index'))
+
+    else:
+        servicio_types = servicio_service.getServicioTypes()
+        context = {
+            'servicio_types' : servicio_types
+        }
+
+        return render(request, 'Admin/Services/new_service.html', context)
+
+@require_http_methods(['GET'])
+def update_index(request, servicio_id):
+
+    servicio_service = ServiciosService()
+
+    servicio = servicio_service.findServicio(servicio_id)
+
+    context = {
+        'titulo' : 'titulo',
+        'servicio' : servicio
+    }
+
+    return render(request, 'Admin/Services/edit_service.html', context)
+
+@require_http_methods(['POST'])
+def update_servicio(request, servicio_id):
+
+    form = UpdateServicioForm(request.POST)
+
+    servicio_service = ServiciosService()
+
+    servicio = servicio_service.findServicio(servicio_id)
+
+    if FormValidator.validateForm(form, request):
+        context = {
+            'titulo': 'titulo',
+            'servicio' : servicio
+        }
+        return render(request, 'Admin/Services/edit_service.html', context)
+
+    else:
+
+        price = form.cleaned_data['price']
+
+
+        update_data = {
+            'price': price,
+        }
+
+        servicio_service.update(servicio_id, update_data)
+
+        return HttpResponseRedirect(reverse('servicios:index'))
+
+@require_http_methods(['GET'])
+def delete(request, servicio_id):
+    
+    servicio_service = ServiciosService()
+
+    servicio = servicio_service.delete(servicio_id)
 
     return HttpResponseRedirect(reverse('servicios:index'))
