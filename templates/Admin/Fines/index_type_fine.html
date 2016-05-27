@@ -1,0 +1,90 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: tipo de multas
+{% endblock %}
+
+{% block head_dahsboard %}
+Tipos de multas
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de tipos de multas
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Tipos de multas
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de tipos de multas
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+  <!-- Simple Table Full -->
+    <div class="block block-bordered">
+            <form id="myFormDelete" action="{% url "fine:delete_type" %} " method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid1" name="id"/>
+            </form>
+            <form id="myFormEdit" action="{% url "fine:edit_type_index" %} " method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid2" name="id"/>
+            </form>
+            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+            <div class="block-content">
+            <table class="table table-bordered table-striped js-dataTable-simple">
+                <thead>
+                    <tr>
+                            <th>Razón</th>
+                            <th>Precion</th>                                       
+                            <th>Acción</th>                                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fine in fines %}                                       
+                        <tr>
+                            <td class="font-w600">{{fine.reason}}</td>
+                            <td class="font-w600">S/. {{fine.price}} </td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-default editar" data-id="{{fine.id}}" type="button"  data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
+
+                                    <button class="btn btn-xs btn-default eliminar" data-id="{{fine.id}}" type="button" data-toggle="tooltip" title="Eliminar Tipo"><i class="fa fa-times"></i></button>
+                                </div>
+                            </td>    
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END Simple Table Full -->
+    </div>
+    <!-- END Page Content -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+    $(document).ready(function () {
+        $('.editar').click(function (e) {
+            var id = $(this).attr("data-id")          
+            $('#hid2').val(id)
+            document.forms["myFormEdit"].submit();    
+
+        });
+        $('.eliminar').click(function (e) {
+           var id = $(this).attr("data-id")          
+            $('#hid1').val(id)
+            document.forms["myFormDelete"].submit();          
+        });
+        
+    });
+    </script>
+    <!-- HASTA AQUÍ -->       
+
+    {% endblock %}
+

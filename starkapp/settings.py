@@ -37,8 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'products',
+    'users',
+    'promotions',
     'bungalows',
+    'memberships',
+    'membership_application',
+    'fine',
+    'objection',
+    'members',
+    'activities',
     'events_type',
+    'providers',
     'events'
 ]
 
