@@ -184,3 +184,33 @@ def update(request, activity_id):
         activity_service.update(activity_id, update_data)
 
         return HttpResponseRedirect(reverse('activities:index'))
+
+def index_course(request):
+
+    activity_service = ActivityService()
+
+    filters = getActivityFilters(request)
+
+    filters['activity_type_id'] = 2
+
+    activities = activity_service.filter(filters)
+
+    paginator = Paginator(activities, 10)
+
+    page = request.GET.get('page')
+
+    try:
+        activities = paginator.page(page)
+
+    except PageNotAnInteger:
+        activities = paginator.page(1)
+
+    except EmptyPage:
+        activities = paginator.page(paginator.num_pages)
+
+    context = {
+        'titulo': 'tittle',
+        'activities': activities
+    }
+
+    return render(request, 'Admin/Activities/index_course.html', context)

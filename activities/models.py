@@ -3,6 +3,7 @@ from activity_types.models import ActivityType
 # Create your models here.
 
 class Activity(models.Model):
+    status = models.DateTimeField()
     end_date = models.DateTimeField()
     attendance = models.IntegerField()
     start_date = models.DateTimeField()

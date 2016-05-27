@@ -127,8 +127,8 @@ Lista de actividades
                                 <td class="hidden-xs">
                                     <span class="label label-danger">Ocupado</span>
                                 </td>
-                                <td class="hidden-xs">{{activity.start_date}}</td>
-                                <td class="hidden-xs">{{activity.end_date}}</td>
+                                <td class="hidden-xs">{{activity.start_date|date:"d/m/Y"}}</td>
+                                <td class="hidden-xs">{{activity.end_date|date:"d/m/Y"}}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <a href="{% url 'activities:select' activity.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Serivicio"><i class="fa fa-pencil"></i></button></a>
