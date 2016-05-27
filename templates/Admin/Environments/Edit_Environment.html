@@ -43,11 +43,11 @@ Editar reserva
                                         <div class="form-group">
                                             <div class="col-xs-6">
                                                 <label for="mega-firstname">Codigo</label>
-                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="number" placeholder=""  disabled>
+                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="number" placeholder="" value="{{environment.id}}" disabled>
                                             </div>
                                             <div class="col-xs-6">
                                                 <label for="mega-lastname">Nombre</label>
-                                                <input class="form-control input-lg" type="text" id="mega-lastname" name="name" placeholder="Ingrese el nombre..">
+                                                <input class="form-control input-lg" type="text" id="mega-lastname" name="name" placeholder="Ingrese el nombre.." value="{{environment.name}}">
                                             </div>
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@ Editar reserva
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label for="mega-bio">Descripción</label>
-                                                <textarea class="form-control input-lg" id="mega-bio" name="description" rows="22" placeholder="Ingrese una breve descripción del ambiente.."></textarea>
+                                                <textarea class="form-control input-lg" id="mega-bio" name="description" rows="22" placeholder="Ingrese una breve descripción del ambiente..">{{environment.description}}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -79,9 +79,9 @@ Editar reserva
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Estado</label>
                                             <div class="col-sm-9">
-                                                <select class="form-control input-lg" id="example-select" name="status" size="1">
+                                                <select class="form-control input-lg" id="example-select" name="status" size="1" >
                                                     <option value="0">Seleccione un estado</option>
-                                                    <option value="1">Activo</option>
+                                                    <option value="1" selected >Activo</option>
                                                     <option value="2">Inactivo</option>
                                                     <option value="3">Ocupado</option>
                                                 </select>
@@ -89,7 +89,7 @@ Editar reserva
                                         </div>
                                         <div class="col-xs-6">
                                                 <label for="mega-lastname">Aforo</label>
-                                                <input class="form-control input-lg" type="text" id="mega-lastname" name="capacity" placeholder="Ingrese el aforo..">
+                                                <input class="form-control input-lg" type="text" id="mega-lastname" name="capacity" placeholder="Ingrese el aforo.." value="{{environment.capacity}}">
                                         </div>
                                     </div>
                                 </div>
