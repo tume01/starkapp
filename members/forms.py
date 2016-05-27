@@ -23,6 +23,8 @@ class MemberForm(forms.Form):
 
     def clean_phone(self):
         data = self.cleaned_data['phone']
+        if (data < 0):
+            raise forms.ValidationError("El Telefono no puede ser negativo")
         if (data < 999999):
-            raise forms.ValidationError("El Telefono tiene que ser como minimo 8 digitos")
+            raise forms.ValidationError("El Telefono tiene que ser como minimo 7 digitos")
         return data
