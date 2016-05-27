@@ -7,3 +7,6 @@ class Membership_ApplicationRepository(BaseRepository):
 
     def __init__(self):
         BaseRepository.__init__(self, Membership_Application)
+    
+    def all(self):
+        return self.model.objects.filter(status=1)

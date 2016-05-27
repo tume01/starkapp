@@ -25,6 +25,8 @@
 
     <!-- Bootstrap and OneUI CSS framework -->
     <link rel="stylesheet" href='{% static "assets/css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/js/plugins/select2/select2.min.css" %}'>
+
     <link rel="stylesheet" id="css-main" href='{% static "assets/css/oneui.css" %}'>
 
 </head>
@@ -426,7 +428,7 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                                     <ul>
                                         <li>
-                                            <a href='{% url 'bungalows:index' %}'>Consultar Bungalows</a>
+                                            <a href='{% url "bungalows:index" %}'>Consultar Bungalows</a>
                                         </li>
                                         <li>
                                             <a href='{% url "bungalows:create_index" %}'>Crear Bungalows</a>
@@ -496,38 +498,66 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Membresía</span></a>
-                            <ul>                                        
+                            <ul>      
                                 <li>
-                                    <a href=''>Pagos de membresía</a> 
+                                    <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
+                                </li>
+                                <li>
+                                    <a href='{% url 'memberships:type/create_index' %}'>Nuevo tipo de membresía</a> 
+                                </li>                                     
+                                <li>
+                                    <a href='{% url 'membership_application:index' %}'>Solicitudes de membresía</a> 
                                 </li>
                                 <li> 
-                                    <a href=''>Lista de invitados</a>
+                                    <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
                                 </li>
                                 <li>
-                                    <a href=''>Registrar invitados</a>
-                                </li> 
-                                <li>
-                                    <a href=''>Consultar socios en objeciones</a>
+                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía (User)</a> 
                                 </li>
                                 <li>
-                                    <a href=''>Afiliados</a>
+                                    <a href='{% url 'members:index' %}'>Miembros</a>
+                                </li>                                
+                            </ul>
+                        </li> 
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Usuarios</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url 'users:type/index' %}'>Tipos de usuario</a>
                                 </li>
                                 <li>
-                                    <a href=''>Registrar Afiliados</a>
+                                    <a href='{% url 'users:type/create_index' %}'>Registrar tipos de usuario</a>
+                                </li>
+                                <li>
+                                    <a href='{% url 'users:index' %}'>Usuarios</a>
+                                </li>
+                                <li>
+                                    <a href='{% url 'users:create_index' %}'>Registrar usuario (Externo)</a>
                                 </li>
                             </ul>
-                        </li>         
-                         <li>
+                        </li>        
+                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Promociones</span></a>
                             <ul>                                        
                                 <li>
                                    <a href='{% url 'promotions:index' %}'>Lista de promociones</a> 
                                 </li>
                                 <li>
-                                    <a href=''>Registrar promoción</a>
+                                    <a href='{% url "promotions:create_index" %}'>Registrar promoción</a>
                                 </li> 
                             </ul>
-                        </li>                                                            
+                        </li>
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Multas</span></a>
+                            <ul>                                        
+                                <li>
+                                   <a href='{% url 'fine:index_type' %}'>Lista de tipos</a> 
+                                </li>
+                                <li>
+                                    <a href='{% url "fine:create_type_index" %}'>Registrar tipo</a>
+                                </li> 
+                            </ul>
+                        </li>   
 
                     </ul>
                 </div>
@@ -760,12 +790,14 @@
         <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/select2/select2.full.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+        <script src='{% static "assets/js/product.js" %}'></script>
 
         <!-- Page JS Code -->
         <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script>
@@ -775,6 +807,17 @@
                 App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
             });
         </script>
+
+        <!-- Page JS Plugins -->
+<<<<<<< HEAD
+        <!--<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script> -->
+        <!--<script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script> -->
+        <!-- Page JS Code -->
+        <!--<script src="assets/js/pages/base_forms_validation.js"></script>-->
+=======
+        <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
+        <script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
+>>>>>>> 86ebd4bbc52bbbf9fb99a086b0950f190745de47
 
     </body>
     </html>

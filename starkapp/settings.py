@@ -38,8 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bungalows',
+    'products',
     'users',
     'promotions',
+    'memberships',
+    'membership_application',
+    'fine',
+    'objection',
+    'members',
+    'activities',
+    'events_type',
+    'providers',
 ]
 
 MIDDLEWARE_CLASSES = [

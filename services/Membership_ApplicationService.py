@@ -4,7 +4,7 @@ class Membership_ApplicationService(object):
 
     """docstring for Membership_ApplicationService"""
 
-    __Membership_Application_repository = Membership_ApplicationRepository.Membership_ApplicationRepository()
+    __membership_application_repository = Membership_ApplicationRepository.Membership_ApplicationRepository()
 
     def create(self, insert_data):
         return self.__membership_application_repository.create(insert_data)
@@ -17,3 +17,9 @@ class Membership_ApplicationService(object):
 
     def getMembership_Applications(self):
         return self.__membership_application_repository.all()
+
+    def getMembership_Application(self,id):
+        return self.__membership_application_repository.find(id)
+
+    def filter(self, filters):
+        return self.__membership_application_repository.filter(filters)

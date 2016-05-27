@@ -1,0 +1,66 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: multas
+{% endblock %}
+
+{% block head_dahsboard %}
+Tipos de multas
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista de multas
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Tipos de multas
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de tipos de multas
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+  <!-- Simple Table Full -->
+    <div class="block block-bordered">
+            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+            <div class="block-content">
+            <table class="table table-bordered table-striped js-dataTable-simple">
+                <thead>
+                    <tr>
+                            <th>Observacion</th>
+                            <th>Tipo</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fine in fines %}
+                        <tr>
+                            <td class="font-w600">{{fine.observations}}</td>
+                            <td class="font-w600">{{fine.reason}} </td>
+                            <td class="font-w600">S/. {{fine.price}} </td>
+                            <td class="font-w600">{{fine.status}} </td>
+                            <td class="text-center">
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END Simple Table Full -->
+    </div>
+    <!-- END Page Content -->
+
+    <!-- HASTA AQUÍ -->
+
+    {% endblock %}
+

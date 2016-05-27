@@ -5,12 +5,9 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.PromotionsService import PromotionsService
 from django.views.decorators.http import require_http_methods
+from Adapters.FormValidator import FormValidator
+from .forms import PromotionForm
 
-
-#
-# Nombres de atributos en ingles, fijate mis models porsiacaso
-# request deberia ser con Promotions y no Discounts
-#
 
 @require_http_methods(['GET'])
 def index(request):
@@ -23,41 +20,45 @@ def index(request):
         'promotions' : promotions,
     }
 
-    return render(request, 'Admin/Discounts/index_promotion.html', context) 
+    return render(request, 'Admin/Promotions/index_promotion.html', context) 
 
 
 @require_http_methods(['GET'])
 def create_index(request):
 
-    return render(request, 'Admin/Discounts/new_promotion.html', context)
+    context = {
+        'titulo' : 'titulo'
+    }
 
-@require_http_methods(['GET'])
+    return render(request, 'Admin/Promotions/new_promotion.html', context)
+
+@require_http_methods(['POST'])
 def edit_index(request):
+
+    id_promotion = request.POST['id']
 
     promotion_service = PromotionsService()
 
-    promotion = promotion_service.getPromotion()
-    #que se hace aqui?, getPromotion(id) o getPromotions()
+    promotion = promotion_service.getPromotion(id_promotion)
 
     context = {
         'promotion' : promotion,
     }
 
-    return render(request, 'Admin/Discounts/edit_promotion.html', context)
+    return render(request, 'Admin/Promotions/edit_promotion.html', context)
 
 @require_http_methods(['POST'])
 def delete_promotion(request):
 
-    insert_data = {}
+    edit_data = {}
 
-    insert_data["id"] = request.POST['id']
+    id_edit = request.POST['id']
 
-    insert_data["estado"] = 0
+    edit_data["status"] = 0
 
     promotion_service = PromotionsService()
 
-    promotion_service.update(insert_data)
-    #delete en lugar de update
+    promotion_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('promotions:index'))
 
@@ -65,34 +66,61 @@ def delete_promotion(request):
 @require_http_methods(['POST'])
 def create_promotion(request):
 
-    insert_data = {}
+    form = PromotionForm(request.POST)
 
-    insert_data["descripcion"] = request.POST['descripcion']
+    request = FormValidator.validateForm(form, request)
 
-    insert_data["porcentaje"] = request.POST['porcentaje']
+    if not request:
 
-    insert_data["estado"] = 1
+        insert_data = {}
 
-    promotion_service = PromotionsService()
+        insert_data["description"] = form.cleaned_data['description']
 
-    promotion_service.create(insert_data)
+        insert_data["percentage"] = form.cleaned_data['percentage']
 
-    return HttpResponseRedirect(reverse('promotions:index'))
+        insert_data["status"] = 1
+
+        promotion_service = PromotionsService()
+
+        promotion_service.create(insert_data)
+
+        return HttpResponseRedirect(reverse('promotions:index'))
+
+    else:
+        context = {
+            'titulo' : 'titulo'
+        }
+
+        return render(request, 'Admin/Promotions/new_promotion.html', context)
 
 
 @require_http_methods(['POST'])
 def edit_promotion(request):
 
-    insert_data = {}
+    form = PromotionForm(request.POST)
 
-    insert_data["descripcion"] = request.POST['descripcion']
-
-    insert_data["porcentaje"] = request.POST['porcentaje']
-
-    insert_data["id"] = request.POST['id']
+    id_edit = request.POST['id']
 
     promotion_service = PromotionsService()
 
-    promotion_service.update(insert_data)
+    if FormValidator.validateForm(form, request):
 
-    return HttpResponseRedirect(reverse('promotions:index'))
+        promotion = promotion_service.getPromotion(id_edit)
+
+        context = {
+            'promotion' : promotion
+        }
+
+        return render(request, 'Admin/Promotions/edit_promotion.html', context)
+
+    else:
+
+        edit_data = {}
+
+        edit_data["description"] = form.cleaned_data['description']
+
+        edit_data["percentage"] = form.cleaned_data['percentage']
+        
+        promotion_service.update(id_edit, edit_data)
+
+        return HttpResponseRedirect(reverse('promotions:index'))
