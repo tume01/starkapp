@@ -12,7 +12,7 @@ def index(request):
 
     environment_service = EnvironmentService()
 
-    environments = environment_service.getEnvironment()
+    environments = environment_service.getEnvironmentByStatus()
 
     context = {
         'environments' : environments,
@@ -37,7 +37,7 @@ def edit_index(request):
     id_environment= request.POST['id']
 
     environment_service = EnvironmentService()
-    
+
     environment = environment_service.getEnviromentById(id_environment)
 
     context = {
