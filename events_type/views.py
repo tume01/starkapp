@@ -101,11 +101,14 @@ def update_eventstype(request,type_id):
 
     insert_data = {}
 
-    insert_data["name"] = request.POST["name"]
+    if request.POST["name"]:
+        insert_data["name"] = request.POST["name"]
 
-    insert_data["description"] = request.POST["description"]
+    if request.POST["description"]:
+        insert_data["description"] = request.POST["description"]
 
-    insert_data["status"] = request.POST["status"]
+    if request.POST["status"]:
+        insert_data["status"] = request.POST["status"]
 
     events_type_service = EventsTypeService()
 

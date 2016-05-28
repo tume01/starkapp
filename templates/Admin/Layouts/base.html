@@ -9,7 +9,7 @@
     <title>YoQúeríaPHP -{% block head_title %}{% endblock %}</title>    
 
     <meta name="description" content="YoQúeríaPHP - Admin">
-    <meta name="author" content="YoQúeríaPHP">
+    <meta name="author" content="Javier" >
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
 
@@ -464,6 +464,20 @@
                             </ul>
                         </li>
                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
+                            <ul>
+                                <li>
+                                    <a href=''>Consultar sedes</a>
+                                </li>   
+                                <li>
+                                    <a href='{% url "headquarters:new" %}'>Nueva sede</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "headquarters:edit" %}'>Editar sede</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
                             <ul>
                                 <li>
@@ -489,11 +503,12 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar servicios</a>
+                                    <a href="{% url 'servicios:index' %}">Consultar Servicios</a>
                                 </li>
                                 <li>
-                                    <a href=''>Ver solicitudes de servicios</a>
+                                    <a href='{% url "servicios:create_index" %}'>Crear Servicios</a>
                                 </li>
+                                
                             </ul>
                         </li>
                         <li>
