@@ -24,6 +24,15 @@ Nuevo Invitado
 
                 <!-- Page Content -->
                 <div class="content content-narrow">
+                    <div class="content">
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{msg.message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-header bg-gray-lighter">

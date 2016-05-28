@@ -8,7 +8,21 @@ class MemberForm(forms.Form):
 
     name = forms.CharField(max_length=200, validators=[alphabetic], error_messages={'required': 'El campo Nombres es requerido', 'max_length': 'El campo Nombres debe tener una longitud maxima de 200 caracteres'})
     surname = forms.CharField(max_length=200, validators=[alphabetic], error_messages={'required': 'El campo Apellidos es requerido', 'max_length': 'El campo Apellidos debe tener una longitud maxima de 200 caracteres'})
-    dni = forms.IntegerField(min_value=8, max_value=8, error_messages={'required': 'El campo DNI es requerido', 'min_value':'El campo DNI debe tener 8 digitos minimo', 'max_value':'El campo DNI debe tener 8 digitos como maximo'})
-    phone = forms.IntegerField(min_value=8, error_messages={'required': 'El campo Telefono es requerido', 'min_value':'El campo Telefono debe tener minimo 8 digitos'})
-    address = forms.CharField(max_length=200, error_messages={'required': 'El campo Direccion es requerido', 'max_length': 'El campo Direccion debe tener una longitud maxima de 200 caracteres'})
-    email = forms.CharField(max_length=200,validators=EmailValidator, error_messages={'required': 'El campo Email es requerido', 'max_length': 'El campo Email debe tener una longitud maxima de 200 caracteres'})
+    dni = forms.IntegerField( error_messages={'required': 'El campo DNI es requerido'})
+    phone = forms.IntegerField(error_messages={'required': 'El campo Telefono es requerido'})
+    address = forms.CharField(error_messages={'required': 'El campo Direccion es requerido'})
+    email = forms.CharField(max_length=200, error_messages={'required': 'El campo Email es requerido', 'max_length': 'El campo Email debe tener una longitud maxima de 200 caracteres'})
+
+    def clean_dni(self):
+        data = self.cleaned_data['dni']
+        if (data < 9999999):
+            raise forms.ValidationError("El dni tiene que tener 8 digitos")
+        if (data > 100000000):
+            raise forms.ValidationError("El dni tiene que tener 8 digitos")
+        return data
+
+    def clean_phone(self):
+        data = self.cleaned_data['phone']
+        if (data < 999999):
+            raise forms.ValidationError("El Telefono tiene que ser como minimo 8 digitos")
+        return data
