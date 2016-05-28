@@ -5,4 +5,4 @@ from .BaseRepository import BaseRepository
 class BungalowsRepository(BaseRepository):
 
     def __init__(self):
-        BaseRepository.__init__(self, Bungalow)
+        BaseRepository.__init__(self, Bungalow) 

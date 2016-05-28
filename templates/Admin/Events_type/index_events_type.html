@@ -20,15 +20,7 @@ Crar tipo de eventos
 Crear tipo de eventos
 {% endblock %}
 
-{% block content %}
-                        {% if messages %}
-                            {% for msg in messages %}       
-                                <div class="alert alert-warning" role="alert">
-                                    {{msg.message}}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        
+{% block content %}     
                 <div class="content">
                     <!-- Simple Table Full -->
                     <div class="block">
@@ -40,10 +32,11 @@ Crear tipo de eventos
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"></th>
+                                        <th class="text-center">ID</th>
                                         <th>Nombre del evento</th>
                                         <th class="hidden-xs">Descripcion</th>
                                         <th class="text-center" style="width: 20%;">Estado del Evento</th>
+                                        <th class="text-center" style="width: 20%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,15 +45,17 @@ Crear tipo de eventos
                                         <td class="text-center">{{ type.id }}</td>
                                         <td class="font-w600">{{type.name}}</td>
                                         <td class="hidden-xs">{{type.description}}</td>
-                                        {% if type.status == 1 %}
-                                            <td class="hidden-xs">Habilitado</td>
-                                        {% else %}
-                                            <td class="hidden-xs">Deshabilitado</td>
-                                        {% endif %}
+                                        <td class="hidden-xs text-center">
+                                            {% if type.status == 0%}
+                                                <span class="label label-warning">Habilitado</span>
+                                            {% else %}
+                                                <span class="label label-danger">Deshabilitado</span>
+                                            {% endif %}
+                                        </td>
                                         <td class="text-center">
                                             <div class="btn-group">
                                                 <a href="/eventstype/edit/{{type.id}}" ><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button>
+                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
                                             </div>
                                         </td>
                                     </tr>
