@@ -33,6 +33,7 @@ $(function () {
 /******************************************************************/
 
 $('#SaveProduct').click(function(){
+//function SaveProduct(){
 	console.log('click Guardar');
 	data = {};
 	data.name = $('#name').val();
@@ -64,7 +65,9 @@ $('#SaveProduct').click(function(){
     });
 
     return xhr;
+//}
 });
+
 
 $('#EditProduct').click(function(){
 	console.log('click editar');
@@ -151,3 +154,10 @@ $('#filterProduct').click(function(){
     return xhr;
 
 });
+
+/*
+$('#formNewProduct').submit(function(){
+	console.log('form click');
+	SaveProduct();
+});
+*/
