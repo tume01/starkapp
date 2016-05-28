@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'objection',
     'members',
     'activities',
+    'activity_types',
     'events_type',
     'providers',
     'events',
@@ -94,7 +95,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'starkapp',
         'USER': 'root',
-        'PASSWORD': 'blackfeather14',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '',
     }
