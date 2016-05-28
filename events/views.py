@@ -105,7 +105,7 @@ def create_event(request):
 
         insert_data["environment_id"] = form.cleaned_data.get('environment') 
 
-        insert_data["user_id"] = form.cleaned_data.get('user') 
+        insert_data["user_id"] = request.POST.get('user') 
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
