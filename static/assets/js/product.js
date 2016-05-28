@@ -120,18 +120,15 @@ $('#filterProduct').click(function(){
 	data.f_name = $('#f_name').val();
 	data.f_select2Provider = $('#f_select2Provider').val();
 	data.f_selectProductType = $('#f_selectProductType').val();
+	/*
 	data.f_range_stock_min = $('#f_range_stock_min').val();
 	data.f_range_stock_max = $('#f_range_stock_max').val();
 	data.f_active = $('#f_active').val();
 	data.f_range_price_min = $('#f_range_price_min').val();
 	data.f_range_price_max = $('#f_range_price_max').val();
+	*/
 
 	console.log('json='+JSON.stringify(data));
-
-	data2 ={};
-	data2.name = 'casa';
-	data2.lastname='roja';
-
 
 	var xhr = $.ajax({
 	    type: "POST", 

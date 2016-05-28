@@ -14,6 +14,7 @@ import json
 import urllib
 import logging
 from django.db import IntegrityError, transaction
+from django.core import serializers
 
 @require_http_methods(['GET'])
 def index(request):
@@ -185,15 +186,18 @@ def filter_product(request):
     logging.debug(qry)
 
     try:
-        for p in Product.objects.raw(qry):
+        list_products = Product.objects.raw(qry)
+        for p in list_products:
             print(p.id)
+
+        req_list = serializers.serialize('json', list_products)
 
         #list_products = list_products[:]
     except IntegrityError:
         handle_exception()
         list_products = None
 
-
+    
     
 
-    return HttpResponse( json.dumps(req), content_type='application/json')
+    return HttpResponse( json.dumps(req_list), content_type='application/json')
