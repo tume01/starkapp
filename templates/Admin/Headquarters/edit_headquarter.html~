@@ -92,8 +92,8 @@ Sedes
                     <div class="col-sm-7">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label for="mega-bio">Comentarios</label>
-                                <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="22" placeholder="Enter a few details about this place.."></textarea>
+                                <label for="mega-bio">Direccion</label>
+                                <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="22" placeholder="Enter the location of this headquarter.."></textarea>
                             </div>
                         </div>
                     </div>

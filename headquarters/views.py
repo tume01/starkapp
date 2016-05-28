@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from HeadquarterService import HeadquarterService
+from services.HeadquarterService import HeadquarterService
 
 from adapters.FormValidator import FormValidator
 from django.views.decorators.http import require_http_methods
@@ -17,7 +17,42 @@ from .forms import HeadquarterForm
 @require_http_methods(['GET'])
 def index(request):
 	headquarter_service = HeadquarterService()
+	
+	#filters = headquarters_filter(request)
+	headquarters = headquarter_service.getHeadquarters()
+	paginator = Paginator(headquarters, 10)
 
+	page = request.GET.get('page')
+
+	try:
+		headquarters = paginator.page(page)
+	except PageNotAnInteger:
+		headquarters = paginator.page(1)
+	except EmptyPage:
+		headquarters = paginator.page(paginator.num_pages)
+
+	context = {
+		'titulo': 'Title',
+		'headquarters': headquarters
+	}
+
+	return render(request, 'Admin/Headquarters/index_headquarter.html', context)
+
+def headquarters_filter(request):
+	filters = {}
+
+	if request.GET.get('name'):
+		filters['name'] = request.GET.get('name')
+
+	if request.GET.get('description'):
+		filters['description'] = request.GET.get('description')
+
+	if request.GET.get('location'):
+		filters['location'] = request.GET.get('location')
+
+	return filters
+
+@require_http_methods(['POST'])
 def create_headquarters(request):
 	request = FormValidator.validateForm(form, request)
 
@@ -27,14 +62,15 @@ def create_headquarters(request):
 
 		insert_data = {
 			'name': name,
-			'location': location,
+			'description': description,
+			'location': location
 		}
 
 		headquarter_service.create(insert_data)
 
-		return HttpResponseRedirect(reverse('TBD'))
-	else
-		return render(request, 'TBD', context)
+		return HttpResponseRedirect(reverse('headquarter:index'))
+	else:
+		return render(request, 'headquarter:index', context)
 
 @require_http_methods(['POST'])	
 def update(request, headquearter_id):
@@ -47,24 +83,23 @@ def update(request, headquearter_id):
 		context = {
 			'titulo': 'titulo'
 		}
-		return render(request, 'TBD', context)
+		return render(request, 'headquarter:index', context)
 	else:
 		headquarter_service = HeadquarterService()
 
 		name = form.cleaned_data['name']
+		description = form.cleaned_data['description']
 		location = form.cleaned_data['location']
 
 		update_information = {
 			'name': name,
+			'description': description,
 			'location': location
 		}
 
 		headquarter_service.update(headquearter_id, update_information)
 
-		return HttpResponseRedirect(reverse('TBD'))
+		return HttpResponseRedirect(reverse('headquarter:index'))
 	headquarter = headquarter_service.update(headquearter_id, update_information)
 
-	return HttpResponseRedirect(reverse('TBD'))
-
-
-	
+	return HttpResponseRedirect(reverse('headquarter:index'))

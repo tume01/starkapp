@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^activities/', include('activities.urls')),
     url(r'^eventstype/', include('events_type.urls')),
     url(r'^providers/', include('providers.urls')),
+    url(r'^headquarters/', include('headquarters.urls')),
 ]
 
 if settings.DEBUG:

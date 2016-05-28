@@ -99,7 +99,7 @@ Lista de sedes
                         <tr>
                             <td class="text-center">4</td>
                             <td class="font-w600">Sede 3</td>
-                            <td class="hidden-xs">Direccion 23</td>
+                            <td class="hidden-xs">Direccion 3</td>
                             <td class="hidden-xs">
                                 <span class="label label-success">Desactivada</span>
                             </td>

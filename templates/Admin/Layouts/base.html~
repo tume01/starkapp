@@ -464,7 +464,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="ffa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Sedes</span></a>
                             <ul>
                                 <li>
                                     <a href=''>Consultar sedes</a>

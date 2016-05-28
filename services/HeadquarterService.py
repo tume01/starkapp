@@ -1,6 +1,6 @@
 from repositories import HeadquartersRepository
 
-class HeadquearterService(object):
+class HeadquarterService(object):
 
 	__headquarters_repository = HeadquartersRepository.HeadquartersRepository()
 
@@ -13,8 +13,8 @@ class HeadquearterService(object):
 	def delete(self, id):
 		return self.__headquarters_repository.delete(id)
 
-	def getHeadquarter(self, id):
-		return self.__headquarters_repository.getHeadquarter(id)
+	def getHeadquarters(self):
+		return self.__headquarters_repository.all()
 
 	def findHearquarter(self, id):
 		return self.__headquarters_repository.findHearquarter(id)
