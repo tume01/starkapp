@@ -15,13 +15,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='event',
             name='ruc',
-            field=models.CharField(default=0, max_length=8),
+            field=models.CharField(default=1, max_length=8),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='event',
             name='seat',
-            field=models.CharField(default=0, max_length=20),
+            field=models.CharField(default=1, max_length=20),
             preserve_default=False,
         ),
     ]
