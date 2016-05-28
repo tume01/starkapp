@@ -1,4 +1,5 @@
 from django import forms
+from datetime import datetime
 from django.core.validators import RegexValidator
 
 class MembershipApplicationForm(forms.Form):
@@ -18,5 +19,11 @@ class MembershipApplicationForm(forms.Form):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
         if (data > 100000000):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
+        return data
+
+    def clean_finalDate(self):
+        data = self.cleaned_data['finalDate']
+        if data < datetime.now().date():
+            raise forms.ValidationError("La fecha final no puede ser menor a la de hoy")
         return data
 
