@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'activities',
     'events_type',
     'providers',
-    'events'
+    'events',
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -65,6 +65,7 @@ var ProviderFormValidation = function() {
                 },
                 'ruc': {
                     minlength: 'El RUC debe tener 11 dígitos',
+                    maxlength: 'El RUC debe tener 11 dígitos'
                 },
                 'environment': {
                     required: 'Por favor ingrese el ambiente donde se realizará el evento'

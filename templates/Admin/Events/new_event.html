@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
 
 {% load staticfiles %}
 
@@ -11,7 +11,7 @@ Eventos
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Inscripción
+Creación
 {% endblock %}
 
 {% block sub_head_dahsboard %}
@@ -53,9 +53,8 @@ Nueva Inscripción
                                             <div class="col-md-10">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="name" placeholder="Evento">
-                                                    {{form.name}}
-                                                </div>
+                                                    <input class="form-control" type="text" id="name" name="name" placeholder="Evento" value="">
+                                                </div> 
                                             </div>
                                         </div>
                                     </div>
@@ -63,7 +62,8 @@ Nueva Inscripción
                                         <div class="form-group">
                                             <label class="col-xs-12" for="event_type">Tipo de evento</label>
                                             <div class="col-sm-6">
-                                                <select class="form-control" id="example-select" name="event_type" size="1">
+                                                <select class="form-control" id="event_type" name="event_type" size="1">
+                                                    <option value="">Seleccionar</option>
                                                     <option value="1">Privado</option>
                                                     <option value="2">Público</option>
                                                 </select>
@@ -72,11 +72,11 @@ Nueva Inscripción
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="user">Usuario</label>
+                                            <label class="col-xs-12" for="user">Código del usuario</label>
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="user" value="{{form.user}}" placeholder="Id del usuario" >
+                                                    <input class="form-control" type="number" id="user" name="user" value="" placeholder="Id del usuario" >
                                                 </div>
                                             </div>
                                         </div>
@@ -87,7 +87,7 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="number" maxlength="8" id="example-input1-group1" name="ruc" placeholder="R.U.C" value="{{form.ruc}}" >
+                                                    <input class="form-control" type="number" maxlength="8" id="ruc" name="ruc" placeholder="R.U.C" value="" >
                                                 </div>
                                                 <label><b><i>Si el evento es para una empresa llenar este campo</i></b></label>
                                             </div>
@@ -99,7 +99,7 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="seat" placeholder="Sede Principal" value="{{form.seat}}" >
+                                                    <input class="form-control" type="text" id="seat" name="seat" placeholder="Sede Principal" value="{{form.seat}}" >
                                                 </div>
                                             </div>
                                         </div>
@@ -110,7 +110,7 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="environment" value="{{form.environment}}" placeholder="Ambiente" >
+                                                    <input class="form-control" type="text" id="environment" name="environment" value="{{form.environment}}" placeholder="Ambiente" >
                                                 </div>
                                             </div>
                                         </div>
@@ -123,7 +123,7 @@ Nueva Inscripción
                                             <label class="col-xs-12" for="start_date">Fechas del Evento</label>
                                             <div class="col-md-6">
                                                 <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="start_date" placeholder="Fecha y hora del Inicio del Evento" value="{{form.start_date}}" >
+                                                    <input class="form-control" type="text" id="start_date" name="start_date" placeholder="Fecha y hora del Inicio del Evento" value="{{form.start_date}}" >
                                                     <span class="input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </span>
@@ -131,7 +131,7 @@ Nueva Inscripción
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="end_date" placeholder="Fecha y hora del Fin del Evento" value="{{form.end_date}}" >
+                                                    <input class="form-control" type="text" id="end_date" name="end_date" placeholder="Fecha y hora del Fin del Evento" value="{{form.end_date}}" >
                                                     <span class="input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </span>
@@ -145,7 +145,7 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                                    <input class="form-control" type="number" id="example-input1-group1" name="assistance" value="{{form.assistance}}" placeholder="Cantidad máxima de participantes" >
+                                                    <input class="form-control" type="number" id="assistance"  maxlength="11" name="assistance" value="{{form.assistance}}" placeholder="Cantidad máxima de participantes" >
                                                 </div>
                                             </div>
                                         </div>
@@ -156,7 +156,7 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                                    <input class="form-control" type="number" id="example-input1-group1" name="price" value="{{form.price}}" placeholder="S/.">
+                                                    <input class="form-control" type="number" id="price" name="price" value="{{form.price}}" placeholder="S/.">
                                                 </div>
                                             </div>
                                         </div>
@@ -168,7 +168,7 @@ Nueva Inscripción
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label for="description">Observaciones</label>
-                                                <textarea class="form-control input-lg" id="mega-bio" name="description" rows="8" placeholder="Ingrese alguna observación adicional que debamos tener en cuenta para atenderlo mejor." value="{{form.description}}"></textarea>
+                                                <textarea class="form-control input-lg" id="description" name="description" rows="8" placeholder="Ingrese alguna observación adicional que debamos tener en cuenta para atenderlo mejor." value="{{form.description}}"></textarea>
                                             </div>
                                         </div>
                                     </div>                                    
@@ -176,10 +176,10 @@ Nueva Inscripción
                                 
                                 <div class="form-group">
                                     <div class="col-xs-2">
-                                        <button href=""class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
+                                        <button href="" class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
                                     </div>
-                                    <div class="col-xs-2 col-xs-offset-4"><!-- type="submit" -->
-                                        <button href="{% url 'events:index' %}" class="btn btn-danger" type=""><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                    <div class="col-xs-2 col-xs-offset-4"button><!-- type="submit" -->
+                                        <a href="{% url 'events:index' %}" class="btn btn-danger" type="button"><i class="fa fa-times push-5-r"></i> Cancelar</a>
                                     </div>
                                 </div>
                             </form>
@@ -192,4 +192,47 @@ Nueva Inscripción
 
 {% endblock %}
 
-<script src='{% static "assets/js/Admin/Events/events_validation.js" %}'></script>
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+<script>
+    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+
+
+        <script src='{% static "assets/js/Admin/Events/events_validation.js" %}'></script>
+        <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+
+{% endblock %}
