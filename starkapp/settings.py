@@ -31,26 +31,32 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'servicios.apps.ServiciosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bungalows',
-    'environment',
     'products',
     'users',
     'promotions',
+    'bungalows',
+    'environment',
     'memberships',
     'membership_application',
     'fine',
     'objection',
     'members',
     'activities',
+    'activity_types',
     'events_type',
     'providers',
+<<<<<<< HEAD
     'headquarters',
+=======
+    'events',
+>>>>>>> 73cc7773dd94963047c1380256cb901eb2792e02
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -75,6 +81,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.csrf',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -93,7 +100,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'starkapp',
         'USER': 'root',
-        'PASSWORD': '20101573',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '',
     }
