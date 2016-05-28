@@ -93,7 +93,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'starkapp',
         'USER': 'root',
-        'PASSWORD': '20101573',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '',
     }

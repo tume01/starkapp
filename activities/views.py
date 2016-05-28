@@ -2,6 +2,7 @@ from datetime import datetime
 from .forms import ActivityForm
 import json
 from django.template import loader
+from services.EnvironmentService import EnvironmentService
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponse
@@ -83,6 +84,7 @@ def create_activity(request):
 
         activity_service = ActivityService()
         activity_types_service = ActivityTypeService()
+        environments_service = EnvironmentService()
 
         name = form.cleaned_data['name']
         price = form.cleaned_data['price']
@@ -90,7 +92,9 @@ def create_activity(request):
         start_date = form.cleaned_data['start_date']
         end_date   = form.cleaned_data['end_date']
         activity_type_id = form.cleaned_data['activity_type']
+        enviroment_id = form.cleaned_data['environments']
 
+        enviroment = environments_service.getEnviromentById(enviroment_id)
         activity_type = activity_types_service.getActivityType(activity_type_id)
 
         insert_data = {
@@ -99,7 +103,8 @@ def create_activity(request):
             'attendance': attendance,
             'start_date': start_date,
             'end_date': end_date,
-            'activity_type': activity_type
+            'activity_type': activity_type,
+            'enviroment': enviroment
         }
 
         activity_service.create(insert_data)
@@ -114,12 +119,15 @@ def create_activity(request):
 def create_index(request):
 
     activity_types_service = ActivityTypeService()
+    environments_service = EnvironmentService()
 
     activity_types = activity_types_service.getActivityTypes()
+    environments = environments_service.getEnvironment()
 
     context = {
         'titulo': 'tittle',
         'activity_types': activity_types,
+        'environments': environments,
     }
 
     return render(request, 'Admin/Activities/new_activity.html', context)
@@ -141,14 +149,17 @@ def update_index(request, activity_id):
 
     activity_service = ActivityService()
     activity_types_service = ActivityTypeService()
+    environments_service = EnvironmentService()
 
     activity  = activity_service.getActivity(activity_id)
     activity_types = activity_types_service.getActivityTypes()
+    environments = environments_service.getEnvironment()
 
     context = {
         'titulo': 'tittle',
         'activity': activity,
-        'activity_types': activity_types
+        'activity_types': activity_types,
+        'environments': environments
     }
 
     return render(request, 'Admin/Activities/edit_activity.html', context)
@@ -166,12 +177,19 @@ def update(request, activity_id):
 
     else:
         activity_service = ActivityService()
+        environments_service = EnvironmentService()
+        activity_types_service = ActivityTypeService()
 
         name = form.cleaned_data['name']
         price = form.cleaned_data['price']
         attendance = form.cleaned_data['attendance']
         start_date = form.cleaned_data['start_date']
         end_date   = form.cleaned_data['end_date']
+        activity_type_id = form.cleaned_data['activity_type']
+        enviroment_id = form.cleaned_data['environments']
+
+        enviroment = environments_service.getEnviromentById(enviroment_id)
+        activity_type = activity_types_service.getActivityType(activity_type_id)
 
         update_data = {
             'name': name,
@@ -179,6 +197,8 @@ def update(request, activity_id):
             'end_date': end_date,
             'attendance': attendance,
             'start_date': start_date,
+            'activity_type': activity_type,
+            'enviroment': enviroment
         }
 
         activity_service.update(activity_id, update_data)

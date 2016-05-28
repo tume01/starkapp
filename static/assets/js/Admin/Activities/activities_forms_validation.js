@@ -50,6 +50,9 @@ var ProviderFormValidation = function() {
                 'activity_type': {
                     required: true
                 },
+                'environments': {
+                    required: true
+                }
             },
             messages: {
                 'name': {
@@ -75,6 +78,9 @@ var ProviderFormValidation = function() {
                 'activity_type': {
                     required: 'Por favor seleccione un tipo de actividad'
                 },
+                'environments': {
+                    required: 'Por favor seleccione un ambiente'
+                }
                 /*
                 'val-confirm-password': {
                     required: 'Please provide a password',
