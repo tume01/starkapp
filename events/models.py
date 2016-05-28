@@ -1,10 +1,12 @@
 from django.db import models
 from events_type.models import EventsType
+from environment.models import Environment
+from users.models import User
 
 class Event(models.Model):
     event_type  =   models.ForeignKey(EventsType, on_delete=models.CASCADE,default=None)
-    #environment =   models.ForeignKey(Environment, on_delete=models.CASCADE)
-    #user        =   models.ForeignKey(User, on_delete=models.CASCADE)
+    environment =   models.ForeignKey(Environment, on_delete=models.CASCADE,default=None)
+    user        =   models.ForeignKey(User, on_delete=models.CASCADE,default=None)
 
     name        =   models.CharField(max_length=100)
     description =   models.CharField(max_length=200)
