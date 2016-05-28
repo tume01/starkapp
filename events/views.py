@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.EventsService import EventsService
+from services.EnvironmentService import EnvironmentService
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
@@ -56,8 +57,13 @@ def getActivityFilters(request):
 @require_http_methods(['GET'])
 def create_index(request):
 
+    environment_service = EnvironmentService()
+
+    environments = environment_service.getEnvironment()
+
     context = {
-        'titulo' : 'titulo'
+        'titulo' : 'titulo',
+        'environments' : environments
     }
 
     return render(request, 'Admin/Events/new_event.html', context)

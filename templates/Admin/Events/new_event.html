@@ -110,7 +110,12 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="environment" name="environment" value="{{form.environment}}" placeholder="Ambiente" >
+                                                     <select class="form-control" id="event_type" name="event_type" size="1">
+                                                        <option value="">Seleccionar</option>
+                                                        {% for environment in environments%}
+                                                            <option value="1">{{environment.name}}</option>
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

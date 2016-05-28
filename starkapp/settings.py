@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users',
     'promotions',
     'bungalows',
+    'environment',
     'memberships',
     'membership_application',
     'fine',
