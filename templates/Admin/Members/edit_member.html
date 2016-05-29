@@ -1,0 +1,128 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: miembros
+{% endblock %}
+
+{% block head_dahsboard %}
+Miembro
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Editar miembro
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Miembro
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Editar miembro
+{% endblock %}
+
+{% block content %}
+     <div class="content content-narrow">
+         <div class="content">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-warning" role="alert">
+                    {{msg.message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+         </div>
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action='{% url "members:edit" %}' method="post" >
+                            {% csrf_token %}
+                             <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group" style="display: none;">
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="id"  value="{{member.id}}"  type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="display: none;">
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="membership_type_id"  value="{{membership_application.membership_type_id}}" type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-number-input">Nombres</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombres" value="{{member.name}}"  type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Apellidos</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-input2-group1" name="surname" placeholder="Apellidos" value="{{member.surname}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>          
+                                <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">DNI</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI" value="{{member.dni}}" pattern="[0-9]*" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input2">Direccion</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-input1-group2" name="address" placeholder="Direccion" value="{{member.address}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>        
+                                 <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Teléfono</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-number1-group2" name="phone" placeholder="Teléfono" value="{{member.phone}}"  type="number" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input2">Correo</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-input1-group2" name="email" value="{{member.email}}" placeholder="Correo" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>              
+                                <div class="form-group">                    
+                                    <div class="col-xs-2 col-xs-offset-4">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "members:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>    
+
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'Admin/Layouts/base_a.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: productos
+{% endblock %}
+
+{% block head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Editar producto
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Editar producto
+{% endblock %}
+
+{% block content %}
+
+     <input type="hidden" id="idProduct" value="{{product.id}}">
+     <div class="content content-narrow">
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-header bg-gray-lighter">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>                                
+                            </ul>
+                        </div>
+                        <div class="block-content">
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10">
+                            {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="control-label" for="name">Nombre del producto</label>
+                                                <input class="form-control" name="name" id="name" placeholder="" type="text" value="{{product.name}}">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-5 ">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label" for="select2Provider">Proveedor</label> 
+                                                <select class="form-control" multiple="multiple" id="select2Provider" >
+                                                    {% for p in all_providers %}
+                                                        {% if p in product.provider.all %}
+                                                        <option selected value="{{p.id}}">{{p.businessName}}</option>
+                                                        {% else %}
+                                                        <option value="{{p.id}}">{{p.businessName}}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="col-xs-12" for="price">Precio</label>
+                                                <input class="form-control" name="price" id="price" placeholder="" type="text" value="{{product.price}}">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label class="control-label" for="actualStock">Stock actual</label>
+                                                <input class="form-control" name="actualStock" id="actualStock" placeholder="" type="text" value="{{product.actual_stock}}">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="control-label" for="minStock">Stock minimo</label>
+                                                <input class="form-control" name="minStock" id="minStock" placeholder="" type="text" value="{{product.minimum_stock}}">
+                                                <div class="help-block"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label class="control-label" for="selectProductType">Tipo Producto</label>
+                                                <select class="form-control" name="selectProductType" id="selectProductType" size="1">                                                    
+                                                    {% for i in all_product_types%}
+                                                        {% if i = product.product_type %}
+                                                        <option selected value="{{i.id}}">{{i.name}}</option>
+                                                        {% else %}
+                                                        <option value="{{i.id}}">{{i.name}}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+
+                                
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                       <div class="form-group">
+                                        <div class="col-xs-12">
+                                            <label class="control-label" for="description">Descripcion</label>
+                                            <textarea class="form-control input-lg" name="description" id="description" rows="8" placeholder="Ingrese alguna descripcion acerca del producto">{{product.description}}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">                                        
+                                        <div class="col-xs-2 col-xs-offset-4">
+                                            <button class="btn btn-success" type="button" id="EditProduct"><i class="fa fa-check push-5-r"></i>Guardar</button>
+                                        </div>  
+                                        <div class="col-sm-2">
+                                            <a href='{% url "products:index" %}'><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                                        </div>                                                                        
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>    
+
+
+{% endblock %}
+
+{% block scripts %}
+
+                <!-- Page Plugins -->
+                <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+                <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+                <script>
+                    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        <script src='{% static "assets/js/product.js" %}'></script>
+        <script src='{% static "assets/js/Admin/Product/product_forms_validation.js" %}'></script>
+        
+
+        {% endblock %}

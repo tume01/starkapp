@@ -20,3 +20,13 @@ class FineService(object):
 
     def getFine(self, id):
         return self.__fine_repository.find(id)
+
+    def filter(self, filters):
+        return self.__fine_repository.filter(filters)
+
+    def getFineByUser(self, id_Member):
+        filter_fine = {}
+        filter_fine['member'] = id_Member
+        return self.__fine_repository.filter(filter_fine)
+
+

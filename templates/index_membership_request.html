@@ -29,40 +29,42 @@ Lista de solicitudes de membresía
     <!-- Simple Table Full -->
     <div class="block">
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "mebership_application:user_filter" %}' method="post" >
+                            <form class="form-horizontal push-10-t push-10" action='{% url "membership_application:user_filter" %}' method="post" >
+                                {% csrf_token %}  
                                 <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Nombres</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="names" placeholder="Nombres"  type="text" >
+                                                    <input class="form-control" id="example-input1-group1" name="firstName" placeholder="Nombres"  type="text" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Apellidos</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input2-group1" name="surnames" placeholder="Apellidos"  type="text" >
+                                                    <input class="form-control" id="example-input2-group1" name="lastName" placeholder="Apellidos"  type="text" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6" >
+                                
+                                <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">DNI</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI"  type="number" >
+                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI" pattern="[0-9]*" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                <div class="row">                                    
                                     <div class="form-group">
                                         <div class="col-lg-8 col-lg-offset-4">
                                             <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
@@ -74,18 +76,20 @@ Lista de solicitudes de membresía
                         </div>
                     </div>
     <div class="block block-bordered">
-         <form id="myFormObject" action="{% url "mebership_application:objection_index" %} " method="post">
+         <form id="myFormObject" action="{% url "membership_application:objection_index" %} " method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid1" name="id"/>
             </form>     
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
                             <table class="table table-bordered table-striped js-dataTable-simple">
-                                <thead>
+                                 <thead>
                                     <tr>
                                         <th>DNI</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>                                       
+                                        <th>Fecha Inicio</th>  
+                                        <th>Fecha Fin</th>  
                                         <th>Comentarios</th> 
                                         <th>Acciones</th>                                      
                                     </tr>
@@ -94,10 +98,10 @@ Lista de solicitudes de membresía
                                     {% for membershipApp in membershipApplications %}                                       
                                         <tr>
                                             <td class="font-w600">{{membershipApp.dni}}</td>
-                                            <td class="font-w600">{{membershipApp.names}}</td>
-                                            <td class="font-w600">{{membershipApp.surnames}}</td>
-                                            <td class="font-w600">{{membershipApp.iniDate}}</td>
-                                            <td class="font-w600">{{membershipApp.endDate}}</td>
+                                            <td class="font-w600">{{membershipApp.firstName}}</td>
+                                            <td class="font-w600">{{membershipApp.lastName}}</td>
+                                            <td class="font-w600">{{membershipApp.initialDate}}</td>
+                                            <td class="font-w600">{{membershipApp.finalDate}}</td>
                                             <td class="font-w600">{{membershipApp.comments}}</td>
                                             <td class="text-center">
                                                <div class="btn-group">

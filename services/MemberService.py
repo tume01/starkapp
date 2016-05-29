@@ -21,4 +21,8 @@ class MembersService(object):
     def getMember(self,id):
         return self.__member_repository.find(id)
 
+    def filter(self, filters):
+        return self.__member_repository.filter(filters)
+
+
     

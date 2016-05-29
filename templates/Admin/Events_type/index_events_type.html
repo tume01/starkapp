@@ -1,0 +1,68 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: Crear tipo de eventos
+{% endblock %}
+
+{% block head_dahsboard %}
+Crear tipo de eventos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Crear tipo de eventos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Crar tipo de eventos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Crear tipo de eventos
+{% endblock %}
+
+{% block content %}     
+                <div class="content">
+                    <!-- Simple Table Full -->
+                    <div class="block">
+                        <!--<div class="block-header">
+                            <h3 class="block-title">Simple Table <small>Full</small></h3>
+                        </div>-->
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">ID</th>
+                                        <th>Nombre del evento</th>
+                                        <th class="hidden-xs">Descripcion</th>
+                                        <th class="text-center" style="width: 20%;">Estado del Evento</th>
+                                        <th class="text-center" style="width: 20%;">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                	{% for type in events_type %}
+                                    <tr>
+                                        <td class="text-center">{{ type.id }}</td>
+                                        <td class="font-w600">{{type.name}}</td>
+                                        <td class="hidden-xs">{{type.description}}</td>
+                                        <td class="hidden-xs text-center">
+                                            {% if type.status == 0%}
+                                                <span class="label label-warning">Habilitado</span>
+                                            {% else %}
+                                                <span class="label label-danger">Deshabilitado</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <a href="/eventstype/edit/{{type.id}}" ><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
+                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title=""><i class="fa fa-times"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+{% endblock %}

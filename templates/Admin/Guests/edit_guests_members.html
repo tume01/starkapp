@@ -24,6 +24,15 @@ Editar Invitado
 
                 <!-- Page Content -->
                 <div class="content content-narrow">
+                    <div class="content">
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="alert alert-warning" role="alert">
+                                {{msg.message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    </div>
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-header bg-gray-lighter">
@@ -67,7 +76,7 @@ Editar Invitado
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-user-plus"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group2" name="dni"  value= "{{guest.dni}}"  placeholder="DNI de invitado" >
+                                                    <input class="form-control" pattern="[0-9]*" id="example-input1-group2" name="dni"  value= "{{guest.dni}}"  placeholder="DNI de invitado" >
                                                 </div>
                                             </div>
                                         </div>

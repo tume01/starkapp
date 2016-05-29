@@ -1,0 +1,211 @@
+{% extends 'Admin/Layouts/base_a.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Usuario: proveedores
+{% endblock %}
+
+{% block head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Editar proveedor
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Proveedores
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Edición de proveedor
+{% endblock %}
+
+{% block content %}
+
+<div class="content content-narrow">
+    <div class="block">
+        <div class="block-header">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                </li>
+            </ul>
+            <!--<h3 class="block-title">MANTENIMIENTO PROVEEDORES</h3>-->
+        </div>
+
+        <div class="block-content">
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "providers:update" id %}' method="post" >
+                {% csrf_token %}                       
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="ruc">R.U.C.</label>
+                                {{form.ruc}}
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="businessName">Razón Social</label> 
+                                {{form.businessName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-8">
+                                <label class="control-label" for="status">Estado</label>
+                                {{form.status}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="province">Provincia</label>
+                                {{form.province}}
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="distric">Distrito</label>
+                                {{form.distric}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-8">
+                                <label class="control-label" for="registrationDate">Fecha de Registro</label>
+                                {{form.registrationDate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="address">Dirección</label>
+                                {{form.address}}
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="effectiveTime">Tiempo de Vigencia</label>
+                                {{form.effectiveTime}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="col-xs-8">
+                                <label class="control-label" for="phone">Teléfono</label>
+                                {{form.phone}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col-xs-9">
+                                <label class="control-label" for="email">Correo</label>                            
+                                {{form.email}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="contactName">Nombre de contacto</label>
+                                {{form.contactName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <div class="col-xs-5">
+                                <label class="control-label" for="contactPhone">Número de contacto</label>
+                                {{form.contactPhone}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-2 col-xs-offset-4">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-danger" type=""><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>  
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+<script>
+    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+
+
+        <script src='{% static "assets/js/Admin/Provider/provider_forms_validation.js" %}'></script>
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        
+
+        {% endblock %}

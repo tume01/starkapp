@@ -4,7 +4,7 @@ class Membership_ApplicationService(object):
 
     """docstring for Membership_ApplicationService"""
 
-    __Membership_Application_repository = Membership_ApplicationRepository.Membership_ApplicationRepository()
+    __membership_application_repository = Membership_ApplicationRepository.Membership_ApplicationRepository()
 
     def create(self, insert_data):
         return self.__membership_application_repository.create(insert_data)

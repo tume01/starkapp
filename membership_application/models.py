@@ -1,13 +1,13 @@
-from django.db import models
-from memberships import models.MembershipType
+from django.db import models as m
+from memberships import models as x
 
 # Create your models here.
-class Membership_Application(models.Model):
-    membership_type = models.ForeignKey(MembershipType, on_delete=models.CASCADE)
-    firstName = models.CharField(max_length=20)
-    lastName = models.CharField(max_length=20)
-    dni = models.IntegerField()
-    comments = models.CharField(max_length=200)
-    initialDate = models.DateField()
-    finalDate = models.DateField()
-    status = models.CharField(max_length=20)
+class Membership_Application(m.Model):
+    membership_type = m.ForeignKey(x.MembershipType, on_delete=m.CASCADE)
+    firstName = m.CharField(max_length=20)
+    lastName = m.CharField(max_length=20)
+    dni = m.IntegerField()
+    comments = m.CharField(max_length=200)
+    initialDate = m.DateField()
+    finalDate = m.DateField()
+    status = m.IntegerField()
