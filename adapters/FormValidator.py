@@ -2,8 +2,8 @@ from django.contrib import messages
 
 class FormValidator():
 
-    @staticmethod
-    def validateForm(form, request):
+    @classmethod
+    def validateForm(cls, form, request):
 
         if not form.is_valid():
 
@@ -22,3 +22,4 @@ class FormValidator():
             return request
 
         return False
+
