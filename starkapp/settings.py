@@ -52,11 +52,8 @@ INSTALLED_APPS = [
     'activity_types',
     'events_type',
     'providers',
-<<<<<<< HEAD
     'headquarters',
-=======
     'events',
->>>>>>> 73cc7773dd94963047c1380256cb901eb2792e02
 ]
 
 MIDDLEWARE_CLASSES = [
