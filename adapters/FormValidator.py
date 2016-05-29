@@ -22,4 +22,3 @@ class FormValidator():
             return request
 
         return False
-
