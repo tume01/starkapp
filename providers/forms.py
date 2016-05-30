@@ -25,3 +25,4 @@ class ProviderForm(forms.ModelForm):
 		self.fields['email'].widget.attrs.update({'class' : 'form-control','id' : 'email','name' : 'email', 'type' : 'text', 'placeholder' : 'Ingrese el email..'})
 		self.fields['contactName'].widget.attrs.update({'class' : 'form-control','id' : 'contactName','name' : 'contactName', 'type' : 'text', 'placeholder' : 'Ingrese nombre de contacto..'})
 		self.fields['contactPhone'].widget.attrs.update({'class' : 'form-control','id' : 'contactPhone','name' : 'contactPhone', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el número de contacto..'})
+		#'style':'text-align:right;',
