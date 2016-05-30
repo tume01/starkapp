@@ -90,6 +90,8 @@ def create_environment(request):
 @require_http_methods(['POST'])
 def edit_environment(request):
 
+    id_edit = request.POST['id']
+
     edit_data = {}
 
     edit_data["description"] = request.POST['description']
@@ -98,9 +100,7 @@ def edit_environment(request):
 
     edit_data["capacity"] = request.POST['capacity']
 
-    edit_data["status"] = request.POST['status']
-
-    id_edit = request.POST['id']
+    edit_data["status"] = request.POST['status']    
 
     environment_service = EnvironmentService()
 
