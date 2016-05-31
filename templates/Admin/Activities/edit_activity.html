@@ -7,19 +7,19 @@ Admin: actividades
 {% endblock %}
 
 {% block head_dahsboard %}
-{{activity.name}}
+Actividades
 {% endblock %}
 
 {% block function_head_dahsboard %}
-
+Editar Actvidad
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-<h3>Actividades</h3>
+Actividades
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-
+Edición de Actividad
 {% endblock %}
 
 {% block content %}
@@ -76,7 +76,7 @@ Admin: actividades
                             <div class="col-xs-12">
                                 <label for="start_date">Fecha/Hora Inicio Actividad</label>
                                 <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha.." value="{{activity.start_date}}">
+                                    <input class="form-control input-lg" type="text" id="start_date" name="start_date" placeholder="{{activity.start_date|date:"d/m/Y h:i"}}" value="{{activity.start_date}}">
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -90,7 +90,7 @@ Admin: actividades
                             <div class="col-xs-12">
                                 <label for="end_date">Fecha/Hora Fin Actividad</label>
                                 <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha.." value="{{activity.end_date}}">
+                                    <input class="form-control input-lg" type="text" id="end_date" name="end_date" placeholder="{{activity.end_date|date:"d/m/Y h:i"}}" value="{{activity.end_date}}">
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -134,10 +134,10 @@ Admin: actividades
                     <div class="col-xs-4">
                     </div>
                     <div class="col-xs-2">
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
                     </div>
                     <div class="col-xs-2">
-                        <a href="{% url 'activities:index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
+                        <a href="{% url 'activities:index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
                     </div>
                     <div class="col-xs-4">
                     </div>
@@ -197,8 +197,6 @@ Admin: actividades
         <script src='{% static "assets/js/product.js" %}'></script>
         <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
         <script type="text/javascript">
-    $(".js-datetimepicker").each(function() {
-        $(this).datepicker('setDate', $(this).val());
-    });
+
 </script>
 {% endblock %}

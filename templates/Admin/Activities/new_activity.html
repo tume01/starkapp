@@ -11,7 +11,7 @@ Actividades
 {% endblock %}
 
 {% block function_head_dahsboard %}
-
+Nueva Actividad
 {% endblock %}
 
 {% block sub_head_dahsboard %}
@@ -19,7 +19,7 @@ Actividades
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de actividades
+Creación de Actividades
 {% endblock %}
 
 {% block content %}
@@ -48,19 +48,23 @@ Lista de actividades
             <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:insert" %}' method="post">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <div class="col-xs-6">
+                            <div class="col-xs-12">
                                 <label for="name">Nombre</label>
                                 <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Ingrese un nombre.." value="" >
                             </div>
-                            <div class="col-xs-6">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
                                 <label for="attendance">Capacidad</label>
                                 <input class="form-control input-lg" type="text" id="attendance" name="attendance" placeholder="Ingrese capacidad de actividad..">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="price">Precio</label>
@@ -69,14 +73,13 @@ Lista de actividades
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="start_date">Fecha/Hora Inicio Actividad</label>
                                 <div class=" input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha..">
+                                    <input class="form-control input-lg js-datetimepicker" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha..">
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -85,12 +88,12 @@ Lista de actividades
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="end_date">Fecha/Hora Fin Actividad</label>
                                 <div class=" input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha..">
+                                    <input class="form-control input-lg js-datetimepicker" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha..">
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -99,25 +102,19 @@ Lista de actividades
                         </div>
                     </div>
 
-                    <div class="col-sm-2">
-                    </div>
-
-
-                </div>
-
-
-                <div class="form-group">
-                            <label class="col-xs-12" for="activity_type">Tipo</label>
-                            <div class="col-xs-12">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="activity_type">Tipo</label>
                                 <select class="form-control" id="activity_type" name="activity_type">
                                     {% for activity_type in activity_types %}
                                     <option value="{{activity_type.id}}">{{activity_type.name}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                </div>
-                <div class="row">
-                     <div class="col-sm-12">
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
                          <div class="form-group">
                             <label class="col-xs-12" for="environments">Ambiente</label>
                             <div class="col-xs-12">
@@ -134,10 +131,10 @@ Lista de actividades
                     <div class="col-xs-4">
                     </div>
                     <div class="col-xs-2">
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
                     </div>
                     <div class="col-xs-2">
-                        <a><button class="btn btn-danger" type="button"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
+                        <a><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
                     </div>
                     <div class="col-xs-4">
                     </div>
