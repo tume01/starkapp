@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'providers',
     'headquarters',
     'events',
+    'identity_document_type',
 ]
 
 MIDDLEWARE_CLASSES = [

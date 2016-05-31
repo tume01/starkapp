@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MembershipTypeService import MembershipTypeService
+from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.ObjectionService import ObjectionsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
@@ -22,8 +23,13 @@ def index(request):
 
     membershipApplications = member_application_service.getMembership_Applications()
 
+    identity_document_type_service = IdentityDocumentTypeService()
+
+    doc_types = identity_document_type_service.getIdentityDocumentTypes()
+
     context = {
         'membershipApplications' : membershipApplications,
+        'doc_types' : doc_types,
     }
 
     return render(request, 'Admin/Membership/index_membership_request.html', context) 
@@ -34,15 +40,21 @@ def filter(request):
 
     member_application_service = Membership_ApplicationService()
 
+    identity_document_type_service = IdentityDocumentTypeService()
+
+    doc_types = identity_document_type_service.getIdentityDocumentTypes()
+
     filter_member_application = {}
 
-    filter_member_application["status"] = 1 
+    appStatus = request.POST['status']
 
     iniDate = request.POST['initialDate']
 
     endDate = request.POST['finalDate']
 
-    dni = request.POST['dni']
+    num_doc = request.POST['num_doc']
+
+    type_identity_doc = request.POST['identity_document_type']
 
     if iniDate != '':
         filter_member_application["initialDate"] = datetime.strptime(iniDate, '%m/%d/%Y')
@@ -50,13 +62,20 @@ def filter(request):
     if endDate != '':
         filter_member_application["finalDate"] = datetime.strptime(endDate, '%m/%d/%Y')
 
-    if dni != '':
-        filter_member_application["dni"] = int(dni)
+    if num_doc != '':
+        filter_member_application["document_number"] = num_doc
+
+    if appStatus != '3':
+        filter_member_application["status"] = appStatus
+
+    if type_identity_doc != 'Todos':
+        filter_member_application["identity_document_type"] = type_identity_doc
 
     membershipApplications = member_application_service.filter(filter_member_application)
 
     context = {
         'membershipApplications' : membershipApplications,
+        'doc_types' : doc_types
     }
 
     return render(request, 'Admin/Membership/index_membership_request.html', context) 
@@ -67,12 +86,16 @@ def create_index(request):
 
     membership_type_service = MembershipTypeService()
 
+    identity_document_type_service = IdentityDocumentTypeService()
+
     types = membership_type_service.getMembershipTypes()
+
+    doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
     context = {
 
         'types' : types,
-
+        'doc_types': doc_types,
         'titulo' : 'titulo'
     }
 
@@ -83,7 +106,11 @@ def edit_index(request):
 
     membership_type_service = MembershipTypeService()
 
+    identity_document_type_service = IdentityDocumentTypeService()
+
     types = membership_type_service.getMembershipTypes()
+
+    doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
     member_application_service = Membership_ApplicationService()
 
@@ -97,6 +124,7 @@ def edit_index(request):
 
     context = {
         'types' : types,
+        'doc_types' : doc_types,
         'membership_application' : membership_application,
     }
 
@@ -119,17 +147,23 @@ def delete_membership_application(request):
 
 
 @require_http_methods(['POST'])
-def create_membership_application(request2):
+def create_membership_application(request):
 
-    form = MembershipApplicationForm(request2.POST)
+    membership_id = request.POST['membership_type']
 
-    request = FormValidator.validateForm(form, request2)
+    identity_document_id = request.POST['identity_document_type']
+
+    form = MembershipApplicationForm(request.POST)
+
+    request = FormValidator.validateForm(form, request)
 
     if not request:
 
         insert_data = {}
 
-        insert_data["membership_type_id"] = request2.POST['membership_type']
+        insert_data["membership_type_id"] = membership_id
+
+        insert_data["identity_document_type_id"] = identity_document_id
 
         insert_data["firstName"] = form.cleaned_data['firstName']
 
@@ -137,7 +171,7 @@ def create_membership_application(request2):
 
         insert_data["comments"] = form.cleaned_data['comments']
 
-        insert_data["dni"] = form.cleaned_data['dni']
+        insert_data["document_number"] = form.cleaned_data['num_doc']
 
         insert_data["initialDate"] = form.cleaned_data['initialDate']
 
@@ -154,10 +188,15 @@ def create_membership_application(request2):
     else:
         membership_type_service = MembershipTypeService()
 
+        identity_doc_type_service = IdentityDocumentTypeService()
+
         types = membership_type_service.getMembershipTypes()
+
+        doc_types = identity_doc_type_service.getIdentityDocumentTypes()
 
         context = {
             'types' : types,
+            'doc_types' : doc_types,
             'titulo': 'titulo'
         }
 
@@ -173,6 +212,8 @@ def edit_membership_application(request):
 
     membership_type_id = request.POST['membership_type']
 
+    identity_document_id = request.POST['identity_document_type']
+
     request = FormValidator.validateForm(form, request)    
 
     if not request:
@@ -181,13 +222,15 @@ def edit_membership_application(request):
 
         insert_data["membership_type_id"] = membership_type_id
 
+        insert_data["identity_document_type_id"] = identity_document_id
+
         insert_data["firstName"] = form.cleaned_data['firstName']
 
         insert_data["lastName"] = form.cleaned_data['lastName']
 
         insert_data["comments"] = form.cleaned_data['comments']
 
-        insert_data["dni"] = form.cleaned_data['dni']
+        insert_data["document_number"] = form.cleaned_data['num_doc']
 
         insert_data["initialDate"] = form.cleaned_data['initialDate']
 
@@ -202,9 +245,13 @@ def edit_membership_application(request):
     else:
         membership_type_service = MembershipTypeService()
 
+        identity_doc_type_service = IdentityDocumentTypeService()
+
         member_application_service = Membership_ApplicationService()
 
         types = membership_type_service.getMembershipTypes()
+
+        doc_types = identity_doc_type_service.getIdentityDocumentTypes()
 
         membership_application = member_application_service.getMembership_Application(id_application)
 
@@ -214,6 +261,7 @@ def edit_membership_application(request):
 
         context = {
             'types': types,
+            'doc_types': doc_types,
             'membership_application': membership_application,
         }
 
@@ -227,10 +275,15 @@ def user_index(request):
 
     member_application_service = Membership_ApplicationService()
 
+    identity_document_type_service = IdentityDocumentTypeService()
+
+    doc_types = identity_document_type_service.getIdentityDocumentTypes()
+
     membershipApplications = member_application_service.getMembership_Applications()
 
     context = {
         'membershipApplications' : membershipApplications,
+        'doc_types' : doc_types,
     }
 
     return render(request, 'index_membership_request.html', context) 
@@ -241,6 +294,10 @@ def user_filter(request):
 
     member_application_service = Membership_ApplicationService()
 
+    identity_document_type_service = IdentityDocumentTypeService()
+
+    doc_types = identity_document_type_service.getIdentityDocumentTypes()
+
     filter_member_application = {}
 
     filter_member_application["status"] = 1 
@@ -249,7 +306,9 @@ def user_filter(request):
 
     firstName = request.POST['firstName']
 
-    dni = request.POST['dni']
+    num_doc = request.POST['num_doc']
+
+    type_identity_doc = request.POST['identity_document_type']
 
     if lastName != '':
         filter_member_application["lastName"] = lastName
@@ -257,13 +316,17 @@ def user_filter(request):
     if firstName != '':
         filter_member_application["firstName"] = firstName
 
-    if dni != '':
-        filter_member_application["dni"] = int(dni)
+    if num_doc != '':
+        filter_member_application["document_number"] = num_doc
+
+    if type_identity_doc != 'Todos':
+        filter_member_application["identity_document_type"] = type_identity_doc
 
     membershipApplications = member_application_service.filter(filter_member_application)
 
     context = {
         'membershipApplications' : membershipApplications,
+        'doc_types' : doc_types,
     }
 
     return render(request, 'index_membership_request.html', context) 
@@ -332,10 +395,15 @@ def approve_membership_application(request):
 
     member_application_service = Membership_ApplicationService()
 
+    identity_doc_type_service = IdentityDocumentTypeService()
+
+    doc_types = identity_doc_type_service.getIdentityDocumentTypes()
+
     membership_application =  member_application_service.getMembership_Application(id_application)
 
     context = {
         'titulo' : 'titulo',
+        'doc_types' : doc_types,
         'membership_application' : membership_application,
     }
 

@@ -55,11 +55,24 @@ Lista de solicitudes de membresía
                                 
                                 <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">DNI</label>
+                                        <label class="col-xs-12" for="example-select">Numero de Documento</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI" pattern="[0-9]*" >
+                                                    <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" pattern="[0-9]*" >
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12" >
+                                        <div class="form-group">
+                                        <label class="col-xs-1 " for="example-select">Documento de Identidad</label>
+                                            <div class="col-sm-2">
+                                                <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                                    <option value="Todos">Todos</option>
+                                                    {% for doc_type in doc_types %}
+                                                        <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                    {% endfor %}
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -85,7 +98,8 @@ Lista de solicitudes de membresía
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                  <thead>
                                     <tr>
-                                        <th>DNI</th>
+                                        <th>Doc. de Identidad</th>
+                                        <th>Num. de Documento</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>                                       
                                         <th>Fecha Inicio</th>  
@@ -97,7 +111,8 @@ Lista de solicitudes de membresía
                                 <tbody>
                                     {% for membershipApp in membershipApplications %}                                       
                                         <tr>
-                                            <td class="font-w600">{{membershipApp.dni}}</td>
+                                            <td class="font-w600">{{membershipApp.identity_document_type.name}}</td>
+                                            <td class="font-w600">{{membershipApp.document_number}}</td>
                                             <td class="font-w600">{{membershipApp.firstName}}</td>
                                             <td class="font-w600">{{membershipApp.lastName}}</td>
                                             <td class="font-w600">{{membershipApp.initialDate}}</td>

@@ -6,6 +6,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.MembershipTypeService import MembershipTypeService
 from services.Membership_ApplicationService import Membership_ApplicationService
+from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.MembershipService import MembershipService
 from services.ObjectionService import ObjectionsService
 from services.MemberService import MembersService
@@ -16,7 +17,6 @@ from Adapters.FormValidator import FormValidator
 from .forms import MembershipTypeForm
 from .forms import MembershipForm
 from members import forms as mForms
-from users import forms as uForms
 
 
 @require_http_methods(['GET'])
@@ -217,7 +217,7 @@ def create_membership(request):
 
         insert_data = {}
 
-        insert_data["name"] = form2.cleaned_data['dni']
+        insert_data["name"] = form2.cleaned_data['num_doc']
 
         insert_data["password"] = 1111
 
@@ -235,11 +235,13 @@ def create_membership(request):
 
         insert_data["membership_id"] = membership.id
 
+        insert_data['identity_document_type_id'] = request.POST['identity_document_type']
+
         insert_data["name"] = form2.cleaned_data['name']
 
         insert_data["surname"] = form2.cleaned_data['surname']
 
-        insert_data["dni"] = form2.cleaned_data['dni']
+        insert_data["document_number"] = form2.cleaned_data['num_doc']
 
         insert_data["phone"] = form2.cleaned_data['phone']
 
@@ -259,7 +261,7 @@ def create_membership(request):
 
         insert_data = {}
 
-        insert_data["status"] = 0
+        insert_data["status"] = 2
 
         member_application_service = Membership_ApplicationService()
 
@@ -270,10 +272,15 @@ def create_membership(request):
     else:
         member_application_service = Membership_ApplicationService()
 
+        identity_doc_type_service = IdentityDocumentTypeService()
+
+        doc_types = identity_doc_type_service.getIdentityDocumentTypes()
+
         membershipApplication = member_application_service.getMembership_Application(membershipApplicationId)
     
         context = {
             'titulo': 'titulo',
+            'doc_types' : doc_types,
             'membership_application': membershipApplication,
         }
 
