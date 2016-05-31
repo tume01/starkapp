@@ -11,7 +11,7 @@ class ProviderForm(forms.ModelForm):
 	def __init__(self,*args, **kwargs):
 		super(ProviderForm,self).__init__(*args,**kwargs)
 
-		self.fields['ruc'].widget.attrs.update({'class' : 'form-control','id' : 'ruc','name' : 'ruc', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el RUC..'})
+		self.fields['ruc'].widget.attrs.update({'class' : 'form-control','id' : 'ruc','name' : 'ruc', 'type' : 'text','min' : '0','max' : '99999999999', 'placeholder' : 'Ingrese el RUC..'})
 		self.fields['businessName'].widget.attrs.update({'class' : 'form-control','id' : 'businessName','name' : 'businessName', 'type' : 'text', 'placeholder' : 'Ingrese el nombre de su compañía..'})
 		self.fields['status'].widget.attrs.update({'class' : 'form-control','id' : 'status','name' : 'status', 'size' : '1',  'placeholder' : 'Seleccione un estado..'})
 		self.fields['province'].widget.attrs.update({'class' : 'form-control','id' : 'province','name' : 'province', 'type' : 'text', 'placeholder' : 'Ingrese la provincia..'})

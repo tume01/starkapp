@@ -23,7 +23,9 @@ var ProviderFormValidation = function() {
             rules: {
                 'ruc': {
                     required: true,
-                    minlength: 11
+                    minlength: 11,
+                    min: 0,
+                    max: 99999999999
                 },
                 'businessName': {
                     required: true
@@ -47,7 +49,8 @@ var ProviderFormValidation = function() {
                 },
                 'phone': {
                     required: true,
-                    minlength: 7
+                    minlength: 7,
+                    min: 0
                 },
                 'effectiveTime': {
                     required: true
@@ -61,13 +64,16 @@ var ProviderFormValidation = function() {
                 },
                 'contactPhone': {
                     required: true,
-                    minlength: 7
+                    minlength: 7,
+                    min: 0
                 }
             },
             messages: {
                 'ruc': {
                     required: 'Por favor ingrese un RUC',
-                    minlength: 'El RUC debe tener 11 caracteres'
+                    minlength: 'El RUC debe tener 11 caracteres',
+                    min: 'Por favor ingrese un número positivo',
+                    max: 'Por favor ingrese números menores a 99999999999'
                 },
                 'businessName': {
                     required: 'Por favor ingrese una razón social'                    
@@ -86,7 +92,8 @@ var ProviderFormValidation = function() {
                 },
                 'phone': {
                     required: 'Por favor ingrese un teléfono',
-                    minlength: 'El teléfono debe tener mínimo 7 caracteres'
+                    minlength: 'El teléfono debe tener mínimo 7 caracteres',
+                    min: 'Por favor ingrese un número positivo',
                 },
                 'effectiveTime': {
                     required: 'Por favor ingrese tiempo de vigencia'
@@ -97,7 +104,8 @@ var ProviderFormValidation = function() {
                 },
                 'contactPhone': {
                     required: 'Por favor ingrese un teléfono de contacto',
-                    minlength: 'El teléfono de contacto debe tener mínimo 7 caracteres'
+                    minlength: 'El teléfono de contacto debe tener mínimo 7 caracteres',
+                    min: 'Por favor ingrese un número positivo',
                 }
                 /*
                 'val-confirm-password': {
