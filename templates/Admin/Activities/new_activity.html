@@ -48,7 +48,7 @@ Creación de Actividades
             <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:insert" %}' method="post">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="name">Nombre</label>
@@ -56,7 +56,7 @@ Creación de Actividades
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="attendance">Capacidad</label>
@@ -64,11 +64,35 @@ Creación de Actividades
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="price">Precio</label>
                                 <input class="form-control input-lg" type="text" id="price" name="price" placeholder="Ingrese precio de actividad..">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="activity_type">Tipo</label>
+                                <select class="form-control" id="activity_type" name="activity_type">
+                                    {% for activity_type in activity_types %}
+                                    <option value="{{activity_type.id}}">{{activity_type.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="environments">Ambiente</label>
+                                <select class="form-control" id="environments" name="environments">
+                                    {% for enviroment in environments %}
+                                    <option value="{{enviroment.id}}">{{enviroment.name}}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -101,31 +125,6 @@ Creación de Actividades
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <label for="activity_type">Tipo</label>
-                                <select class="form-control" id="activity_type" name="activity_type">
-                                    {% for activity_type in activity_types %}
-                                    <option value="{{activity_type.id}}">{{activity_type.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                         <div class="form-group">
-                            <label class="col-xs-12" for="environments">Ambiente</label>
-                            <div class="col-xs-12">
-                                <select class="form-control" id="environments" name="environments">
-                                    {% for enviroment in environments %}
-                                    <option value="{{enviroment.id}}">{{enviroment.name}}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                        </div>
-                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-4">
