@@ -1,6 +1,6 @@
 from .forms import UpdateServicioForm
 from .forms import ServicioForm
-from adapters.FormValidator import FormValidator
+from Adapters.FormValidator import FormValidator
 
 from django.template import loader
 from django.shortcuts import render

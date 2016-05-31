@@ -73,10 +73,24 @@ Nueva membresía
                                 <div class="row">
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">DNI</label>
-                                            <div class="col-md-12">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI" value="{{membership_application.dni}}" pattern="[0-9]*" >
+                                        <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                   <div class="input-group">
+                                                        <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" value="{{membership_application.document_number}}"pattern="[0-9]*" >
+                                                    </div>
+                                                </div>
+                                                <label class="col-xs-1" for="example-select">Tipo</label>
+                                                <div class="col-sm-4">
+                                                    <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                                         {% for doc_type in doc_types %}
+                                                            {% if doc_type.id == membership_application.identity_document_type.id %}
+                                                                <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                            {% else %}
+                                                                <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>

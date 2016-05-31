@@ -8,7 +8,7 @@ class MemberForm(forms.Form):
 
     name = forms.CharField(max_length=200, validators=[alphabetic], error_messages={'required': 'El campo Nombres es requerido', 'max_length': 'El campo Nombres debe tener una longitud maxima de 200 caracteres'})
     surname = forms.CharField(max_length=200, validators=[alphabetic], error_messages={'required': 'El campo Apellidos es requerido', 'max_length': 'El campo Apellidos debe tener una longitud maxima de 200 caracteres'})
-    dni = forms.IntegerField( error_messages={'required': 'El campo DNI es requerido'})
+    num_doc = forms.IntegerField( error_messages={'required': 'El campo Numero de Documento es requerido'})
     phone = forms.IntegerField(error_messages={'required': 'El campo Telefono es requerido'})
     address = forms.CharField(error_messages={'required': 'El campo Direccion es requerido'})
     email = forms.CharField(max_length=200, error_messages={'required': 'El campo Email es requerido', 'max_length': 'El campo Email debe tener una longitud maxima de 200 caracteres'})
