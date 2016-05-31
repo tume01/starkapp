@@ -1,5 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
 Admin: solicitud de membresia
 {% endblock %}
@@ -35,13 +37,13 @@ Nueva solicitud de membresía
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "membership_application:insert" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:insert" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-number-input">Nombres</label>
-                                            <div class="col-md-12">
+                                        <label class="col-xs-8" for="example-number-input">Nombres</label>
+                                            <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="firstName" placeholder="Nombres"  type="text">
                                                 </div>
@@ -58,30 +60,32 @@ Nueva solicitud de membresía
                                     </div>
                                 </div>          
                                 <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>
-                                            <div class="row">
-                                                <div class="col-lg-6">
+                                        <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
+                                            <div class="col-lg-12">
                                                    <div class="input-group">
                                                         <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" pattern="[0-9]*" >
                                                     </div>
-                                                </div>
-                                                <label class="col-xs-1" for="example-select">Tipo</label>
-                                                <div class="col-sm-4">
-                                                    <select class="form-control" id="example-select" name="identity_document_type" size="1">
-                                                         {% for doc_type in doc_types %}
-                                                        <option value="{{doc_type.id}}">{{doc_type.name}}</option>
-                                                         {% endfor %}
-                                                    </select>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                            <label class="col-xs-5" for="example-select">Tipo</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                                    {% for doc_type in doc_types %}
+                                                    <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Comentarios</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-12">
                                                 <input class="form-control" id="example-input1-group2" name="comments" placeholder="Comentarios" type="text">
                                             </div>
                                         </div>
@@ -128,5 +132,18 @@ Nueva solicitud de membresía
                     </div>
                     <!-- END Mega Form -->
                 </div>    
+
+{% endblock %}
+
+{% block scripts %}
+
+
+        <!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/Membership/membership_application_forms_validation.js" %}'></script>
+
+
 
 {% endblock %}

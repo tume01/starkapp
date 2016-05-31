@@ -37,7 +37,8 @@ var MemberFormValidation = function() {
                     maxlength:200
                 },
                 'phone': {
-                    required: true
+                    required: true,
+                    minlength:7
                     
                 },
                 'email': {
@@ -51,7 +52,7 @@ var MemberFormValidation = function() {
                     maxlength: 'El nombre no puede tener más de 200 caracteres'
                 },
                 'surname': {
-                    required: 'Por favor ingrese un apellido'                    
+                    required: 'Por favor ingrese un apellido',                    
                     maxlength: 'El apellido no puede tener más de 200 caracteres'
                 },
                 'dni': {
@@ -62,7 +63,8 @@ var MemberFormValidation = function() {
                     maxlength: 'La dirección no puede tener más de 200 caracteres'
                 },
                 'phone': {
-                    required: 'Por favor ingrese un teléfono',                    
+                    required: 'Por favor ingrese un teléfono',   
+                    minlength:'El telefono deber tener más de 6 digitos'                 
                 },
                 
                 'email': {

@@ -1,5 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
 Admin: solicitud de membresia
 {% endblock %}
@@ -34,7 +36,7 @@ Nueva solicitud de membresía
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "membership_application:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:edit" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-6" style="display: none;">
@@ -146,6 +148,19 @@ Nueva solicitud de membresía
         
     });
     </script>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+
+        <!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/Membership/membership_application_forms_validation.js" %}'></script>
+
 
 
 {% endblock %}
