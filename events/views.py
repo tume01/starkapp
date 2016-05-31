@@ -78,7 +78,7 @@ def create_event(request):
         'titulo' : 'titulo'
     }
 
-    insert_data = {}
+    insert_data = {} 
 
 
     if not form.is_valid():
@@ -101,19 +101,19 @@ def create_event(request):
 
         insert_data["name"] = form.cleaned_data.get('name')
 
-        insert_data["description"] = form.cleaned_data.get('description')
+        insert_data["description"] = form.cleaned_data.get('description') 
 
-        insert_data["environment_id"] = form.cleaned_data.get('environment')
+        insert_data["environment_id"] = form.cleaned_data.get('environment') 
 
-        insert_data["user_id"] = request.POST.get('user')
+        insert_data["user_id"] = form.cleaned_data.get('user') 
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
         insert_data["seat"] = request.POST.get('seat')
-
+     
         insert_data["start_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
 
-        insert_data["end_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
+        insert_data["end_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")   
 
         insert_data["assistance"] = request.POST.get('assistance')
 
@@ -166,22 +166,22 @@ def update_events(request, event_id):
         insert_data["name"] = request.POST.get('name')
 
     if request.POST.get('description'):
-        insert_data["description"] = request.POST.get('description')
+        insert_data["description"] = request.POST.get('description') 
 
     if request.POST.get('ruc'):
         insert_data["ruc"]  = request.POST.get('ruc')
 
     if request.POST.get('environment'):
 
-        insert_data["environment_id"] = request.POST.get('environment')
+        insert_data["environment_id"] = request.POST.get('environment') 
 
     if request.POST.get('user'):
-
-        insert_data["user_id"] = request.POST.get('user')
+        
+        insert_data["user_id"] = request.POST.get('user') 
 
     if request.POST.get('seat'):
         insert_data["seat"] = request.POST.get('seat')
-
+         
     if request.POST.get("start_date"):
         insert_data["start_date"] = datetime.datetime.strptime(request.POST.get("start_date"),"%m/%d/%Y %H:%M %p").date()
 

@@ -14,5 +14,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-
+        migrations.AddField(
+            model_name='activity',
+            name='activity_type',
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='activity_types.ActivityType'),
+            preserve_default=False,
+        ),
     ]
