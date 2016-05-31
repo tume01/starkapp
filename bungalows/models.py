@@ -1,6 +1,6 @@
 from django.db import models
+from environment import models as x
 
-# Create your models here.
 class BungalowType(models.Model):
 
     name = models.CharField(max_length=100)
@@ -11,8 +11,7 @@ class BungalowType(models.Model):
 
 class Bungalow(models.Model):
     bungalow_type = models.ForeignKey(BungalowType, on_delete=models.CASCADE)
-    #ambiente = models.ForeignKey("Ambiente", on_delete=models.CASCADE)
-
+    #environment = models.ForeignKey(x.Environment, on_delete=models.CASCADE)
     status = models.IntegerField()
     location = models.CharField(max_length=200)
     number = models.IntegerField()

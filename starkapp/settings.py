@@ -31,24 +31,29 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'servicios.apps.ServiciosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bungalows',
     'products',
     'users',
     'promotions',
+    'bungalows',
+    'environment',
     'memberships',
     'membership_application',
     'fine',
     'objection',
     'members',
     'activities',
+    'activity_types',
     'events_type',
     'providers',
+    'headquarters',
+    'events',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -73,6 +78,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.csrf',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],

@@ -278,6 +278,8 @@ def create_objection(request):
 
     requestId = request.POST['id_membership']
 
+    comments = request.POST['comments']
+
     request = FormValidator.validateForm(form, request)
 
 
@@ -285,7 +287,7 @@ def create_objection(request):
 
         insert_data = {}
 
-        insert_data["comments"] = form.cleaned_data['comments']
+        insert_data["comments"] = comments
 
         insert_data["membership_application_id"] = requestId
 

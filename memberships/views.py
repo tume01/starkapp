@@ -321,8 +321,12 @@ def membership_edit(request):
 
         membership_type_service = MembershipTypeService()
 
-        membership = membership_service.getType(id_edit)
+        membership = membership_service.getMembership(id_edit)
 
+        membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+
+        membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+        
         types = membership_type_service.getMembershipTypes()
 
         context = {

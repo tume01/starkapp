@@ -1,11 +1,14 @@
 $( document ).ready(function() {
-    console.log( "product ready!" );
+	console.log( "product ready!" );
 
-   $("#select2Provider").select2();
+	$("#select2Provider").select2();
+	$('#f_select2Provider').select2();
     //$(".js-example-basic-multiple").select2();
+
+	console.log( "finish product ready!" );    
 });
 
-/*CODE FOR AJAX*/
+/*CODE FOR AJAX***************************************************/
 function getCookie(c_name){
     if (document.cookie.length > 0)
     {
@@ -27,9 +30,10 @@ $(function () {
     });
 });
 
-/**/
+/******************************************************************/
 
 $('#SaveProduct').click(function(){
+//function SaveProduct(){
 	console.log('click Guardar');
 	data = {};
 	data.name = $('#name').val();
@@ -39,9 +43,6 @@ $('#SaveProduct').click(function(){
 	data.description = $('#description').val();
 	data.providers = $('#select2Provider').val();
 	data.price = $('#price').val();
-
-	//data.csrfmiddlewaretoken = '{% csrf_token %}';
-
 
 	console.log(data);
 
@@ -64,7 +65,9 @@ $('#SaveProduct').click(function(){
     });
 
     return xhr;
+//}
 });
+
 
 $('#EditProduct').click(function(){
 	console.log('click editar');
@@ -100,3 +103,61 @@ $('#EditProduct').click(function(){
     return xhr;
 
 });
+
+$('#filterProduct').click(function(){
+	console.log('click filtro');
+
+	/*
+	console.log('f_name='+$('#f_name').val());
+	console.log('f_select2Provider='+$('#f_select2Provider').val());
+	console.log('f_selectProductType='+$('#f_selectProductType').val());
+	console.log('f_range_stock_min='+$('#f_range_stock_min').val());
+	console.log('f_range_stock_max='+$('#f_range_stock_max').val());
+	console.log('f_active='+$('#f_active').is(':checked'));
+	console.log('f_range_price_min='+$('#f_range_price_min').val());
+	console.log('f_range_price_max='+$('#f_range_price_max').val());
+	*/
+
+	data = {};
+
+	data.f_name = $('#f_name').val();
+	data.f_select2Provider = $('#f_select2Provider').val();
+	data.f_selectProductType = $('#f_selectProductType').val();
+	/*
+	data.f_range_stock_min = $('#f_range_stock_min').val();
+	data.f_range_stock_max = $('#f_range_stock_max').val();
+	data.f_active = $('#f_active').val();
+	data.f_range_price_min = $('#f_range_price_min').val();
+	data.f_range_price_max = $('#f_range_price_max').val();
+	*/
+
+	console.log('json='+JSON.stringify(data));
+
+	var xhr = $.ajax({
+	    type: "POST", 
+	    url: "/products/filter/", //url que procesa
+	    dataType: "text",
+	    data: JSON.stringify(data),
+	    contentType: "application/json; charset=utf-8",
+    });
+
+	xhr.done(function(data) {
+		console.log('done='+data); //data que recibes de controller
+		//window.location = "/products"; //url que abrira
+    });
+
+    xhr.fail(function(xhr, status, text){
+        console.log("Error " + xhr.readyState + " " +text);
+
+    });
+
+    return xhr;
+
+});
+
+/*
+$('#formNewProduct').submit(function(){
+	console.log('form click');
+	SaveProduct();
+});
+*/
