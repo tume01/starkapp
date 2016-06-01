@@ -56,7 +56,7 @@ Lista de ambientes
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a href="{% url 'environment:edit_index' environment.id %}"><button class="btn btn-xs btn-default editar" type="button" data-toggle="tooltip" title="Editar Ambiente"><i class="fa fa-pencil"></i></button></a>
+                                                <a href="{% url 'environment:edit' environment.id %}"><button class="btn btn-xs btn-default editar" type="button" data-toggle="tooltip" title="Editar Ambiente"><i class="fa fa-pencil"></i></button></a>
 
                                                 <button class="btn btn-xs btn-default eliminar" data-id="{{environment.id}}" type="button" data-toggle="tooltip" title="Eliminar"><i class="fa fa-times"></i></button>
                                             </div>
