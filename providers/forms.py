@@ -5,7 +5,7 @@ class ProviderForm(forms.ModelForm):
 
 	class Meta:
 		model = Provider
-		fields = ['ruc','businessName','status','region','province','distric','registrationDate','address','phone','email','contactName','contactPhone']
+		fields = ['ruc','businessName','status','region','province','distric','registrationDate','address','phone','postal','email','contactName','contactPhone']
 		
 
 
@@ -23,6 +23,7 @@ class ProviderForm(forms.ModelForm):
 		self.fields['registrationDate'].input_formats = ['%Y-%m-%d']
 		self.fields['address'].widget.attrs.update({'class' : 'form-control','id' : 'address','name' : 'address', 'type' : 'text', 'placeholder' : 'Ingrese la dirección..'})
 		self.fields['phone'].widget.attrs.update({'class' : 'form-control','id' : 'phone','name' : 'phone', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el teléfono..'})
+		self.fields['postal'].widget.attrs.update({'class' : 'form-control','id' : 'postal','name' : 'postal', 'type' : 'number','min' : '0', 'placeholder' : 'Ingrese el código postal..'})
 		#self.fields['effectiveTime'].widget.attrs.update({'class' : 'form-control','id' : 'effectiveTime','name' : 'effectiveTime', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el tiempo de vigencia..'})
 		self.fields['email'].widget.attrs.update({'class' : 'form-control','id' : 'email','name' : 'email', 'type' : 'text', 'placeholder' : 'Ingrese el email..'})
 		self.fields['contactName'].widget.attrs.update({'class' : 'form-control','id' : 'contactName','name' : 'contactName', 'type' : 'text', 'placeholder' : 'Ingrese nombre de contacto..'})
