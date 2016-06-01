@@ -66,8 +66,8 @@ def create_headquarters(request):
 
 	form = HeadquarterForm(request.POST)
 
-	new_id = request.POST['id']
-
+	headquarter_service = HeadquarterService()
+	print("HASTA AQUI")
 	if not FormValidator.validateForm(form, request):
 		
 		insert_data = {}
@@ -83,10 +83,10 @@ def create_headquarters(request):
 
 		headquarter_service.create(insert_data)
 		
-		return HttpResponseRedirect(reverse('headquarters:hq/index'))
+		return HttpResponseRedirect(reverse('headquarters:index'))
 
 	else:
-		headquarter_service = HeadquarterService()
+		
 
 		headquarters = headquarter_service.getHeadquarters()
 

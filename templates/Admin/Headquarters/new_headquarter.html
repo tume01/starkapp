@@ -34,7 +34,7 @@ Crear sede
         </div>
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='{% url "headquarters:hq/create_insert" %}' method="post" >
+            <form class="form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >
             {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-7">
@@ -74,7 +74,7 @@ Crear sede
                 </div>
                 <div class="form-group">
                     <div class="col-xs-2">
-                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "headquarters:hq/index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "headquarters:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
                     </div>
                     <div class="col-xs-2">
                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
