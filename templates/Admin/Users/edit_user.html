@@ -1,5 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
 Admin: usuario
 {% endblock %}
@@ -34,7 +36,7 @@ Editar usuario
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "users:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "users:edit" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-6" style="display: none;">
@@ -46,7 +48,7 @@ Editar usuario
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-10" >
+                                    <div class="col-lg-6" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Nombre</label>
                                             <div class="col-md-6">
@@ -56,7 +58,7 @@ Editar usuario
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-10" >
+                                    <div class="col-lg-6" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Contraseña</label>
                                             <div class="col-md-6">
@@ -105,5 +107,18 @@ Editar usuario
         
     });
     </script> 
+
+{% endblock %}
+
+{% block scripts %}
+
+
+        <!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/User/user_forms_validation.js" %}'></script>
+
+
 
 {% endblock %}
