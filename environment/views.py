@@ -39,6 +39,7 @@ def edit_index(request, id):
     environments = environment_service.getEnviromentById(id)
 
     context = {
+		'id' :id,
         'titulo': 'tittle',
         'environments' : environments,
     }
