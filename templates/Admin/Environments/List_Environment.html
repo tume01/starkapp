@@ -30,10 +30,6 @@ Lista de ambientes
                         {% csrf_token %}  
                             <input type="hidden" id="hid1" name="id"/>
                         </form>
-                        <form id="myFormEdit" action={% url "environment:edit_index" %} method="post">
-                            {% csrf_token %}  
-                            <input type="hidden" id="hid2" name="id"/>
-                        </form>
                         <!--<div class="block-header">
                             <h3 class="block-title">Simple Table <small>Full</small></h3>
                         </div>-->
@@ -60,7 +56,7 @@ Lista de ambientes
                                         </td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <button class="btn btn-xs btn-default editar" data-id="{{environment.id}}" type="button"  data-toggle="tooltip" title="Editar"><i class="fa fa-pencil"></i></button>
+                                                <a href="{% url 'environment:edit_index' environment.id %}"><button class="btn btn-xs btn-default editar" type="button" data-toggle="tooltip" title="Editar Ambiente"><i class="fa fa-pencil"></i></button></a>
 
                                                 <button class="btn btn-xs btn-default eliminar" data-id="{{environment.id}}" type="button" data-toggle="tooltip" title="Eliminar"><i class="fa fa-times"></i></button>
                                             </div>
