@@ -1,5 +1,6 @@
 from django.template import loader
 from django.shortcuts import render
+from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
@@ -66,9 +67,29 @@ def delete_membership_type(request):
 
     edit_data["status"] = 0
 
-    membership_type_service = MembershipTypeService()
+    membership_service = MembershipService()
 
-    membership_type_service.update(id_edit, edit_data)
+    membership_application_service = Membership_ApplicationService()
+
+    filter_data = {}
+
+    filter_data["membership_type_id"] = id_edit
+
+    filter_data["status"] = 1
+
+    members = membership_service.filter(filter_data)
+
+    membership_applications = membership_application_service.filter(filter_data)
+
+    print("Members:")
+    print(members)
+    print(membership_applications)
+
+    if (len(members) == 0 and len(membership_applications) == 0):
+
+        membership_type_service = MembershipTypeService()
+
+        membership_type_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('memberships:type/index'))
 
@@ -171,7 +192,7 @@ def create_membership(request):
     form = MembershipForm(request.POST)
     form2 = mForms.MemberForm(request.POST)
 
-    membershipId = request.POST['id']
+    membershipApplicationId = request.POST['id']
 
     if (not FormValidator.validateForm(form,request)
         and not FormValidator.validateForm(form2,request)):
@@ -234,7 +255,7 @@ def create_membership(request):
 
         #Elimino solicitud
 
-        id_application = membershipId
+        id_application = membershipApplicationId
 
         insert_data = {}
 
@@ -249,13 +270,14 @@ def create_membership(request):
     else:
         member_application_service = Membership_ApplicationService()
 
-        membershipApplications = member_application_service.getMembership_Applications()
-
+        membershipApplication = member_application_service.getMembership_Application(membershipApplicationId)
+    
         context = {
-            'membershipApplications': membershipApplications,
+            'titulo': 'titulo',
+            'membership_application': membershipApplication,
         }
 
-        return render(request, 'Admin/Membership/index_membership_request.html', context)
+        return render(request, 'Admin/Membership/new_membership_member.html', context)
 
 
 
@@ -299,8 +321,12 @@ def membership_edit(request):
 
         membership_type_service = MembershipTypeService()
 
-        membership = membership_service.getType(id_edit)
+        membership = membership_service.getMembership(id_edit)
 
+        membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+
+        membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+        
         types = membership_type_service.getMembershipTypes()
 
         context = {

@@ -8,7 +8,13 @@ from services.ProductTypesService import ProductTypesService
 from services.ProvidersService import ProvidersService
 from django.views.decorators.http import require_http_methods
 
+from products.models import Product
+
 import json
+import urllib
+import logging
+from django.db import IntegrityError, transaction
+from django.core import serializers
 
 @require_http_methods(['GET'])
 def index(request):
@@ -165,3 +171,33 @@ def delete_product(request, id):
     
 
     return HttpResponseRedirect(reverse('products:index'))
+
+@require_http_methods(['POST'])
+def filter_product(request):
+    filter_data = {}
+    req = json.loads( request.body.decode('utf-8') )
+
+    print(req.get("f_selectProductType"))
+
+    
+    qry = 'SELECT * FROM products_product WHERE id<2'
+
+
+    logging.debug(qry)
+
+    try:
+        list_products = Product.objects.raw(qry)
+        for p in list_products:
+            print(p.id)
+
+        req_list = serializers.serialize('json', list_products)
+
+        #list_products = list_products[:]
+    except IntegrityError:
+        handle_exception()
+        list_products = None
+
+    
+    
+
+    return HttpResponse( json.dumps(req_list), content_type='application/json')

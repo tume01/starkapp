@@ -35,7 +35,8 @@ Lista de tipos de multas
                     <tr>
                             <th>Observacion</th>
                             <th>Tipo</th>
-                        <th>Precio</th>
+                            <th>Precio</th>
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -43,8 +44,9 @@ Lista de tipos de multas
                         {% for fine in fines %}
                         <tr>
                             <td class="font-w600">{{fine.observations}}</td>
-                            <td class="font-w600"> {{fine.reason}} </td>
+                            <td class="font-w600">{{fine.reason}} </td>
                             <td class="font-w600">S/. {{fine.price}} </td>
+                            <td class="font-w600">{{fine.status}} </td>
                             <td class="text-center">
 
                             </td>

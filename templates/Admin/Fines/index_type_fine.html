@@ -42,7 +42,7 @@ Lista de tipos de multas
                 <thead>
                     <tr>
                             <th>Razón</th>
-                            <th>Precion</th>                                       
+                            <th>Precio</th>                                       
                             <th>Acción</th>                                        
                         </tr>
                     </thead>
@@ -50,7 +50,7 @@ Lista de tipos de multas
                         {% for fine in fines %}                                       
                         <tr>
                             <td class="font-w600">{{fine.reason}}</td>
-                            <td class="font-w600">S/. {{fine.price}} </td>
+                            <td class="font-w600" style="text-align:right;">S/. {{fine.price}} </td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-default editar" data-id="{{fine.id}}" type="button"  data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
