@@ -78,9 +78,12 @@ def create_headquarters(request):
 
 		insert_data["description"] = form.cleaned_data['description']
 
+		#TO IMPLEMENT
+		#insert_data["status"] = 1		
+
 		headquarter_service.create(insert_data)
 		
-		return HttpResponseRedirect(reverse('headquarters:index'))
+		return HttpResponseRedirect(reverse('headquarters:hq/index'))
 
 	else:
 		headquarter_service = HeadquarterService()
@@ -88,7 +91,7 @@ def create_headquarters(request):
 		headquarters = headquarter_service.getHeadquarters()
 
 		context = {		
-			'headquarters': headquarters
+			'headquarters': headquarters,
 		}
 		
 		return render(request, 'Admin/Headquarters/new_headquarter.html', context)
@@ -125,4 +128,4 @@ def update(request):
 
 		edit_data["description"] = form.cleaned_data['description']
 
-		return HttpResponseRedirect(reverse('headquarter:index'))
+		return HttpResponseRedirect(reverse('headquarter:hq/index'))

@@ -22,72 +22,72 @@ Lista de tipos de membresías
 
 {% block content %}
      <div class="content content-narrow">
-                    <div class="content">
-                        {% if messages %}
-                            {% for msg in messages %}
-                                <div class="alert alert-warning" role="alert">
-                                    {{msg.message}}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+        <div class="content">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{msg.message}}
                     </div>
-                    <!-- Mega Form -->
-                    <div class="block block-bordered">
-                        <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "memberships:type/insert" %}' method="post" >
-                            {% csrf_token %}
-                                <div class="row">
-                                    <div class="col-lg-6" >
-                                        <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Tipo de membresía</label>
-                                            <div class="col-md-6">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Tipo de mebresía"  type="text" value= "{{membershipType.name}}" >
-                                                </div>
-                                            </div>
-                                        </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <!-- Mega Form -->
+        <div class="block block-bordered">
+            <div class="block-content">
+                <form class="form-horizontal push-10-t push-10" action='{% url "memberships:type/insert" %}' method="post" >
+                {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6" >
+                            <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Tipo de membresía</label>
+                                <div class="col-md-6">
+                                   <div class="input-group">
+                                        <input class="form-control" id="example-input1-group1" name="name" placeholder="Tipo de mebresía"  type="text" value= "{{membershipType.name}}" >
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Invitados</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" id="example-number-input" name="guests" placeholder="Invitados" value= "{{membershipType.guests}}"  type="number">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>          
-                                <div class="row">
-                                    <div class="col-lg-6" >
-                                        <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Precio</label>
-                                            <div class="col-md-6">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group2" name="price" placeholder="Precio"  type="number" value= "{{membershipType.price}}" >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input2">Tipo de cobro</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" id="example-number-input2" name="billing" placeholder="Tipo de cobro" value= "{{membershipType.billing}}"  type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>                               
-                                <div class="form-group">
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "memberships:type/index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
-                                    </div>                                  
                                 </div>
-                            </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-xs-12" for="example-number-input">Invitados</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="example-number-input" name="guests" placeholder="Invitados" value= "{{membershipType.guests}}"  type="number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>          
+                    <div class="row">
+                        <div class="col-lg-6" >
+                            <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Precio</label>
+                                <div class="col-md-6">
+                                   <div class="input-group">
+                                        <input class="form-control" id="example-input1-group2" name="price" placeholder="Precio"  type="number" value= "{{membershipType.price}}" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="col-xs-12" for="example-number-input2">Tipo de cobro</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="example-number-input2" name="billing" placeholder="Tipo de cobro" value= "{{membershipType.billing}}"  type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </div>                               
+                    <div class="form-group">
+                        <div class="col-xs-6">
+                            <button class="btn btn-danger" type="button" onclick="location.href='{% url "memberships:type/index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                        </div>
+                        <div class="col-xs-6">
+                            <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
                         </div>
                     </div>
-                    <!-- END Mega Form -->
-                </div>    
+                </form>
+            </div>
+        </div>
+        <!-- END Mega Form -->
+    </div>    
 
 {% endblock %}
