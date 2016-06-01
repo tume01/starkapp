@@ -4,10 +4,11 @@ from . import views
 
 app_name = 'headquarters'
 
-urlpatterns = [
+urlpatterns = [    
+    url(r'^create', views.create_headquarters_index, name='create_index'),
+    url(r'^edit', views.update_headquarters_index, name='edit_index'),
+
+
+
     url(r'^', views.index, name='index'),
-    url(r'^create', views.create_headquarters, name='new'),
-    #url(r'^update/(?P<headquarter_id>[0-9]+)', views.update, name='edit'),
-    #TEMP
-    url(r'^', views.update, name='edit'),
 ]
