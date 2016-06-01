@@ -11,13 +11,13 @@ class Provider(models.Model):
     ruc = models.BigIntegerField(null=False, blank=False)
     businessName = models.CharField(null=False, blank=False,max_length=120)
     status = models.IntegerField(choices=status_choices,default=1) #Binario por estado 0->Inactivo 1->Activo    
-    region = models.CharField(blank=True,max_length=120)
+    region = models.CharField(max_length=120)
     province = models.CharField(max_length=120)
     distric = models.CharField(max_length=120)
     registrationDate = models.DateField(auto_now=False, auto_now_add=False)
     address = models.CharField(max_length=200)    
     phone= models.BigIntegerField()
-    postal= models.IntegerField(blank=True,default=00000)
+    postal= models.IntegerField(null=False,blank=True)
     #effectiveTime = models.IntegerField(choices=effectiveTime_choices,default=30) #Tiempo de vigencia en días
     email= models.EmailField()    
     contactName = models.CharField(null=False, blank=False,max_length=120)

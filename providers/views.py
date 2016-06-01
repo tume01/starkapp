@@ -37,17 +37,17 @@ def create_provider(request):
 
     if request.POST:
         form = ProviderForm(request.POST)
-        print(request.POST)
+        
         #print(form['ruc'])
         if form.is_valid():
-            #form.save()
+            print("no pasa")
 
             provider_service = ProvidersService()
 
             providerRuc = provider_service.find_ruc(request.POST['ruc'])
 
             if(providerRuc == None):
-
+                print("pasa")
                 insert_data = {}
                 insert_data["ruc"] = request.POST['ruc']
                 insert_data["businessName"] = request.POST['businessName']
@@ -108,9 +108,10 @@ def edit_provider(request,id):
 
     if request.POST:
         form = ProviderForm(request.POST)
-        print(request.POST)
+        
         #print(form['ruc'])
         if form.is_valid():
+
             #form.save()
 
             insert_data = {}

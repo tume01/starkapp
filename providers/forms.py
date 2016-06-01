@@ -15,7 +15,7 @@ class ProviderForm(forms.ModelForm):
 		self.fields['ruc'].widget.attrs.update({'class' : 'form-control','id' : 'ruc','name' : 'ruc', 'type' : 'number','min' : '0', 'placeholder' : 'Ingrese el RUC..'})
 		self.fields['businessName'].widget.attrs.update({'class' : 'form-control','id' : 'businessName','name' : 'businessName', 'type' : 'text', 'placeholder' : 'Ingrese el nombre de su compañía..'})
 		self.fields['status'].widget.attrs.update({'class' : 'form-control','id' : 'status','name' : 'status', 'size' : '1',  'placeholder' : 'Seleccione un estado..'})
-		self.fields['region'].widget.attrs.update({'class' : 'form-control','id' : 'region','name' : 'region', 'type' : 'text', 'placeholder' : 'Ingrese la región..'})
+		self.fields['region'].widget.attrs.update({'class' : 'form-control','id' : 'region','name' : 'region', 'placeholder' : 'Ingrese la región..'})
 		self.fields['province'].widget.attrs.update({'class' : 'form-control','id' : 'province','name' : 'province', 'type' : 'text', 'placeholder' : 'Ingrese la provincia..'})
 		self.fields['distric'].widget.attrs.update({'class' : 'form-control','id' : 'distric','name' : 'distric', 'type' : 'text', 'placeholder' : 'Ingrese el distrito..'})
 		self.fields['registrationDate'].widget.attrs.update({'class' : 'js-datepicker form-control', 'data-date-format' : 'yyyy-mm-dd', 'id' : 'registrationDate','name' : 'registrationDate', 'placeholder' : 'Ingrese una fecha..'})
@@ -23,7 +23,7 @@ class ProviderForm(forms.ModelForm):
 		self.fields['registrationDate'].input_formats = ['%Y-%m-%d']
 		self.fields['address'].widget.attrs.update({'class' : 'form-control','id' : 'address','name' : 'address', 'type' : 'text', 'placeholder' : 'Ingrese la dirección..'})
 		self.fields['phone'].widget.attrs.update({'class' : 'form-control','id' : 'phone','name' : 'phone', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el teléfono..'})
-		self.fields['postal'].widget.attrs.update({'class' : 'form-control','id' : 'postal','name' : 'postal', 'type' : 'number','min' : '0', 'placeholder' : 'Ingrese el código postal..'})
+		self.fields['postal'].widget.attrs.update({'class' : 'form-control','id' : 'postal','name' : 'postal','min' : '0', 'placeholder' : 'Ingrese el código postal..'})
 		#self.fields['effectiveTime'].widget.attrs.update({'class' : 'form-control','id' : 'effectiveTime','name' : 'effectiveTime', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el tiempo de vigencia..'})
 		self.fields['email'].widget.attrs.update({'class' : 'form-control','id' : 'email','name' : 'email', 'type' : 'text', 'placeholder' : 'Ingrese el email..'})
 		self.fields['contactName'].widget.attrs.update({'class' : 'form-control','id' : 'contactName','name' : 'contactName', 'type' : 'text', 'placeholder' : 'Ingrese nombre de contacto..'})

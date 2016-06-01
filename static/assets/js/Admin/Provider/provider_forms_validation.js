@@ -29,7 +29,11 @@ var ProviderFormValidation = function() {
                     required: true
                     //email: true
                 },
-                'province': {
+                'region': {
+                    required: true
+                    //email: true
+                },
+                'province': { 
                     required: true                    
                 },
                 /*'val-confirm-password': {
@@ -53,6 +57,10 @@ var ProviderFormValidation = function() {
                     required: true,
                     email: true
                 },
+                'postal': {
+                    required: true,
+                    minlength: 5
+                },
                 'contactName': {
                     required: true
                 },
@@ -68,6 +76,9 @@ var ProviderFormValidation = function() {
                 },
                 'businessName': {
                     required: 'Por favor ingrese una razón social'                    
+                },
+                'region': {
+                    required: 'Por favor ingrese una región'                    
                 },
                 'province': {
                     required: 'Por favor ingrese una provincia'                    
@@ -86,6 +97,10 @@ var ProviderFormValidation = function() {
                     minlength: 'El teléfono debe tener mínimo 7 caracteres'
                 },
                 'email': 'Por favor ingrese un email válido',
+                'postal': {
+                    required: 'Por favor ingrese un código postal',
+                    minlength: 'El código postal debe tener 5 caracteres'
+                },
                 'contactName': {
                     required: 'Por favor ingrese un nombre de contacto'
                 },
