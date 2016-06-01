@@ -108,12 +108,14 @@ def update_servicio(request, servicio_id):
         return render(request, 'Admin/Services/edit_service.html', context)
 
     else:
-
+        
+        name = form.cleaned_data['name']
         price = form.cleaned_data['price']
 
 
         update_data = {
             'price': price,
+            'name' : name
         }
 
         servicio_service.update(servicio_id, update_data)

@@ -24,7 +24,7 @@ var ProviderFormValidation = function() {
             rules: {
                 'name': {
                     required: true,
-                    maxlength: 20
+                    maxlength: 40
                 },
                 'price': {
                     required: true,
@@ -39,7 +39,7 @@ var ProviderFormValidation = function() {
             messages: {
                 'name': {
                     required: 'Por favor ingrese un Nombre',
-                    maxlength: 'Por favor ingrese maximo 20 caracteres',
+                    maxlength: 'Por favor ingrese maximo 40 caracteres',
                 },
                 'price': {
                     required: 'Por favor ingrese un precio',
