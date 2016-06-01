@@ -9,7 +9,7 @@
     <title>YoQúeríaPHP -{% block head_title %}{% endblock %}</title>    
 
     <meta name="description" content="YoQúeríaPHP - Admin">
-    <meta name="author" content="YoQúeríaPHP">
+    <meta name="author" content="Javier" >
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
 
@@ -464,6 +464,20 @@
                             </ul>
                         </li>
                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
+                            <ul>
+                                <li>
+                                    <a href=''>Consultar sedes</a>
+                                </li>   
+                                <li>
+                                    <a href='{% url "headquarters:new" %}'>Nueva sede</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "headquarters:edit" %}'>Editar sede</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
                             <ul>
                                 <li>
@@ -489,15 +503,16 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar servicios</a>
+                                    <a href="{% url 'servicios:index' %}">Consultar Servicios</a>
                                 </li>
                                 <li>
-                                    <a href=''>Ver solicitudes de servicios</a>
+                                    <a href='{% url "servicios:create_index" %}'>Crear Servicios</a>
                                 </li>
+                                
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Membresía</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
                             <ul>      
                                 <li>
                                     <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
@@ -520,7 +535,7 @@
                             </ul>
                         </li> 
                          <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user-plus"></i><span class="sidebar-mini-hide">Usuarios</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
                                 <li>
                                     <a href='{% url 'users:type/index' %}'>Tipos de usuario</a>
@@ -537,7 +552,7 @@
                             </ul>
                         </li>        
                           <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Promociones</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-money"></i><span class="sidebar-mini-hide">Promociones</span></a>
                             <ul>                                        
                                 <li>
                                    <a href='{% url 'promotions:index' %}'>Lista de promociones</a> 
@@ -548,7 +563,7 @@
                             </ul>
                         </li>
                          <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-coffee"></i><span class="sidebar-mini-hide">Multas</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
                             <ul>                                        
                                 <li>
                                    <a href='{% url 'fine:index_type' %}'>Lista de tipos</a> 

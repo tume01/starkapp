@@ -19,8 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^bungalows/', include('bungalows.urls')),
-    url(r'^environment/', include('environment.urls')),
+
     url(r'^products/', include('products.urls')),
     url(r'^activities/', include('activities.urls')),
     url(r'^bungalows/', include('bungalows.urls')),
@@ -32,7 +31,10 @@ urlpatterns = [
     url(r'^users/', include('users.urls')),
     url(r'^eventstype/', include('events_type.urls')),
     url(r'^providers/', include('providers.urls')),
-    url(r'^events', include('events.urls')),    
+    url(r'^headquarters/', include('headquarters.urls')),
+    url(r'^servicios/', include('servicios.urls')),
+    url(r'^environment/', include('environment.urls')),
+    url(r'^events', include('events.urls')),
 ]
 
 if settings.DEBUG:
