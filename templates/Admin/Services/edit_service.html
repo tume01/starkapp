@@ -1,4 +1,6 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
+
+{% load staticfiles %}
 
 {% block head_title %}
 Admin: servicios
@@ -44,14 +46,14 @@ Crear servicio
                             </ul>
                         </div>
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "servicios:update" servicio.id %}' method="post" >
+                            <form class="form-horizontal js-validation-bootstrap push-10-t push-10" action='{% url "servicios:update" servicio.id %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-text-input">Nombre</label>
+                                            <label class="col-xs-12" for="name">Nombre</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-text-input" name="name" placeholder="Ingrese nombre del servicio..." type="text" value="{{servicio.name}}" disabled>
+                                                <input class="form-control" id="name" name="name" placeholder="Ingrese nombre del servicio..." type="text" value="{{servicio.name}}" disabled>
                                             </div>
                                         </div>
                                     </div>
@@ -59,7 +61,9 @@ Crear servicio
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Tipo de servicio</label>
                                             <div class="col-md-6">
-                                                <input class="form-control" id="example-text-input" name="servicio_type" type="text" value="{{servicio.servicio_type.name}}" disabled>
+                                                <select class="form-control" id="id_servicio" name="id_servicio" size="1" disabled>
+                                                    <option value="{{servicio.servicio_type.id}}" selected>{{servicio.servicio_type.name}}</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
