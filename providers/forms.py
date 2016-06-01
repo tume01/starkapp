@@ -5,7 +5,7 @@ class ProviderForm(forms.ModelForm):
 
 	class Meta:
 		model = Provider
-		fields = ['ruc','businessName','status','province','distric','registrationDate','address','phone','email','contactName','contactPhone']
+		fields = ['ruc','businessName','status','region','province','distric','registrationDate','address','phone','email','contactName','contactPhone']
 		
 
 
@@ -15,6 +15,7 @@ class ProviderForm(forms.ModelForm):
 		self.fields['ruc'].widget.attrs.update({'class' : 'form-control','id' : 'ruc','name' : 'ruc', 'type' : 'number','min' : '0', 'placeholder' : 'Ingrese el RUC..'})
 		self.fields['businessName'].widget.attrs.update({'class' : 'form-control','id' : 'businessName','name' : 'businessName', 'type' : 'text', 'placeholder' : 'Ingrese el nombre de su compañía..'})
 		self.fields['status'].widget.attrs.update({'class' : 'form-control','id' : 'status','name' : 'status', 'size' : '1',  'placeholder' : 'Seleccione un estado..'})
+		self.fields['region'].widget.attrs.update({'class' : 'form-control','id' : 'region','name' : 'region', 'type' : 'text', 'placeholder' : 'Ingrese la región..'})
 		self.fields['province'].widget.attrs.update({'class' : 'form-control','id' : 'province','name' : 'province', 'type' : 'text', 'placeholder' : 'Ingrese la provincia..'})
 		self.fields['distric'].widget.attrs.update({'class' : 'form-control','id' : 'distric','name' : 'distric', 'type' : 'text', 'placeholder' : 'Ingrese el distrito..'})
 		self.fields['registrationDate'].widget.attrs.update({'class' : 'js-datepicker form-control', 'data-date-format' : 'yyyy-mm-dd', 'id' : 'registrationDate','name' : 'registrationDate', 'placeholder' : 'Ingrese una fecha..'})

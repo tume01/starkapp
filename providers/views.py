@@ -54,13 +54,14 @@ def create_provider(request):
                 insert_data["status"] = request.POST['status']
                 insert_data["distric"] = request.POST['distric']
                 insert_data["province"] = request.POST['province']
+                insert_data["region"] = request.POST['region']
                 insert_data["address"] = request.POST['address']
                 insert_data["phone"] = request.POST['phone']
                 insert_data["email"] = request.POST['email']
                 insert_data["registrationDate"] = request.POST['registrationDate']
                 insert_data["contactName"] = request.POST['contactName']
                 insert_data["contactPhone"] = request.POST['contactPhone']
-                insert_data["effectiveTime"] = request.POST['effectiveTime']
+
 
                 provider_service = ProvidersService()
 
@@ -117,13 +118,15 @@ def edit_provider(request,id):
             insert_data["status"] = request.POST['status']
             insert_data["distric"] = request.POST['distric']
             insert_data["province"] = request.POST['province']
+            insert_data["region"] = request.POST['region']
             insert_data["address"] = request.POST['address']
             insert_data["phone"] = request.POST['phone']
             insert_data["email"] = request.POST['email']
             insert_data["registrationDate"] = request.POST['registrationDate']
             insert_data["contactName"] = request.POST['contactName']
             insert_data["contactPhone"] = request.POST['contactPhone']
-            insert_data["effectiveTime"] = request.POST['effectiveTime']
+
+
 
             provider_service = ProvidersService()
 

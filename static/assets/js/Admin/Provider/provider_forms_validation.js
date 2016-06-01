@@ -106,11 +106,63 @@ var ProviderFormValidation = function() {
 
     var LimitCharactersRUC = function () {
     var element = document.getElementById('ruc');
-
+    var limitCharacters = 10;
     $("#ruc").keydown(function (event) {
         // Allow only backspace and delete
         console.log($(this).val().length);
-        if($(this).val().length <= 10 || event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 )
+        if($(this).val().length <= limitCharacters || event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 )
+        {
+            if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9) {
+                // let it happen, don't do anything
+            } else {
+                // Ensure that it is a number and stop the keypress
+                if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                    event.preventDefault();
+                }
+            }
+        }else{
+            
+            event.preventDefault();
+        }          
+       
+    });
+
+
+    };
+
+    var LimitCharactersPhone = function () {
+    var element = document.getElementById('phone');
+    var limitCharacters = 10;
+    $("#phone").keydown(function (event) {
+        // Allow only backspace and delete
+        console.log($(this).val().length);
+        if($(this).val().length <= limitCharacters || event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 )
+        {
+            if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9) {
+                // let it happen, don't do anything
+            } else {
+                // Ensure that it is a number and stop the keypress
+                if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                    event.preventDefault();
+                }
+            }
+        }else{
+            
+            event.preventDefault();
+        }          
+       
+    });
+
+
+    };
+
+    var LimitCharactersContactPhone = function () {
+    var element = document.getElementById('contactPhone');
+    var limitCharacters = 10;
+    $("#contactPhone").keydown(function (event) {
+        // Allow only backspace and delete
+        console.log($(this).val().length);
+        if($(this).val().length <= limitCharacters || event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 )
         {
             if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9) {
                 // let it happen, don't do anything
@@ -134,7 +186,9 @@ var ProviderFormValidation = function() {
         init: function () {
             // Init Bootstrap Forms Validation
             initValidationBootstrap();
-            initValidationForms();
+            LimitCharactersRUC();
+            LimitCharactersPhone();
+            LimitCharactersContactPhone();
             // Init Validation on Select2 change
             jQuery('.js-select2').on('change', function(){
                 jQuery(this).valid();
