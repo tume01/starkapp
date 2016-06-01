@@ -2,16 +2,17 @@ from django import forms
 from .models import Provider
 
 class ProviderForm(forms.ModelForm):
+
 	class Meta:
 		model = Provider
-		fields = ['ruc','businessName','status','province','distric','registrationDate','address','phone','effectiveTime','email','contactName','contactPhone']
-		error_messages = {' businessName': {'max_length': ("This provider's name is too long."),},}
+		fields = ['ruc','businessName','status','province','distric','registrationDate','address','phone','email','contactName','contactPhone']
+		
 
 
 	def __init__(self,*args, **kwargs):
 		super(ProviderForm,self).__init__(*args,**kwargs)
 
-		self.fields['ruc'].widget.attrs.update({'class' : 'form-control','id' : 'ruc','name' : 'ruc', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el RUC..'})
+		self.fields['ruc'].widget.attrs.update({'class' : 'form-control','id' : 'ruc','name' : 'ruc', 'type' : 'number','min' : '0', 'placeholder' : 'Ingrese el RUC..'})
 		self.fields['businessName'].widget.attrs.update({'class' : 'form-control','id' : 'businessName','name' : 'businessName', 'type' : 'text', 'placeholder' : 'Ingrese el nombre de su compañía..'})
 		self.fields['status'].widget.attrs.update({'class' : 'form-control','id' : 'status','name' : 'status', 'size' : '1',  'placeholder' : 'Seleccione un estado..'})
 		self.fields['province'].widget.attrs.update({'class' : 'form-control','id' : 'province','name' : 'province', 'type' : 'text', 'placeholder' : 'Ingrese la provincia..'})
@@ -21,8 +22,8 @@ class ProviderForm(forms.ModelForm):
 		self.fields['registrationDate'].input_formats = ['%Y-%m-%d']
 		self.fields['address'].widget.attrs.update({'class' : 'form-control','id' : 'address','name' : 'address', 'type' : 'text', 'placeholder' : 'Ingrese la dirección..'})
 		self.fields['phone'].widget.attrs.update({'class' : 'form-control','id' : 'phone','name' : 'phone', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el teléfono..'})
-		self.fields['effectiveTime'].widget.attrs.update({'class' : 'form-control','id' : 'effectiveTime','name' : 'effectiveTime', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el tiempo de vigencia..'})
+		#self.fields['effectiveTime'].widget.attrs.update({'class' : 'form-control','id' : 'effectiveTime','name' : 'effectiveTime', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el tiempo de vigencia..'})
 		self.fields['email'].widget.attrs.update({'class' : 'form-control','id' : 'email','name' : 'email', 'type' : 'text', 'placeholder' : 'Ingrese el email..'})
 		self.fields['contactName'].widget.attrs.update({'class' : 'form-control','id' : 'contactName','name' : 'contactName', 'type' : 'text', 'placeholder' : 'Ingrese nombre de contacto..'})
 		self.fields['contactPhone'].widget.attrs.update({'class' : 'form-control','id' : 'contactPhone','name' : 'contactPhone', 'type' : 'text','min' : '0', 'placeholder' : 'Ingrese el número de contacto..'})
-		#'style':'text-align:right;',
+		#'style':'text-align:right;'
