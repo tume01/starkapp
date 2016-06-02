@@ -10,15 +10,17 @@ from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.MembershipService import MembershipService
 from services.ObjectionService import ObjectionsService
 from services.MemberService import MembersService
-from services.UsersService import UsersService
+from django.contrib.auth.models import User, Group
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
 from Adapters.FormValidator import FormValidator
 from .forms import MembershipTypeForm
 from .forms import MembershipForm
 from members import forms as mForms
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 @require_http_methods(['GET'])
 def membership_type_index(request):
 
@@ -33,6 +35,7 @@ def membership_type_index(request):
     return render(request, 'Admin/Membership/index_type_membership.html', context) 
 
 
+@login_required
 @require_http_methods(['GET'])
 def create_membership_type_index(request):
 
@@ -215,17 +218,11 @@ def create_membership(request):
 
         #Datos del usuario
 
-        insert_data = {}
+        user = User.objects.create_user(username=form2.cleaned_data['num_doc'], email=form2.cleaned_data['email'],   password='1111')
 
-        insert_data["name"] = form2.cleaned_data['num_doc']
+        group = Group.objects.get(id=1)
 
-        insert_data["password"] = 1111
-
-        insert_data["user_type_id"] = 1
-
-        user_service = UsersService()
-
-        user = user_service.create(insert_data)
+        group.user_set.add(user)
 
         #Datos del miembro
 
