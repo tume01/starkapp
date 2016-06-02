@@ -1,8 +1,9 @@
 from django import forms
+from datetime import datetime
 from django.core.validators import RegexValidator
 
 class MembershipTypeForm(forms.Form):
-    alphabetic = RegexValidator(r'^[a-zA-Z]*$', 'Only alphabetic characters are allowed.')
+    alphabetic = RegexValidator(r'^[a-zA-Z]*$', 'Solo caracteres alfabeticos estan perimitidos para los campos Nombre y Apellidos.')
 
     name = forms.CharField(max_length=200, validators=[alphabetic], error_messages={'required': 'El campo Tipo de Membresia es requerido', 'max_length': 'El campo Tipo de Membresia debe tener una longitud maxima de 200 caracteres'})
     guests = forms.IntegerField(error_messages={'required': 'El campo Invitados es requerido'})
@@ -23,6 +24,11 @@ class MembershipTypeForm(forms.Form):
 
 class MembershipForm(forms.Form):
 
-    initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'})
-    finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'})
+    initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'}, input_formats=['%m/%d/%Y'])
+    finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'}, input_formats=['%m/%d/%Y'])
 
+    def clean_finalDate(self):
+        data = self.cleaned_data['finalDate']
+        if data < datetime.now().date():
+            raise forms.ValidationError("La fecha final no puede ser menor a la de hoy")
+        return data

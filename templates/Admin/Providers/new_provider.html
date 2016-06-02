@@ -1,4 +1,5 @@
 {% extends 'Admin/Layouts/base_a.html' %}
+
 {% load staticfiles %}
 
 
@@ -28,7 +29,7 @@ Creación de proveedores
         <div class="block-header">
             <ul class="block-options">
                 <li>
-                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                    <button type="reset" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
                 </li>
             </ul>
             <!--<h3 class="block-title">MANTENIMIENTO PROVEEDORES</h3>-->
@@ -58,9 +59,7 @@ Creación de proveedores
                         <div class="form-group">
                             <div class="col-xs-8">
                                 <label class="control-label" for="status">Estado</label>
-
                                 {{form.status}}
-
                             </div>
                         </div>
                     </div>
@@ -106,7 +105,7 @@ Creación de proveedores
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label class="control-label" for="effectiveTime">Tiempo de Vigencia</label>
@@ -114,7 +113,7 @@ Creación de proveedores
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-8">
                                 <label class="control-label" for="phone">Teléfono</label>
@@ -153,13 +152,12 @@ Creación de proveedores
 
                 <div class="form-group">                    
                     <div class="col-xs-2 col-xs-offset-4">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Guardar</button>
                     </div>
                     <div class="col-xs-2">
-                        <button class="btn btn-danger" type=""><i class="fa fa-remove push-5-r"></i> Cancelar</button>
-                    </div>
-
-                </div>
+                        <a href='{% url "providers:index" %}'><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                    </div> 
+                </div>                
             </form>
         </div>
     </div>  
@@ -174,6 +172,7 @@ Creación de proveedores
 <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
 
 <script>
+    
     jQuery(function () {
                 // Init page helpers (Slick Slider plugin)
                 App.initHelpers('slick');
@@ -208,7 +207,6 @@ Creación de proveedores
 
         <script src='{% static "assets/js/Admin/Provider/provider_forms_validation.js" %}'></script>
         <script src='{% static "assets/js/tablas.js" %}'></script>
-        <script src='{% static "assets/js/product.js" %}'></script>
-        <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+        
 
 {% endblock %}

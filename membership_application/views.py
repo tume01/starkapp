@@ -169,15 +169,17 @@ def edit_membership_application(request):
 
     form = MembershipApplicationForm(request.POST)
 
-    request = FormValidator.validateForm(form, request)
-
     id_application = request.POST['id']
+
+    membership_type_id = request.POST['membership_type']
+
+    request = FormValidator.validateForm(form, request)    
 
     if not request:
 
         insert_data = {}
 
-        insert_data["membership_type_id"] = form.cleaned_data['membership_type']
+        insert_data["membership_type_id"] = membership_type_id
 
         insert_data["firstName"] = form.cleaned_data['firstName']
 
@@ -187,9 +189,9 @@ def edit_membership_application(request):
 
         insert_data["dni"] = form.cleaned_data['dni']
 
-        insert_data["initialDate"] = datetime.strptime(form.cleaned_data['initialDate'], '%m/%d/%Y')
+        insert_data["initialDate"] = form.cleaned_data['initialDate']
 
-        insert_data["finalDate"] = datetime.strptime(form.cleaned_data['finalDate'], '%m/%d/%Y')
+        insert_data["finalDate"] = form.cleaned_data['finalDate']
 
         member_application_service = Membership_ApplicationService()
 
@@ -274,17 +276,20 @@ def create_objection(request):
 
     form = oforms.ObjectionForm(request.POST)
 
+    requestId = request.POST['id_membership']
+
+    comments = request.POST['comments']
+
     request = FormValidator.validateForm(form, request)
 
-    requestId = int(request.POST['id'])
 
     if not request:
 
         insert_data = {}
 
-        insert_data["comments"] = form.cleaned_data['comments']
+        insert_data["comments"] = comments
 
-        insert_data["membership_application_id"] = form.cleaned_data['id_membership']
+        insert_data["membership_application_id"] = requestId
 
         objection_service = ObjectionsService()
 
@@ -309,7 +314,7 @@ def objection_index(request):
 
     member_application_service = Membership_ApplicationService()
 
-    requestId = int(request.POST['id'])
+    requestId = request.POST['id']
 
     membership_application = member_application_service.getMembership_Application(requestId)
 
@@ -323,7 +328,7 @@ def objection_index(request):
 @require_http_methods(['POST'])
 def approve_membership_application(request):
 
-    id_application = int(request.POST['id'])
+    id_application = request.POST['id']
 
     member_application_service = Membership_ApplicationService()
 

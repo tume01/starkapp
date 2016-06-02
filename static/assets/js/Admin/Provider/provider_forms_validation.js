@@ -2,7 +2,7 @@ var ProviderFormValidation = function() {
     // Init Bootstrap Forms Validation, for more examples you can check out https://github.com/jzaefferer/jquery-validation
     var initValidationBootstrap = function(){
         jQuery('.js-validation-bootstrap').validate({
-            ignore: [],
+            ignore: ['cancel'],
             errorClass: 'help-block animated fadeInDown',
             errorElement: 'div',
             errorPlacement: function(error, e) {

@@ -22,6 +22,15 @@ Nueva solicitud de membresía
 
 {% block content %}
      <div class="content content-narrow">
+                    <div class="content">
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{msg.message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
                     <!-- Mega Form -->                        
                     <div class="block-content">
                                 <div class="row">                                   
@@ -53,9 +62,9 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input2">Comentarios</label>
+                                            <label class="col-xs-12" for="comments">Comentarios</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input1-group2" name="comments" placeholder="Comentarios" type="text">
+                                                <textarea class="form-control input-lg" id="comments" name="comments" rows="8" placeholder="Comentarios"></textarea>
                                             </div>
                                         </div>
                                     </div>

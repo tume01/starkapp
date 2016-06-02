@@ -18,3 +18,6 @@ class ProductsService(object):
 
     def find(self,id):
         return self.__product_repository.find(id)
+
+    def filter(self, filters):
+        return self.__product_repository.filter(filters)
