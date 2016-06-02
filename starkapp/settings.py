@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'products',
+    'login',
     'users',
     'promotions',
     'bungalows',
@@ -150,3 +151,5 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
+
+LOGIN_URL = '/login'

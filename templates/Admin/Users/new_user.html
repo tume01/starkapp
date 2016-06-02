@@ -67,8 +67,8 @@ Nuevo usuario
                             <label class="col-xs-12" for="example-select">Seleccione un tipo</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="example-select" name="user_type" size="1">
-                                     {% for type in types %}       
-                                    <option value="{{type.id}}">{{type.description}}</option>
+                                     {% for group in groups %}       
+                                    <option value="{{group.id}}">{{group.name}}</option>
                                      {% endfor %}
                                 </select>
                             </div>
