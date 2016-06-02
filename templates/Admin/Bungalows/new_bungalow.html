@@ -10,7 +10,7 @@ Bungalows
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Editar bungalow
+Nuevo bungalow
 {% endblock %}
 
 {% block sub_head_dahsboard %}
@@ -18,7 +18,7 @@ Bungalows
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Edición de bungalow
+Creación de bungalows
 {% endblock %}
 
 {% block content %}
@@ -33,7 +33,7 @@ Edición de bungalow
                             </ul>
                         </div>
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "bungalows:update" bungalow.id%}' method="post" >
+                            <form class="form-horizontal push-10-t push-10" action='{% url "bungalows:insert" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -120,9 +120,10 @@ Edición de bungalow
                                 <div class="row">
                                     <div class="col-lg-12">
                                        <div class="form-group">
-                                        <div class="col-xs-12">
-                                            <label for="mega-bio">Observaciones</label>
-                                            <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="8" placeholder="Ingrese alguna observación adicional acerca del bungalow"></textarea>
+                                            <div class="col-xs-12">
+                                                <label for="mega-bio">Observaciones</label>
+                                                <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="8" placeholder="Ingrese alguna observación adicional acerca del bungalow"></textarea>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -142,6 +143,7 @@ Edición de bungalow
                 </div>    
 
 {% endblock %}
+
 
 {% block scripts %}
 

@@ -57,9 +57,21 @@ def delete_type(request):
 
     edit_data["status"] = 0
 
-    fine_type_service = FineTypeService()
+    filter_data = {}
 
-    fine_type_service.update(id_edit, edit_data)
+    filter_data["fine_type_id"] = id_edit
+
+    filter_data["status"] = 'Pendiente de Pago'
+
+    fine_service = FineService()
+
+    fines = fine_service.filter(filter_data)
+
+    if(len(fines) == 0):
+
+        fine_type_service = FineTypeService()
+
+        fine_type_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('fine:index_type'))
 
@@ -161,13 +173,13 @@ def create(request2):
 
         insert_data = {}
 
-        insert_data["status"] = 1
+        insert_data["status"] = 'Pendiente de Pago'
 
         insert_data["observations"] = form.cleaned_data['observations']
 
         insert_data["member_id"] = request2.POST['member_id']
 
-        insert_data["fine_type_id_id"] = request2.POST['fine_type_id_id']
+        insert_data["fine_type_id"] = request2.POST['fine_type_id_id']
 
         insert_data["member_id"] = member_id
 
@@ -203,8 +215,8 @@ def index(request):
     fines = fine_service.getFineByUser(member_id)
 
     for fine in fines:
-        fine.reason = (fine_type_service.getFine(fine.fine_type_id.id)).reason
-        fine.price = (fine_type_service.getFine(fine.fine_type_id.id)).price
+        fine.reason = (fine_type_service.getFine(fine.fine_type.id)).reason
+        fine.price = (fine_type_service.getFine(fine.fine_type.id)).price
 
     context = {
         'fines' : fines,

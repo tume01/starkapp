@@ -32,7 +32,7 @@ Lista de solicitudes de membresía
                             <form class="form-horizontal push-10-t push-10" action='{% url "membership_application:user_filter" %}' method="post" >
                                 {% csrf_token %}  
                                 <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Nombres</label>
                                             <div class="col-md-12">
@@ -42,7 +42,7 @@ Lista de solicitudes de membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Apellidos</label>
                                             <div class="col-md-12">
@@ -52,18 +52,19 @@ Lista de solicitudes de membresía
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6" >
+                                
+                                <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">DNI</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI"  type="number" >
+                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI" pattern="[0-9]*" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                <div class="row">                                    
                                     <div class="form-group">
                                         <div class="col-lg-8 col-lg-offset-4">
                                             <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
