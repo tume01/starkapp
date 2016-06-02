@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^servicios/', include('servicios.urls')),
     url(r'^environment/', include('environment.urls')),
     url(r'^events', include('events.urls')),
+    url(r'^login/', include('login.urls')),
 ]
 
 if settings.DEBUG:

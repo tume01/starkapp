@@ -53,7 +53,7 @@ Editar usuario
                                         <label class="col-xs-12" for="example-select">Nombre</label>
                                             <div class="col-md-6">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombre"  type="text" value= "{{user.name}}" >
+                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombre"  type="text" value= "{{user.username}}" >
                                                 </div>
                                             </div>
                                         </div>
@@ -63,7 +63,7 @@ Editar usuario
                                         <label class="col-xs-12" for="example-select">Contraseña</label>
                                             <div class="col-md-6">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input2-group1" name="password" placeholder="Contraseña"  type="text" value= "{{user.password}}" >
+                                                    <input class="form-control" id="example-input2-group1" name="password" placeholder="Contraseña"  type="text" >
                                                 </div>
                                             </div>
                                         </div>
@@ -77,8 +77,8 @@ Editar usuario
                             <label class="col-xs-12" for="example-select">Seleccione un tipo</label>
                             <div class="col-sm-10">
                                 <select class="form-control" id="example-select" name="user_type" size="1">
-                                     {% for type in types %}       
-                                    <option value="{{type.id}}">{{type.description}}</option>
+                                     {% for group in groups %}       
+                                    <option value="{{group.id}}">{{group.name}}</option>
                                      {% endfor %}
                                 </select>
                             </div>
@@ -103,7 +103,7 @@ Editar usuario
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script>
     $(document).ready(function () {
-        $("#example-select").val({{user.user_type_id}});
+        $("#example-select").val({{user.type}});
         
     });
     </script> 
