@@ -17,7 +17,7 @@ Sedes
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-{{headquearter.name}}
+{{headquarters.name}}
 {% endblock %}
 
 {% block content %}
@@ -26,17 +26,18 @@ Sedes
         
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+            <form class="form-horizontal push-10-t push-10" action="headquarters:edit_index" method="post">
+            {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="form-group">
                             <div class="col-xs-6">
                                 <label for="mega-firstname">Codigo</label>
-                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter your firstname.." value="001" disabled>
+                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Wait for the HQ code" value="{{headquarters.id}}" disabled>
                             </div>
                             <div class="col-xs-6">
                                 <label for="mega-lastname">Nombre</label>
-                                <input class="form-control input-lg" type="text" id="mega-lastname" name="mega-lastname" placeholder="Enter the headquarter's name.." value="">
+                                <input class="form-control input-lg" type="text" id="mega-lastname" name="mega-lastname" placeholder="Enter the headquarter's name.." value="{{headquarters.name}}">
                             </div>
                         </div>
                     </div>
@@ -46,7 +47,7 @@ Sedes
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="mega-firstname">Descripcion</label>
-                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter a brief description..">
+                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter a brief description.." value="{{headquarters.description}}">
                             </div>
 
                         </div>
@@ -57,24 +58,17 @@ Sedes
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="mega-bio">Direccion</label>
-                                <input class="form-control input-lg" id="mega-bio" name="mega-bio" rows="2" placeholder="Enter the location of this headquarter.."></input>
+                                <input class="form-control input-lg" id="mega-bio" name="mega-bio" rows="2" placeholder="Enter the location of this headquarter.." value="{{headquarters.location}}"></input>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-3">
-                    </div>
                     <div class="col-xs-2">
-                        <a href="./ClubFranchices.html"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#saveModal"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "headquarters:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
                     </div>
-                    <div class="col-xs-2">
-                        <a href="./ClubFranchices.html"><button class="btn btn-warning" type="button"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
-                    </div>
-                    <div class="col-xs-2">
-                        <a href="./ClubFranchices.html"><button class="btn btn-danger" type="button"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
-                    </div>
-                    <div class="col-xs-3">
+                    <div class="col-xs-6">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
                     </div>
                 </div>
             </form>

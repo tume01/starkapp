@@ -46,11 +46,14 @@ def create_headquarters_index(request):
 
 
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def update_headquarters_index(request):
+
 	headquarter_service = HeadquarterService()
 
-	headquarters = headquarter_service.getHeadquarters()
+	headquarters_id = request.POST['id']
+
+	headquarters = headquarter_service.findHeadquarter(headquarters_id)
 
 	context = {		
 		'headquarters': headquarters
@@ -67,7 +70,7 @@ def create_headquarters(request):
 	form = HeadquarterForm(request.POST)
 
 	headquarter_service = HeadquarterService()
-	print("HASTA AQUI")
+
 	if not FormValidator.validateForm(form, request):
 		
 		insert_data = {}
@@ -84,10 +87,7 @@ def create_headquarters(request):
 		headquarter_service.create(insert_data)
 		
 		return HttpResponseRedirect(reverse('headquarters:index'))
-
 	else:
-		
-
 		headquarters = headquarter_service.getHeadquarters()
 
 		context = {		
@@ -128,4 +128,23 @@ def update(request):
 
 		edit_data["description"] = form.cleaned_data['description']
 
-		return HttpResponseRedirect(reverse('headquarter:hq/index'))
+		return HttpResponseRedirect(reverse('headquarter:index'))
+
+
+
+
+@require_http_methods(['POST'])
+def delete(request):
+
+    edit_data = {}
+
+    id_edit = request.POST['id']
+
+    #Need to add STATUS on model
+    edit_data["status"] = 0
+
+    headquarters_service = HeadquartersService()
+
+    headquarters_service.update(id_edit, edit_data)
+
+    return HttpResponseRedirect(reverse('headquarters:index'))
