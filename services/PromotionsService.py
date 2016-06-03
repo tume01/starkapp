@@ -1,5 +1,6 @@
 from repositories import PromotionsRepository
 
+
 class PromotionsService(object):
 
     """docstring for PromotionssService"""
@@ -20,3 +21,4 @@ class PromotionsService(object):
 
     def filter(self,filters):
         return self.__promotion_repository.filter(filters)
+

@@ -15,6 +15,6 @@ class UserForm(forms.Form):
     user_type = forms.IntegerField(error_messages={'required': 'El campo tipo de usuario es requerido'})
 
 class UserTypeForm(forms.Form):
-    description = forms.CharField(max_length=200,
-                           error_messages={'required': 'El campo descripcion es requerido',
-                                           'max_length': 'El campo descripcion debe tener una longitud maxima de 200 caracteres'})
+    name = forms.CharField(max_length=200,
+                           error_messages={'required': 'El campo nombre es requerido',
+                                           'max_length': 'El campo nombre debe tener una longitud maxima de 200 caracteres'})

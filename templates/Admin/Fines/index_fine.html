@@ -28,6 +28,55 @@ Lista de tipos de multas
 <div class="content">
   <!-- Simple Table Full -->
     <div class="block block-bordered">
+        <div class="block">
+
+                        <div class="block-content">
+
+                            <form class="form" action='{% url "fine:filter" %}' method="post" >
+                                {% csrf_token %}
+                                <div class row>
+                                    <div class="col-lg-6" style="display: none;">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input0-group1" name="member_id" placeholder="ID"  type="number" value= "{{member.id}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   <br>
+                                    <div class="row">
+                                        <div class="col-lg-5" >
+                                            <div class="form-group">
+                                            <label class="col-xs-1 " for="example-select">Estado</label>
+                                                <div class="col-sm-12">
+                                                    <select class="form-control" id="example-select" name="status" size="1">
+                                                        <option value="Pendiente de Pago">Todas</option>
+                                                        <option value="">Pagadas</option>
+                                                        <option value="Pendiente de Pago">Por Pagar</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1" >
+
+                                        </div>
+                                    </div>
+                                    <br>
+                                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                            </form>
+                        </div>
+                    </div>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
             <table class="table table-bordered table-striped js-dataTable-simple">
