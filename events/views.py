@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.EventsService import EventsService
 from services.EnvironmentService import EnvironmentService
+from services.HeadquarterService import HeadquarterService
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
@@ -59,11 +60,16 @@ def create_index(request):
 
     environment_service = EnvironmentService()
 
+    headquearter_service = HeadquarterService()
+
     environments = environment_service.getEnvironment()
+
+    headquearters = headquearter_service.getHeadquarters()
 
     context = {
         'titulo' : 'titulo',
-        'environments' : environments
+        'environments' : environments,
+        'headquearters' : headquearters
     }
 
     return render(request, 'Admin/Events/new_event.html', context)
