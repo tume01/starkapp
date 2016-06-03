@@ -10,7 +10,12 @@ from django.views.decorators.http import require_http_methods
 from Adapters.FormValidator import FormValidator
 from .forms import FineForm
 from .forms import FineTypeForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
 def type_index(request):
 
@@ -25,6 +30,9 @@ def type_index(request):
     return render(request, 'Admin/Fines/index_type_fine.html', context) 
 
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_type_index(request):
 
@@ -34,6 +42,9 @@ def create_type_index(request):
 
     return render(request, 'Admin/Fines/new_type_fine.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_type_index(request):
 
@@ -49,6 +60,9 @@ def edit_type_index(request):
 
     return render(request, 'Admin/Fines/edit_type_fine.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_type(request):
 
@@ -77,6 +91,9 @@ def delete_type(request):
     return HttpResponseRedirect(reverse('fine:index_type'))
 
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_type(request):
 
@@ -110,6 +127,8 @@ def create_type(request):
 
 
 
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_type(request):
 
@@ -144,6 +163,9 @@ def edit_type(request):
         return HttpResponseRedirect(reverse('fine:index_type'))
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_index(request):
 
@@ -161,6 +183,9 @@ def create_index(request):
 
     return render(request, 'Admin/Fines/new_fine.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create(request2):
 
@@ -204,6 +229,9 @@ def create(request2):
 
         return render(request, 'Admin/Fines/new_fine.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def index(request):
 
@@ -231,6 +259,9 @@ def index(request):
     return render(request, 'Admin/Fines/index_fine.html', context)
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def filter(request):
 

@@ -7,10 +7,13 @@ from django.views.decorators.http import require_http_methods
 from Adapters.FormValidator import FormValidator
 from .forms import UserForm, UserTypeForm
 from django.contrib.auth.models import Group, User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 
 #TIPOS DE USUARIO
-
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
 def user_type_index(request):
 
@@ -23,6 +26,8 @@ def user_type_index(request):
     return render(request, 'Admin/Users/index_type_user.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_user_type_index(request):
 
@@ -32,6 +37,9 @@ def create_user_type_index(request):
 
     return render(request, 'Admin/Users/new_type_user.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_user_type_index(request):
 
@@ -46,6 +54,8 @@ def edit_user_type_index(request):
     return render(request, 'Admin/Users/edit_type_user.html', context)
 
 
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_user_type(request):
 
@@ -72,7 +82,8 @@ def create_user_type(request):
         return render(request, 'Admin/Users/new_type_user.html', context)
 
 
-
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_user_type(request):
 
@@ -105,7 +116,8 @@ def edit_user_type(request):
 
 
 #USUARIOS
-
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_user_index(request):
 
@@ -125,6 +137,8 @@ def edit_user_index(request):
     return render(request, 'Admin/Users/edit_user.html', context)
 
 
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_user(request):
 
@@ -166,6 +180,9 @@ def edit_user(request):
         return HttpResponseRedirect(reverse('users:index'))
 
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_user_index(request):
 
@@ -179,6 +196,8 @@ def create_user_index(request):
     return render(request, 'Admin/Users/new_user.html', context)
 
 
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_user(request):
 
@@ -212,7 +231,8 @@ def create_user(request):
         return render(request, 'Admin/Users/new_user.html', context)
 
 
-
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
 def user_index(request):
 
