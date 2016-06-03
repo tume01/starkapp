@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
 
 {% block head_title %}
 Admin: Sedes
@@ -21,23 +21,33 @@ Sedes
 {% endblock %}
 
 {% block content %}
+    <div class="content">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-warning" role="alert">
+                    {{msg.message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
 <div class="content">
     <div class="block">
         
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action="headquarters:edit_index" method="post">
+            <form class="form-horizontal push-10-t push-10" action="{% url 'headquarters:update' headquarter.id %}" method="post">
             {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="form-group">
                             <div class="col-xs-6">
                                 <label for="mega-firstname">Codigo</label>
-                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Wait for the HQ code" value="{{headquarters.id}}" disabled>
+                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Wait for the HQ code" value="{{headquarter.id}}" disabled>
                             </div>
                             <div class="col-xs-6">
                                 <label for="mega-lastname">Nombre</label>
-                                <input class="form-control input-lg" type="text" id="mega-lastname" name="mega-lastname" placeholder="Enter the headquarter's name.." value="{{headquarters.name}}">
+                                <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Enter the headquarter's name.." value="{{headquarter.name}}">
                             </div>
                         </div>
                     </div>
@@ -47,7 +57,7 @@ Sedes
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="mega-firstname">Descripcion</label>
-                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter a brief description.." value="{{headquarters.description}}">
+                                <input class="form-control input-lg" type="text" id="description" name="description" placeholder="Enter a brief description.." value="{{headquarter.description}}">
                             </div>
 
                         </div>
@@ -58,7 +68,7 @@ Sedes
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="mega-bio">Direccion</label>
-                                <input class="form-control input-lg" id="mega-bio" name="mega-bio" rows="2" placeholder="Enter the location of this headquarter.." value="{{headquarters.location}}"></input>
+                                <input class="form-control input-lg" id="location" name="location" rows="2" placeholder="Enter the location of this headquarter.." value="{{headquarter.location}}"></input>
                             </div>
                         </div>
                     </div>

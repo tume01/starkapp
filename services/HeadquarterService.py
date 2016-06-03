@@ -17,4 +17,4 @@ class HeadquarterService(object):
 		return self.__headquarters_repository.all()
 
 	def findHeadquarter(self, id):
-		return self.__headquarters_repository.findHeadquarter(id)
+		return self.__headquarters_repository.find(id)

@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
 
 {% block head_title %}
 Admin: sedes
@@ -25,14 +25,6 @@ Lista de sedes
 <div class="content">
     <!-- Simple Table Full -->
     <div class="block">
-        <form id="myFormDelete" action="{% url "headquarters:delete" %} " method="post">
-                {% csrf_token %}  
-                <input type="hidden" id="hid1" name="id"/>
-            </form>
-            <form id="myFormEdit" action="{% url "headquarters:edit_index" %} " method="post">
-                {% csrf_token %}  
-                <input type="hidden" id="hid2" name="id"/>
-            </form>
         <div class="block-content">
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <table class="table table-bordered table-striped js-dataTable-simple">
@@ -47,20 +39,20 @@ Lista de sedes
                     </tr>
                 </thead>
                 <tbody>
-                    {% for headquarters in headquarters %}  
+                    {% for headquarter in headquarters %}  
                     <tr>
-                        <td class="text-center">{{headquarters.id}}</td>
-                        <td class="font-w600">{{headquarters.name}}</td>
-                        <td class="hidden-xs">{{headquarters.location}}</td>
-                        <td class="hidden-xs">{{headquarters.description}}</td>
+                        <td class="text-center">{{headquarter.id}}</td>
+                        <td class="font-w600">{{headquarter.name}}</td>
+                        <td class="hidden-xs">{{headquarter.location}}</td>
+                        <td class="hidden-xs">{{headquarter.description}}</td>
                         <!--<td class="hidden-xs">
                             <span class="label label-danger">TBD</span>
                         </td>-->
                         <td class="text-center">
                             <div class="btn-group">
-                                <button class="btn btn-xs btn-default editar" data-id="{{headquarters.id}}" type="button"  data-toggle="tooltip" title="Editar Sede"><i class="fa fa-pencil"></i></button>
+                                <a href="{% url 'headquarters:select' headquarter.id %}"><button class="btn btn-xs btn-default editar" data-id="{{headquarter.id}}" type="button"  data-toggle="tooltip" title="Editar Sede"><i class="fa fa-pencil"></i></button></a>
 
-                                <button class="btn btn-xs btn-default eliminar" data-id="{{headquarters.id}}" type="button" data-toggle="tooltip" title="Eliminar Sede"><i class="fa fa-times"></i></button>
+                                <a href="{% url 'headquarters:delete' headquarter.id %}"><button class="btn btn-xs btn-default eliminar" data-id="{{headquarter.id}}" type="button" data-toggle="tooltip" title="Eliminar Sede"><i class="fa fa-times"></i></button></a>
                             </div>
                         </td>
                     </tr>
