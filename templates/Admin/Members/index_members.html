@@ -57,7 +57,8 @@ Lista de miembros
             <table class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
-                            <th>DNI</th>   
+                            <th>Doc. Identidad</th>
+                            <th>Num. Doc.</th>
                             <th>Nombres</th>
                             <th>Apellidos</th>
                             <th>Teléfono</th>
@@ -68,7 +69,8 @@ Lista de miembros
                     <tbody>
                         {% for member in members %}                                       
                         <tr>
-                            <td class="font-w600">{{member.dni}}</td>
+                            <td class="font-w600">{{member.identity_document_type.name}}</td>
+                            <td class="font-w600">{{member.document_number}}</td>
                             <td class="font-w600">{{member.name}}</td>
                             <td class="font-w600">{{member.surname}}</td>
                             <td class="font-w600">{{member.phone}}</td>
