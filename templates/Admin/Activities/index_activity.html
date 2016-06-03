@@ -1,4 +1,6 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
+
+{% load staticfiles %}
 
 {% block head_title %}
 Admin: bungalows
@@ -24,83 +26,68 @@ Lista de actividades
 <main id="main-container">
     <!-- Page Content -->
     <div class="content">
-        <div class="block">
-            <div class="block-content">
-                <form class="form" action="{% url 'activities:index' %}" method="get">
-                    <div class="row">
-                        <div class="col-lg-2">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label">Nombre</label>
-                                <input class="form-control" type="text" id="name" name="name">
+        <form class="form" action="{% url 'activities:index' %}" method="get">
+            <div class="block">
+                <div class="block-content">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="col-sm-12 control-label">Nombre</label>
+                                    <input class="form-control" type="text" id="name" name="name">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label">Precio</label>
-                                <input class="form-control" type="text" id="price" name="price">
+                            <div class="col-lg-1">
+                                <div class="form-group">
+                                    <label class="col-sm-12 control-label">Capacidad</label>
+                                    <input class="form-control" type="text" id="attendance" name="attendance">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
+                            <div class="col-lg-4">
 
-                            <div class="form-group">
-                                <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
-                                <div class="col-xs-12">
-                                    <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                        <input class="form-control" type="text" id="start_date" name="start_date" placeholder="Desde">
-                                        <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                        <input class="form-control" type="text" id="end_date" name="end_date" placeholder="hasta">
+                                <div class="form-group">
+                                    <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
+                                    <div class="col-xs-12">
+                                        <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                            <input class="form-control input-datetime" type="text" id="start_date" name="start_date" placeholder="Desde">
+                                            <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                            <input class="form-control input-datetime" type="text" id="end_date" name="end_date" placeholder="hasta">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="col-xs-12" for="example-select">Seleccione una sede</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" id="example-select" name="example-select" size="1">
-                                        <option value="0">Todas las sedes</option>
-                                        <option value="1">Sede principal</option>
-                                        <option value="2">Sede #1</option>
-                                        <option value="3">Sede #2</option>
-                                        <option value="4">Sede #3</option>
-                                    </select>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label class="col-xs-12" for="example-select">Tipo de Actividad</label>
+                                    <div class="col-sm-12">
+                                        <select class="form-control" id="activity_type_id" name="activity_type_id" size="1">
+                                            <option value>Todas las sedes</option>
+                                            {% for activity_type in activity_types %}
+                                            <option value="{{ activity_type.id }}">{{ activity_type.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-9">
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <div class="col-lg-12">
-                                    <a href="{% url 'activities:index' %}"><button class="btn btn-sm btn-primary" type="button">Mostrar Todos</button></a>
+                </div>
+                <div class="block-content">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-lg-3 col-lg-offset-9">
+                                <div class="col-lg-12 text-right">
                                     <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <br>
-
-                </form>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
     <div class="content">
         <!-- Simple Table Full -->
         <div class="block">
             <div class="block-header">
-                <ul class="block-options">
-                    <li>
-                        <button class="btn btn-sm btn-primary">Nuevo Servicio</button>
-                    </li>
-                    <li>
-                        <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                    </li>
-                </ul>
                 <h1 class="block-title">Lista de Actividades</h1>
             </div>
             <!--<div class="block-header">
@@ -111,9 +98,9 @@ Lista de actividades
                 <table class="table table-bordered table-striped js-dataTable-simple">
                     <thead>
                         <tr>
-                            <th class="text-center" style="width: 5%;"></th>
+                            <th class="text-center" style="width: 5%;">Codigo</th>
                             <th class="hidden-xs" style="width: 30%;">Nombre</th>
-                            <th class="hidden-xs" style="width: 15%;">Local</th>
+                            <th class="hidden-xs" style="width: 15%;">Ambiente</th>
                             <th class="hidden-xs" style="width: 15%;">Fecha Inicio</th>
                             <th class="hidden-xs" style="width: 15%;">Fecha Fin</th>
                             <th class="text-center" style="width: 10%;">Acciones</th>
@@ -124,24 +111,51 @@ Lista de actividades
                             <tr>
                                 <td class="text-center">{{activity.id}}</td>
                                 <td class="font-w600">{{activity.name}}</td>
-                                <td class="hidden-xs">
-                                    <span class="label label-danger">Ocupado</span>
-                                </td>
+                                <td class="hidden-xs">{{activity.enviroment.name}}</td>
                                 <td class="hidden-xs">{{activity.start_date|date:"d/m/Y H:i"}}</td>
                                 <td class="hidden-xs">{{activity.end_date|date:"d/m/Y H:i"}}</td>
                                 <td class="text-center">
                                     <div class="btn-group">
                                         <a href="{% url 'activities:select' activity.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Serivicio"><i class="fa fa-pencil"></i></button></a>
-                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Eliminar Servicio"><i class="fa fa-times"></i></button>
+                                        <a href="{% url 'activities:delete' activity.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Eliminar Servicio"><i class="fa fa-times"></i></button></a>
                                     </div>
                                 </td>
                             </tr>
                         {%endfor%}
                     </tbody>
                 </table>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if activities.has_previous %}
+                            <a href="?page={{ activities.previous_page_number }}">Anterior</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ activities.number }} of {{ activities.paginator.num_pages }}.
+                        </span>
+
+                        {% if activities.has_next %}
+                            <a href="?page={{ activities.next_page_number }}">Siguiente</a>
+                        {% endif %}
+                    </span>
+                </div>
             </div>
         </div>
         <!-- END Simple Table Full -->
     </div>
 </main>
+{% endblock %}
+{% block scripts %}
+
+<script src='{% static "assets/js/datetimepicker/jquery.datetimepicker.full.min.js" %}'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+                
+        $('.input-datetime').datetimepicker({
+            format: "d/m/Y",
+            timepicker: false,
+        });  
+            
+    });
+</script>
 {% endblock %}

@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from services.MemberService import MembersService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
+from services.UbigeoService import UbigeoService
 from Adapters.FormValidator import FormValidator
 from .forms import  MemberForm
 from django.contrib.auth.decorators import login_required
@@ -43,8 +44,13 @@ def edit_member_index(request):
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+    ubigeo_service = UbigeoService()
+
+    ubigeo = ubigeo_service.getAllUbigeo()
+
     context = {
         'member' : member,
+        'ubigeo' : ubigeo,
         'doc_types': doc_types,
     }
 
@@ -81,6 +87,8 @@ def edit_member(request):
 
     id_edit = request.POST['id']
 
+    ubigeo_service = UbigeoService()
+
     identity_doc_type = request.POST['identity_document_type']
 
     if FormValidator.validateForm(form, request):
@@ -93,8 +101,11 @@ def edit_member(request):
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+        ubigeo = ubigeo_service.getAllUbigeo()
+
         context = {
             'member': member,
+            'ubigeo': ubigeo,
             'doc_types': doc_types
         }
 
@@ -108,7 +119,9 @@ def edit_member(request):
 
         edit_data["name"] = form.cleaned_data['name']
 
-        edit_data["surname"] = form.cleaned_data['surname']
+        edit_data["paternalLastName"] = form.cleaned_data['paternalLastName']
+
+        edit_data["maternalLastName"] = form.cleaned_data['maternalLastName']
 
         edit_data["document_number"] = form.cleaned_data['num_doc']
 
@@ -117,6 +130,12 @@ def edit_member(request):
         edit_data["address"] = form.cleaned_data['address']
 
         edit_data["email"] = form.cleaned_data['email']
+
+        id_ubigeo = request.POST['district']
+
+        ubi = ubigeo_service.getUbigeoById(id_ubigeo)
+
+        edit_data["ubigeo"] = ubi
 
         member_service = MembersService()
 

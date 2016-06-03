@@ -1,5 +1,4 @@
 from identity_document_type.models import Identity_Document_Type
-from contracts.repositories import AbstractBaseRepository
 from .BaseRepository import BaseRepository
 
 class IdentityDocumentTypeRepository(BaseRepository):

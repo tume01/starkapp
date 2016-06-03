@@ -9,6 +9,7 @@ from services.Membership_ApplicationService import Membership_ApplicationService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.MembershipService import MembershipService
 from services.ObjectionService import ObjectionsService
+from services.UbigeoService import UbigeoService
 from services.MemberService import MembersService
 from django.contrib.auth.models import User, Group
 from datetime import datetime
@@ -250,7 +251,9 @@ def create_membership(request):
 
         insert_data["name"] = form2.cleaned_data['name']
 
-        insert_data["surname"] = form2.cleaned_data['surname']
+        insert_data["paternalLastName"] = form2.cleaned_data['paternalLastName']
+
+        insert_data["maternalLastName"] = form2.cleaned_data['maternalLastName']
 
         insert_data["document_number"] = form2.cleaned_data['num_doc']
 
@@ -262,11 +265,19 @@ def create_membership(request):
 
         insert_data["state"] = 1
 
+        ubigeo_service = UbigeoService()
+
+        id_ubigeo = request.POST['district']
+
+        ubi = ubigeo_service.getUbigeoById(id_ubigeo)
+
+        insert_data["ubigeo"] = ubi
+
         member_service = MembersService()
 
         member_service.create(insert_data)
 
-        #Elimino solicitud
+        #Elimino solicitud (se pone como aceptada)
 
         id_application = membershipApplicationId
 
