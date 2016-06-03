@@ -44,10 +44,10 @@ Lista de solicitudes de membresía
                                     </div>
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-1" for="example-select">Apellidos</label>
+                                        <label class="col-xs-12" for="example-select">Apellido paterno</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input2-group1" name="lastName" placeholder="Apellidos"  type="text" >
+                                                    <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno"  type="text" >
                                                 </div>
                                             </div>
                                         </div>
@@ -103,7 +103,8 @@ Lista de solicitudes de membresía
                                         <th>Doc. de Identidad</th>
                                         <th>Num. de Documento</th>
                                         <th>Nombres</th>
-                                        <th>Apellidos</th>                                       
+                                        <th>Apellido paterno</th>                                       
+                                        <th>Apellido materno</th>                                       
                                         <th>Fecha Inicio</th>  
                                         <th>Fecha Fin</th>  
                                         <th>Comentarios</th> 
@@ -116,7 +117,8 @@ Lista de solicitudes de membresía
                                             <td class="font-w600">{{membershipApp.identity_document_type.name}}</td>
                                             <td class="font-w600">{{membershipApp.document_number}}</td>
                                             <td class="font-w600">{{membershipApp.firstName}}</td>
-                                            <td class="font-w600">{{membershipApp.lastName}}</td>
+                                            <td class="font-w600">{{membershipApp.paternalLastName}}</td>
+                                            <td class="font-w600">{{membershipApp.maternalLastName}}</td>
                                             <td class="font-w600">{{membershipApp.initialDate}}</td>
                                             <td class="font-w600">{{membershipApp.finalDate}}</td>
                                             <td class="font-w600">{{membershipApp.comments}}</td>

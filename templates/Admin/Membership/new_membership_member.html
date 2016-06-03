@@ -39,7 +39,7 @@ Nueva membresía
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "memberships:insert" %}' method="post" >
                             {% csrf_token %}
                              <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group" style="display: none;">
                                             <div class="col-md-12">
                                                <div class="input-group">
@@ -63,11 +63,19 @@ Nueva membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Apellidos</label>
+                                            <label class="col-xs-8" for="example-number-input">Apellido paterno</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input2-group1" name="surname" placeholder="Apellidos" value="{{membership_application.lastName}}" type="text">
+                                                <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="{{membership_application.paternalLastName}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Apellido materno</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input3-group1" name="maternalLastName" placeholder="Apellido materno" value="{{membership_application.maternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
