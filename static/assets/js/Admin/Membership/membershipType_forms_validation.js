@@ -25,12 +25,12 @@ var MembershipTypeFormValidation = function() {
                     required: true,
                     maxlength: 200
                 },
-                'gests':{
+                'guests':{
                 	required:true                
                 },
                 'price':{
                     required:true
-                }
+                },
                 'billing':{
                     required:true,
                     maxlength:200
@@ -41,7 +41,7 @@ var MembershipTypeFormValidation = function() {
                     required: 'Por favor ingrese una descripcion',
                     maxlength: 'El usuario no puede tener más de 200 caracteres'
                 },
-                'gests':{
+                'guests':{
                 	required: 'Por favor ingrese el número de invitados'                	
                 },
                 'price':{

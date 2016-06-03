@@ -36,7 +36,7 @@ var PromotionFormValidation = function() {
                     maxlength: 'La descripcion no puede tener más de 200 caracteres'
                 },
                 'percentage':{
-                	required: 'Por favor ingrese una clave'
+                	required: 'Por favor ingrese un porcentaje'
                 	
                 }
                 /*

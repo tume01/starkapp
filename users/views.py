@@ -3,22 +3,21 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from services.UserTypeService import UsersTypeService
-from services.UsersService import UsersService
 from django.views.decorators.http import require_http_methods
 from Adapters.FormValidator import FormValidator
 from .forms import UserForm, UserTypeForm
+from django.contrib.auth.models import Group, User
 
+
+#TIPOS DE USUARIO
 
 @require_http_methods(['GET'])
 def user_type_index(request):
 
-    user_type_service = UsersTypeService()
-
-    types = user_type_service.getTypes()
+    groups = Group.objects.all()
 
     context = {
-        'types' : types,
+        'groups' : groups,
     }
 
     return render(request, 'Admin/Users/index_type_user.html', context) 
@@ -38,12 +37,10 @@ def edit_user_type_index(request):
 
     id_type = request.POST['id']
 
-    user_type_service = UsersTypeService()
-
-    type = user_type_service.getType(id_type)
+    group = Group.objects.get(id=id_type)
 
     context = {
-        'type' : type,
+        'group' : group,
     }
 
     return render(request, 'Admin/Users/edit_type_user.html', context)
@@ -60,11 +57,9 @@ def create_user_type(request):
 
         insert_data = {}
 
-        insert_data["description"] = form.cleaned_data['description']
+        name = form.cleaned_data['name']
 
-        user_type_service = UsersTypeService()
-
-        user_type_service.create(insert_data)
+        Group.objects.create(name=name)
 
         return HttpResponseRedirect(reverse('users:type/index'))
 
@@ -85,49 +80,50 @@ def edit_user_type(request):
 
     id_edit = request.POST['id']
 
-    user_type_service = UsersTypeService()
-
     if FormValidator.validateForm(form, request):
 
-        user_type = user_type_service.getType(id_edit)
+        group = Group.objects.get(id=id_edit)
 
         context = {
-            'type' : user_type
+            'group' : group
         }
 
         return render(request, 'Admin/Users/edit_type_user.html', context)
 
     else:
 
-        edit_data = {}
+        name = form.cleaned_data['name']
 
-        edit_data["description"] = form.cleaned_data['description']
+        group = Group.objects.get(id=id_edit)
 
-        user_type_service.update(id_edit, edit_data)
+        group.name = name
+
+        group.save()
 
         return HttpResponseRedirect(reverse('users:type/index'))
 
 
+
+#USUARIOS
 
 @require_http_methods(['POST'])
 def edit_user_index(request):
 
     id_user = request.POST['id']
 
-    user_service = UsersService()
+    user = User.objects.get(id=id_user)
 
-    user = user_service.getUser(id_user)
+    groups = Group.objects.all()
 
-    user_type_service = UsersTypeService()
-
-    types = user_type_service.getTypes()
+    user.type = user.groups.all()[0].id
 
     context = {
         'user' : user,
-        'types' : types,
+        'groups' : groups,
     }
 
     return render(request, 'Admin/Users/edit_user.html', context)
+
 
 @require_http_methods(['POST'])
 def edit_user(request):
@@ -136,36 +132,36 @@ def edit_user(request):
 
     id_edit = request.POST['id']
 
-    user_service = UsersService()
-
-    user_type_service = UsersTypeService()
-
     if FormValidator.validateForm(form, request):
 
-        user = user_service.getUser(id_edit)
+        user = User.objects.get(id=id_edit)
 
-        types = user_type_service.getTypes()
+        user.type = user.groups.all()[0].id
+
+        groups = Group.objects.all()
 
         context = {
             'user' : user,
-            'types' : types,
+            'groups' : groups,
         }
 
         return render(request, 'Admin/Users/edit_user.html', context)
 
     else:
 
-        edit_data = {}
+        user = User.objects.get(id=id_edit)
 
-        edit_data["name"] = form.cleaned_data['name']
+        user.username = form.cleaned_data['name']
 
-        edit_data["password"] = form.cleaned_data['password']
+        user.set_password(form.cleaned_data['password'])
 
-        user_type = user_type_service.getType(form.cleaned_data['user_type'])
+        user.save()
 
-        edit_data["user_type"] = user_type
+        group = Group.objects.get(id=(form.cleaned_data['user_type']))
 
-        user_service.update(id_edit, edit_data)
+        user.groups.all()[0].user_set.remove(user)
+     
+        group.user_set.add(user)
 
         return HttpResponseRedirect(reverse('users:index'))
 
@@ -173,13 +169,11 @@ def edit_user(request):
 @require_http_methods(['GET'])
 def create_user_index(request):
 
-    user_type_service = UsersTypeService()
-
-    types = user_type_service.getTypes()
+    groups = Group.objects.all()
 
     context = {
         'titulo' : 'titulo',
-        'types' : types,
+        'groups' : groups,
     }
 
     return render(request, 'Admin/Users/new_user.html', context)
@@ -192,33 +186,27 @@ def create_user(request):
 
     request = FormValidator.validateForm(form, request)
 
-    user_type_service = UsersTypeService()
-
     if not request:
 
-        insert_data = {}
+        name = form.cleaned_data['name']
 
-        insert_data["name"] = form.cleaned_data['name']
+        password = form.cleaned_data['password']
 
-        insert_data["password"] = form.cleaned_data['password']
+        group = Group.objects.get(id=(form.cleaned_data['user_type']))
 
-        user_type = user_type_service.getType(form.cleaned_data['user_type'])
+        user = User.objects.create_user(username=name, password=password)
 
-        insert_data["user_type"] = user_type
-
-        user_service = UsersService()
-
-        user_service.create(insert_data)
+        group.user_set.add(user)
 
         return HttpResponseRedirect(reverse('users:index'))
 
     else:
 
-        types = user_type_service.getTypes()
+        groups = Group.objects.all()
 
         context = {
             'titulo' : 'titulo',
-            'types' : types
+            'groups' : groups
         }
 
         return render(request, 'Admin/Users/new_user.html', context)
@@ -228,14 +216,7 @@ def create_user(request):
 @require_http_methods(['GET'])
 def user_index(request):
 
-    user_service = UsersService()
-
-    users = user_service.getUsers()
-
-    #user_type_service = UsersTypeService()
-
-    #for user in users:
-        #user.user_type = user_type_service.getType(user.user_type_id).description
+    users = User.objects.all()
 
     context = {
         'users' : users,

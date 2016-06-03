@@ -30,7 +30,7 @@ var ProviderFormValidation = function() {
                     maxlength:200
                     //email: true
                 },
-                'dni': {
+                'num_doc': {
                     required: true                    
                 },
                 /*'val-confirm-password': {
@@ -57,7 +57,7 @@ var ProviderFormValidation = function() {
                     required: 'Por favor ingrese un nombre',
                     maxlength: 'El apellido debe tener máximo 200 caracteres'                    
                 },
-                'dni': {
+                'num_doc': {
                     required: 'Por favor ingrese un dni'                    
                 },
                 'comments': {
