@@ -106,8 +106,8 @@ Editar Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class=""></span>
-                                                        {% for environment in event.environment%}
-                                                            <input type="radio" name="environment" value="{{environment.id}}">{{environment.name}}</input>
+                                                        {% for environment in event.environment.all %}
+                                                            <input type="radio" name="environment" checked value="{{event.environment.id}}">{{environment.name}}</input>
                                                         {% endfor %}
                                                     </select>
                                                 </div>

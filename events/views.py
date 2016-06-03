@@ -64,12 +64,12 @@ def create_index(request):
 
     environments = environment_service.getEnvironment()
 
-    headquearters = headquearter_service.getHeadquarters()
-
+    headquarters = headquearter_service.getHeadquarters()
+    
     context = {
         'titulo' : 'titulo',
         'environments' : environments,
-        'headquearters' : headquearters
+        'headquarters' : headquarters
     }
 
     return render(request, 'Admin/Events/new_event.html', context)
@@ -115,7 +115,7 @@ def create_event(request):
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
-        insert_data["seat"] = request.POST.get('seat')
+        insert_data["headquarter_id"] = request.POST.get('headquarter')
      
         insert_data["start_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
 
@@ -123,7 +123,9 @@ def create_event(request):
 
         insert_data["assistance"] = request.POST.get('assistance')
 
-        insert_data["price"] = request.POST.get('price')
+        insert_data["price_member"] = request.POST.get('price_member')
+
+        insert_data["price_invited"] = request.POST.get('price_invited')
 
         insert_data["status"] = 0
 
