@@ -250,7 +250,9 @@ def create_membership(request):
 
         insert_data["name"] = form2.cleaned_data['name']
 
-        insert_data["surname"] = form2.cleaned_data['surname']
+        insert_data["paternalLastName"] = form2.cleaned_data['paternalLastName']
+
+        insert_data["maternalLastName"] = form2.cleaned_data['maternalLastName']
 
         insert_data["document_number"] = form2.cleaned_data['num_doc']
 
@@ -266,7 +268,7 @@ def create_membership(request):
 
         member_service.create(insert_data)
 
-        #Elimino solicitud
+        #Elimino solicitud (se pone como aceptada)
 
         id_application = membershipApplicationId
 

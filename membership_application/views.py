@@ -70,7 +70,7 @@ def filter(request):
     if num_doc != '':
         filter_member_application["document_number"] = num_doc
 
-    if appStatus != '3':
+    if appStatus != '4':
         filter_member_application["status"] = appStatus
 
     if type_identity_doc != 'Todos':
@@ -183,7 +183,9 @@ def create_membership_application(request):
 
         insert_data["firstName"] = form.cleaned_data['firstName']
 
-        insert_data["lastName"] = form.cleaned_data['lastName']
+        insert_data["paternalLastName"] = form.cleaned_data['paternalLastName']
+
+        insert_data["maternalLastName"] = form.cleaned_data['maternalLastName']
 
         insert_data["comments"] = form.cleaned_data['comments']
 
@@ -245,7 +247,9 @@ def edit_membership_application(request):
 
         insert_data["firstName"] = form.cleaned_data['firstName']
 
-        insert_data["lastName"] = form.cleaned_data['lastName']
+        insert_data["paternalLastName"] = form.cleaned_data['paternalLastName']
+
+        insert_data["maternalLastName"] = form.cleaned_data['maternalLastName']
 
         insert_data["comments"] = form.cleaned_data['comments']
 
@@ -324,7 +328,7 @@ def user_filter(request):
 
     filter_member_application["status"] = 1 
 
-    lastName = request.POST['lastName']
+    paternalLastName = request.POST['paternalLastName']
 
     firstName = request.POST['firstName']
 
@@ -332,8 +336,8 @@ def user_filter(request):
 
     type_identity_doc = request.POST['identity_document_type']
 
-    if lastName != '':
-        filter_member_application["lastName"] = lastName
+    if paternalLastName != '':
+        filter_member_application["paternalLastName"] = paternalLastName
 
     if firstName != '':
         filter_member_application["firstName"] = firstName
@@ -419,22 +423,39 @@ def objection_index(request):
 @require_http_methods(['POST'])
 def approve_membership_application(request):
 
-    id_application = request.POST['id']
+    if 'Accept' in request.POST:
+    
+        id_application = request.POST['id']
 
-    member_application_service = Membership_ApplicationService()
+        member_application_service = Membership_ApplicationService()
 
-    identity_doc_type_service = IdentityDocumentTypeService()
+        identity_doc_type_service = IdentityDocumentTypeService()
 
-    doc_types = identity_doc_type_service.getIdentityDocumentTypes()
+        doc_types = identity_doc_type_service.getIdentityDocumentTypes()
 
-    membership_application =  member_application_service.getMembership_Application(id_application)
+        membership_application =  member_application_service.getMembership_Application(id_application)
 
-    context = {
-        'titulo' : 'titulo',
-        'doc_types' : doc_types,
-        'membership_application' : membership_application,
-    }
+        context = {
+            'titulo' : 'titulo',
+            'doc_types' : doc_types,
+            'membership_application' : membership_application,
+        }
 
-    return render(request, 'Admin/Membership/new_membership_member.html', context)
+        return render(request, 'Admin/Membership/new_membership_member.html', context)
+
+    elif 'Reject' in request.POST:
+
+        insert_data = {}
+
+        id_application = request.POST['id']
+
+        insert_data["status"] = 3
+
+        member_application_service = Membership_ApplicationService()
+
+        member_application_service.update(id_application, insert_data)
+
+        return HttpResponseRedirect(reverse('membership_application:index'))
+
 
 

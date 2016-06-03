@@ -108,7 +108,9 @@ def edit_member(request):
 
         edit_data["name"] = form.cleaned_data['name']
 
-        edit_data["surname"] = form.cleaned_data['surname']
+        edit_data["paternalLastName"] = form.cleaned_data['paternalLastName']
+
+        edit_data["maternalLastName"] = form.cleaned_data['maternalLastName']
 
         edit_data["document_number"] = form.cleaned_data['num_doc']
 
