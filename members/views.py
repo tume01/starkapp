@@ -8,8 +8,12 @@ from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from Adapters.FormValidator import FormValidator
 from .forms import  MemberForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def member_index(request):
 
@@ -24,6 +28,8 @@ def member_index(request):
     return render(request, 'Admin/Members/index_members.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_member_index(request):
 
@@ -44,6 +50,10 @@ def edit_member_index(request):
 
     return render(request, 'Admin/Members/edit_member.html', context)
 
+
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_member(request):
 
@@ -60,6 +70,10 @@ def delete_member(request):
     return HttpResponseRedirect(reverse('members:index'))
 
 
+
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_member(request):
 
