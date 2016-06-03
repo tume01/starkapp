@@ -23,7 +23,7 @@ def login_view(request):
         return HttpResponseRedirect(reverse('login:ini'))
     else:
         # Show an error page
-    	return HttpResponseRedirect(reverse("login.html"))
+    	return HttpResponseRedirect(reverse('login:index'))
 
 
 
