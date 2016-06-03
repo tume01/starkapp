@@ -4,7 +4,7 @@ from environment.models import Environment
 # Create your models here.
 
 class Activity(models.Model):
-    status = models.DateTimeField()
+    status = models.DateTimeField(null=True)
     end_date = models.DateTimeField()
     attendance = models.IntegerField()
     start_date = models.DateTimeField()

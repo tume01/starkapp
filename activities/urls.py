@@ -8,6 +8,6 @@ urlpatterns = [
     url(r'^create', views.create_index, name='create_index'),
     url(r'^update/(?P<activity_id>[0-9]+)', views.update_index, name='select'),
     url(r'^save/(?P<activity_id>[0-9]+)', views.update, name='update'),
-    url(r'^delete/(?P<activity_id>[0-9]+)', views.delete, name='dete'),
+    url(r'^delete/(?P<activity_id>[0-9]+)', views.delete, name='delete'),
     url(r'^', views.index, name='index'),
 ]

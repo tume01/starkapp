@@ -23,6 +23,8 @@ def index(request):
 
     activities = activity_service.filter(filters)
 
+    activity_types = ActivityTypeService.getActivityTypes()
+    
     paginator = Paginator(activities, 10)
 
     page = request.GET.get('page')
@@ -38,21 +40,23 @@ def index(request):
 
     context = {
         'titulo': 'tittle',
-        'activities': activities
+        'activities': activities,
+        'activity_types': activity_types
     }
 
     return render(request, 'Admin/Activities/index_activity.html', context)
 
 def getActivityFilters(request):
 
-
     filters = {}
+
+    filters['status'] = None;
 
     if request.GET.get('name'):
         filters['name'] = request.GET.get('name')
 
-    if request.GET.get('price'):
-        filters['price'] = request.GET.get('price')
+    if request.GET.get('activity_type_id'):
+        filters['activity_type_id'] = request.GET.get('activity_type_id')
 
     if request.GET.get('start_date'):
         start_date = datetime.strptime(request.GET.get('start_date'), "%m/%d/%Y")
@@ -132,14 +136,12 @@ def create_index(request):
 
     return render(request, 'Admin/Activities/new_activity.html', context)
 
-@require_http_methods(['POST'])
-def delete(request):
-
-    activity_id = request.POST['id']
+@require_http_methods(['GET'])
+def delete(request, activity_id):
 
     activity_service = ActivityService()
 
-    activity = activity_service.delete(activity_id)
+    activity = activity_service.update(activity_id, {'status': datetime.now()})
 
     return HttpResponseRedirect(reverse('activities:index'))
 
@@ -182,11 +184,11 @@ def update(request, activity_id):
 
         name = form.cleaned_data['name']
         price = form.cleaned_data['price']
-        attendance = form.cleaned_data['attendance']
+        end_date = form.cleaned_data['end_date']
         start_date = form.cleaned_data['start_date']
-        end_date   = form.cleaned_data['end_date']
-        activity_type_id = form.cleaned_data['activity_type']
+        attendance = form.cleaned_data['attendance']
         enviroment_id = form.cleaned_data['environments']
+        activity_type_id = form.cleaned_data['activity_type']
 
         enviroment = environments_service.getEnviromentById(enviroment_id)
         activity_type = activity_types_service.getActivityType(activity_type_id)
