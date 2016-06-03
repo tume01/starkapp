@@ -44,19 +44,53 @@ Lista de solicitudes de membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">DNI</label>
+                                        <label class="col-xs-12" for="example-select">Numero de Documento</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI" pattern="[0-9]*"  >
+                                                    <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Num Documento" pattern="[0-9]*"  >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                     
+                                </div>
+                               <br>
+                                <div class="row">
+                                    <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-1 " for="example-select">Estado</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="status" size="1">
+                                                    <option value="3">Todas</option>
+                                                    <option value="0">Desaprobado</option>
+                                                    <option value="1">Por Aprobar</option>
+                                                    <option value="2">Aprobado</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <br>
-                                    <div class="row">
+                                    <div class="col-lg-1" >
+                                        
+                                    </div>
+                                    <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-6 " for="example-select">Documento de Identidad</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                                    <option value="Todos">Todos</option>
+                                                    {% for doc_type in doc_types %}
+                                                        <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
 
                     <div class="col-lg-12">
                         <div class="form-group">
@@ -89,32 +123,45 @@ Lista de solicitudes de membresía
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
                                     <tr>
-                                        <th>DNI</th>
+                                        <th>Doc. Identidad</th>
+                                        <th>Num. Doc.</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>                                       
                                         <th>Fecha Inicio</th>  
-                                        <th>Fecha Fin</th>  
-                                        <th>Comentarios</th> 
-                                        <th>Acciones</th>                                      
+                                        <th>Fecha Fin</th>
+                                        <th>Comentarios</th>
+                                        <th> Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for membershipApp in membershipApplications %}                                       
                                         <tr>
-                                            <td class="font-w600">{{membershipApp.dni}}</td>
+                                            <td class="font-w600">{{membershipApp.identity_document_type.name}}</td>
+                                            <td class="font-w600">{{membershipApp.document_number}}</td>
                                             <td class="font-w600">{{membershipApp.firstName}}</td>
                                             <td class="font-w600">{{membershipApp.lastName}}</td>
                                             <td class="font-w600">{{membershipApp.initialDate}}</td>
                                             <td class="font-w600">{{membershipApp.finalDate}}</td>
                                             <td class="font-w600">{{membershipApp.comments}}</td>
                                             <td class="text-center">
-                                               <div class="btn-group">
-                                    <button class="btn btn-xs btn-default editar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Editar Solicitud"><i class="fa fa-pencil"></i></button>
-
-                                    <button class="btn btn-xs btn-default eliminar" data-id="{{membershipApp.id}}" type="button" data-toggle="tooltip" title="Eliminar Solicitud"><i class="fa fa-times"></i></button>                                
-                                 <button class="btn btn-xs btn-default cerrar" data-id="{{membershipApp.id}}" type="button" data-toggle="tooltip" title="Cerrar Solicitud"><i class="fa fa-chevron-right"></i></button>
-                                </div>
-                                            </td>    
+                                            {% if membershipApp.status == 1 %}
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-default editar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Editar Solicitud"><i class="fa fa-pencil"></i></button>
+                                                    <button class="btn btn-xs btn-default eliminar" data-id="{{membershipApp.id}}" type="button" data-toggle="tooltip" title="Eliminar Solicitud"><i class="fa fa-times"></i></button>
+                                                    <button class="btn btn-xs btn-default cerrar" data-id="{{membershipApp.id}}" type="button" data-toggle="tooltip" title="Cerrar Solicitud"><i class="fa fa-chevron-right"></i></button>
+                                                </div>
+                                            {% endif %}
+                                            {% if membershipApp.status == 0 %}
+                                                <div class="col-lg-12" >
+                                                    <label class="col-xs-15 " for="example-select">Desaprobado</label>
+                                                </div>
+                                            {% endif %}
+                                            {% if membershipApp.status == 2 %}
+                                                <div class="col-lg-12" >
+                                                    <label class="col-xs-15" for="example-select">Aprobado</label>
+                                                </div>
+                                            {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>

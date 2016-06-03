@@ -37,17 +37,17 @@ Lista de tipos de usuario
             <table class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
-                            <th>Descripción</th>                                     
+                            <th>Nombre</th>                                     
                             <th>Acción</th>                                        
                         </tr>
                     </thead>
                     <tbody>
-                        {% for type in types %}                                       
+                        {% for group in groups %}                                       
                         <tr>
-                            <td class="font-w600">{{type.description}}</td>
+                            <td class="font-w600">{{group.name}}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <button class="btn btn-xs btn-default editar" data-id="{{type.id}}" type="button"  data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-xs btn-default editar" data-id="{{group.id}}" type="button"  data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
                                 </div>
                             </td>    
                         </tr>
