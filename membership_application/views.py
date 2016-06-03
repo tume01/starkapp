@@ -12,10 +12,13 @@ from datetime import datetime
 from Adapters.FormValidator import FormValidator
 from .forms import MembershipApplicationForm
 from objection import forms as oforms
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 
 #ADMIN
-
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def index(request):
 
@@ -35,6 +38,8 @@ def index(request):
     return render(request, 'Admin/Membership/index_membership_request.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def filter(request):
 
@@ -81,6 +86,8 @@ def filter(request):
     return render(request, 'Admin/Membership/index_membership_request.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_index(request):
 
@@ -101,6 +108,9 @@ def create_index(request):
 
     return render(request, 'Admin/Membership/new_membership_request.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_index(request):
 
@@ -130,6 +140,9 @@ def edit_index(request):
 
     return render(request, 'Admin/Membership/edit_membership_request.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_membership_application(request):
 
@@ -146,6 +159,9 @@ def delete_membership_application(request):
     return HttpResponseRedirect(reverse('membership_application:index'))
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_membership_application(request):
 
@@ -203,6 +219,9 @@ def create_membership_application(request):
         return render(request, 'Admin/Membership/new_membership_request.html', context)
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_membership_application(request):
 
@@ -269,7 +288,8 @@ def edit_membership_application(request):
 
 
 #USUARIO
-
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['GET'])
 def user_index(request):
 
@@ -289,6 +309,8 @@ def user_index(request):
     return render(request, 'index_membership_request.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def user_filter(request):
 
@@ -333,7 +355,8 @@ def user_filter(request):
 
 
 #OBJECIONES
-
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_objection(request):
 
@@ -372,6 +395,8 @@ def create_objection(request):
         return render(request, 'Objections_members.html', context)
 
 
+@login_required
+@permission_required('dummy.permission_user', login_url='login:ini')
 @require_http_methods(['POST'])
 def objection_index(request):
 
@@ -388,6 +413,9 @@ def objection_index(request):
     return render(request, 'Objections_members.html', context)
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def approve_membership_application(request):
 

@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import permission_required
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def membership_type_index(request):
 
@@ -38,7 +38,7 @@ def membership_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_membership_type_index(request):
 
@@ -50,7 +50,7 @@ def create_membership_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_membership_type_index(request):
 
@@ -68,7 +68,7 @@ def edit_membership_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_membership_type(request):
 
@@ -102,7 +102,7 @@ def delete_membership_type(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_membership_type(request):
 
@@ -141,7 +141,7 @@ def create_membership_type(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_membership_type(request):
 
@@ -180,7 +180,7 @@ def edit_membership_type(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def membership_accept(request):
 
@@ -202,7 +202,7 @@ def membership_accept(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_membership(request):
 
@@ -301,7 +301,7 @@ def create_membership(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def membership_edit_index(request):
 
@@ -328,7 +328,7 @@ def membership_edit_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def membership_edit(request):
 
