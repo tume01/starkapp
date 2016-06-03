@@ -1,5 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
 Admin: tipos de usuario
 {% endblock %}
@@ -34,15 +36,15 @@ Lista de tipos de usuario
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "users:type/insert" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "users:type/insert" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Descripción</label>
+                                        <label class="col-xs-12" for="example-select">Nombre</label>
                                             <div class="col-md-6">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="description" placeholder="Descripción"  type="text">
+                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombre"  type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -62,5 +64,18 @@ Lista de tipos de usuario
                     </div>
                     <!-- END Mega Form -->
                 </div>    
+
+{% endblock %}
+
+{% block scripts %}
+
+
+        <!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/User/userType_forms_validation.js" %}'></script>
+
+
 
 {% endblock %}

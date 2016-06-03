@@ -33,7 +33,7 @@ var ProviderFormValidation = function() {
                 },
                 'price': {
                     required: true,
-                    maxlength: 5,
+                    maxlength: 10,
                     number:true
                 },
                 /*'val-confirm-password': {
