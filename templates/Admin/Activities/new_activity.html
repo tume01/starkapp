@@ -102,8 +102,8 @@ Creación de Actividades
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="start_date">Fecha/Hora Inicio Actividad</label>
-                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha..">
+                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg input-datetime" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha..">
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -116,8 +116,8 @@ Creación de Actividades
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="end_date">Fecha/Hora Fin Actividad</label>
-                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha..">
+                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg input-datetime" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha..">
                                     <span class="input-group-addon">
                                         <span class="fa fa-calendar"></span>
                                     </span>
@@ -154,7 +154,16 @@ Creación de Actividades
 <!-- Page Plugins -->
 <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
 <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
-
+<script src='{% static "assets/js/datetimepicker/jquery.datetimepicker.full.min.js" %}'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+                
+        $('.input-datetime').datetimepicker({
+            format: "d/m/Y H:m",
+        });  
+            
+    });
+</script>
 <script>
     jQuery(function () {
                 // Init page helpers (Slick Slider plugin)
@@ -164,9 +173,7 @@ Creación de Actividades
 
         <!-- Page JS Plugins -->
         <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
@@ -182,7 +189,7 @@ Creación de Actividades
         <script>
             jQuery(function () {
                 // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
-                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+                App.initHelpers(['colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
             });
         </script>
 

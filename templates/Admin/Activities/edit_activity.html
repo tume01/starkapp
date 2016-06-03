@@ -48,87 +48,83 @@ Edición de Actividad
             <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:update" activity.id%}' method="post">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-4">
                         <div class="form-group">
-                            <div class="col-xs-6">
+                            <div class="col-xs-12">
                                 <label for="name">Nombre</label>
-                                <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Ingrese un nombre.." value="{{activity.name}}" maxlength='100'>
-                            </div>
-                            <div class="col-xs-6">
-                                <label for="attendance">Capacidad</label>
-                                <input class="form-control input-lg" type="text" id="attendance" name="attendance" placeholder="Ingrese capacidad de actividad.." value="{{activity.attendance}}" maxlength='100' numeric>
+                                <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Ingrese un nombre.." value="{{activity.name}}" >
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="attendance">Capacidad</label>
+                                <input class="form-control input-lg" type="text" id="attendance" name="attendance" placeholder="Ingrese capacidad de actividad.." value="{{activity.attendance}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="price">Precio</label>
-                                <input class="form-control input-lg" type="number" id="price" name="price" placeholder="Ingrese precio de actividad.." value="{{activity.price}}" maxlength='4'>
+                                <input class="form-control input-lg" type="text" id="price" name="price" placeholder="Ingrese precio de actividad.." value="{{activity.price}}">
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="start_date">Fecha/Hora Inicio Actividad</label>
-                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="start_date" name="start_date" placeholder="{{activity.start_date|date:"d/m/Y h:i"}}" value="{{activity.start_date}}">
-                                    <span class="input-group-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="end_date">Fecha/Hora Fin Actividad</label>
-                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="end_date" name="end_date" placeholder="{{activity.end_date|date:"d/m/Y h:i"}}" value="{{activity.end_date}}">
-                                    <span class="input-group-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-sm-2">
-                    </div>
-
-
-                </div>
-
-
-                <div class="form-group">
-                            <label class="col-xs-12" for="activity_type">Tipo</label>
-                            <div class="col-xs-12">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="activity_type">Tipo</label>
                                 <select class="form-control" id="activity_type" name="activity_type">
                                     {% for activity_type in activity_types %}
                                     <option value="{{activity_type.id}}" {% if activity_type.id == activity.activity_type_id %} selected="selected" {% endif %}>{{activity_type.name}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
-                </div>
-                 <div class="row">
-                     <div class="col-sm-12">
-                         <div class="form-group">
-                            <label class="col-xs-12" for="environments">Ambiente</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
                             <div class="col-xs-12">
+                                <label for="environments">Ambiente</label>
                                 <select class="form-control" id="environments" name="environments">
                                     {% for enviroment in environments %}
-                                    <option value="{{enviroment.id}}"  {% if enviroment.id == activity.enviroment_id %} selected="selected" {% endif %}>{{enviroment.name}}</option>
+                                    <option value="{{enviroment.id}}" {% if enviroment.id == activity.enviroment_id %} selected="selected" {% endif %}>{{enviroment.name}}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
-                     </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="start_date">Fecha/Hora Inicio Actividad</label>
+                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg input-datetime" type="text" id="start_date" name="start_date" placeholder="{{activity.start_date|date:"d/m/Y h:i"}}" value="{{activity.start_date|date:"d/m/Y H:i"}}">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="end_date">Fecha/Hora Fin Actividad</label>
+                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg input-datetime" type="text" id="end_date" name="end_date" placeholder="{{activity.end_date|date:"d/m/Y h:i"}}" value="{{activity.end_date|date:"d/m/Y H:i"}}">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-4">
@@ -155,10 +151,22 @@ Edición de Actividad
 
 {% block scripts %}
 
+<script src='{% static "assets/js/core/jquery.min.js" %}'></script>
 <!-- Page Plugins -->
 <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
 <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
-
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+<script src='{% static "assets/js/datetimepicker/jquery.datetimepicker.full.min.js" %}'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+                
+        $('.input-datetime').datetimepicker({
+            format: "d/m/Y H:m",
+            value: $(this).val()
+        });  
+            
+    });
+</script>
 <script>
     jQuery(function () {
                 // Init page helpers (Slick Slider plugin)
@@ -170,7 +178,6 @@ Edición de Actividad
         <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
@@ -186,7 +193,7 @@ Edición de Actividad
         <script>
             jQuery(function () {
                 // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
-                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+                App.initHelpers(['colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
             });
         </script>
 
@@ -196,7 +203,6 @@ Edición de Actividad
         <script src='{% static "assets/js/tablas.js" %}'></script>
         <script src='{% static "assets/js/product.js" %}'></script>
         <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
-        <script type="text/javascript">
 
 </script>
 {% endblock %}

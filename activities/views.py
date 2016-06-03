@@ -53,7 +53,7 @@ def getActivityFilters(request):
     filters['status'] = None;
 
     if request.GET.get('name'):
-        filters['name'] = request.GET.get('name')
+        filters['name__contains'] = request.GET.get('name')
 
     if request.GET.get('activity_type_id'):
         filters['activity_type_id'] = request.GET.get('activity_type_id')
@@ -69,7 +69,7 @@ def getActivityFilters(request):
         filters['end_date__lte'] = end_date
 
     if request.GET.get('attendance'):
-        filters['attendance'] = request.GET.get('end_date')
+        filters['attendance'] = request.GET.get('attendance')
 
     return filters
 
@@ -175,7 +175,7 @@ def update(request, activity_id):
         context = {
             'titutlo': 'titulo'
         }
-        return render(request, 'Admin/Activities/new_activity.html', context)
+        return HttpResponseRedirect(reverse('activities:select', args=[activity_id]))
 
     else:
         activity_service = ActivityService()
