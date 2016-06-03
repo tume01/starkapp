@@ -4,11 +4,6 @@ $('#filters-form').on('submit', function(event){
     submit_filters();
 });
 
-$('#btn-edit').click(function(){
-    console.log("BTN CLICK");
-});
-
-
 // {% url 'update_index' bungalow.id %}
 
 function submit_filters() {

@@ -22,7 +22,7 @@ def index(request):
         'titulo' : 'titulo'
     }
 
-    return render(request, 'Admin/Bungalow/index.html', context)
+    return render(request, 'Admin/bungalow/index.html', context)
 
 @require_http_methods(['POST'])
 def index_filters(request):
@@ -46,7 +46,7 @@ def index_filters(request):
         'bungalows' : bungalows
     }
 
-    return render_to_response('Admin/Bungalow/index_table.html', context)
+    return render_to_response('Admin/bungalow/index_table.html', context)
 
 
 @require_http_methods(['GET'])
@@ -62,7 +62,7 @@ def create_index(request):
     for status in a:
         print("Status:",status[0], status[1])
 
-    return render(request, 'Admin/Bungalow/new_bungalow.html', context)
+    return render(request, 'Admin/bungalow/new_bungalow.html', context)
 
 
 @require_http_methods(['POST'])
@@ -105,7 +105,7 @@ def update_index(request, bungalow_id):
         'bungalowTypes' : BungalowTypeService.getBungalowTypes(),
     }
 
-    return render(request, 'Admin/Bungalow/update_bungalow.html', context)
+    return render(request, 'Admin/bungalow/update_bungalow.html', context)
 
 @require_http_methods(['POST'])
 def update_bungalow(request, bungalow_id):
