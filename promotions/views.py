@@ -22,6 +22,36 @@ def index(request):
 
     return render(request, 'Admin/Promotions/index_promotion.html', context) 
 
+@require_http_methods(['POST'])
+def filter(request):
+
+    promotion_service = PromotionsService()
+
+    filter_promotions = {}
+
+    promStatus = request.POST['status']
+
+    fromNum = request.POST['from_num']
+
+    toNum = request.POST['to_num']
+
+    if promStatus != '3':
+        filter_promotions["status"] = promStatus
+
+    if fromNum != '':
+        filter_promotions["percentage__gte"] = fromNum
+
+    if toNum != '':
+        filter_promotions["percentage__lte"] = toNum
+
+    promotions = promotion_service.filter(filter_promotions)
+
+    context = {
+        'promotions': promotions,
+    }
+
+    return render(request, 'Admin/Promotions/index_promotion.html', context)
+
 
 @require_http_methods(['GET'])
 def create_index(request):
