@@ -7,25 +7,25 @@ class ActivityTypeService(object):
     __activity_type_repository = ActivityTypeRepository()
 
     @classmethod
-    def create(self, insert_data):
-        return self.__activity_type_repository.create(insert_data)
+    def create(cls, insert_data):
+        return cls.__activity_type_repository.create(insert_data)
 
     @classmethod
-    def update(self, id, update_data):
-        return self.__activity_type_repository.update(id, update_data)
+    def update(cls, id, update_data):
+        return cls.__activity_type_repository.update(id, update_data)
 
     @classmethod
-    def delete(self, id):
-        return self.__activity_type_repository.delete(id)
+    def delete(cls, id):
+        return cls.__activity_type_repository.delete(id)
 
     @classmethod
-    def getActivityTypes(self):
-        return self.__activity_type_repository.all()
+    def getActivityTypes(cls):
+        return cls.__activity_type_repository.all()
 
     @classmethod
-    def filter(self, filters):
-        return self.__activity_type_repository.filter(filters)
+    def filter(cls, filters):
+        return cls.__activity_type_repository.filter(filters)
 
     @classmethod
-    def getActivityType(self, id):
-        return self.__activity_type_repository.find(id)
+    def getActivityType(cls, id):
+        return cls.__activity_type_repository.find(id)

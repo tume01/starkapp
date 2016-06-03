@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime,timedelta
 from .forms import ActivityForm
 import json
 from django.template import loader
@@ -59,14 +59,15 @@ def getActivityFilters(request):
         filters['activity_type_id'] = request.GET.get('activity_type_id')
 
     if request.GET.get('start_date'):
-        start_date = datetime.strptime(request.GET.get('start_date'), "%m/%d/%Y")
+        start_date = datetime.strptime(request.GET.get('start_date'), "%d/%m/%Y")
 
         filters['start_date__gte'] = start_date
 
     if request.GET.get('end_date'):
-        end_date = datetime.strptime(request.GET.get('end_date'), "%m/%d/%Y")
+        end_date = datetime.strptime(request.GET.get('end_date'), "%d/%m/%Y")
+        end_date = end_date + timedelta(hours=24)
 
-        filters['end_date__lte'] = end_date
+        filters['end_date__lt'] = end_date
 
     if request.GET.get('attendance'):
         filters['attendance'] = request.GET.get('attendance')
