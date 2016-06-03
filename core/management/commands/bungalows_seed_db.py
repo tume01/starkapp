@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
-from bungalows.models import *
+from bungalow.models import Bungalow
+from bungalow_type.models import BungalowType
 
 class Command(BaseCommand):
     help = 'This command will seed the database (Bungalow)'
