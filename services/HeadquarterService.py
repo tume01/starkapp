@@ -18,3 +18,6 @@ class HeadquarterService(object):
 
 	def findHeadquarter(self, id):
 		return self.__headquarters_repository.find(id)
+	
+	def filter(self, filters):
+		return self.__headquarters_repository.filter(filters)

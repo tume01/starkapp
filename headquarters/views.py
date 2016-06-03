@@ -22,7 +22,7 @@ def index(request):
 
     headquarter_service = HeadquarterService()
     
-    headquarters = headquarter_service.getHeadquarters()
+    headquarters = headquarter_service.filter({'status': None})
 
     context = {
         'headquarters': headquarters,
