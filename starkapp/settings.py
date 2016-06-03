@@ -97,11 +97,11 @@ WSGI_APPLICATION = 'starkapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASS'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'NAME': 'starkapp',
+        'USER': 'root',
+        'PASSWORD': '1111',
+        'HOST': '127.0.0.1',
+        'PORT': '',
     }
 }
 
