@@ -20,5 +20,11 @@ class Command(BaseCommand):
     def insertData(self):
         at1 = ActivityType(name= 'Pequena', price= 100, description= 'test')
         at1.save()
+
+        at1 = ActivityType(name= 'Mediana', price= 200, description= 'test')
+        at1.save()
+
+        at1 = ActivityType(name= 'Grande', price= 300, description= 'test')
+        at1.save()
         
         print('    Data has been inserted\n')
