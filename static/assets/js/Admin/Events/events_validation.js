@@ -29,7 +29,7 @@ var ProviderFormValidation = function() {
                 },
                 'ruc': {
                     minlength: 11,
-                    maxlength: 11
+                    maxlength: 11,
                 },
                 'environment': {
                     required: true
@@ -47,12 +47,15 @@ var ProviderFormValidation = function() {
                     required: true
                 },
                 'user': {
-                    required: true
+                    required: false
                 },
                 'assistance': {
                     required: true
                 },
-                'price': {
+                'price_member': {
+                    required: true
+                },
+                'price_invited': {
                     required: true
                 },
             },
@@ -85,8 +88,11 @@ var ProviderFormValidation = function() {
                 'assistance': {
                     required: 'Por favor ingrese el número de participantes'
                 },
-                'price': {
-                    required: 'Por favor ingrese el precio del evento'
+                'price_member': {
+                    required: 'Por favor ingrese el precio del evento para los socios'
+                },
+                'price_invited': {
+                    required: 'Por favor ingrese el precio del evento para los invitados'
                 },
                 'user': {
                     required: 'Por favor coloque el código del usuario'

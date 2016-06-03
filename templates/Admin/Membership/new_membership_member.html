@@ -117,6 +117,42 @@ Nueva membresía
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Departamento</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="example-select" name="department" size="1">
+                                                            {% for u in ubigeo%}
+                                                                <option value="{{u.id}}">{{u.department}}</option>
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Provincia</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="example-select" name="province" size="1">
+                                                            {% for u in ubigeo%}
+                                                                <option value="{{u.id}}">{{u.province}}</option>
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Distrito</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="example-select" name="district" size="1">
+                                                        {% for u in ubigeo%}
+                                                            <option value="{{u.id}}">{{u.district}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
                                 </div>        
                                  <div class="row">
                                     <div class="col-lg-3" >

@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render
 from django.template import loader
 from django.contrib import messages
@@ -14,92 +15,112 @@ from .forms import HeadquarterForm
 
 # Create your views here.
 
+
+
 @require_http_methods(['GET'])
 def index(request):
-	headquarter_service = HeadquarterService()
-	
-	#filters = headquarters_filter(request)
-	headquarters = headquarter_service.getHeadquarters()
-	paginator = Paginator(headquarters, 10)
 
-	page = request.GET.get('page')
+    headquarter_service = HeadquarterService()
+    
+    headquarters = headquarter_service.filter({'status': None})
 
-	try:
-		headquarters = paginator.page(page)
-	except PageNotAnInteger:
-		headquarters = paginator.page(1)
-	except EmptyPage:
-		headquarters = paginator.page(paginator.num_pages)
+    context = {
+        'headquarters': headquarters,
+        'titulo': 'tittle',
+    }
 
-	context = {
-		'titulo': 'Title',
-		'headquarters': headquarters
-	}
+    return render(request, 'Admin/Headquarters/index_headquarter.html', context)
 
-	return render(request, 'Admin/Headquarters/index_headquarter.html', context)
 
-def headquarters_filter(request):
-	filters = {}
 
-	if request.GET.get('name'):
-		filters['name'] = request.GET.get('name')
+@require_http_methods(['GET'])
+def create_headquarters_index(request):
+    headquarter_service = HeadquarterService()
 
-	if request.GET.get('description'):
-		filters['description'] = request.GET.get('description')
+    headquarters = headquarter_service.getHeadquarters()
 
-	if request.GET.get('location'):
-		filters['location'] = request.GET.get('location')
+    context = {     
+        'headquarters': headquarters
+    }
+    
+    return render(request, 'Admin/Headquarters/new_headquarter.html', context)
 
-	return filters
+
+
+
+@require_http_methods(['GET'])
+def update_headquarters_index(request, headquarter_id):
+
+    headquarter_service = HeadquarterService()
+
+    headquarter = headquarter_service.findHeadquarter(headquarter_id)
+
+    context = {     
+        'headquarter': headquarter
+    }
+    
+    return render(request, 'Admin/Headquarters/edit_headquarter.html', context)
 
 @require_http_methods(['POST'])
 def create_headquarters(request):
-	request = FormValidator.validateForm(form, request)
 
-	if not request:
-		name = form.cleaned_data['name']
-		location = form.cleaned_data['location']
+    form = HeadquarterForm(request.POST)
 
-		insert_data = {
-			'name': name,
-			'description': description,
-			'location': location
-		}
+    headquarter_service = HeadquarterService()
 
-		headquarter_service.create(insert_data)
+    if not FormValidator.validateForm(form, request):
+        
+        insert_data = {}
 
-		return HttpResponseRedirect(reverse('headquarter:index'))
-	else:
-		return render(request, 'headquarter:index', context)
+        insert_data["name"] = form.cleaned_data['name']
 
-@require_http_methods(['POST'])	
-def update(request, headquearter_id):
-	headquearter_id = request.GET.get('headquarter_id')
+        insert_data["location"] = form.cleaned_data['location']
 
-	form = HeadquarterForm(request.POST)
-	headquarter_service = HeadquarterService()
+        insert_data["description"] = form.cleaned_data['description']
 
-	if FormValidator.validateForm(form, request):
-		context = {
-			'titulo': 'titulo'
-		}
-		return render(request, 'headquarter:index', context)
-	else:
-		headquarter_service = HeadquarterService()
+        headquarter_service.create(insert_data)
+        
+        return HttpResponseRedirect(reverse('headquarters:index'))
+    else:
 
-		name = form.cleaned_data['name']
-		description = form.cleaned_data['description']
-		location = form.cleaned_data['location']
+        headquarters = headquarter_service.getHeadquarters()
 
-		update_information = {
-			'name': name,
-			'description': description,
-			'location': location
-		}
+        context = {     
+            'headquarters': headquarters,
+        }
+        
+        return render(request, 'Admin/Headquarters/new_headquarter.html', context)
 
-		headquarter_service.update(headquearter_id, update_information)
+@require_http_methods(['POST']) 
+def update_headquarters(request, headquarter_id):
+    
+    form = HeadquarterForm(request.POST)
+    
+    if FormValidator.validateForm(form, request):
+        
+        return HttpResponseRedirect(reverse('headquarters:select', args=[headquarter_id]))
 
-		return HttpResponseRedirect(reverse('headquarter:index'))
-	headquarter = headquarter_service.update(headquearter_id, update_information)
+    else:
+        
+        headquarter_service = HeadquarterService()
 
-	return HttpResponseRedirect(reverse('headquarter:index'))
+        edit_data = {}
+
+        edit_data["name"] = form.cleaned_data['name']
+
+        edit_data["location"] = form.cleaned_data['location']       
+
+        edit_data["description"] = form.cleaned_data['description']
+
+        headquarter_service.update(headquarter_id, edit_data)
+
+        return HttpResponseRedirect(reverse('headquarters:index'))
+
+@require_http_methods(['GET'])
+def delete(request, headquarter_id):
+
+    headquarter_service = HeadquarterService()
+
+    headquarter = headquarter_service.update(headquarter_id, {'status': datetime.now()})
+
+    return HttpResponseRedirect(reverse('headquarters:index'))
