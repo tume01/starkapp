@@ -1,4 +1,6 @@
 from django.db import models
+from Locations.models import Region
+from django.forms import ModelChoiceField
 # Create your models here.
 
 class Provider(models.Model):    
@@ -7,11 +9,14 @@ class Provider(models.Model):
     status_choices = ((0,'Inactivo'),(1,'Activo'),)
     #effectiveTime_choices = ((30,'1 Mes'),(90,'3 Meses'),(180,'6 Meses'),(365,'12 meses'),)
 
+    #region = ModelChoiceField(queryset = Region.objects.all())
+    queryset = Region.objects.values_list('name')
+    region_choices = []
 
     ruc = models.BigIntegerField(null=False, blank=False)
     businessName = models.CharField(null=False, blank=False,max_length=120)
     status = models.IntegerField(choices=status_choices,default=1) #Binario por estado 0->Inactivo 1->Activo    
-    region = models.CharField(max_length=120)
+    region = models.CharField(choices=region_choices,max_length=120)
     province = models.CharField(max_length=120)
     distric = models.CharField(max_length=120)
     registrationDate = models.DateField(auto_now=False, auto_now_add=False)
