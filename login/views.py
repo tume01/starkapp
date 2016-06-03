@@ -5,7 +5,8 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User, Group, Permission
+from django.contrib.contenttypes.models import ContentType
 
 
 
@@ -39,7 +40,37 @@ def login_view(request):
     cajero.user_set.add(user6)
     membresia.user_set.add(user7)
     empresa.user_set.add(user8)
+
+    content_type = ContentType.objects.create(name='url permission', app_label='dummy', model='unused')
+
+    permission_usuario = Permission.objects.create(codename='permission_usuario', name='Can Do User Things', content_type=content_type)
+    permission_admin = Permission.objects.create(codename='permission_admin', name='Can Do Admin Things', content_type=content_type)
+    permission_bungalows = Permission.objects.create(codename='permission_bungalows', name='Can Do Bungalow Things', content_type=content_type)
+    permission_eventos = Permission.objects.create(codename='permission_eventos', name='Can Do Event Things', content_type=content_type)
+    permission_canchas = Permission.objects.create(codename='permission_canchas', name='Can Do Field Things', content_type=content_type)
+    permission_cajero = Permission.objects.create(codename='permission_cajero', name='Can Do Cashier Things', content_type=content_type)
+    permission_membresia = Permission.objects.create(codename='permission_membresia', name='Can Do Membership Things', content_type=content_type)
+    permission_empresa = Permission.objects.create(codename='permission_empresa', name='Can Do Business Things', content_type=content_type)
+
+    usuario.permissions.add(permission_usuario)  
+    bungalows.permissions.add(permission_bungalows)
+    eventos.permissions.add(permission_eventos)
+    canchas.permissions.add(permission_canchas)
+    cajero.permissions.add(permission_cajero)
+    membresia.permissions.add(permission_membresia)
+    empresa.permissions.add(permission_empresa)
+
+    admin.permissions.add(permission_admin)
+    admin.permissions.add(permission_usuario)
+    admin.permissions.add(permission_bungalows)
+    admin.permissions.add(permission_eventos)
+    admin.permissions.add(permission_canchas)
+    admin.permissions.add(permission_cajero)
+    admin.permissions.add(permission_membresia)
+    admin.permissions.add(permission_empresa)
+
     """
+    
 
 
     username = request.POST['username']

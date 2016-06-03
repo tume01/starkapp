@@ -513,7 +513,8 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
-                            <ul>      
+                            <ul>  
+                                {% if perms.dummy.permission_membresia %}     
                                 <li>
                                     <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
                                 </li>
@@ -526,23 +527,31 @@
                                 <li> 
                                     <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
                                 </li>
+                                {% endif %}
+                                {% if perms.dummy.permission_usuario %} 
                                 <li>
-                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía (User)</a> 
+                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía</a> 
                                 </li>
+                                {% endif %}
+                                {% if perms.dummy.permission_membresia %} 
                                 <li>
                                     <a href='{% url 'members:index' %}'>Miembros</a>
-                                </li>                                
+                                </li>
+                                {% endif %}                                
                             </ul>
                         </li> 
+                        {% if perms.dummy.permission_admin %}  
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
+                                
                                 <li>
                                     <a href='{% url 'users:type/index' %}'>Tipos de usuario</a>
                                 </li>
                                 <li>
                                     <a href='{% url 'users:type/create_index' %}'>Registrar tipos de usuario</a>
                                 </li>
+ 
                                 <li>
                                     <a href='{% url 'users:index' %}'>Usuarios</a>
                                 </li>
@@ -550,7 +559,9 @@
                                     <a href='{% url 'users:create_index' %}'>Registrar usuario (Externo)</a>
                                 </li>
                             </ul>
-                        </li>        
+                        </li>  
+                        {% endif %} 
+                        {% if perms.dummy.permission_admin %}  
                           <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-money"></i><span class="sidebar-mini-hide">Promociones</span></a>
                             <ul>                                        
@@ -562,6 +573,9 @@
                                 </li> 
                             </ul>
                         </li>
+                        {% endif %}  
+
+                         {% if perms.dummy.permission_admin %} 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
                             <ul>                                        
@@ -573,6 +587,7 @@
                                 </li> 
                             </ul>
                         </li>   
+                        {% endif %}  
 
                     </ul>
                 </div>
