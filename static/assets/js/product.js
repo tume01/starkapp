@@ -33,39 +33,49 @@ $(function () {
 /******************************************************************/
 
 $('#SaveProduct').click(function(){
-//function SaveProduct(){
 	console.log('click Guardar');
-	data = {};
-	data.name = $('#name').val();
-	data.actualStock = $('#actualStock').val();
-	data.minStock = $('#minStock').val();
-	data.productType = $('#selectProductType').val();
-	data.description = $('#description').val();
-	data.providers = $('#select2Provider').val();
-	data.price = $('#price').val();
 
-	console.log(data);
+	if ($('#name').val() == '' || $('#actualStock').val() == '' || $('#minStock').val() == '' ||
+		$('#price').val() == '' || 
+		$('#selectProductType').val() == '' || $('#selectProductType').val() == null){
 
-	var xhr = $.ajax({
-	    type: "POST", 
-	    url: "/products/create/insert/", //url que procesa
-	    dataType: "text",
-	    data: JSON.stringify(data),
-	    contentType: "application/json; charset=utf-8",
-    });
+		$('#formNewProduct').submit();
+		//console.log('form');
+		//console.log($('#selectProductType').val());
+	}
+	else{
+		console.log('ajax');
+		data = {};
+		data.name = $('#name').val();
+		data.actualStock = $('#actualStock').val();
+		data.minStock = $('#minStock').val();
+		data.productType = $('#selectProductType').val();
+		data.description = $('#description').val();
+		data.providers = $('#select2Provider').val();
+		data.price = $('#price').val();
 
-	xhr.done(function(data) {
-		console.log('done='+data);
-		window.location = "/products";
-    });
+		console.log(data);
 
-    xhr.fail(function(xhr, status, text){
-        console.log("Error " + xhr.readyState + " " +text);
+		var xhr = $.ajax({
+		    type: "POST", 
+		    url: "/products/create/insert/", //url que procesa
+		    dataType: "text",
+		    data: JSON.stringify(data),
+		    contentType: "application/json; charset=utf-8",
+	    });
 
-    });
+		xhr.done(function(data) {
+			console.log('done='+data);
+			window.location = "/products";
+	    });
 
-    return xhr;
-//}
+	    xhr.fail(function(xhr, status, text){
+	        console.log("Error " + xhr.readyState + " " +text);
+
+	    });
+
+	    return xhr;
+	}
 });
 
 
