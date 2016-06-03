@@ -24,63 +24,32 @@ var ProviderFormValidation = function() {
             rules: {
                 'name': {
                     required: true,
-                    maxlength: 20
-                },
-                'attendance': {
-                    required: true,
-                    maxlength:5,
-                    number:true
+                    maxlength: 40
                 },
                 'price': {
                     required: true,
-                    maxlength: 10,
-                    number:true
+                    maxlength: 5,
+                    number:true,
+                    min: 0
                 },
-                /*'val-confirm-password': {
-                    required: true,
-                    equalTo: '#val-password'
-                },*/
-                'start_date': {
-                    required: true,
-
-                },
-                'end_date' : {
-                    required: true
-                },
-                'activity_type': {
-                    required: true
-                },
-                'environments': {
+                'id_servicio': {
                     required: true
                 }
             },
             messages: {
                 'name': {
                     required: 'Por favor ingrese un Nombre',
-                    maxlength: 'Por favor ingrese maximo 20 caracteres',
-                },
-                'attendance': {
-                    required: 'Por favor ingrese una capacidad',
-                    maxlength: 'Por favor ingrese maximo 5 caracteres',
-                    number: 'Por favor ingrese solo números'
+                    maxlength: 'Por favor ingrese maximo 40 caracteres',
                 },
                 'price': {
                     required: 'Por favor ingrese un precio',
-                    maxlength: 'Por favor ingrese maximo 5 caracteres',
-                    number: 'Por favor ingrese solo números'
+                    maxlength: 'Por favor ingrese maximo 5 dígitos',
+                    number: 'Por favor ingrese solo números',
+                    min: 'Por favor ingrese un numero positivo'
                 },
-                'start_date': {
-                    required: 'Por favor ingrese una fecha de inicio'
+                'id_servicio': {
+                    required: 'Por favor seleccione un tipo de servicio'
                 },
-                'end_date': {
-                    required: 'Por favor ingrese una fecha fin'
-                },
-                'activity_type': {
-                    required: 'Por favor seleccione un tipo de actividad'
-                },
-                'environments': {
-                    required: 'Por favor seleccione un ambiente'
-                }
                 /*
                 'val-confirm-password': {
                     required: 'Please provide a password',

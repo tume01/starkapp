@@ -20,6 +20,7 @@ class Migration(migrations.Migration):
             name='Activity',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('status', models.DateTimeField(null=True)),
                 ('end_date', models.DateTimeField()),
                 ('attendance', models.IntegerField()),
                 ('start_date', models.DateTimeField()),
