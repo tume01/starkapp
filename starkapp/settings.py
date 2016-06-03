@@ -38,13 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core.apps.CoreConfig',
     'products',
+    'login',
     'users',
     'promotions',
-    'bungalows',
+    'bungalow',
+    'bungalow_reservation',
+    'bungalow_type',
     'environment',
     'memberships',
     'membership_application',
+    'payment_documents',
     'fine',
     'objection',
     'members',
@@ -55,6 +60,7 @@ INSTALLED_APPS = [
     'headquarters',
     'events',
     'Locations',
+    'identity_document_type',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -150,3 +156,5 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
+
+LOGIN_URL = '/login'

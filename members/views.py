@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.MemberService import MembersService
 from django.views.decorators.http import require_http_methods
+from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from Adapters.FormValidator import FormValidator
 from .forms import  MemberForm
 
@@ -32,8 +33,13 @@ def edit_member_index(request):
 
     member = member_service.getMember(id_member)
 
+    identity_document_type_service = IdentityDocumentTypeService()
+
+    doc_types = identity_document_type_service.getIdentityDocumentTypes()
+
     context = {
         'member' : member,
+        'doc_types': doc_types,
     }
 
     return render(request, 'Admin/Members/edit_member.html', context)
@@ -61,14 +67,21 @@ def edit_member(request):
 
     id_edit = request.POST['id']
 
+    identity_doc_type = request.POST['identity_document_type']
+
     if FormValidator.validateForm(form, request):
 
         member_service = MembersService()
 
         member = member_service.getMember(id_edit)
 
+        identity_document_type_service = IdentityDocumentTypeService()
+
+        doc_types = identity_document_type_service.getIdentityDocumentTypes()
+
         context = {
             'member': member,
+            'doc_types': doc_types
         }
 
         return render(request, 'Admin/Members/edit_member.html', context)
@@ -77,11 +90,13 @@ def edit_member(request):
 
         edit_data = {}
 
+        edit_data["identity_document_type_id"] = identity_doc_type
+
         edit_data["name"] = form.cleaned_data['name']
 
         edit_data["surname"] = form.cleaned_data['surname']
 
-        edit_data["dni"] = form.cleaned_data['dni']
+        edit_data["document_number"] = form.cleaned_data['num_doc']
 
         edit_data["phone"] = form.cleaned_data['phone']
 

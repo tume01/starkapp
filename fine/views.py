@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.FineTypeService import FineTypeService
+from services.MemberService import MembersService
 from services.FineService import FineService
 from django.views.decorators.http import require_http_methods
 from Adapters.FormValidator import FormValidator
@@ -208,6 +209,10 @@ def index(request):
 
     member_id = request.POST['id']
 
+    member_service = MembersService()
+
+    member = member_service.getMember(member_id)
+
     fine_service = FineService()
 
     fine_type_service = FineTypeService()
@@ -220,6 +225,43 @@ def index(request):
 
     context = {
         'fines' : fines,
+        'member' : member,
+    }
+
+    return render(request, 'Admin/Fines/index_fine.html', context)
+
+
+@require_http_methods(['POST'])
+def filter(request):
+
+    member_id = request.POST['member_id']
+
+    member_service = MembersService()
+
+    member = member_service.getMember(member_id)
+
+    fine_service = FineService()
+
+    fine_type_service = FineTypeService()
+
+    filter_fines = {}
+
+    fineStatus = request.POST['status']
+
+    filter_fines["member_id"] = member_id
+
+    if fineStatus != 'Pendiente de Pago':
+        filter_fines["status"] = fineStatus
+
+    fines = fine_service.filter(filter_fines)
+
+    for fine in fines:
+        fine.reason = (fine_type_service.getFine(fine.fine_type.id)).reason
+        fine.price = (fine_type_service.getFine(fine.fine_type.id)).price
+
+    context = {
+        'fines': fines,
+        'member' : member,
     }
 
     return render(request, 'Admin/Fines/index_fine.html', context)
