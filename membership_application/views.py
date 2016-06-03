@@ -5,7 +5,9 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MembershipTypeService import MembershipTypeService
+from services.MemberService import MembersService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
+from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
@@ -368,6 +370,8 @@ def create_objection(request):
 
     requestId = request.POST['id_membership']
 
+    memberId = request.POST['id_member']
+
     comments = request.POST['comments']
 
     request = FormValidator.validateForm(form, request)
@@ -381,6 +385,8 @@ def create_objection(request):
 
         insert_data["membership_application_id"] = requestId
 
+        insert_data["member_id"] = memberId
+
         objection_service = ObjectionsService()
 
         objection_service.create(insert_data)
@@ -392,15 +398,20 @@ def create_objection(request):
 
         membership_application = member_application_service.getMembership_Application(requestId)
 
+        current_user = request.user
+
+        member = MembersService.getMemberByUser(current_user)
+
         context = {
             'membership_application': membership_application,
+            'member' : member,
         }
 
         return render(request, 'Objections_members.html', context)
 
 
-@login_required
-@permission_required('dummy.permission_user', login_url='login:ini')
+#@login_required
+#@permission_required('dummy.permission_user', login_url='login:ini')
 @require_http_methods(['POST'])
 def objection_index(request):
 
@@ -410,8 +421,15 @@ def objection_index(request):
 
     membership_application = member_application_service.getMembership_Application(requestId)
 
+    member_service = MembersService()
+
+    current_user = request.user
+
+    member = member_service.getMemberByUser(current_user)
+
     context = {
         'membership_application' : membership_application,
+        'member': member,
     }
 
     return render(request, 'Objections_members.html', context)
@@ -435,9 +453,14 @@ def approve_membership_application(request):
 
         membership_application =  member_application_service.getMembership_Application(id_application)
 
+        ubigeo_service = UbigeoService()
+
+        ubigeo = ubigeo_service.getAllUbigeo()
+
         context = {
             'titulo' : 'titulo',
             'doc_types' : doc_types,
+            'ubigeo' : ubigeo,
             'membership_application' : membership_application,
         }
 

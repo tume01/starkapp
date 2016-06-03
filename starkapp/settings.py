@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'headquarters',
     'events',
     'identity_document_type',
+    'ubigeo',
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -9,6 +9,7 @@ from services.Membership_ApplicationService import Membership_ApplicationService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.MembershipService import MembershipService
 from services.ObjectionService import ObjectionsService
+from services.UbigeoService import UbigeoService
 from services.MemberService import MembersService
 from django.contrib.auth.models import User, Group
 from datetime import datetime
@@ -263,6 +264,14 @@ def create_membership(request):
         insert_data["email"] = form2.cleaned_data['email']
 
         insert_data["state"] = 1
+
+        ubigeo_service = UbigeoService()
+
+        id_ubigeo = request.POST['district']
+
+        ubi = ubigeo_service.getUbigeoById(id_ubigeo)
+
+        insert_data["ubigeo"] = ubi
 
         member_service = MembersService()
 

@@ -36,13 +36,19 @@ Lista de objeciones
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
                                     <tr>
-                                        <th>Comentarios</th>                                
+                                        <th>Comentarios</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido Paterno</th>
+                                        <th>Apellido Materno</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for objection in objections %}                                       
                                         <tr>
                                             <td class="font-w600">{{objection.comments}}</td>
+                                            <td class="font-w600">{{objection.member.name}}</td>
+                                            <td class="font-w600">{{objection.member.paternalLastName}}</td>
+                                            <td class="font-w600">{{objection.member.maternalLastName}}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
