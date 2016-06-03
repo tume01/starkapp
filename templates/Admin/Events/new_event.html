@@ -99,7 +99,11 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="seat" name="seat" placeholder="Sede Principal" value="{{form.headquarter}}" >
+                                                    <select class="form-control" id="example-select" name="headquarter" size="1">
+                                                    {% for headquarter in headquarters %}
+                                                        <option value="{{event.headquarter.name}}">{{event.headquarter.name}}</option>
+                                                    {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
