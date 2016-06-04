@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^fine/', include('fine.urls')),
     url(r'^members/', include('members.urls')),
     url(r'^users/', include('users.urls')),
-    url(r'^eventstype/', include('events_type.urls')),
+    url(r'^eventstype', include('events_type.urls')),
     url(r'^providers/', include('providers.urls')),    
     url(r'^servicios/', include('servicios.urls')),
     url(r'^environment/', include('environment.urls')),

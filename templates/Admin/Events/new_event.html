@@ -63,9 +63,9 @@ Nueva Inscripción
                                             <label class="col-xs-12" for="event_type">Tipo de evento</label>
                                             <div class="col-sm-6">
                                                 <select class="form-control" id="event_type" name="event_type" size="1">
-                                                    <option value="">Seleccionar</option>
-                                                    <option value="1">Privado</option>
-                                                    <option value="2">Público</option>
+                                                    {% for eventtype in eventstype %}
+                                                    <option value="{{eventtype.id}}">{{eventtype.name}}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                         </div>
