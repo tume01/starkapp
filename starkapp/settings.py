@@ -58,12 +58,8 @@ INSTALLED_APPS = [
     'providers',
     'headquarters',
     'events',
-<<<<<<< HEAD
-    'Locations',
-=======
     'identity_document_type',
     'ubigeo',
->>>>>>> 32cb6699ce721d5bdd4d3c80efdfbb40f12d0d5e
 ]
 
 MIDDLEWARE_CLASSES = [
