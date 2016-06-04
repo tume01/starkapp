@@ -193,7 +193,7 @@ def filter_product(request):
         
 
     #print(qry)
-    qry = "SELECT * FROM products_product "
+    qry = "SELECT * FROM products_product WHERE id<5"
     #logging.debug(qry)
 
 
@@ -206,7 +206,6 @@ def filter_product(request):
 
         req_list = serializers.serialize('json', list_products)
 
-        #list_products = list_products[:]
     except IntegrityError:
         handle_exception()
         list_products = None
