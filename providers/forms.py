@@ -1,7 +1,10 @@
 from django import forms
+from django.forms import ModelChoiceField
 from .models import Provider
 
 class ProviderForm(forms.ModelForm):
+
+	#region = ModelChoiceField(queryset = Region.objects.all())
 
 	class Meta:
 		model = Provider
