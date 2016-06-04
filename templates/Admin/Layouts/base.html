@@ -139,16 +139,13 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-flag"></i><span class="sidebar-mini-hide">Sedes</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar sedes</a>
+                                    <a href='{% url 'headquarters:index' %}'>Consultar sede</a>
                                 </li>   
                                 <li>
-                                    <a href='{% url "headquarters:new" %}'>Nueva sede</a>
-                                </li>
-                                <li>
-                                    <a href='{% url "headquarters:edit" %}'>Editar sede</a>
+                                    <a href='{% url 'headquarters:create_index' %}'>Nueva sede</a>
                                 </li>
                             </ul>
                         </li>
