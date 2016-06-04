@@ -11,6 +11,6 @@ class FineType(models.Model):
 class Fine(models.Model):
     fine_type = models.ForeignKey(FineType, on_delete=models.CASCADE)
     #ambiente = models.ForeignKey("Ambiente", on_delete=models.CASCADE)
-    member=models.ForeignKey(x.Member,on_delete=models.CASCADE)
+    member=models.ForeignKey(x.Member,on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=20)
     observations = models.CharField(max_length=200)    

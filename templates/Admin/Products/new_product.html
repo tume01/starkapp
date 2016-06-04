@@ -33,7 +33,7 @@ Crear producto
                             </ul>
                         </div>
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10">
+                            <form id="formNewProduct" class="js-validation-bootstrap form-horizontal push-10-t push-10">
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-4">
@@ -92,7 +92,8 @@ Crear producto
                                         <div class="form-group">
                                             <div class="col-sm-12">
                                                 <label class="control-label" for="selectProductType">Tipo Producto</label>                                            
-                                                <select class="form-control" name="selectProductType" id="selectProductType" size="1" placeholder="Seleccione un Tipo de Producto">
+                                                <select class="form-control" name="selectProductType" id="selectProductType" size="1">
+                                                    <option value="">Seleccione un Tipo de curso</option>
                                                     {% for i in product_types%}
                                                         <option value="{{i.id}}">{{i.name}}</option>
                                                     {% endfor %}

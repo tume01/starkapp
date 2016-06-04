@@ -33,332 +33,7 @@
 <body>
  <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
 
-     <!-- Side Overlay-->
-     <aside id="side-overlay">
-        <!-- Side Overlay Scroll Container -->
-        <div id="side-overlay-scroll">
-            <!-- Side Header -->
-            <div class="side-header side-content">
-                <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-                <button class="btn btn-default pull-right" type="button" data-toggle="layout" data-action="side_overlay_close">
-                    <i class="fa fa-times"></i>
-                </button>
-                <span> 
-                    <img class="img-avatar img-avatar32" src='{% static "assets/img/avatars/avatar10.jpg" %}' alt="">
-                    <span class="font-w600 push-10-l">Carlo Alva</span>
-                </span>
-            </div>
-            <!-- END Side Header -->
-
-            <!-- Side Content -->
-            <div class="side-content remove-padding-t">
-                <!-- Side Overlay Tabs -->
-                <div class="block pull-r-l border-t">
-                    <ul class="nav nav-tabs nav-tabs-alt nav-justified" data-toggle="tabs">
-                        <li class="active">
-                            <a href="#tabs-side-overlay-overview"><i class="fa fa-fw fa-coffee"></i> Overview</a>
-                        </li>
-                        <li>
-                            <a href="#tabs-side-overlay-sales"><i class="fa fa-fw fa-line-chart"></i> Sales</a>
-                        </li>
-                    </ul>
-                    <div class="block-content tab-content">
-                        <!-- Overview Tab -->
-                        <div class="tab-pane fade fade-right in active" id="tabs-side-overlay-overview">
-                            <!-- Activity -->
-                            <div class="block pull-r-l">
-                                <div class="block-header bg-gray-lighter">
-                                    <ul class="block-options">
-                                        <li>
-                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                                        </li>
-                                        <li>
-                                            <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
-                                        </li>
-                                    </ul>
-                                    <h3 class="block-title">Recent Activity</h3>
-                                </div>
-                                <div class="block-content">
-                                    <!-- Activity List -->
-                                    <ul class="list list-activity">
-                                        <li>
-                                            <i class="si si-wallet text-success"></i>
-                                            <div class="font-w600">New sale ($15)</div>
-                                            <div><a href="javascript:void(0)">Admin Template</a></div>
-                                            <div><small class="text-muted">3 min ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="si si-pencil text-info"></i>
-                                            <div class="font-w600">You edited the file</div>
-                                            <div><a href="javascript:void(0)"><i class="fa fa-file-text-o"></i> Documentation.doc</a></div>
-                                            <div><small class="text-muted">15 min ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="si si-close text-danger"></i>
-                                            <div class="font-w600">Project deleted</div>
-                                            <div><a href="javascript:void(0)">Line Icon Set</a></div>
-                                            <div><small class="text-muted">4 hours ago</small></div>
-                                        </li>
-                                    </ul>
-                                    <!-- END Activity List -->
-                                </div>
-                            </div>
-                            <!-- END Activity -->
-
-                            <!-- Online Friends -->
-                            <div class="block pull-r-l">
-                                <div class="block-header bg-gray-lighter">
-                                    <ul class="block-options">
-                                        <li>
-                                            <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                                        </li>
-                                        <li>
-                                            <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
-                                        </li>
-                                    </ul>
-                                    <h3 class="block-title">Online Friends</h3>
-                                </div>
-                                <div class="block-content block-content-full">
-                                    <!-- Users Navigation -->
-                                    <ul class="nav-users remove-margin-b">
-                                        <li>
-                                            <a href="base_pages_profile.html"> 
-                                                <img class="img-avatar" src='{% static "assets/img/avatars/avatar7.jpg" %}' alt="">
-                                                <i class="fa fa-circle text-success"></i> Ashley Welch
-                                                <div class="font-w400 text-muted"><small>Copywriter</small></div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="base_pages_profile.html">
-                                                <img class="img-avatar" src='{% static "assets/img/avatars/avatar13.jpg" %}' alt="">
-                                                <i class="fa fa-circle text-success"></i> Dennis Ross
-                                                <div class="font-w400 text-muted"><small>Web Developer</small></div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="base_pages_profile.html">
-                                                <img class="img-avatar" src='{% static "assets/img/avatars/avatar3.jpg" %}' alt="">
-                                                <i class="fa fa-circle text-success"></i> Amber Walker
-                                                <div class="font-w400 text-muted"><small>Web Designer</small></div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="base_pages_profile.html">
-                                                <img class="img-avatar" src='{% static "assets/img/avatars/avatar2.jpg" %}' alt="">
-                                                <i class="fa fa-circle text-warning"></i> Rebecca Gray
-                                                <div class="font-w400 text-muted"><small>Photographer</small></div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="base_pages_profile.html">
-                                                <img class="img-avatar" src='{% static "assets/img/avatars/avatar16.jpg" %}' alt="">
-                                                <i class="fa fa-circle text-warning"></i> Roger Hart
-                                                <div class="font-w400 text-muted"><small>Graphic Designer</small></div>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <!-- END Users Navigation -->
-                                </div>
-                            </div>
-                            <!-- END Online Friends -->
-
-                            <!-- Quick Settings -->
-                            <div class="block pull-r-l">
-                                <div class="block-header bg-gray-lighter">
-                                    <ul class="block-options">
-                                        <li>
-                                            <button type="button" data-toggle="block-option" data-action="content_toggle"></button>
-                                        </li>
-                                    </ul>
-                                    <h3 class="block-title">Quick Settings</h3>
-                                </div>
-                                <div class="block-content">
-                                    <!-- Quick Settings Form -->
-                                    <form class="form-bordered" action="index.html" method="post" onsubmit="return false;">
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-xs-8">
-                                                    <div class="font-s13 font-w600">Online Status</div>
-                                                    <div class="font-s13 font-w400 text-muted">Show your status to all</div>
-                                                </div>
-                                                <div class="col-xs-4 text-right">
-                                                    <label class="css-input switch switch-sm switch-primary push-10-t">
-                                                        <input type="checkbox"><span></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-xs-8">
-                                                    <div class="font-s13 font-w600">Auto Updates</div>
-                                                    <div class="font-s13 font-w400 text-muted">Keep up to date</div>
-                                                </div>
-                                                <div class="col-xs-4 text-right">
-                                                    <label class="css-input switch switch-sm switch-primary push-10-t">
-                                                        <input type="checkbox"><span></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-xs-8">
-                                                    <div class="font-s13 font-w600">Notifications</div>
-                                                    <div class="font-s13 font-w400 text-muted">Do you need them?</div>
-                                                </div>
-                                                <div class="col-xs-4 text-right">
-                                                    <label class="css-input switch switch-sm switch-primary push-10-t">
-                                                        <input type="checkbox" checked><span></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-xs-8">
-                                                    <div class="font-s13 font-w600">API Access</div>
-                                                    <div class="font-s13 font-w400 text-muted">Enable/Disable access</div>
-                                                </div>
-                                                <div class="col-xs-4 text-right">
-                                                    <label class="css-input switch switch-sm switch-primary push-10-t">
-                                                        <input type="checkbox" checked><span></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                    <!-- END Quick Settings Form -->
-                                </div>
-                            </div>
-                            <!-- END Quick Settings -->
-                        </div>
-                        <!-- END Overview Tab -->
-
-                        <!-- Sales Tab -->
-                        <div class="tab-pane fade fade-left" id="tabs-side-overlay-sales">
-                            <div class="block pull-r-l">
-                                <!-- Stats -->
-                                <div class="block-content pull-t">
-                                    <div class="row items-push">
-                                        <div class="col-xs-6">
-                                            <div class="font-w700 text-gray-darker text-uppercase">Sales</div>
-                                            <a class="h3 font-w300 text-primary" href="javascript:void(0)">22030</a>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <div class="font-w700 text-gray-darker text-uppercase">Balance</div>
-                                            <a class="h3 font-w300 text-primary" href="javascript:void(0)">$ 4.589,00</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- END Stats -->
-
-                                <!-- Today -->
-                                <div class="block-content block-content-full block-content-mini bg-gray-lighter">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <span class="font-w600 font-s13 text-gray-darker text-uppercase">Today</span>
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <span class="font-s13 text-muted">$996</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="block-content">
-                                    <ul class="list list-activity pull-r-l">
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $249</div>
-                                            <div><small class="text-muted">3 min ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $129</div>
-                                            <div><small class="text-muted">50 min ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $119</div>
-                                            <div><small class="text-muted">2 hours ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $499</div>
-                                            <div><small class="text-muted">3 hours ago</small></div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- END Today -->
-
-                                <!-- Yesterday -->
-                                <div class="block-content block-content-full block-content-mini bg-gray-lighter">
-                                    <div class="row">
-                                        <div class="col-xs-6">
-                                            <span class="font-w600 font-s13 text-gray-darker text-uppercase">Yesterday</span>
-                                        </div>
-                                        <div class="col-xs-6 text-right">
-                                            <span class="font-s13 text-muted">$765</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="block-content">
-                                    <ul class="list list-activity pull-r-l">
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $249</div>
-                                            <div><small class="text-muted">26 hours ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-danger"></i>
-                                            <div class="font-w600">Product Purchase - $50</div>
-                                            <div><small class="text-muted">28 hours ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $119</div>
-                                            <div><small class="text-muted">29 hours ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-danger"></i>
-                                            <div class="font-w600">Paypal Withdrawal - $300</div>
-                                            <div><small class="text-muted">37 hours ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $129</div>
-                                            <div><small class="text-muted">39 hours ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $119</div>
-                                            <div><small class="text-muted">45 hours ago</small></div>
-                                        </li>
-                                        <li>
-                                            <i class="fa fa-circle text-success"></i>
-                                            <div class="font-w600">New sale! + $499</div>
-                                            <div><small class="text-muted">46 hours ago</small></div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- END Yesterday -->
-
-                                <!-- More -->
-                                <div class="text-center">
-                                    <small><a href="javascript:void(0)">Load More..</a></small>
-                                </div>
-                                <!-- END More -->
-                            </div>
-                        </div>
-                        <!-- END Sales Tab -->
-                    </div>
-                </div>
-                <!-- END Side Overlay Tabs -->
-            </div>
-            <!-- END Side Content -->
-        </div>
-        <!-- END Side Overlay Scroll Container -->
-    </aside>
-    <!-- END Side Overlay -->
+    
 
     <!-- Sidebar -->
     <nav id="sidebar">
@@ -464,16 +139,13 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-flag"></i><span class="sidebar-mini-hide">Sedes</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar sedes</a>
+                                    <a href='{% url 'headquarters:index' %}'>Consultar sede</a>
                                 </li>   
                                 <li>
-                                    <a href='{% url "headquarters:new" %}'>Nueva sede</a>
-                                </li>
-                                <li>
-                                    <a href='{% url "headquarters:edit" %}'>Editar sede</a>
+                                    <a href='{% url 'headquarters:create_index' %}'>Nueva sede</a>
                                 </li>
                             </ul>
                         </li>
@@ -513,7 +185,8 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
-                            <ul>      
+                            <ul>  
+                                {% if perms.dummy.permission_membresia %}     
                                 <li>
                                     <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
                                 </li>
@@ -526,23 +199,31 @@
                                 <li> 
                                     <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
                                 </li>
+                                {% endif %}
+                                {% if perms.dummy.permission_usuario %} 
                                 <li>
-                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía (User)</a> 
+                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía</a> 
                                 </li>
+                                {% endif %}
+                                {% if perms.dummy.permission_membresia %} 
                                 <li>
                                     <a href='{% url 'members:index' %}'>Miembros</a>
-                                </li>                                
+                                </li>
+                                {% endif %}                                
                             </ul>
                         </li> 
+                        {% if perms.dummy.permission_admin %}  
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
+                                
                                 <li>
                                     <a href='{% url 'users:type/index' %}'>Tipos de usuario</a>
                                 </li>
                                 <li>
                                     <a href='{% url 'users:type/create_index' %}'>Registrar tipos de usuario</a>
                                 </li>
+ 
                                 <li>
                                     <a href='{% url 'users:index' %}'>Usuarios</a>
                                 </li>
@@ -550,7 +231,10 @@
                                     <a href='{% url 'users:create_index' %}'>Registrar usuario (Externo)</a>
                                 </li>
                             </ul>
-                        </li>        
+                        </li>  
+                        {% endif %} 
+                        
+                        {% if perms.dummy.permission_admin %}  
                           <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-money"></i><span class="sidebar-mini-hide">Promociones</span></a>
                             <ul>                                        
@@ -562,6 +246,9 @@
                                 </li> 
                             </ul>
                         </li>
+                        {% endif %}  
+
+                         {% if perms.dummy.permission_admin %} 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
                             <ul>                                        
@@ -573,6 +260,7 @@
                                 </li> 
                             </ul>
                         </li>   
+                        {% endif %}  
 
                     </ul>
                 </div>
@@ -621,18 +309,12 @@
                             </a>
                         </li>
                         <li>
-                            <a tabindex="-1" href="base_pages_login.html">
+                            <a tabindex="-1" href="{% url "login:logout" %}">
                                 <i class="si si-logout pull-right"></i>Cerrar sesión
                             </a>
                         </li>
                     </ul>
                 </div>
-            </li>
-            <li>
-                <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
-                <button class="btn btn-default" data-toggle="layout" data-action="side_overlay_toggle" type="button">
-                    <i class="fa fa-tasks"></i>
-                </button>
             </li>
         </ul>
         <!-- END Header Navigation Right -->
@@ -727,47 +409,6 @@
 </div>
 <!-- END Page Container -->
 
-<!-- Apps Modal -->
-        <!-- Opens from the button in the header 
-        <div class="modal fade" id="apps-modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-sm modal-dialog modal-dialog-top">
-                <div class="modal-content">
-                    <!-- Apps Block 
-                    <div class="block block-themed block-transparent">
-                        <div class="block-header bg-primary-dark">
-                            <ul class="block-options">
-                                <li>
-                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                                </li>
-                            </ul>
-                            <h3 class="block-title">Apps</h3>
-                        </div>
-                        <div class="block-content">
-                            <div class="row text-center">
-                                <div class="col-xs-6">
-                                    <a class="block block-rounded" href="index.html">
-                                        <div class="block-content text-white bg-default">
-                                            <i class="si si-speedometer fa-2x"></i>
-                                            <div class="font-w600 push-15-t push-15">Backend</div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-xs-6">
-                                    <a class="block block-rounded" href="frontend_home.html">
-                                        <div class="block-content text-white bg-modern">
-                                            <i class="si si-rocket fa-2x"></i>
-                                            <div class="font-w600 push-15-t push-15">Frontend</div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END Apps Block 
-                </div>
-            </div>
-        </div>
-        <!-- END Apps Modal -->
         <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
         <script src='{% static "assets/js/core/jquery.min.js" %}'></script>
         <script src='{% static "assets/js/core/bootstrap.min.js" %}'></script>
@@ -824,15 +465,17 @@
         </script>
 
         <!-- Page JS Plugins -->
-<<<<<<< HEAD
+
         <!--<script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script> -->
         <!--<script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script> -->
         <!-- Page JS Code -->
         <!--<script src="assets/js/pages/base_forms_validation.js"></script>-->
-=======
         <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
         <script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
->>>>>>> 86ebd4bbc52bbbf9fb99a086b0950f190745de47
+        
+{% block scripts %}
+{% endblock %}
+
 
     </body>
     </html>

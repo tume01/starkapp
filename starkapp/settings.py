@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,13 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core.apps.CoreConfig',
     'products',
+    'login',
     'users',
     'promotions',
-    'bungalows',
+    'bungalow',
+    'bungalow_reservation',
+    'bungalow_type',
     'environment',
     'memberships',
     'membership_application',
+    'payment_documents',
     'fine',
     'objection',
     'members',
@@ -54,7 +58,12 @@ INSTALLED_APPS = [
     'providers',
     'headquarters',
     'events',
+<<<<<<< HEAD
     'Locations',
+=======
+    'identity_document_type',
+    'ubigeo',
+>>>>>>> 32cb6699ce721d5bdd4d3c80efdfbb40f12d0d5e
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -96,11 +105,11 @@ WSGI_APPLICATION = 'starkapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'starkapp',
-        'USER': 'root',
-        'PASSWORD': 'Cohello19',
-        'HOST': '127.0.0.1',
-        'PORT': '',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),        
     }
 }
 
@@ -150,3 +159,5 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
+
+LOGIN_URL = '/login'
