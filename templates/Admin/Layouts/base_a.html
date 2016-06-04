@@ -470,7 +470,10 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar actividades</a>
+                                    <a href='{% url 'activities:index' %}'>Consultar actividades</a>
+                                </li>
+                                <li>
+                                    <a href='{% url 'activities:create_index' %}'>Crear actividad</a>
                                 </li>                                
                             </ul>
                         </li>
