@@ -1,5 +1,4 @@
 from django.db import models
-from Locations.models import Region
 from django.forms import ModelChoiceField
 # Create your models here.
 
@@ -9,8 +8,6 @@ class Provider(models.Model):
     status_choices = ((0,'Inactivo'),(1,'Activo'),)
     #effectiveTime_choices = ((30,'1 Mes'),(90,'3 Meses'),(180,'6 Meses'),(365,'12 meses'),)
 
-    #region = ModelChoiceField(queryset = Region.objects.all())
-    queryset = Region.objects.values_list('name')
     region_choices = []
 
     ruc = models.BigIntegerField(null=False, blank=False)
