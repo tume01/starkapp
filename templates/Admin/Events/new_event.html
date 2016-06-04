@@ -99,7 +99,11 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="seat" name="seat" placeholder="Sede Principal" value="{{form.headquarter}}" >
+                                                    <select class="form-control" id="example-select" name="headquarter" size="1">
+                                                    {% for headquarter in headquarters %}
+                                                        <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                                                    {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -111,7 +115,7 @@ Nueva Inscripción
                                                 <div class="input-group">
                                                     <span class=""></span>
                                                         {% for environment in environments%}
-                                                            <input type="radio" value="{{environment.id}}">{{environment.name}}</input>
+                                                            <input type="radio" name="environment" value="{{environment.id}}">{{environment.name}}</input>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
