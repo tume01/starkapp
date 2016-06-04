@@ -24,7 +24,7 @@ def index(request):
 @require_http_methods(['GET'])
 def create_index(request):
 
-    regions = Region.objects.all()
+    #regions = Region.objects.all()
     form = ProviderForm()
     #form.region = regions
     context = {
