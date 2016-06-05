@@ -1,10 +1,4 @@
-from bungalow_type.models import BungalowType
-from repositories.BaseRepository import BaseRepository
-
-class BungalowTypeRepository(BaseRepository):
-    def __init__(self):
-        BaseRepository.__init__(self, BungalowType)
-
+from repositories.BungalowTypeRepository import BungalowTypeRepository
 
 class BungalowTypeService(object):
     """docstring for BungalowTypeService"""
@@ -21,11 +15,11 @@ class BungalowTypeService(object):
 
     @classmethod
     def delete(cls, id):
-        return cls._repository.delete(id)
+        return cls._repository.softDelete(id)
 
     @classmethod
     def getBungalowTypes(cls):
-        return cls._repository.all()
+        return cls._repository.allNotDeleted()
 
     @classmethod
     def findBungalowType(cls, id):
