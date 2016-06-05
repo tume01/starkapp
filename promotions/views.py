@@ -7,8 +7,12 @@ from services.PromotionsService import PromotionsService
 from django.views.decorators.http import require_http_methods
 from Adapters.FormValidator import FormValidator
 from .forms import PromotionForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
 def index(request):
 
@@ -22,6 +26,9 @@ def index(request):
 
     return render(request, 'Admin/Promotions/index_promotion.html', context) 
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def filter(request):
 
@@ -53,6 +60,9 @@ def filter(request):
     return render(request, 'Admin/Promotions/index_promotion.html', context)
 
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_index(request):
 
@@ -62,6 +72,9 @@ def create_index(request):
 
     return render(request, 'Admin/Promotions/new_promotion.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_index(request):
 
@@ -77,6 +90,9 @@ def edit_index(request):
 
     return render(request, 'Admin/Promotions/edit_promotion.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_promotion(request):
 
@@ -93,6 +109,9 @@ def delete_promotion(request):
     return HttpResponseRedirect(reverse('promotions:index'))
 
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_promotion(request):
 
@@ -124,6 +143,9 @@ def create_promotion(request):
         return render(request, 'Admin/Promotions/new_promotion.html', context)
 
 
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_promotion(request):
 

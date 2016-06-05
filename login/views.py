@@ -5,13 +5,13 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.decorators import login_required
 
 
 
 @require_http_methods(['POST'])
 def login_view(request):
-
+    
     username = request.POST['username']
     password = request.POST['password']
     print(username, password)
@@ -20,10 +20,10 @@ def login_view(request):
         # Correct password, and the user is marked "active"
         auth.login(request, user)
         # Redirect to a success page.
-        return HttpResponseRedirect(reverse("memberships:type/index"))
+        return HttpResponseRedirect(reverse('login:ini'))
     else:
         # Show an error page
-    	return HttpResponseRedirect(reverse("login.html"))
+    	return HttpResponseRedirect(reverse("login:index"))
 
 
 
@@ -31,11 +31,18 @@ def login_view(request):
 def logout_view(request):
 
     auth.logout(request)
-    # Redirect to a success page.
-    return HttpResponseRedirect("/account/loggedout/")
+    return render(request, 'login.html') 
 
 @require_http_methods(['GET'])
 def index(request):	
     
     # Redirect to a success page.
     return render(request, 'login.html') 
+
+
+@login_required
+@require_http_methods(['GET'])
+def ini(request): 
+    
+    # Redirect to a success page.
+    return render(request, 'User/starting_screen.html')

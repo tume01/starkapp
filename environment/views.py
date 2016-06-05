@@ -31,18 +31,17 @@ def create_index(request):
 
     return render(request, 'Admin/Environments/Create_Environment.html', context)
 
-@require_http_methods(['POST'])
-def edit_index(request):
-
-    id_environment= request.POST['id']
+@require_http_methods(['GET'])
+def edit_index(request, id):
 
     environment_service = EnvironmentService()
 
-    environment = environment_service.getEnviromentById(id_environment)
+    environments = environment_service.getEnviromentById(id)
 
     context = {
-
-        'environment' : environment,
+		'id' :id,
+        'titulo': 'tittle',
+        'environment' : environments,
     }
 
     return render(request, 'Admin/Environments/Edit_Environment.html', context)
@@ -88,7 +87,7 @@ def create_environment(request):
 
 
 @require_http_methods(['POST'])
-def edit_environment(request):
+def edit_environment(request, id):
 
     edit_data = {}
 
@@ -98,12 +97,10 @@ def edit_environment(request):
 
     edit_data["capacity"] = request.POST['capacity']
 
-    edit_data["status"] = request.POST['status']
-
-    id_edit = request.POST['id']
+    edit_data["status"] = request.POST['status']    
 
     environment_service = EnvironmentService()
 
-    environment_service.update(id_edit, edit_data)
+    environment_service.update(id, edit_data)
 
     return HttpResponseRedirect(reverse('environment:index'))

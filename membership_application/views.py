@@ -5,17 +5,22 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MembershipTypeService import MembershipTypeService
+from services.MemberService import MembersService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
+from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
 from Adapters.FormValidator import FormValidator
 from .forms import MembershipApplicationForm
 from objection import forms as oforms
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 
 #ADMIN
-
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def index(request):
 
@@ -35,6 +40,8 @@ def index(request):
     return render(request, 'Admin/Membership/index_membership_request.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def filter(request):
 
@@ -65,7 +72,7 @@ def filter(request):
     if num_doc != '':
         filter_member_application["document_number"] = num_doc
 
-    if appStatus != '3':
+    if appStatus != '4':
         filter_member_application["status"] = appStatus
 
     if type_identity_doc != 'Todos':
@@ -81,6 +88,8 @@ def filter(request):
     return render(request, 'Admin/Membership/index_membership_request.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_index(request):
 
@@ -101,6 +110,9 @@ def create_index(request):
 
     return render(request, 'Admin/Membership/new_membership_request.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_index(request):
 
@@ -130,6 +142,9 @@ def edit_index(request):
 
     return render(request, 'Admin/Membership/edit_membership_request.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_membership_application(request):
 
@@ -146,6 +161,9 @@ def delete_membership_application(request):
     return HttpResponseRedirect(reverse('membership_application:index'))
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_membership_application(request):
 
@@ -167,7 +185,9 @@ def create_membership_application(request):
 
         insert_data["firstName"] = form.cleaned_data['firstName']
 
-        insert_data["lastName"] = form.cleaned_data['lastName']
+        insert_data["paternalLastName"] = form.cleaned_data['paternalLastName']
+
+        insert_data["maternalLastName"] = form.cleaned_data['maternalLastName']
 
         insert_data["comments"] = form.cleaned_data['comments']
 
@@ -203,6 +223,9 @@ def create_membership_application(request):
         return render(request, 'Admin/Membership/new_membership_request.html', context)
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_membership_application(request):
 
@@ -226,7 +249,9 @@ def edit_membership_application(request):
 
         insert_data["firstName"] = form.cleaned_data['firstName']
 
-        insert_data["lastName"] = form.cleaned_data['lastName']
+        insert_data["paternalLastName"] = form.cleaned_data['paternalLastName']
+
+        insert_data["maternalLastName"] = form.cleaned_data['maternalLastName']
 
         insert_data["comments"] = form.cleaned_data['comments']
 
@@ -269,7 +294,8 @@ def edit_membership_application(request):
 
 
 #USUARIO
-
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['GET'])
 def user_index(request):
 
@@ -289,6 +315,8 @@ def user_index(request):
     return render(request, 'index_membership_request.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def user_filter(request):
 
@@ -302,7 +330,7 @@ def user_filter(request):
 
     filter_member_application["status"] = 1 
 
-    lastName = request.POST['lastName']
+    paternalLastName = request.POST['paternalLastName']
 
     firstName = request.POST['firstName']
 
@@ -310,8 +338,8 @@ def user_filter(request):
 
     type_identity_doc = request.POST['identity_document_type']
 
-    if lastName != '':
-        filter_member_application["lastName"] = lastName
+    if paternalLastName != '':
+        filter_member_application["paternalLastName"] = paternalLastName
 
     if firstName != '':
         filter_member_application["firstName"] = firstName
@@ -333,13 +361,16 @@ def user_filter(request):
 
 
 #OBJECIONES
-
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_objection(request):
 
     form = oforms.ObjectionForm(request.POST)
 
     requestId = request.POST['id_membership']
+
+    memberId = request.POST['id_member']
 
     comments = request.POST['comments']
 
@@ -354,6 +385,8 @@ def create_objection(request):
 
         insert_data["membership_application_id"] = requestId
 
+        insert_data["member_id"] = memberId
+
         objection_service = ObjectionsService()
 
         objection_service.create(insert_data)
@@ -365,13 +398,20 @@ def create_objection(request):
 
         membership_application = member_application_service.getMembership_Application(requestId)
 
+        current_user = request.user
+
+        member = MembersService.getMemberByUser(current_user)
+
         context = {
             'membership_application': membership_application,
+            'member' : member,
         }
 
         return render(request, 'Objections_members.html', context)
 
 
+#@login_required
+#@permission_required('dummy.permission_user', login_url='login:ini')
 @require_http_methods(['POST'])
 def objection_index(request):
 
@@ -381,32 +421,64 @@ def objection_index(request):
 
     membership_application = member_application_service.getMembership_Application(requestId)
 
+    member_service = MembersService()
+
+    current_user = request.user
+
+    member = member_service.getMemberByUser(current_user)
+
     context = {
         'membership_application' : membership_application,
+        'member': member,
     }
 
     return render(request, 'Objections_members.html', context)
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def approve_membership_application(request):
 
-    id_application = request.POST['id']
+    if 'Accept' in request.POST:
+    
+        id_application = request.POST['id']
 
-    member_application_service = Membership_ApplicationService()
+        member_application_service = Membership_ApplicationService()
 
-    identity_doc_type_service = IdentityDocumentTypeService()
+        identity_doc_type_service = IdentityDocumentTypeService()
 
-    doc_types = identity_doc_type_service.getIdentityDocumentTypes()
+        doc_types = identity_doc_type_service.getIdentityDocumentTypes()
 
-    membership_application =  member_application_service.getMembership_Application(id_application)
+        membership_application =  member_application_service.getMembership_Application(id_application)
 
-    context = {
-        'titulo' : 'titulo',
-        'doc_types' : doc_types,
-        'membership_application' : membership_application,
-    }
+        ubigeo_service = UbigeoService()
 
-    return render(request, 'Admin/Membership/new_membership_member.html', context)
+        ubigeo = ubigeo_service.getAllUbigeo()
+
+        context = {
+            'titulo' : 'titulo',
+            'doc_types' : doc_types,
+            'ubigeo' : ubigeo,
+            'membership_application' : membership_application,
+        }
+
+        return render(request, 'Admin/Membership/new_membership_member.html', context)
+
+    elif 'Reject' in request.POST:
+
+        insert_data = {}
+
+        id_application = request.POST['id']
+
+        insert_data["status"] = 3
+
+        member_application_service = Membership_ApplicationService()
+
+        member_application_service.update(id_application, insert_data)
+
+        return HttpResponseRedirect(reverse('membership_application:index'))
+
 
 

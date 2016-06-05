@@ -24,15 +24,14 @@ Lista de tipos de membresías
 
 {% block content %}
      <div class="content content-narrow">
-                    <div class="content">
-                        {% if messages %}
-                            {% for msg in messages %}
-                                <div class="alert alert-warning" role="alert">
-                                    {{msg.message}}
-                                </div>
-                            {% endfor %}
-                        {% endif %}
+        <div class="content">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{msg.message}}
                     </div>
+                {% endfor %}
+            {% endif %}
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
@@ -87,11 +86,14 @@ Lista de tipos de membresías
                                     </div>
 
                                 </div>
-                            </form>
+                            </div>
                         </div>
-                    </div>
-                    <!-- END Mega Form -->
-                </div>    
+                        
+                </form>
+            </div>
+        </div>
+        <!-- END Mega Form -->
+    </div>    
 
 {% endblock %}
 

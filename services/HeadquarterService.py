@@ -16,5 +16,8 @@ class HeadquarterService(object):
 	def getHeadquarters(self):
 		return self.__headquarters_repository.all()
 
-	def findHearquarter(self, id):
-		return self.__headquarters_repository.findHearquarter(id)
+	def findHeadquarter(self, id):
+		return self.__headquarters_repository.find(id)
+	
+	def filter(self, filters):
+		return self.__headquarters_repository.filter(filters)

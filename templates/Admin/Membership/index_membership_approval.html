@@ -36,13 +36,19 @@ Lista de objeciones
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
                                     <tr>
-                                        <th>Comentarios</th>                                
+                                        <th>Comentarios</th>
+                                        <th>Nombre</th>
+                                        <th>Apellido Paterno</th>
+                                        <th>Apellido Materno</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for objection in objections %}                                       
                                         <tr>
                                             <td class="font-w600">{{objection.comments}}</td>
+                                            <td class="font-w600">{{objection.member.name}}</td>
+                                            <td class="font-w600">{{objection.member.paternalLastName}}</td>
+                                            <td class="font-w600">{{objection.member.maternalLastName}}</td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
@@ -50,8 +56,11 @@ Lista de objeciones
 
                                                        <div class="block-content">
                             <div class="form-group">                    
-                                    <div class="col-xs-2 col-xs-offset-4">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Aprobar</button>
+                                    <div class="col-xs-2 col-xs-offset-3">
+                                        <button class="btn btn-success" type="submit" value="Accept" name="Accept"><i class="fa fa-check push-5-r"></i> Aprobar</button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger" type="submit" value="Reject" name="Reject"><i class="fa fa-check push-5-r"></i> Rechazar</button>
                                     </div>
                                     <div class="col-xs-2">
                                         <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>

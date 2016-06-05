@@ -7,6 +7,7 @@ class ServicioForm(forms.Form):
 
 class UpdateServicioForm(forms.Form):
     price = forms.FloatField(error_messages={'required': 'El precio es requerido'})
+    name = forms.CharField(error_messages={'required': 'El nombre es requerido'})
 
 # Pending Features
 # class BungalowTypeForm(forms.Form):

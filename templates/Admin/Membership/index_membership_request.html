@@ -64,10 +64,11 @@ Lista de solicitudes de membresía
                                         <label class="col-xs-1 " for="example-select">Estado</label>
                                             <div class="col-sm-12">
                                                 <select class="form-control" id="example-select" name="status" size="1">
-                                                    <option value="3">Todas</option>
-                                                    <option value="0">Desaprobado</option>
+                                                    <option value="4">Todas</option>
+                                                    <option value="0">Eliminado</option>
                                                     <option value="1">Por Aprobar</option>
                                                     <option value="2">Aprobado</option>
+                                                    <option value="3">Desprobado</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -126,7 +127,8 @@ Lista de solicitudes de membresía
                                         <th>Doc. Identidad</th>
                                         <th>Num. Doc.</th>
                                         <th>Nombres</th>
-                                        <th>Apellidos</th>                                       
+                                        <th>Apellido paterno</th>                                       
+                                        <th>Apellido materno</th>                                       
                                         <th>Fecha Inicio</th>  
                                         <th>Fecha Fin</th>
                                         <th>Comentarios</th>
@@ -139,7 +141,8 @@ Lista de solicitudes de membresía
                                             <td class="font-w600">{{membershipApp.identity_document_type.name}}</td>
                                             <td class="font-w600">{{membershipApp.document_number}}</td>
                                             <td class="font-w600">{{membershipApp.firstName}}</td>
-                                            <td class="font-w600">{{membershipApp.lastName}}</td>
+                                            <td class="font-w600">{{membershipApp.paternalLastName}}</td>
+                                            <td class="font-w600">{{membershipApp.maternalLastName}}</td>
                                             <td class="font-w600">{{membershipApp.initialDate}}</td>
                                             <td class="font-w600">{{membershipApp.finalDate}}</td>
                                             <td class="font-w600">{{membershipApp.comments}}</td>
@@ -153,12 +156,17 @@ Lista de solicitudes de membresía
                                             {% endif %}
                                             {% if membershipApp.status == 0 %}
                                                 <div class="col-lg-12" >
-                                                    <label class="col-xs-15 " for="example-select">Desaprobado</label>
+                                                    <label class="col-xs-15 " for="example-select">Eliminado</label>
                                                 </div>
                                             {% endif %}
                                             {% if membershipApp.status == 2 %}
                                                 <div class="col-lg-12" >
                                                     <label class="col-xs-15" for="example-select">Aprobado</label>
+                                                </div>
+                                            {% endif %}
+                                            {% if membershipApp.status == 3 %}
+                                                <div class="col-lg-12" >
+                                                    <label class="col-xs-15" for="example-select">Desaprobado</label>
                                                 </div>
                                             {% endif %}
                                             </td>

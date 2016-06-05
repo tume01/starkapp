@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -38,14 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core.apps.CoreConfig',
     'products',
     'login',
     'users',
     'promotions',
-    'bungalows',
+    'bungalow',
+    'bungalow_reservation',
+    'bungalow_type',
     'environment',
     'memberships',
     'membership_application',
+    'payment_documents',
     'fine',
     'objection',
     'members',
@@ -56,6 +59,8 @@ INSTALLED_APPS = [
     'headquarters',
     'events',
     'identity_document_type',
+    'ubigeo',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -97,11 +102,11 @@ WSGI_APPLICATION = 'starkapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'starkapp',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),        
     }
 }
 

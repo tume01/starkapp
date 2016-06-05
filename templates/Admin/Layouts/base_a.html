@@ -27,7 +27,7 @@
     <link rel="stylesheet" href='{% static "assets/css/bootstrap.min.css" %}'>
     <link rel="stylesheet" id="css-main" href='{% static "assets/css/oneui.css" %}'>
     <link rel="stylesheet" href='{% static "assets/js/plugins/select2/select2.min.css" %}'>
-
+    <link rel="stylesheet" href='{% static "assets/js/datetimepicker/jquery.datetimepicker.min.css" %}'>
 
 </head>
 <body>
@@ -428,13 +428,13 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
                                 <li>
-                                    <a href='{% url "bungalows:index" %}'>Consultar Bungalows</a>
+                                    <a href='{% url "bungalow:index" %}'>Consultar Bungalows</a>
                                 </li>
                                 <li>
-                                    <a href='{% url "bungalows:create_index" %}'>Crear Bungalows</a>
+                                    <a href='{% url "bungalow:create_index" %}'>Crear Bungalows</a>
                                 </li>
                                 <li>
-                                    <a href="Register_InOutBungalows.html">Editar disponibilidad de Bungalows</a>
+                                    <a href='{% url "bungalowReservation:index" %}'>Editar disponibilidad de Bungalows</a>
                                 </li>
                                 <li>
                                     <a href="Make_Sorteo.html">Sorteo de bungalows</a>
@@ -470,19 +470,50 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar actividades</a>
+                                    <a href='{% url 'activities:index' %}'>Consultar actividades</a>
+                                </li>
+                                <li>
+                                    <a href='{% url 'activities:create_index' %}'>Crear actividad</a>
                                 </li>                                
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "headquarters:index" %}'>Consultar sedes</a>
+                                </li>   
+                                <li>
+                                    <a href='{% url "headquarters:create_index" %}'>Nueva sede</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar Eventos</a>
-                                </li>                                
+                                    <a href='{% url "events:index" %}'>Consultar eventos</a>
+                                </li>                               
                                 <li>
-                                    <a href=''>Ver inscripción de Eventos</a>
-                                </li>                                
+                                    <a href='{% url "events:create_index" %}'>Crear nuevo evento</a>
+                                </li>  
+                                <li>
+                                    <a href='{% url "events_type:index" %}'>Tipos de eventos</a>
+                                </li>   
+                                <li>
+                                    <a href='{% url "events_type:create_index" %}'>Crear tipo de evento</a>
+                                </li>                                 
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Servicios</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "servicios:index" %}'>Consultar servicios</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "servicios:create_index" %}'>Crear un nuevo servicio</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
