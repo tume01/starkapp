@@ -45,4 +45,4 @@ def index(request):
 def ini(request): 
     
     # Redirect to a success page.
-    return render(request, 'User/starting_screen.html') 
+    return render(request, 'User/starting_screen.html')
