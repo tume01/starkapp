@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from services.EventsService import EventsService
 from services.EnvironmentService import EnvironmentService
 from services.HeadquarterService import HeadquarterService
+from services.EventsTypeService import EventsTypeService
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
@@ -62,14 +63,19 @@ def create_index(request):
 
     headquearter_service = HeadquarterService()
 
+    eventstype_service = EventsTypeService()
+
     environments = environment_service.getEnvironment()
 
     headquarters = headquearter_service.getHeadquarters()
+
+    eventstype = eventstype_service.getEventsType()
     
     context = {
         'titulo' : 'titulo',
         'environments' : environments,
-        'headquarters' : headquarters
+        'headquarters' : headquarters,
+        'eventstype' : eventstype
     }
 
     return render(request, 'Admin/Events/new_event.html', context)
@@ -152,7 +158,7 @@ def update_index(request,event_id):
 
     context = {
         'titulo' : 'titulo',
-        'events' : events
+        'events' : events,
     }
 
     return render(request,'Admin/Events/edit_event.html',context)

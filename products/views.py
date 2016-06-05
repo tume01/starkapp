@@ -177,22 +177,35 @@ def filter_product(request):
     filter_data = {}
     req = json.loads( request.body.decode('utf-8') )
 
-    print(req.get("f_selectProductType"))
+    #print(req.get("f_selectProductType"))
 
-    
-    qry = 'SELECT * FROM products_product WHERE id<2'
+    param = []
+    param.append(req.get("f_name"))
+    #param = [3, 2] #id y stock min
+
+    #if req.get("f_selectProductType") == '' && req.get("f_name") == '' && req.get("f_select2Provider") == null:
+    #    qry = "SELECT * FROM products_product "
+    #else:
+    #    qry = "SELECT * FROM products_product WHERE "
+
+    #   if req.get("f_selectProductType") == '':
+    #       qry += "product_type_id = " + req.get("f_selectProductType")
+        
+
+    #print(qry)
+    qry = "SELECT * FROM products_product WHERE id<5"
+    #logging.debug(qry)
 
 
-    logging.debug(qry)
 
     try:
         list_products = Product.objects.raw(qry)
+        #print('hola')
         for p in list_products:
             print(p.id)
 
         req_list = serializers.serialize('json', list_products)
 
-        #list_products = list_products[:]
     except IntegrityError:
         handle_exception()
         list_products = None
