@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
 
 {% block head_title %}
 Admin: environments
@@ -84,7 +84,7 @@ Lista de ambientes
                                              </div>
                                         </div>  
                                     </div>
-                                    <div class="col-sm-7"> 
+                                    <div class="col-sm-5"> 
                                         <div class="form-group">
                                             <div class="col-xs-6">
                                                 <label class="col-xs-12" for="mega-bio">Descripción</label>
@@ -93,7 +93,8 @@ Lista de ambientes
                                             
                                         </div>
                                     </div>
-                                
+                                </div>
+                                <div class="row">
                                     <div class="col-sm-5">
                                         <div class="col-xs-6">
                                             <button class="btn btn-danger" type="button" onclick="location.href='{% url "environment:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
