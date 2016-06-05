@@ -49,7 +49,7 @@ class Command(BaseCommand):
         membresia.user_set.add(user7)
         empresa.user_set.add(user8)
 
-        content_type = ContentType.objects.create(name='url permission', app_label='dummy', model='unused')
+        content_type = ContentType.objects.create(app_label='dummy', model='unused')
 
         permission_usuario = Permission.objects.create(codename='permission_usuario', name='Can Do User Things', content_type=content_type)
         permission_admin = Permission.objects.create(codename='permission_admin', name='Can Do Admin Things', content_type=content_type)
