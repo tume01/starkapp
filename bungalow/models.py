@@ -13,6 +13,8 @@ class Bungalow(models.Model):
     location = models.CharField(max_length=200)
     number = models.IntegerField()
 
+    deleted_at = models.DateTimeField(null=True)
+
     def getStatusName(self):
         index = self.status - 1
         statusData = self.STATUS_CHOICES[index]
