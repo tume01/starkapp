@@ -23,7 +23,7 @@ def login_view(request):
         return HttpResponseRedirect(reverse('login:ini'))
     else:
         # Show an error page
-    	return HttpResponseRedirect(reverse("login.html"))
+    	return HttpResponseRedirect(reverse("login:index"))
 
 
 
@@ -45,4 +45,4 @@ def index(request):
 def ini(request): 
     
     # Redirect to a success page.
-    return render(request, 'User\starting_screen.html') 
+    return render(request, 'User/starting_screen.html')

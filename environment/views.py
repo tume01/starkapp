@@ -41,7 +41,7 @@ def edit_index(request, id):
     context = {
 		'id' :id,
         'titulo': 'tittle',
-        'environments' : environments,
+        'environment' : environments,
     }
 
     return render(request, 'Admin/Environments/Edit_Environment.html', context)

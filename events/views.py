@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from services.EventsService import EventsService
 from services.EnvironmentService import EnvironmentService
 from services.HeadquarterService import HeadquarterService
+from services.EventsTypeService import EventsTypeService
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
@@ -62,14 +63,19 @@ def create_index(request):
 
     headquearter_service = HeadquarterService()
 
+    eventstype_service = EventsTypeService()
+
     environments = environment_service.getEnvironment()
 
-    headquearters = headquearter_service.getHeadquarters()
+    headquarters = headquearter_service.getHeadquarters()
 
+    eventstype = eventstype_service.getEventsType()
+    
     context = {
         'titulo' : 'titulo',
         'environments' : environments,
-        'headquearters' : headquearters
+        'headquarters' : headquarters,
+        'eventstype' : eventstype
     }
 
     return render(request, 'Admin/Events/new_event.html', context)
@@ -115,7 +121,7 @@ def create_event(request):
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
-        insert_data["seat"] = request.POST.get('seat')
+        insert_data["headquarter_id"] = request.POST.get('headquarter')
      
         insert_data["start_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
 
@@ -123,7 +129,9 @@ def create_event(request):
 
         insert_data["assistance"] = request.POST.get('assistance')
 
-        insert_data["price"] = request.POST.get('price')
+        insert_data["price_member"] = request.POST.get('price_member')
+
+        insert_data["price_invited"] = request.POST.get('price_invited')
 
         insert_data["status"] = 0
 
@@ -150,7 +158,7 @@ def update_index(request,event_id):
 
     context = {
         'titulo' : 'titulo',
-        'events' : events
+        'events' : events,
     }
 
     return render(request,'Admin/Events/edit_event.html',context)

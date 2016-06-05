@@ -12,3 +12,5 @@ class BungalowReservation(models.Model):
     check_in = models.TimeField(null=True)
     check_out = models.TimeField(null=True)
     price = models.FloatField(null=True)
+
+    deleted_at = models.DateTimeField(null=True)

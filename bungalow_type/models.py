@@ -5,4 +5,6 @@ class BungalowType(models.Model):
     description = models.TextField(max_length=200)
     price = models.FloatField()
     capacity = models.IntegerField()
+    
+    deleted_at = models.DateTimeField(null=True)
 

@@ -87,6 +87,11 @@ ENV/
 
 # Rope project settings
 .ropeproject
-providers/migrations/0001_initial.py
-*.py
-providers/migrations/0001_initial.py
+
+#Ignore Migrations
+*/migrations/0*
+
+
+################################
+#     DO NOT MODIFY PLEASE     #
+################################
