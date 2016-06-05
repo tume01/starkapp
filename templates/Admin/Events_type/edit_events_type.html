@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
 
 {% block head_title %}
 Admin: Tipo de eventos
@@ -40,16 +40,6 @@ Lista de tipo de eventos
                         <div class="block-content">
                             <form class="form-horizontal push-10-t push-10" action="{% url 'events_type:update' type.id %}" method="post">
                             {% csrf_token %}
-                                <div class="row">   
-                                    <div class="col-sm-7">
-                                        <div class="form-group">
-                                            <div class="col-xs-6">
-                                                <label for="mega-firstname">Codigo</label>
-                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="id" placeholder="{{type.id}}" disabled>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <div class="form-group">
@@ -70,29 +60,29 @@ Lista de tipo de eventos
                                     </div>
                                      <div class="col-sm-6">
                                         <div class="form-group">
-                                            <div class="col-xs-12">
-                                                <label for="mega-firstname">Estado</label>
-                                                <input class="form-control input-lg" type="text" id="mega-firstname" name="status" placeholder="{{type.status}}" value="{{type.status}}">
+                                            <label class="col-xs-12" for="example-select">Estado</label>
+                                            <div class="col-md-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
+                                                    <select class="form-control" id="example-select" value="" placeholder="{{type.status}}" name="status" size="1">
+                                                        <option value="0">Habilitado</option>
+                                                        <option value="1">Deshabilitado</option>
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                        </div>
                         {% endfor %}
-                                <div class="form-group">
-                                    <div class="col-xs-3">
+                                    <div class="form-group">
+                                        <div class="col-xs-2">
+                                            <a href=''><button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                                        </div>
+                                        <div class="col-xs-2 col-xs-offset-4"><!-- type="submit" -->
+                                            <a href="{% url 'events_type:index' %}"><button class="btn btn-danger" type="button" ><i class="fa fa-times push-5-r"></i> Cancelar</button></a>
+                                        </div>
                                     </div>
-                                    <div class="col-xs-2">
-                                        <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#createModal"><i class="fa fa-check push-5-r"></i> Guardar</button>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <a href="./Concessionaire.html"><button class="btn btn-warning" type="submit"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <a href="./Concessionaire.html"><button class="btn btn-danger" type="submit"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
-                                    </div>
-                                    <div class="col-xs-3">
-                                    </div>
+                        </div>
                                 </div>
                             </form>
                         </div>

@@ -45,11 +45,13 @@ Lista de usuarios
                     <tbody>
                         {% for user in users %}                                       
                         <tr>
-                            <td class="font-w600">{{user.name}}</td>
-                            <td class="font-w600">{{user.user_type.description}}</td>
+                            <td class="font-w600">{{user.username}}</td>
+                            {% for group in user.groups.all %}     
+                            <td class="font-w600">{{group.name}}</td>
+                             {% endfor %}
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <button class="btn btn-xs btn-default editar" data-id="{{user.id}}" type="button"  data-toggle="tooltip" title="Editar Tipo"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-xs btn-default editar" data-id="{{user.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-pencil"></i></button>
                                 </div>
                             </td>    
                         </tr>

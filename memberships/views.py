@@ -6,19 +6,24 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.MembershipTypeService import MembershipTypeService
 from services.Membership_ApplicationService import Membership_ApplicationService
+from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.MembershipService import MembershipService
 from services.ObjectionService import ObjectionsService
+from services.UbigeoService import UbigeoService
 from services.MemberService import MembersService
-from services.UsersService import UsersService
+from django.contrib.auth.models import User, Group
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
 from Adapters.FormValidator import FormValidator
 from .forms import MembershipTypeForm
 from .forms import MembershipForm
 from members import forms as mForms
-from users import forms as uForms
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def membership_type_index(request):
 
@@ -33,6 +38,8 @@ def membership_type_index(request):
     return render(request, 'Admin/Membership/index_type_membership.html', context) 
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_membership_type_index(request):
 
@@ -42,6 +49,9 @@ def create_membership_type_index(request):
     
     return render(request, 'Admin/Membership/new_type_membership.html', context)
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_membership_type_index(request):
 
@@ -58,6 +68,8 @@ def edit_membership_type_index(request):
     return render(request, 'Admin/Membership/edit_type_membership.html', context)
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_membership_type(request):
 
@@ -81,10 +93,6 @@ def delete_membership_type(request):
 
     membership_applications = membership_application_service.filter(filter_data)
 
-    print("Members:")
-    print(members)
-    print(membership_applications)
-
     if (len(members) == 0 and len(membership_applications) == 0):
 
         membership_type_service = MembershipTypeService()
@@ -94,6 +102,8 @@ def delete_membership_type(request):
     return HttpResponseRedirect(reverse('memberships:type/index'))
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_membership_type(request):
 
@@ -130,6 +140,9 @@ def create_membership_type(request):
         return render(request, 'Admin/Membership/new_type_membership.html', context)
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_membership_type(request):
 
@@ -166,6 +179,9 @@ def edit_membership_type(request):
         return HttpResponseRedirect(reverse('memberships:type/index'))
 
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def membership_accept(request):
 
@@ -186,6 +202,8 @@ def membership_accept(request):
 
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_membership(request):
 
@@ -215,17 +233,11 @@ def create_membership(request):
 
         #Datos del usuario
 
-        insert_data = {}
+        user = User.objects.create_user(username=form2.cleaned_data['num_doc'], email=form2.cleaned_data['email'],   password='1111')
 
-        insert_data["name"] = form2.cleaned_data['dni']
+        group = Group.objects.get(id=1)
 
-        insert_data["password"] = 1111
-
-        insert_data["user_type_id"] = 1
-
-        user_service = UsersService()
-
-        user = user_service.create(insert_data)
+        group.user_set.add(user)
 
         #Datos del miembro
 
@@ -235,11 +247,15 @@ def create_membership(request):
 
         insert_data["membership_id"] = membership.id
 
+        insert_data['identity_document_type_id'] = request.POST['identity_document_type']
+
         insert_data["name"] = form2.cleaned_data['name']
 
-        insert_data["surname"] = form2.cleaned_data['surname']
+        insert_data["paternalLastName"] = form2.cleaned_data['paternalLastName']
 
-        insert_data["dni"] = form2.cleaned_data['dni']
+        insert_data["maternalLastName"] = form2.cleaned_data['maternalLastName']
+
+        insert_data["document_number"] = form2.cleaned_data['num_doc']
 
         insert_data["phone"] = form2.cleaned_data['phone']
 
@@ -249,17 +265,29 @@ def create_membership(request):
 
         insert_data["state"] = 1
 
+        ubigeo_service = UbigeoService()
+
+        filter_ubigeo = {}
+
+        print(request.POST['district'])
+
+        filter_ubigeo["district"] = request.POST['district']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["ubigeo"] = ubi[0]
+
         member_service = MembersService()
 
         member_service.create(insert_data)
 
-        #Elimino solicitud
+        #Elimino solicitud (se pone como aceptada)
 
         id_application = membershipApplicationId
 
         insert_data = {}
 
-        insert_data["status"] = 0
+        insert_data["status"] = 2
 
         member_application_service = Membership_ApplicationService()
 
@@ -270,10 +298,15 @@ def create_membership(request):
     else:
         member_application_service = Membership_ApplicationService()
 
+        identity_doc_type_service = IdentityDocumentTypeService()
+
+        doc_types = identity_doc_type_service.getIdentityDocumentTypes()
+
         membershipApplication = member_application_service.getMembership_Application(membershipApplicationId)
     
         context = {
             'titulo': 'titulo',
+            'doc_types' : doc_types,
             'membership_application': membershipApplication,
         }
 
@@ -282,7 +315,8 @@ def create_membership(request):
 
 
 
-
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def membership_edit_index(request):
 
@@ -308,6 +342,8 @@ def membership_edit_index(request):
     return render(request, 'Admin/Membership/edit_membership.html', context)
 
 
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def membership_edit(request):
 
@@ -321,8 +357,12 @@ def membership_edit(request):
 
         membership_type_service = MembershipTypeService()
 
-        membership = membership_service.getType(id_edit)
+        membership = membership_service.getMembership(id_edit)
 
+        membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+
+        membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+        
         types = membership_type_service.getMembershipTypes()
 
         context = {

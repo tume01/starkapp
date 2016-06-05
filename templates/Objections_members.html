@@ -1,5 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
 Admin: solicitud de membresia
 {% endblock %}
@@ -33,22 +35,27 @@ Nueva solicitud de membresía
                     </div>
                     <!-- Mega Form -->                        
                     <div class="block-content">
-                                <div class="row">                                   
-                                    <div class="col-lg-6" >
+                                <div class="row">
+                                    <div class="col-lg-2" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select"> Nombres: {{membership_application.firstName}}</label>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> Apellidos: {{membership_application.lastName}}</label>
+                                        <label class="col-xs-12" for="example-select"> Apellido Paterno: {{membership_application.paternalLastName}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Apellidos Materno: {{membership_application.maternalLastName}}</label>
                                         </div>
                                     </div>
                                 </div>
                         </div>
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "membership_application:objection_insert" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:objection_insert" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                      <div class="col-lg-6" style="display: none;">
@@ -60,11 +67,20 @@ Nueva solicitud de membresía
                                             </div>
                                         </div>
                                     </div>
+                                     <div class="col-lg-6" style="display: none;">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input0-group1" name="id_member" placeholder="ID"  type="number" value= "{{member.id}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input2">Comentarios</label>
+                                            <label class="col-xs-12" for="comments">Comentarios</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input1-group2" name="comments" placeholder="Comentarios" type="text">
+                                                <textarea class="form-control input-lg" id="comments" name="comments" rows="8" placeholder="Comentarios"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -83,5 +99,17 @@ Nueva solicitud de membresía
                     </div>
                     <!-- END Mega Form -->
                 </div>    
+
+{% endblock %}
+
+{% block scripts %}
+
+        <!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/Membership/objection_forms_validation.js" %}'></script>
+
+
 
 {% endblock %}

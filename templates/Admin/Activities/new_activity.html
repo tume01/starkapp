@@ -1,23 +1,25 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
+
+{% load staticfiles %}
 
 {% block head_title %}
-Admin: bungalows
+Admin: actividades
 {% endblock %}
 
 {% block head_dahsboard %}
-Bungalows
+Actividades
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de bungalows
+Nueva Actividad
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Bungalows
+Actividades
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de bungalows
+Creación de Actividades
 {% endblock %}
 
 {% block content %}
@@ -43,22 +45,26 @@ Lista de bungalows
 
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='{% url "activities:insert" %}' method="post">
+            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:insert" %}' method="post">
                 {% csrf_token %}
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-4">
                         <div class="form-group">
-                            <div class="col-xs-6">
-                                <label for="mega-firstname">Nombre</label>
+                            <div class="col-xs-12">
+                                <label for="name">Nombre</label>
                                 <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Ingrese un nombre.." value="" >
                             </div>
-                            <div class="col-xs-6">
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
                                 <label for="attendance">Capacidad</label>
                                 <input class="form-control input-lg" type="text" id="attendance" name="attendance" placeholder="Ingrese capacidad de actividad..">
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="price">Precio</label>
@@ -66,66 +72,68 @@ Lista de bungalows
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="mega-lastname">Fecha/Hora Inicio Actividad</label>
-                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha..">
-                                    <span class="input-group-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="mega-lastname">Fecha/Hora Fin Actividad</label>
-                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha..">
-                                    <span class="input-group-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="activity_type">Tipo</label>
+                                <select class="form-control" id="activity_type" name="activity_type">
+                                    {% for activity_type in activity_types %}
+                                    <option value="{{activity_type.id}}">{{activity_type.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="environments">Ambiente</label>
+                                <select class="form-control" id="environments" name="environments">
+                                    {% for enviroment in environments %}
+                                    <option value="{{enviroment.id}}">{{enviroment.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="start_date">Fecha/Hora Inicio Actividad</label>
+                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg input-datetime" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha..">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-
-                </div>
-
-
-                <div class="form-group">
-                            <label class="col-xs-12">Tipo</label>
+                    <div class="col-sm-3">
+                        <div class="form-group">
                             <div class="col-xs-12">
-                                <label class="css-input css-radio css-radio-warning push-10-r">
-                                    <input type="radio" name="mega-gender-group"><span></span> Curso
-                                </label>
-                                <label class="css-input css-radio css-radio-warning">
-                                    <input type="radio" name="mega-gender-group"><span></span> Actividad
-                                </label>
-                                <label class="css-input css-radio css-radio-warning">
-                                    <input type="radio" name="mega-gender-group"><span></span> Evento
-                                </label>
+                                <label for="end_date">Fecha/Hora Fin Actividad</label>
+                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg input-datetime" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha..">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
                             </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-4">
                     </div>
                     <div class="col-xs-2">
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
                     </div>
                     <div class="col-xs-2">
-                        <a><button class="btn btn-danger" type="button"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
+                        <a><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
                     </div>
                     <div class="col-xs-4">
                     </div>
@@ -138,5 +146,59 @@ Lista de bungalows
 
     </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+<script src='{% static "assets/js/datetimepicker/jquery.datetimepicker.full.min.js" %}'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+                
+        $('.input-datetime').datetimepicker({
+            format: "d/m/Y H:m",
+        });  
+            
+    });
+</script>
+<script>
+    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script>
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+
+
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+
+
+        <script src='{% static "assets/js/Admin/Activities/activities_forms_validation.js" %}'></script>
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        <script src='{% static "assets/js/product.js" %}'></script>
+        <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+
 
 {% endblock %}

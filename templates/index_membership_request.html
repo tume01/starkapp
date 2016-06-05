@@ -32,38 +32,54 @@ Lista de solicitudes de membresía
                             <form class="form-horizontal push-10-t push-10" action='{% url "membership_application:user_filter" %}' method="post" >
                                 {% csrf_token %}  
                                 <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Nombres</label>
-                                            <div class="col-md-12">
+                                        <label class="col-xs-10" for="example-select">Nombres</label>
+                                            <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="firstName" placeholder="Nombres"  type="text" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Apellidos</label>
+                                        <label class="col-xs-12" for="example-select">Apellido paterno</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input2-group1" name="lastName" placeholder="Apellidos"  type="text" >
+                                                    <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno"  type="text" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-6" >
+                                <br>
+                                <div class="row">    
+                                <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">DNI</label>
+                                        <label class="col-xs-12" for="example-select">Numero de Documento</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI"  type="number" >
+                                                    <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" pattern="[0-9]*" >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-6 " for="example-select">Documento de Identidad</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                                    <option value="Todos">Todos</option>
+                                                    {% for doc_type in doc_types %}
+                                                        <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <div class="row">                                    
                                     <div class="form-group">
                                         <div class="col-lg-8 col-lg-offset-4">
                                             <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
@@ -84,9 +100,11 @@ Lista de solicitudes de membresía
                             <table class="table table-bordered table-striped js-dataTable-simple">
                                  <thead>
                                     <tr>
-                                        <th>DNI</th>
+                                        <th>Doc. de Identidad</th>
+                                        <th>Num. de Documento</th>
                                         <th>Nombres</th>
-                                        <th>Apellidos</th>                                       
+                                        <th>Apellido paterno</th>                                       
+                                        <th>Apellido materno</th>                                       
                                         <th>Fecha Inicio</th>  
                                         <th>Fecha Fin</th>  
                                         <th>Comentarios</th> 
@@ -96,9 +114,11 @@ Lista de solicitudes de membresía
                                 <tbody>
                                     {% for membershipApp in membershipApplications %}                                       
                                         <tr>
-                                            <td class="font-w600">{{membershipApp.dni}}</td>
+                                            <td class="font-w600">{{membershipApp.identity_document_type.name}}</td>
+                                            <td class="font-w600">{{membershipApp.document_number}}</td>
                                             <td class="font-w600">{{membershipApp.firstName}}</td>
-                                            <td class="font-w600">{{membershipApp.lastName}}</td>
+                                            <td class="font-w600">{{membershipApp.paternalLastName}}</td>
+                                            <td class="font-w600">{{membershipApp.maternalLastName}}</td>
                                             <td class="font-w600">{{membershipApp.initialDate}}</td>
                                             <td class="font-w600">{{membershipApp.finalDate}}</td>
                                             <td class="font-w600">{{membershipApp.comments}}</td>

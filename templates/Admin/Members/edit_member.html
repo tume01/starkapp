@@ -1,5 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
 Admin: miembros
 {% endblock %}
@@ -34,10 +36,10 @@ Editar miembro
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "members:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "members:edit" %}' method="post" >
                             {% csrf_token %}
                              <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group" style="display: none;">
                                             <div class="col-md-12">
                                                <div class="input-group">
@@ -61,11 +63,19 @@ Editar miembro
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Apellidos</label>
+                                            <label class="col-xs-12" for="example-number-input">Apellido paterno</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input2-group1" name="surname" placeholder="Apellidos" value="{{member.surname}}" type="text">
+                                                <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="{{member.paternalLastName}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Apellido materno</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-input2-group1" name="maternalLastName" placeholder="Apellido materno" value="{{member.maternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -73,22 +83,90 @@ Editar miembro
                                 <div class="row">
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">DNI</label>
-                                            <div class="col-md-12">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="dni" placeholder="DNI" value="{{member.dni}}" type="number" >
+                                        <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
+                                                <div class="col-lg-8">
+                                                   <div class="input-group">
+                                                        <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" value="{{member.document_number}}" pattern="[0-9]*" >
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
                                     </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Tipo</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                                        {% for doc_type in doc_types %}
+                                                            {% if doc_type.id == member.identity_document_type.id %}
+                                                                <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                            {% else %}
+                                                                <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>                                        
+                                    </div>
+                                </div>          
+                                <div class="row">
+
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Direccion</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input1-group2" name="address" placeholder="Direccion" value="{{member.address}}" type="text">
+                                                <input class="form-control" id="example-input1-group2" name="department" placeholder="address" value="{{member.address}}" type="text">
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Departamento</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="example-select" name="department" size="1">
+                                                            {% for u in ubigeo%}
+                                                                {% if u.department == member.ubigeo.department %}
+                                                                <option selected value="{{u.department}}">{{u.department}}</option>
+                                                                {% else %}
+                                                                <option value="{{u.department}}">{{u.department}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Provincia</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="example-select" name="province" size="1">
+                                                            {% for u in ubigeo%}
+                                                                {% if u.province == member.ubigeo.province %}
+                                                                    <option selected value="{{u.province}}">{{u.province}}</option>
+                                                                {% else %}
+                                                                    <option value="{{u.province}}">{{u.province}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Distrito</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="example-select" name="district" size="1">
+                                                        {% for u in ubigeo%}
+                                                            {% if u.district == member.ubigeo.district %}
+                                                                <option selected value="{{u.id}}">{{u.district}}</option>
+                                                            {% else %}
+                                                                <option value="{{u.id}}">{{u.district}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+
                                 </div>        
                                  <div class="row">
                                     <div class="col-lg-6" >
@@ -124,5 +202,17 @@ Editar miembro
                     </div>
                     <!-- END Mega Form -->
                 </div>    
+
+{% endblock %}
+
+{% block scripts %}
+
+        <!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/Membership/member_forms_validations.js" %}'></script>
+
+
 
 {% endblock %}

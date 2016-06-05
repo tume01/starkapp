@@ -1,5 +1,5 @@
 from django import forms
-from _datetime import datetime
+from datetime import datetime
 from services.Membership_ApplicationService import Membership_ApplicationService
 
 class ObjectionForm(forms.Form):
@@ -14,7 +14,7 @@ class ObjectionForm(forms.Form):
 
         finalDate = membership_application.finalDate
 
-        if (finalDate < datetime.now().date()):
+        if finalDate < datetime.now().date():
             raise forms.ValidationError("La fecha limite ya se cumplio. No se pueden ingresar mas comentarios")
-        return finalDate
+
 

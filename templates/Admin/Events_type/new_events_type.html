@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'Admin/Layouts/base_a.html' %}
 
 {% block head_title %}
 Admin: Tipo de eventos
@@ -58,10 +58,10 @@ Lista de tipo de eventos
                                     <div class="col-xs-3">
                                     </div>
                                     <div class="col-xs-2">
-                                        <button class="btn btn-primary" type="submit" data-toggle="modal" data-target="#createModal"><i class="fa fa-check push-5-r"></i> Crear</button>
+                                        <button class="btn btn-success" type="submit" data-toggle="modal" data-target="#createModal"><i class="fa fa-check push-5-r"></i>Guardar</button>
                                     </div>
                                     <div class="col-xs-2">
-                                        <a href="./Concessionaire.html"><button class="btn btn-warning" type="submit"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
+                                        <a href="{% url 'events_type:index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
                                     </div>
                                     <div class="col-xs-3">
                                     </div>

@@ -24,7 +24,9 @@ def index(request):
 @require_http_methods(['GET'])
 def create_index(request):
 
+    #regions = Region.objects.all()
     form = ProviderForm()
+    #form.region = regions
     context = {
         'titulo' : 'titulo',
         'form' : form
@@ -37,30 +39,32 @@ def create_provider(request):
 
     if request.POST:
         form = ProviderForm(request.POST)
-        print(request.POST)
+        
         #print(form['ruc'])
         if form.is_valid():
-            #form.save()
+            print("no pasa")
 
             provider_service = ProvidersService()
 
             providerRuc = provider_service.find_ruc(request.POST['ruc'])
 
             if(providerRuc == None):
-
+                print("pasa")
                 insert_data = {}
                 insert_data["ruc"] = request.POST['ruc']
                 insert_data["businessName"] = request.POST['businessName']
                 insert_data["status"] = request.POST['status']
                 insert_data["distric"] = request.POST['distric']
                 insert_data["province"] = request.POST['province']
+                insert_data["region"] = request.POST['region']
                 insert_data["address"] = request.POST['address']
+                insert_data["postal"] = request.POST['postal']
                 insert_data["phone"] = request.POST['phone']
                 insert_data["email"] = request.POST['email']
                 insert_data["registrationDate"] = request.POST['registrationDate']
                 insert_data["contactName"] = request.POST['contactName']
                 insert_data["contactPhone"] = request.POST['contactPhone']
-                insert_data["effectiveTime"] = request.POST['effectiveTime']
+
 
                 provider_service = ProvidersService()
 
@@ -106,9 +110,10 @@ def edit_provider(request,id):
 
     if request.POST:
         form = ProviderForm(request.POST)
-        print(request.POST)
+        
         #print(form['ruc'])
         if form.is_valid():
+
             #form.save()
 
             insert_data = {}
@@ -117,13 +122,16 @@ def edit_provider(request,id):
             insert_data["status"] = request.POST['status']
             insert_data["distric"] = request.POST['distric']
             insert_data["province"] = request.POST['province']
+            insert_data["region"] = request.POST['region']
             insert_data["address"] = request.POST['address']
+            insert_data["postal"] = request.POST['postal']
             insert_data["phone"] = request.POST['phone']
             insert_data["email"] = request.POST['email']
             insert_data["registrationDate"] = request.POST['registrationDate']
             insert_data["contactName"] = request.POST['contactName']
             insert_data["contactPhone"] = request.POST['contactPhone']
-            insert_data["effectiveTime"] = request.POST['effectiveTime']
+
+
 
             provider_service = ProvidersService()
 

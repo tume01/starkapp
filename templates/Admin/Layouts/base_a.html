@@ -27,14 +27,14 @@
     <link rel="stylesheet" href='{% static "assets/css/bootstrap.min.css" %}'>
     <link rel="stylesheet" id="css-main" href='{% static "assets/css/oneui.css" %}'>
     <link rel="stylesheet" href='{% static "assets/js/plugins/select2/select2.min.css" %}'>
-
+    <link rel="stylesheet" href='{% static "assets/js/datetimepicker/jquery.datetimepicker.min.css" %}'>
 
 </head>
 <body>
- <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
+   <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
 
-     <!-- Side Overlay-->
-     <aside id="side-overlay">
+       <!-- Side Overlay-->
+       <aside id="side-overlay">
         <!-- Side Overlay Scroll Container -->
         <div id="side-overlay-scroll">
             <!-- Side Header -->
@@ -426,26 +426,26 @@
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Administración del Club</span></li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href='{% url "bungalows:index" %}'>Consultar Bungalows</a>
-                                        </li>
-                                        <li>
-                                            <a href='{% url "bungalows:create_index" %}'>Crear Bungalows</a>
-                                        </li>
-                                        <li>
-                                            <a href="Register_InOutBungalows.html">Editar disponibilidad de Bungalows</a>
-                                        </li>
-                                        <li>
-                                            <a href="Make_Sorteo.html">Sorteo de bungalows</a>
-                                        </li>
-                                        <li>
-                                            <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
-                                        </li>
-                                    </ul>
+                            <ul>
+                                <li>
+                                    <a href='{% url "bungalow:index" %}'>Consultar Bungalows</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "bungalow:create_index" %}'>Crear Bungalows</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "bungalowReservation:index" %}'>Editar disponibilidad de Bungalows</a>
+                                </li>
+                                <li>
+                                    <a href="Make_Sorteo.html">Sorteo de bungalows</a>
+                                </li>
+                                <li>
+                                    <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
                             <ul>
                                 <li>
                                     <a href='{% url "providers:index" %}'>Consultar proveedores</a>
@@ -456,7 +456,7 @@
                             </ul>
                         </li> 
                         <li>
-                        <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
                             <ul>
                                 <li>
                                     <a href=''>Consultar cursos</a>
@@ -470,19 +470,50 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar actividades</a>
+                                    <a href='{% url 'activities:index' %}'>Consultar actividades</a>
+                                </li>
+                                <li>
+                                    <a href='{% url 'activities:create_index' %}'>Crear actividad</a>
                                 </li>                                
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "headquarters:index" %}'>Consultar sedes</a>
+                                </li>   
+                                <li>
+                                    <a href='{% url "headquarters:create_index" %}'>Nueva sede</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar Eventos</a>
-                                </li>                                
+                                    <a href='{% url "events:index" %}'>Consultar eventos</a>
+                                </li>                               
                                 <li>
-                                    <a href=''>Ver inscripción de Eventos</a>
-                                </li>                                
+                                    <a href='{% url "events:create_index" %}'>Crear nuevo evento</a>
+                                </li>  
+                                <li>
+                                    <a href='{% url "events_type:index" %}'>Tipos de eventos</a>
+                                </li>   
+                                <li>
+                                    <a href='{% url "events_type:create_index" %}'>Crear tipo de evento</a>
+                                </li>                                 
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Servicios</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "servicios:index" %}'>Consultar servicios</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "servicios:create_index" %}'>Crear un nuevo servicio</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -497,8 +528,20 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos y Servicios</span></a>
                             <ul>
+                                <li>
+                                    <a href='{% url "products:index" %}'>Consultar productos</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "products:create_index" %}'>Crear productos</a>
+                                </li>
+                                <li>
+                                    <a href=''>Consultar servicios</a>
+                                </li>
+                                <li>
+                                    <a href=''>Crear servicios</a>
+                                </li>
                                 <li>
                                     <a href=''>Consultar servicios</a>
                                 </li>
@@ -645,7 +688,7 @@
             </div>
         </div>
 
-{% ifnotequal titulo " Admin: Index" %}
+        {% ifnotequal titulo " Admin: Index" %}
         <div class="content bg-gray-lighter">
             <div class="row items-push">
                 <div class="col-sm-7">
@@ -662,7 +705,7 @@
             </div>
         </div>
         <!-- END Page Header -->
-{% endifnotequal %}
+        {% endifnotequal %}
 
         {% block content %}
         {% endblock %}
@@ -684,105 +727,20 @@
 </div>
 <!-- END Page Container -->
 
-<!-- Apps Modal -->
-        <!-- Opens from the button in the header 
-        <div class="modal fade" id="apps-modal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-sm modal-dialog modal-dialog-top">
-                <div class="modal-content">
-                    <!-- Apps Block 
-                    <div class="block block-themed block-transparent">
-                        <div class="block-header bg-primary-dark">
-                            <ul class="block-options">
-                                <li>
-                                    <button data-dismiss="modal" type="button"><i class="si si-close"></i></button>
-                                </li>
-                            </ul>
-                            <h3 class="block-title">Apps</h3>
-                        </div>
-                        <div class="block-content">
-                            <div class="row text-center">
-                                <div class="col-xs-6">
-                                    <a class="block block-rounded" href="index.html">
-                                        <div class="block-content text-white bg-default">
-                                            <i class="si si-speedometer fa-2x"></i>
-                                            <div class="font-w600 push-15-t push-15">Backend</div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-xs-6">
-                                    <a class="block block-rounded" href="frontend_home.html">
-                                        <div class="block-content text-white bg-modern">
-                                            <i class="si si-rocket fa-2x"></i>
-                                            <div class="font-w600 push-15-t push-15">Frontend</div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- END Apps Block 
-                </div>
-            </div>
-        </div>
-        <!-- END Apps Modal -->
-        <!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
-        <script src='{% static "assets/js/core/jquery.min.js" %}'></script>
-        <script src='{% static "assets/js/core/bootstrap.min.js" %}'></script>
-        <script src='{% static "assets/js/core/jquery.slimscroll.min.js" %}'></script>
-        <script src='{% static "assets/js/core/jquery.scrollLock.min.js" %}'></script>
-        <script src='{% static "assets/js/core/jquery.appear.min.js" %}'></script>
-        <script src='{% static "assets/js/core/jquery.countTo.min.js" %}'></script>
-        <script src='{% static "assets/js/core/jquery.placeholder.min.js" %}'></script>
-        <script src='{% static "assets/js/core/js.cookie.min.js" %}'></script>
-        <script src='{% static "assets/js/app.js" %}'></script>
+<!-- OneUI Core JS: jQuery, Bootstrap, slimScroll, scrollLock, Appear, CountTo, Placeholder, Cookie and App.js -->
+<script src='{% static "assets/js/core/jquery.min.js" %}'></script>
+<script src='{% static "assets/js/core/bootstrap.min.js" %}'></script>
+<script src='{% static "assets/js/core/jquery.slimscroll.min.js" %}'></script>
+<script src='{% static "assets/js/core/jquery.scrollLock.min.js" %}'></script>
+<script src='{% static "assets/js/core/jquery.appear.min.js" %}'></script>
+<script src='{% static "assets/js/core/jquery.countTo.min.js" %}'></script>
+<script src='{% static "assets/js/core/jquery.placeholder.min.js" %}'></script>
+<script src='{% static "assets/js/core/js.cookie.min.js" %}'></script>
+<script src='{% static "assets/js/app.js" %}'></script>
 
-        <!-- Page Plugins -->
-        <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
 
-        <!-- Page JS Code -->
-        <!--<script src="assets/js/pages/base_pages_dashboard.js"></script>-->
-        <script>
-            jQuery(function () {
-                // Init page helpers (Slick Slider plugin)
-                App.initHelpers('slick');
-            });
-        </script> 
-
-        <!-- Page JS Plugins -->
-        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
-
-        <!-- Page JS Code -->
-        <!-- <script src="assets/js/pages/base_tables_datatables.js"></script>-->
-        <script src='{% static "assets/js/tablas.js" %}'></script>
-
-        <!-- Page JS Plugins -->
-        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
-
-        <script src='{% static "assets/js/product.js" %}'></script>
-
-        <!-- Page JS Code -->
-        <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script>
-        <script>
-            jQuery(function () {
-                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
-                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
-            });
-        </script>
-
-        <!-- Page JS Plugins -->
-        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+{% block scripts %}
+{% endblock %}
 
     </body>
     </html>

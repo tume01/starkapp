@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,24 +30,38 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'servicios.apps.ServiciosConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bungalows',
+    'core.apps.CoreConfig',
     'products',
+    'login',
     'users',
     'promotions',
+    'bungalow',
+    'bungalow_reservation',
+    'bungalow_type',
+    'environment',
     'memberships',
     'membership_application',
+    'payment_documents',
     'fine',
     'objection',
     'members',
     'activities',
+    'activity_types',
     'events_type',
     'providers',
+    'headquarters',
+    'events',
+    'identity_document_type',
+    'ubigeo',
+    'affiliate',
+
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -73,6 +86,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.csrf',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -89,11 +103,11 @@ WSGI_APPLICATION = 'starkapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'starkapp',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
-        'PORT': '',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),        
     }
 }
 
@@ -143,3 +157,5 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
+
+LOGIN_URL = '/login'

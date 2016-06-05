@@ -1,0 +1,151 @@
+{% extends 'Admin/Layouts/base_a.html' %}
+
+{% block head_title %}
+Usuario: eventos
+{% endblock %}
+
+{% block head_dahsboard %}
+Eventos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista de eventos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Eventos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de Eventos
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+<div class="content">
+    <!-- Simple Table Full -->
+    <div class="block">
+        <div class="block-content">
+            <form class="form" action="{% url 'events:index' %}.html" method="get">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
+                            <div class="col-md-11">
+                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                    <input class="form-control" type="text" value="" id="example-daterange1" name="start_date" placeholder="Desde la fecha...">
+                                    <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                    <input class="form-control" type="text" value="" id="example-daterange2" name="end_date" placeholder="hasta la fecha...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Por Sedes</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="example-select" name="seat" value="" size="1">
+                                    <option value="">Seleccionar</option>
+                                    <option value="Sede">Sede</option>
+                                    <option value="Principal">Principal</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Por Tipos</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" id="example-select"  value="" name="type" size="1">
+                                    <option value="">Seleccionar</option>
+                                    <option value="1">Privado</option>                            
+                                    <option value="2">Público</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Por Estados</label>
+                            <div class="col-sm-7">
+                                <select class="form-control" id="example-select" name="status" value="" size="1">
+                                    <option value="">Seleccionar</option>
+                                    <option value="0">Activo</option>
+                                    <option value="1">Cancelado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">                        
+                    <div class="col-lg-9">
+                        <button href="" style="float: right;" class="btn btn-sm btn-primary" type="submit" margin="50px">Buscar</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+            <hr>
+        </div>
+    </div>
+    <div class="block block-bordered">
+                        <!--<div class="block-header">
+                            <h3 class="block-title">Simple Table <small>Full</small></h3>
+                        </div>-->
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 5%;">#</th>
+                                        <th class="hidden-xs" style="width: 20%;">Nombre</th>
+                                        <th class="hidden-xs" style="width: 30%;">Descripcion</th>
+                                        <th class="hidden-xs" style="width: 10%;">Tipo</th>
+                                        <th class="hidden-xs" style="width: 10%;">Estado</th>
+                                        <th class="hidden-xs" style="width: 10%;">Sede</th>
+                                        <th class="hidden-xs" style="width: 40%;">Fecha Inicio</th>
+                                        <th class="text-center">Acción </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for event in events %}
+                                    <tr>
+                                        <td class="text-center">{{event.id}}</td>
+                                        <td class="font-w600">{{event.name}}</td>
+                                        <td class="hidden-xs">{{event.description}}</td>
+                                        <td class="hidden-xs">
+                                            {% if event.event_type_id == 2%}
+                                                <span>Público</span>
+                                            {% else %}
+                                                <span>Privado</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="hidden-xs">
+                                            {% if event.status == 0%}
+                                                <span class="label label-warning">Activo</span>
+                                            {% else %}
+                                                <span class="label label-danger">Cancelado</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="hidden-xs">{{event.seat}}</td>
+                                        <td class="hidden-xs">{{event.start_date|date:'d/m/Y H:i'}}</td>
+                                        <td class="text-center">
+                                            <div class="btn-group">
+                                                <a href="{% url 'events:update_index' event.id %}" ><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
+                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>
+                <!-- END Page Content -->
+
+
+{% endblock %}

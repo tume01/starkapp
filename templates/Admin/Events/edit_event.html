@@ -1,0 +1,223 @@
+{% extends 'Admin/Layouts/base_a.html' %}
+
+{% block head_title %}
+Usuario: eventos
+{% endblock %}
+
+{% block head_dahsboard %}
+Eventos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Inscripción
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Eventos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Editar Inscripción
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+                <div class="content content-narrow">
+                    <div class="block block-bordered">
+                        <div class="block-header">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title"></h3>
+                        </div>
+                        <!-- Block v2 -->
+                        {% for event in events %}
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" action="{% url 'events:update' event.id %}" method="post">
+                                 {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Nombre del evento</label>
+                                            <div class="col-md-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="name" placeholder="{{event.name}}" value="{{event.name}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Tipo de evento</label>
+                                            <div class="col-md-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
+                                                    <select class="form-control" id="example-select" value="{{event.event_type_id}}" placeholder="{{event.event_type_id}}" name="event_type" size="1">
+                                                    {% if event.event_type_id == 8 %}
+                                                        <option value="{{event.event_type_id}}">Privado</option>
+                                                    {% else %}
+                                                        <option value="{{event.event_type_id}}">Publico</option>
+                                                    {% endif %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Usuario</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="user" placeholder="{{event.user_id}}" value="{{event.user_id}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Razón Social</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                                    <input class="form-control" type="number" id="example-input1-group1" name="ruc" placeholder="{{event.ruc}}" value="{{event.ruc}}" >
+                                                </div>
+                                                <label>Si el evento es para una empresa llenar este campo</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Sede elegida</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                                    <select class="form-control" id="example-select" value="{{event.headquarter}}" placeholder="{{event.headquarter.name}}" name="headquarter" size="1">
+                                                        <option value="{{event.headquarter.name}}">{{event.headquarter.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Ambiente</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class=""></span>
+                                                        {% for environment in event.environment_set.all %}
+                                                            <input type="radio" name="environment" checked value="{{environment.id}}">{{environment.name}}</input>environment
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-datetimepicker3">Fechas del Evento</label>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="start_date" placeholder="{{event.start_date}}" value="{{event.start_date|date:"d/m/Y H:i A"}}">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="end_date" placeholder="{{event.end_date}}" value="{{event.end_date|date:"d/m/Y H:i A"}}">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Cantidad máxima de participantes</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                    <input class="form-control" type="number" id="example-input1-group1" name="assistance" placeholder="{{event.assistance}}" value="{{event.assistance}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Estado</label>
+                                            <div class="col-md-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
+                                                    <select class="form-control" id="example-select" value="{{event.status}}" placeholder="{{event.status}}" name="status" size="1">
+                                                        {% if event.status == 0 %}
+                                                            <option value="0">Activo</option>
+                                                            <option value="1">Cancelado</option>
+                                                        {% else %}
+                                                            <option value="1">Cancelado</option>
+                                                            <option value="0">Activo</option>
+                                                        {% endif %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Costo de entrada</label>
+                                            <div class="col-md-6">
+                                                <div class="col-md-6">
+                                                Para socios
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                    <input class="form-control" type="number" id="price" name="price" value="{{event.price_member}}" placeholder="S/.">
+                                                </div>
+                                            </div>
+                                                Para invitados
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                    <input class="form-control" type="number" id="price" name="price" value="{{event.price_invited}}" placeholder="S/.">
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="mega-bio">Observaciones</label>
+                                                <textarea class="form-control input-lg" id="mega-bio" name="description" rows="8" placeholder="{{event.description}}" value="{{event.description}}"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-xs-2">
+                                        <a href=''><button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                                    </div>
+                                    <div class="col-xs-2 col-xs-offset-4"><!-- type="submit" -->
+                                        <a href="{% url 'events:index' %}"><button class="btn btn-danger" type="button" ><i class="fa fa-times push-5-r"></i> Cancelar</button></a>
+                                    </div>
+                                </div>
+                            </form>
+                            {% endfor %}
+                        </div>
+                        
+                        <!-- END Block v2 -->                        
+                    </div>  
+                </div>
+                <!-- END Page Content -->
+
+
+{% endblock %}
