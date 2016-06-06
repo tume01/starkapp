@@ -37,6 +37,7 @@ urlpatterns = [
     url(r'^headquarters/', include('headquarters.urls')),
     url(r'^events', include('events.urls')),
     url(r'^login/', include('login.urls')),
+    url(r'^ubigeo/', include('ubigeo.urls')),
 ]
 
 if settings.DEBUG:

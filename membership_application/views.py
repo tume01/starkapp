@@ -455,7 +455,7 @@ def approve_membership_application(request):
 
         ubigeo_service = UbigeoService()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo = ubigeo_service.distinctDepartment()
 
         context = {
             'titulo' : 'titulo',
