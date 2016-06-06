@@ -98,38 +98,12 @@
                         <li>
                             <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
-                        <li class="nav-main-heading"><span class="sidebar-mini-hide">Administración del Club</span></li>
+                        <li class="nav-main-heading"><span class="sidebar-mini-hide">Usuario del Club</span></li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
-                                <li>
-                                    <a href='{% url "bungalow:index" %}'>Consultar Bungalows</a>
-                                </li>
-                                <li>
-                                    <a href='{% url "bungalow:create_index" %}'>Crear Bungalows</a>
-                                </li>
-                                <li>
-                                    <a href='{% url "bungalowReservation:index" %}'>Editar disponibilidad de Bungalows</a>
-                                </li>
-                                <li>
-                                    <a href="Make_Sorteo.html">Sorteo de bungalows</a>
-                                </li>
-                                <li>
-                                    <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
-                                </li>
                             </ul>
                         </li>
-                        <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
-                            <ul>
-                                <li>
-                                    <a href='{% url "providers:index" %}'>Consultar proveedores</a>
-                                </li>
-                                <li>
-                                    <a href='{% url "providers:create_index" %}'>Agregar proveedor</a>
-                                </li>
-                            </ul>
-                        </li> 
                         <li>
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
                             <ul>
@@ -143,162 +117,48 @@
                         </li> 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
-                            <ul>
-                                <li>
-                                    <a href='{% url 'activities:index' %}'>Consultar actividades</a>
-                                </li>
-                                <li>
-                                    <a href='{% url 'activities:create_index' %}'>Crear actividad</a>
-                                </li>                                
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
-                            <ul>
-                                <li>
-                                    <a href='{% url "headquarters:index" %}'>Consultar sedes</a>
-                                </li>   
-                                <li>
-                                    <a href='{% url "headquarters:create_index" %}'>Nueva sede</a>
-                                </li>
+                            <ul>                            
                             </ul>
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
-                            <ul>
-                                <li>
-                                    <a href='{% url "events:index" %}'>Consultar eventos</a>
-                                </li>                               
-                                <li>
-                                    <a href='{% url "events:create_index" %}'>Crear nuevo evento</a>
-                                </li>  
-                                <li>
-                                    <a href='{% url "events_type:index" %}'>Tipos de eventos</a>
-                                </li>   
-                                <li>
-                                    <a href='{% url "events_type:create_index" %}'>Crear tipo de evento</a>
-                                </li>                                 
+                            <ul>                               
                             </ul>
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
                             <ul>
-                                <li>
-                                    <a href="{% url 'servicios:index' %}">Consultar Servicios</a>
-                                </li>
-                                <li>
-                                    <a href='{% url "servicios:create_index" %}'>Crear Servicios</a>
-                                </li>
-                                
                             </ul>
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Canchas</span></a>
                             <ul>
-                                <li>
-                                    <a href=''>Consultar canchas</a>
-                                </li>
-                                <li>
-                                    <a href=''>Ver reserva de canchas</a>
-                                </li>
                             </ul>
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos y Servicios</span></a>
                             <ul>
-                                <li>
-                                    <a href='{% url "products:index" %}'>Consultar productos</a>
-                                </li>
-                                <li>
-                                    <a href='{% url "products:create_index" %}'>Crear productos</a>
-                                </li>
-                                <li>
-                                    <a href=''>Consultar servicios</a>
-                                </li>
-                                <li>
-                                    <a href=''>Crear servicios</a>
-                                </li>
-                                <li>
-                                    <a href=''>Consultar servicios</a>
-                                </li>
-                                <li>
-                                    <a href=''>Ver solicitudes de servicios</a>
-                                </li>
                             </ul>
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
                             <ul>  
-                                {% if perms.dummy.permission_membresia %}     
                                 <li>
-                                    <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
+                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía</a> 
                                 </li>
-                                <li>
-                                    <a href='{% url 'memberships:type/create_index' %}'>Nuevo tipo de membresía</a> 
-                                </li>                                     
-                                <li>
-                                    <a href='{% url 'membership_application:index' %}'>Solicitudes de membresía</a> 
-                                </li>
-                                <li> 
-                                    <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
-                                </li>
-                                {% endif %}
-                                {% if perms.dummy.permission_membresia %} 
-                                <li>
-                                    <a href='{% url 'members:index' %}'>Miembros</a>
-                                </li>
-                                {% endif %}                                
                             </ul>
                         </li> 
-                        {% if perms.dummy.permission_admin %}  
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
-                                
-                                <li>
-                                    <a href='{% url 'users:type/index' %}'>Tipos de usuario</a>
-                                </li>
-                                <li>
-                                    <a href='{% url 'users:type/create_index' %}'>Registrar tipos de usuario</a>
-                                </li>
- 
-                                <li>
-                                    <a href='{% url 'users:index' %}'>Usuarios</a>
-                                </li>
-                                <li>
-                                    <a href='{% url 'users:create_index' %}'>Registrar usuario (Externo)</a>
-                                </li>
                             </ul>
                         </li>  
-                        {% endif %} 
-                        
-                        {% if perms.dummy.permission_admin %}  
-                          <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-money"></i><span class="sidebar-mini-hide">Promociones</span></a>
-                            <ul>                                        
-                                <li>
-                                   <a href='{% url 'promotions:index' %}'>Lista de promociones</a> 
-                                </li>
-                                <li>
-                                    <a href='{% url "promotions:create_index" %}'>Registrar promoción</a>
-                                </li> 
-                            </ul>
-                        </li>
-                        {% endif %}  
 
-                         {% if perms.dummy.permission_admin %} 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
-                            <ul>                                        
-                                <li>
-                                   <a href='{% url 'fine:index_type' %}'>Lista de tipos</a> 
-                                </li>
-                                <li>
-                                    <a href='{% url "fine:create_type_index" %}'>Registrar tipo</a>
-                                </li> 
+                            <ul>      
                             </ul>
                         </li>   
-                        {% endif %}  
 
                     </ul>
                 </div>

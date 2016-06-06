@@ -267,11 +267,15 @@ def create_membership(request):
 
         ubigeo_service = UbigeoService()
 
-        id_ubigeo = request.POST['district']
+        filter_ubigeo = {}
 
-        ubi = ubigeo_service.getUbigeoById(id_ubigeo)
+        print(request.POST['district'])
 
-        insert_data["ubigeo"] = ubi
+        filter_ubigeo["district"] = request.POST['district']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["ubigeo"] = ubi[0]
 
         member_service = MembersService()
 
