@@ -40,7 +40,7 @@ Lista de miembros
                 {% csrf_token %}  
                 <input type="hidden" id="hid3" name="id"/>
             </form>
-            <form id="myFormUser" action="{% url 'users:edit_index' %}" method="post">
+            <form id="myFormUser" action="{% url 'users:edit_user_member' %}" method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid4" name="id"/>
             </form>
