@@ -21,3 +21,12 @@ class UbigeoService(object):
 
     def filter(self, filters):
         return self.__ubigeo_repository.filter(filters)
+
+    def distinctDepartment(self):
+        return self.__ubigeo_repository.distinct('department')
+
+    def distinctProvince(self, department):
+        return self.__ubigeo_repository.distinctFilter('province',department)
+
+    def distinctDistrict(self, province):
+        return self.__ubigeo_repository.distinctFilter('district',province)
