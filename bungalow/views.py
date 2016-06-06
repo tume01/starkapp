@@ -34,14 +34,14 @@ def index(request):
         'bungalows' : pagineted_bungalows,
         'bungalowTypes' : BungalowTypeService.getBungalowTypes(),
         'headquarters' : HeadquarterService().getHeadquarters(),
-        'status_choices' : Bungalow.STATUS_CHOICES,
+        'status_choices' : Bungalow.STATUS_CHOICES,        # Aun no se filtra por Status
         'titulo' : 'titulo'
     }
 
     return render(request, 'Admin/bungalow/index.html', context)
 
 @require_http_methods(['POST'])
-def index_filters(request):
+def refresh_table(request):
 
     from django.core import serializers
 
