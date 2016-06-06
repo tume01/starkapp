@@ -1,21 +1,59 @@
 <!-- Simple Table Full tbody -->
-{% for bungalow in bungalows %}
-<tr>
-    <td class="text-center">{{bungalow.id}}</td>
-    <td class="font-w600">Sede Principal</td>
-    <td class="font-w600">Bungalow {{bungalow.number}}</td>
-    <td class="hidden-xs">{{ bungalow.bungalow_type.capacity }}</td>
-    <td class="hidden-xs">{{ bungalow.bungalow_type.name }}</td>
-    <td class="hidden-xs"><span class="label label-danger">{{ bungalow.getStatusName }}</span></td>
-    <td class="text-center">{{ bungalow.bungalow_type.price }}</td>
-    <td class="text-center">
-        <div class="btn-group">
-            <form class="form" action="{% url 'bungalow:update_index' bungalow.id %}" method="get">
-                <button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
-                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-            </form>
+<table class="table table-bordered table-striped js-dataTable-simple">
+    <thead>
+        <tr>
+            <th class="text-center">#</th>
+            <th>Sede</th>
+            <th>Bungalow</th>
+            <th class="hidden-xs">Capacidad</th>
+            <th class="hidden-xs">Tipo</th>
+            <th class="hidden-xs">Estado</th>
+            <th>Precio (S/.)</th>
+            <th >Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bungalow in bungalows %}
+            <tr>
+                <td class="text-center">{{bungalow.id}}</td>
+                <td class="font-w600">{{bungalow.headquarter.name}}</td>
+                <td class="font-w600">Bungalow {{bungalow.number}}</td>
+                <td class="hidden-xs">{{ bungalow.bungalow_type.capacity }}</td>
+                <td class="hidden-xs">{{ bungalow.bungalow_type.name }}</td>
+                <td class="hidden-xs"><span class="label label-danger">{{ bungalow.getStatusName }}</span></td>
+                <td class="text-center">{{ bungalow.bungalow_type.price }}</td>
+                <td class="text-center">
+                    <div class="btn-group">
+                        <form class="form" action="{% url 'bungalow:update_index' bungalow.id %}" method="get">
+                            <button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
+                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-sm-offset-6 col-sm-6">
+        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+            <ul class="pagination">
+                {% if bungalows.has_previous %}
+                <li class="paginate_button" onclick="prevPage()" id="prev-page"><i class="fa fa-angle-left"></i></li>
+                {% else %}
+                <li class="paginate_button" onclick="return false" id="prev-page"><i class="fa fa-angle-left"></i></li>
+                {% endif %}
+
+                <li class="paginate_button active" id="current-page">Página <strong id=page>{{ bungalows.number }}</strong> de <strong>{{bungalows.paginator.num_pages}}</strong></li>
+
+                {% if bungalows.has_next %}
+                <li class="paginate_button" onclick="nextPage()" id="next-page"><i class="fa fa-angle-right"></i></li>
+                {% else %}
+                <li class="paginate_button" onclick="return false" id="next-page"><i class="fa fa-angle-right"></i></li>
+                {% endif %}
+            </ul>
         </div>
-    </td>    
-</tr>
-{% endfor %}
+    </div>
+</div>
 <!-- END Simple Table Full tbody -->
