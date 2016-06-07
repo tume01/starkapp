@@ -36,7 +36,8 @@ Crear sede
         </div>
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >
+            <!--<form class="form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >-->
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >
             {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-7">
@@ -47,7 +48,7 @@ Crear sede
                             </div>-->
                             <div class="col-xs-5">
                                 <label for="mega-lastname">Nombre</label>
-                                <input class="form-control input-lg" type="text" id="mega-lastname" name="name" placeholder="Enter the headquarter's name.." value="{{headquarters.name}}">
+                                <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Enter the headquarter's name.." value="{{headquarters.name}}">
                             </div>
                         </div>
                     </div>
@@ -58,7 +59,7 @@ Crear sede
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="mega-firstname">Descripcion</label>
-                                <input class="form-control input-lg" type="text" id="mega-firstname" name="description" placeholder="Enter a brief description.." value="{{headquarters.description}}">
+                                <input class="form-control input-lg" type="text" id="description" name="description" placeholder="Enter a brief description.." value="{{headquarters.description}}">
                             </div>
 
                         </div>
@@ -69,7 +70,7 @@ Crear sede
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="mega-bio">Direccion</label>
-                                <input class="form-control input-lg" id="mega-bio" name="location" rows="2" placeholder="Enter the location of this headquarter.." value="{{headquarters.location}}"></input>
+                                <input class="form-control input-lg" id="location" name="location" rows="2" placeholder="Enter the location of this headquarter.." value="{{headquarters.location}}"></input>
                             </div>
                         </div>
                     </div>
@@ -98,41 +99,41 @@ Crear sede
 
 <script>
     jQuery(function () {
-                // Init page helpers (Slick Slider plugin)
-                App.initHelpers('slick');
-            });
-        </script>
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+</script>
 
-        <!-- Page JS Plugins -->
-        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
-
-
-        <script>
-            jQuery(function () {
-                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
-                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
-            });
-        </script>
+<!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
 
 
+<script>
+    jQuery(function () {
+        // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+        App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+    });
+</script>
 
-        <script src='{% static "assets/js/Admin/Servicios/servicios_forms_validation.js" %}'></script>
-        <script src='{% static "assets/js/tablas.js" %}'></script>
-        <script src='{% static "assets/js/product.js" %}'></script>
-        <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+
+
+<script src='{% static "assets/js/Admin/Headquarters/headquarters_forms_validations.js" %}'></script>
+<script src='{% static "assets/js/tablas.js" %}'></script>
+<script src='{% static "assets/js/product.js" %}'></script>
+<!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
 
 
 {% endblock %}
