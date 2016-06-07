@@ -46,11 +46,25 @@ def edit_member_index(request):
 
     ubigeo_service = UbigeoService()
 
-    ubigeo = ubigeo_service.getAllUbigeo()
+    departments = ubigeo_service.distinctDepartment()
+
+    filter_ubigeo = {}
+
+    filter_ubigeo["department"] = member.ubigeo.department
+
+    provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+    filter_ubigeo = {}
+
+    filter_ubigeo["province"] = member.ubigeo.province
+
+    districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
     context = {
         'member' : member,
-        'ubigeo' : ubigeo,
+        'departments' : departments,
+        'provinces' : provinces,
+        'districts' : districts,
         'doc_types': doc_types,
     }
 

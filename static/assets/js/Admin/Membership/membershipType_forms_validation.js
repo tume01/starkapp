@@ -26,10 +26,14 @@ var MembershipTypeFormValidation = function() {
                     maxlength: 200
                 },
                 'guests':{
-                	required:true                
+                	required:true,
+                    number: true,
+                    min: 1                
                 },
                 'price':{
-                    required:true
+                    required:true,
+                    number: true,
+                    min: 1
                 },
                 'billing':{
                     required:true,
@@ -42,10 +46,14 @@ var MembershipTypeFormValidation = function() {
                     maxlength: 'El usuario no puede tener más de 200 caracteres'
                 },
                 'guests':{
-                	required: 'Por favor ingrese el número de invitados'                	
+                	required: 'Por favor ingrese el número de invitados',
+                    number: 'Por favor ingrese un número válido',
+                    min: 'Por favor ingrese un número válido'               	
                 },
                 'price':{
-                    required:'Por favor ingrese un precio',                    
+                    required:'Por favor ingrese un precio',   
+                    number: 'Por favor ingrese un precio válido',
+                    min: 'Por favor ingrese un número válido'                
                 },
                 'billing':{
                     required:'Por favor ingrese el tipo de cobro',

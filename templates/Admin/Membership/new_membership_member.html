@@ -39,26 +39,26 @@ Nueva membresía
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "memberships:insert" %}' method="post" >
                             {% csrf_token %}
                              <div class="row">
-                                    <div class="col-lg-3" >
-                                        <div class="form-group" style="display: none;">
+                                <div class="form-group" style="display: none;">
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="id"  value="{{membership_application.id}}"  type="text">
+                                                    <input class="form-control" id="example-input1-group1" name="id" value="{{membership_application.id}}"  type="text">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group" style="display: none;">
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="membership_type_id"  value="{{membership_application.membership_type_id}}" type="text">
+                                                    <input class="form-control" id="example-input1-group1" name="membership_type_id" readonly="readonly" value="{{membership_application.membership_type_id}}" type="text">
                                                 </div>
                                             </div>
                                         </div>
+                                    <div class="col-lg-3" >                                        
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-number-input">Nombres</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombres" value="{{membership_application.firstName}}"  type="text">
+                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombres" readonly="readonly" value="{{membership_application.firstName}}"  type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +67,7 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Apellido paterno</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="{{membership_application.paternalLastName}}" type="text">
+                                                <input class="form-control" id="example-input2-group1" name="paternalLastName" readonly="readonly" placeholder="Apellido paterno" value="{{membership_application.paternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -75,7 +75,7 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Apellido materno</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input3-group1" name="maternalLastName" placeholder="Apellido materno" value="{{membership_application.maternalLastName}}" type="text">
+                                                <input class="form-control" id="example-input3-group1" name="maternalLastName" readonly="readonly" placeholder="Apellido materno" value="{{membership_application.maternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -86,16 +86,16 @@ Nueva membresía
                                         <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
                                                 <div class="col-lg-8">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" value="{{membership_application.document_number}}"pattern="[0-9]*" >
+                                                        <input class="form-control" id="example-number1-group2" readonly="readonly" name="num_doc" placeholder="Doc" value="{{membership_application.document_number}}"pattern="[0-9]*" >
                                                     </div>
                                                 </div>
                                         </div>                                           
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Tipo</label>
+                                                <label class="col-xs-6"  for="example-select">Tipo</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                                    <select class="form-control" id="example-select" readonly="readonly" name="identity_document_type" size="1">
                                                          {% for doc_type in doc_types %}
                                                             {% if doc_type.id == membership_application.identity_document_type.id %}
                                                                 <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
@@ -111,8 +111,8 @@ Nueva membresía
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input2">Direccion</label>
-                                            <div class="col-sm-9">
+                                            <label class="col-xs-8" for="example-number-input2">Direccion</label>
+                                            <div class="col-sm-8">
                                                 <input class="form-control" id="example-input1-group2" name="address" placeholder="Direccion" type="text">
                                             </div>
                                         </div>
@@ -122,9 +122,9 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="department" name="department" size="1">
-                                                            <option value="-1">Seleccione</option>
+                                                            <option value="">Seleccione</option>
                                                             {% for u in ubigeo%}
-                                                                <option value="{{u.id}}">{{u.department}}</option>
+                                                                <option value="{{u.department}}">{{u.department}}</option>
                                                             {% endfor %}
                                                     </select>
                                                 </div>
@@ -135,7 +135,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="province" name="province" size="1">
-                                                            <option value="-1">Seleccione</option>                                                          
+                                                            <option value="">Seleccione</option>                                                          
                                                     </select>
                                                 </div>
                                             </div>
@@ -145,7 +145,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="district" name="district" size="1">
-                                                       <option value="-1">Seleccione</option>
+                                                       <option value="">Seleccione</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -166,7 +166,7 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Correo</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input1-group2" name="email" placeholder="Correo" type="text">
+                                                <input class="form-control" id="example-input1-group3" name="email" placeholder="Correo" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -205,12 +205,10 @@ Nueva membresía
 
 {% block scripts %}
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script>
     $(document).ready(function () {
         $('#department').change(function(){
         var department = $('#department :selected').text();
-        if(department != -1)
         {
             $.ajax({
                 type:'post',
@@ -219,9 +217,9 @@ Nueva membresía
                 cache:false,
                 success: function(returndata){ 
                     $('#province').empty();
-                    $('#province').append($('<option>', { text : 'Seleccione'}));
+                    $('#province').append($('<option>', { text : 'Seleccione', value : ''}));
                     $('#district').empty();
-                    $('#district').append($('<option>', { text : 'Seleccione'}));
+                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
                     $.each(returndata, function(i, item) {
                         $('#province').append($('<option>', { 
                             text : item.province 
@@ -234,7 +232,6 @@ Nueva membresía
 
         $('#province').change(function(){
         var province = $('#province :selected').text();
-        if(province != -1)
         {
             $.ajax({
                 type:'post',
@@ -243,7 +240,7 @@ Nueva membresía
                 cache:false,
                 success: function(returndata){ 
                     $('#district').empty();
-                    $('#district').append($('<option>', { text : 'Seleccione'}));
+                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
                     $.each(returndata, function(i, item) {
                         $('#district').append($('<option>', { 
                             text : item.district 

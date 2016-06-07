@@ -43,14 +43,14 @@ Editar miembro
                                         <div class="form-group" style="display: none;">
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="id"  value="{{member.id}}"  type="text">
+                                                    <input class="form-control" id="id" name="id"  value="{{member.id}}"  type="text">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group" style="display: none;">
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="membership_type_id"  value="{{membership_application.membership_type_id}}" type="text">
+                                                    <input class="form-control"  name="membership_type_id"  value="{{membership_application.membership_type_id}}" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -75,7 +75,7 @@ Editar miembro
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Apellido materno</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input2-group1" name="maternalLastName" placeholder="Apellido materno" value="{{member.maternalLastName}}" type="text">
+                                                <input class="form-control" id="example-input6-group1" name="maternalLastName" placeholder="Apellido materno" value="{{member.maternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@ Editar miembro
                                         <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
                                                 <div class="col-lg-8">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" value="{{member.document_number}}" pattern="[0-9]*" >
+                                                        <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="{{member.document_number}}" pattern="[0-9]*" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -122,8 +122,9 @@ Editar miembro
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="example-select" name="department" size="1">
-                                                            {% for u in ubigeo%}
+                                                    <select class="form-control" id="department" name="department" size="1">
+                                                        <option value="">Seleccione</option>
+                                                            {% for u in departments%}
                                                                 {% if u.department == member.ubigeo.department %}
                                                                 <option selected value="{{u.department}}">{{u.department}}</option>
                                                                 {% else %}
@@ -138,8 +139,9 @@ Editar miembro
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="example-select" name="province" size="1">
-                                                            {% for u in ubigeo%}
+                                                    <select class="form-control" id="province" name="province" size="1">
+                                                        <option value="">Seleccione</option>
+                                                            {% for u in provinces%}
                                                                 {% if u.province == member.ubigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
@@ -154,12 +156,13 @@ Editar miembro
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="example-select" name="district" size="1">
-                                                        {% for u in ubigeo%}
+                                                    <select class="form-control" id="district" name="district" size="1">
+                                                        <option value="">Seleccione</option>
+                                                        {% for u in districts%}
                                                             {% if u.district == member.ubigeo.district %}
-                                                                <option selected value="{{u.id}}">{{u.district}}</option>
+                                                                <option selected value="{{u.district}}">{{u.district}}</option>
                                                             {% else %}
-                                                                <option value="{{u.id}}">{{u.district}}</option>
+                                                                <option value="{{u.district}}">{{u.district}}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -174,7 +177,7 @@ Editar miembro
                                         <label class="col-xs-12" for="example-select">Teléfono</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="phone" placeholder="Teléfono" value="{{member.phone}}"  type="number" >
+                                                    <input class="form-control" id="example-number1-group2" name="phone" placeholder="Teléfono" value="{{member.phone}}"  >
                                                 </div>
                                             </div>
                                         </div>
@@ -183,7 +186,7 @@ Editar miembro
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Correo</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input1-group2" name="email" value="{{member.email}}" placeholder="Correo" type="text">
+                                                <input class="form-control" id="example-input4-group2" name="email" value="{{member.email}}" placeholder="Correo" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -207,6 +210,57 @@ Editar miembro
 
 {% block scripts %}
 
+<script>
+var CSRF_TOKEN = '{{ csrf_token }}';
+var url= "{% url 'users:verify_user_member' %}"
+
+    $(document).ready(function () {
+        $('#department').change(function(){
+        var department = $('#department :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:provincias" %}',
+                data:{department:department, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){ 
+                    $('#province').empty();
+                    $('#province').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $('#district').empty();
+                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        $('#province').append($('<option>', { 
+                            text : item.province 
+                        }));
+                    });
+                }
+            });
+        }
+        });
+
+        $('#province').change(function(){
+        var province = $('#province :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:distritos" %}',
+                data:{province:province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){ 
+                    $('#district').empty();
+                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        $('#district').append($('<option>', { 
+                            text : item.district 
+                        }));
+                    });
+                }
+            });
+        }
+        });
+        
+    });
+</script>
         <!-- Page JS Plugins -->
 <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
 <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
