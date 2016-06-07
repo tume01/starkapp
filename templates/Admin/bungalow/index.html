@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base_a.html' %}
+{% extends 'Admin/Layouts/base.html' %}
 {% load staticfiles %}
 
 {% block head_title %}
@@ -22,9 +22,6 @@ Lista de bungalows
 {% endblock %}
 
 {% block content %}
-
-<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
-
 <!-- Page Content -->
 <div class="content">
 
@@ -34,7 +31,7 @@ Lista de bungalows
             <form class="form" id="filters-form" action="{% url 'bungalow:index' %}" method="post" onsubmit="return false;">{% csrf_token %}
                 <div class="row">
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label class="col-sm-12 control-label" >Seleccione un tipo</label>
                             <select class="form-control" id="bungalow_type_id" size="1">
@@ -46,14 +43,7 @@ Lista de bungalows
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label">Nombre Miembro</label>
-                            <input class="form-control" type="text"  id="member_name" name="pro_Codigo"   >
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label class="col-xs-12" for="example-select">Seleccione una sede</label>
                             <select class="form-control" id="headquarter_id" size="1">
@@ -65,16 +55,6 @@ Lista de bungalows
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-lg-offset-10 col-lg-2">
-                        <div class="form-group">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
-                        </div>
-                    </div>
-                </div>
-
-                <br>
             </form>
         </div>
     </div>
@@ -82,55 +62,20 @@ Lista de bungalows
 
     <!-- Simple Table Full -->
     <div class="block block-bordered">
-        <div class="block-content">
-            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-            <table class="table table-bordered table-striped js-dataTable-simple">
-                <thead>
-                    <tr>
-                        <th class="text-center">#</th>
-                        <th>Sede</th>
-                        <th>Bungalow</th>
-                        <th class="hidden-xs">Capacidad</th>
-                        <th class="hidden-xs">Tipo</th>
-                        <th class="hidden-xs">Estado</th>
-                        <th>Precio (S/.)</th>
-                        <th >Acción</th>
-                    </tr>
-                </thead>
-                <tbody id="table-content">
-                    {% for bungalow in bungalows %}
-                        <tr>
-                            <td class="text-center">{{bungalow.id}}</td>
-                            <td class="font-w600">Sede Principal</td>
-                            <td class="font-w600">Bungalow {{bungalow.number}}</td>
-                            <td class="hidden-xs">{{ bungalow.bungalow_type.capacity }}</td>
-                            <td class="hidden-xs">{{ bungalow.bungalow_type.name }}</td>
-                            <td class="hidden-xs"><span class="label label-danger">{{ bungalow.getStatusName }}</span></td>
-                            <td class="text-center">{{ bungalow.bungalow_type.price }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <form class="form" action="{% url 'bungalow:update_index' bungalow.id %}" method="get">
-                                        <button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
-                                        <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-                                    </form>
-                                </div>
-                            </td>    
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="block-content" id="table-content">
+            {% include 'Admin/bungalow/index_table.html' %}
+
         </div>
     </div>
     <!-- END Simple Table Full -->
 </div>
 <!-- END Page Content -->
+{% endblock %}
 
-                <!-- HASTA AQUÍ -->       
 
-                {% endblock %}
+
 
 {% block scripts %}
-
 <!-- Page Plugins -->
                 <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
                 <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
@@ -166,8 +111,8 @@ Lista de bungalows
             });
         </script>
         
-        <script src='{% static "assets/js/tablas.js" %}'></script>
-        <script src='{% static "assets/js/Admin/bungalows/main.js" %}'></script>
+
+        <script src='{% static "assets/js/Admin/bungalow/main.js" %}'></script>
 
 
 {% endblock %}

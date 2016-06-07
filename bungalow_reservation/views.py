@@ -17,8 +17,21 @@ def index(request):
 
     reservations = BungalowReservationService.getReservations()
 
+    paginator = Paginator(reservations, 10)
+    page = request.GET.get('page')
+
+    try:
+        pagineted_reservations = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        pagineted_reservations = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        pagineted_reservations = paginator.page(paginator.num_pages)
+
+
     context = {
-        'reservations' : reservations,
+        'reservations' : pagineted_reservations,
         'titulo' : 'titulo'
     }
 
