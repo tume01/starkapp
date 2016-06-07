@@ -1,10 +1,12 @@
 from repositories import EnvironmentRepository
+from repositories import EnvironmentReservationRepository
 
 class EnvironmentService(object):
 
-    """docstring for BungalowsService"""
+    """docstring for EnvironmentService"""
 
     __environment_repository = EnvironmentRepository.EnvironmentRepository()
+    __environment_reservation_repository = EnvironmentReservationRepository.EnvironmentReservationRepository()
 
     def create(self, insert_data):
         return self.__environment_repository.create(insert_data)
@@ -23,3 +25,9 @@ class EnvironmentService(object):
 
     def getEnvironmentByStatus(self):
         return self.__environment_repository.getActiveEnvironment()
+
+    def filter(self, filters):
+        return self.__environment_repository.filter(filters)
+
+    def filterReservations(self, filters):
+        return self.__environment_reservation_repository.filter(filters)

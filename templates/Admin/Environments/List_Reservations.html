@@ -1,0 +1,210 @@
+{% extends 'Admin/Layouts/base_a.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: ambientes reservados
+{% endblock %}
+
+{% block head_dahsboard %}
+Reserva de Ambientes
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de ambientes reservados
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Reserva de Ambientes
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de ambientes reservados
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+
+    <!-- Table Header (Filters) -->
+    <div class="block">
+        <div class="block-content">
+            <form class="form" id="filters-form" action="{% url 'environment:index_book' %}" method="post" onsubmit="return false;">{% csrf_token %}
+                <div class="row">
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label" for="env_name">Nombre Ambiente</label>
+                            <input class="form-control" type="text"  id="env_name" name="env_name"   >
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="headquarter_id">Seleccione una sede</label>
+                            <select class="form-control" id="headquarter_id" size="1">
+                                <option value="-1">Todas</option>
+                                {% for headquarter in headquarters %}
+                                <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
+                        <div class="col-xs-12">
+                            <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                <input class="form-control" type="text" id="start_date" name="start_date" placeholder="Desde">
+                                <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                <input class="form-control" type="text" id="end_date" name="end_date" placeholder="hasta">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-offset-10 col-lg-2">
+                        <div class="form-group">
+                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+            </form>
+        </div>
+    </div>
+    <!-- END Table Header (Filters) -->
+
+    <!-- Simple Table Full -->
+    <div class="block block-bordered">
+        <div class="block-content">
+            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+            <table class="table table-bordered table-striped js-dataTable-simple">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th>Nombre</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Estado</th>
+                        <th>Precio (S/.)</th>
+                        <th >Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="table-content">
+                    {% for reservation in reservations %}
+                        <tr>
+                            <td class="text-center" id="reservation_id">{{reservation.id}}</td>
+                            <td class="font-w600">{{ reservation.env.name }}</td>
+                            <td class="font-w600">{{ reservation.start_date }}</td>
+                            <td class="font-w600">{{ reservation.end_date }}</td>
+                            <td class="hidden-xs" id="check_out">{{ reservation.status }}</td>
+                            <td class="text-center">{{ reservation.price }}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Actualizar Reserva" id="btn-edit"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
+                                </div>
+                            </td>    
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- END Simple Table Full -->
+</div>
+<!-- END Page Content -->
+
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+                <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+                <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+                <script>
+                    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+        
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        <script src='{% static "assets/js/Admin/bungalowReservation/main.js" %}'></script>
+
+
+{% endblock %}
+
+<!-- Page Plugins -->
+                <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+                <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+                <script>
+                    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+        
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+
+
+{% endblock %}
