@@ -7,6 +7,9 @@ from services.ProvidersService import ProvidersService
 from django.views.decorators.http import require_http_methods
 from .forms import ProviderForm
 
+from datetime import datetime,timedelta
+
+
 @require_http_methods(['GET'])
 def index(request):
 
@@ -35,6 +38,17 @@ def getProviderFilters(request):
 
     if request.GET.get('filter-status'):
         filters['status'] = request.GET.get('filter-status') 
+
+    if request.GET.get('filter-registrationDate1'):
+        start_date = datetime.strptime(request.GET.get('filter-registrationDate1'), "%d/%m/%Y")
+
+        filters['registrationDate__gte'] = start_date
+
+    if request.GET.get('filter-registrationDate2'):
+        end_date = datetime.strptime(request.GET.get('filter-registrationDate2'), "%d/%m/%Y")
+        #end_date = end_date + timedelta(hours=24)
+
+        filters['registrationDate__lt'] = end_date
 
     if request.GET.get('filter-businessName'):
         filters['businessName'] = request.GET.get('filter-businessName')
