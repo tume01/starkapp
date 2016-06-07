@@ -32,7 +32,7 @@ Lista de proveedores
             <h3 class="block-title">Filtros</h3>
         </div>
         <div class="block-content">
-            <form class="form" action="base_forms_pickers_more.html" method="post" onsubmit="return false;">
+            <form class="form" action="{% url 'providers:index' %}" method="get" >
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-4">
@@ -110,11 +110,11 @@ Lista de proveedores
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
                             
-                            <table id="providersTable" class="table table-bordered table-striped js-dataTable-simple">
+                            <table class="table table-bordered table-striped js-dataTable-simple">
                                 <thead>
                                     <tr>
                                         <th class="text-center">#</th>
-                                        <th>Nombre de Concesionarios</th>
+                                        <th>Nombre de Proveedores</th>
                                         <th>Estado</th>
                                         <th class="hidden-xs">Fecha de registro </th>
                                         <th class="hidden-xs">Contacto</th>
@@ -160,7 +160,7 @@ Lista de proveedores
 
                 {% block scripts %}
 
-                <!-- Page Plugins -->
+                <!-- Page Plugins 
                 <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
                 <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
 
@@ -169,7 +169,7 @@ Lista de proveedores
                 // Init page helpers (Slick Slider plugin)
                 App.initHelpers('slick');
             });
-        </script> 
+        </script> -->
 
         <!-- Page JS Plugins -->
         <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
@@ -198,8 +198,8 @@ Lista de proveedores
 
 
         <script src='{% static "assets/js/Admin/Provider/provider_forms_validation.js" %}'></script>
-        <script src='{% static "assets/js/tablas.js" %}'></script>
+        <!--<script src='{% static "assets/js/tablas.js" %}'></script>
         
-        <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+         <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
 
         {% endblock %}

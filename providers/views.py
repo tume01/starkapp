@@ -12,14 +12,37 @@ def index(request):
 
     provider_service = ProvidersService()
 
+    filters = getProviderFilters(request)
+
+    providers2 = provider_service.filter(filters)
+
     providers = provider_service.getProviders()
 
     context = {
-        'proveedores' : providers,
+        'proveedores' : providers2,
         'titulo' : 'titulo'
     }
 
     return render(request, 'Admin/Providers/index_provider.html', context)
+
+
+def getProviderFilters(request):
+
+    filters = {}
+
+    if request.GET.get('filter-ruc'):
+        filters['ruc__contains'] = request.GET.get('filter-ruc')
+
+    if request.GET.get('filter-status'):
+        filters['status'] = request.GET.get('filter-status') 
+
+    if request.GET.get('filter-businessName'):
+        filters['businessName'] = request.GET.get('filter-businessName')
+
+    if request.GET.get('filter-contactName'):
+        filters['contactName'] = request.GET.get('filter-contactName')
+
+    return filters
 
 @require_http_methods(['GET'])
 def create_index(request):
