@@ -23,7 +23,17 @@ var UserFormValidation = function() {
             rules: {                
                 'name': {
                     required: true,
-                    maxlength: 200
+                    maxlength: 200,
+                    remote: {
+                        url: url,
+                        type: "post",
+                        data: {
+                            username: function() {
+                                return $( "#name" ).val();
+                            }, 'csrfmiddlewaretoken': CSRF_TOKEN, 
+                            user: user
+                        }
+                    }   
                 },
                 'password':{
                 	required:true,
@@ -32,8 +42,9 @@ var UserFormValidation = function() {
             },
             messages: {                
                 'name': {
-                    required: 'Por favor ingrese una descripcion',
-                    maxlength: 'El usuario no puede tener más de 200 caracteres'
+                    required: 'Por favor ingrese un nombre de usuario',
+                    maxlength: 'El usuario no puede tener más de 200 caracteres',
+                    remote: 'Este documento ya esta en uso'
                 },
                 'password':{
                 	required: 'Por favor ingrese una clave',

@@ -29,15 +29,15 @@ var MemberFormValidation = function() {
                 'paternalLastName': {
                     required: true,
                     maxlength:200
-                    //email: true
                 },
                 'maternalLastName': {
                     required: true,
                     maxlength:200
-                    //email: true
                 },
                 'num_doc': {
-                    required: true,    
+                    required: true,   
+                    number: true, 
+                    min: 1,
                     remote: {
                         url: url,
                         type: "post",
@@ -66,7 +66,9 @@ var MemberFormValidation = function() {
                 },  
                 'phone': {
                     required: true,
-                    minlength:7
+                    number: true, 
+                    minlength:7,
+                    min:1
                     
                 },
                 'email': {
@@ -94,8 +96,10 @@ var MemberFormValidation = function() {
                     maxlength: 'El apellido debe tener máximo 200 caracteres'                    
                 },
                 'num_doc': {
-                    required: 'Por favor ingrese un dni' ,
-                    remote: 'Este documento ya esta en uso'                   
+                    required: 'Por favor ingrese un número de documento' ,
+                    number: 'Por favor ingrese un documento válido' ,
+                    remote: 'Este documento ya esta en uso',
+                    min: 'Por favor ingrese un documento válido' ,                
                 },              
                 'address': {
                     required: 'Por favor ingrese una dirección',
@@ -112,7 +116,9 @@ var MemberFormValidation = function() {
                 },
                 'phone': {
                     required: 'Por favor ingrese un teléfono',   
-                    minlength:'El telefono deber tener más de 6 digitos'                 
+                    number: 'Por favor ingrese un número válido' ,
+                    minlength:'El telefono deber tener más de 6 digitos',
+                    min: 'Por favor ingrese un telefono válido'                  
                 },
                 
                 'email': {

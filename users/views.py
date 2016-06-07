@@ -275,15 +275,21 @@ def user_index(request):
 @require_http_methods(['POST'])
 def verify_user(request):
 
-    print(request.POST['username'])
-
     try:
+
+        if(request.POST['username'] == request.POST['user']):
+
+            return  HttpResponse("true")
 
         if( User.objects.get(username=(request.POST['username']))):
      
             return  HttpResponse("false")
 
     except User.DoesNotExist:
+
+        pass
+
+    try:
 
         member_application_service = Membership_ApplicationService()
 
@@ -299,12 +305,15 @@ def verify_user(request):
 
         return  HttpResponse("true")
 
+    except ValueError:
+
+        return  HttpResponse("true")
+
+
 
 @login_required
 @require_http_methods(['POST'])
 def verify_user_member(request):
-
-    print(request.POST['username'])
 
     try:
 
