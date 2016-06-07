@@ -1,9 +1,4 @@
-from bungalow_reservation.models import BungalowReservation
-from repositories.BaseRepository import BaseRepository 
-
-class BungalowReservationRepository(BaseRepository):
-    def __init__(self):
-        BaseRepository.__init__(self, BungalowReservation) 
+from repositories.BungalowReservationRepository import BungalowReservationRepository
 
 class BungalowReservationService(object):
     """docstring for BungalowsService"""
@@ -20,11 +15,11 @@ class BungalowReservationService(object):
 
     @classmethod
     def delete(cls, id):
-        return cls._repository.delete(id)
+        return cls._repository.softDelete(id)
 
     @classmethod
     def getReservations(cls):
-        return cls._repository.all()
+        return cls._repository.allNotDeleted()
 
     @classmethod
     def findReservation(cls, id):

@@ -6,9 +6,10 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-from bungalow.utils import BungalowService
+from services.BungalowService import BungalowService
+from services.BungalowTypeService import BungalowTypeService
+
 from bungalow.models import Bungalow
-from bungalow_type.utils import BungalowTypeService
 from bungalow_type.models import BungalowType
 
 @require_http_methods(['GET'])

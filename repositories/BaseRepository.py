@@ -1,5 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from contracts.repositories.AbstractBaseRepository import AbstractBaseRepository
+import datetime
 
 class BaseRepository(AbstractBaseRepository):
 
@@ -13,6 +14,9 @@ class BaseRepository(AbstractBaseRepository):
 
     def all(self):
         return self.model.objects.all()
+
+    def allNotDeleted(self):
+        return self.filter({"deleted_at" : None})
 
     def find(self, find_id):
         try:
@@ -42,6 +46,9 @@ class BaseRepository(AbstractBaseRepository):
 
     def delete(self, element):
         return self.model.objects.get(id=element).delete()
+
+    def softDelete(self, delete_id):
+        return self.update(delete_id,{"deleted_at", datetime.datetime.now()})
 
     def filter(self, filters):
         return self.model.objects.filter(**filters)
