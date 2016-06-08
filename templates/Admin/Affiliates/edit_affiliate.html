@@ -205,7 +205,7 @@ Editar afiliado
 
 <script>
 var CSRF_TOKEN = '{{ csrf_token }}';
-var url= "{% url 'users:verify_user_member' %}"
+var url= "{% url 'affiliate:verify_affiliate' %}"
 
     $(document).ready(function () {
         $('#department').change(function(){
