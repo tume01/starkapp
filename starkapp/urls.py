@@ -38,6 +38,8 @@ urlpatterns = [
     url(r'^events', include('events.urls')),
     url(r'^login/', include('login.urls')),
     url(r'^ubigeo/', include('ubigeo.urls')),
+    url(r'^entry/', include('entry.urls')),
+    url(r'^guests/', include('guests.urls')),
 ]
 
 if settings.DEBUG:

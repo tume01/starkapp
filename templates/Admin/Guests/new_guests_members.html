@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'Admin/Layouts/base.html' %}
 
 {% block head_title %}
 Admin: invitados
@@ -34,6 +34,34 @@ Nuevo Invitado
                         {% endif %}
                     </div>
                     <!-- Mega Form -->
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10" method="post" >
+                            {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Dni del Miembro</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user-plus"></i></span>
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="names" placeholder="Nombre de invitado" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                </div>                                
+                               <div class="form-group">
+                                    <div class="col-xs-6">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "promotions:index" %}'"><i class="fa fa-times push-5-r"></i> Buscar</button>
+                                    </div>                                   
+                                </div>
+                            </form>
+                        </div>
+     
+
                     <div class="block block-bordered">
                         <div class="block-header bg-gray-lighter">
                             <ul class="block-options">
