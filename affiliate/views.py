@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MemberService import MembersService
 from services.AffiliateService import AffiliateService
 from django.views.decorators.http import require_http_methods
@@ -321,3 +322,42 @@ def delete_affiliate(request):
     }
 
     return render(request, 'Admin/Affiliates/index_affiliates.html', context)
+
+
+
+@login_required
+@require_http_methods(['POST'])
+def verify_affiliate(request):
+
+    member_application_service = Membership_ApplicationService()
+
+    member_service = MembersService()
+
+    affiliate_service = AffiliateService()
+
+    filter_data = {}
+
+    filter_data["document_number"] = request.POST['username']
+
+    filter_data["status"] = 1
+
+    filter_data2 = {}
+
+    filter_data2["document_number"] = request.POST['username']
+
+    filter_data2["state"] = 1
+    
+    if( member_application_service.filter(filter_data)):
+
+        return  HttpResponse("false")
+
+    if( affiliate_service.filter(filter_data2)):
+
+        return  HttpResponse("false")
+
+    if(member_service.filter(filter_data2)):
+
+        return  HttpResponse("false")
+
+    return  HttpResponse("true")
+

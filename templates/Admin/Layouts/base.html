@@ -99,6 +99,7 @@
                             <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Administración del Club</span></li>
+                        {% if perms.dummy.permission_bungalows %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
@@ -119,6 +120,7 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
                             <ul>
@@ -192,6 +194,7 @@
                                 
                             </ul>
                         </li>
+                        {% if perms.dummy.permission_canchas %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Canchas</span></a>
                             <ul>
@@ -203,6 +206,8 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}  
+                        {% if perms.dummy.permission_canchas %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos y Servicios</span></a>
                             <ul>
@@ -226,6 +231,7 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}  
                          {% if perms.dummy.permission_admin %} 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-car"></i><span class="sidebar-mini-hide">Ingreso</span></a>
@@ -239,11 +245,11 @@
                             </ul>
                         </li>   
                         {% endif %}  
-
+                        {% if perms.dummy.permission_membresia %}  
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
                             <ul>  
-                                {% if perms.dummy.permission_membresia %}     
+                                   
                                 <li>
                                     <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
                                 </li>
@@ -256,14 +262,13 @@
                                 <li> 
                                     <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
                                 </li>
-                                {% endif %}
-                                {% if perms.dummy.permission_membresia %} 
+                                
                                 <li>
                                     <a href='{% url 'members:index' %}'>Miembros</a>
-                                </li>
-                                {% endif %}                                
+                                </li>                              
                             </ul>
                         </li> 
+                        {% endif %}
                         {% if perms.dummy.permission_admin %}  
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>

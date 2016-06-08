@@ -46,7 +46,7 @@ var AffiliateFormValidation = function() {
                                 return $( "#num_doc" ).val();
                             }, 'csrfmiddlewaretoken': CSRF_TOKEN, 
                             id_member: function() {
-                                return $( "#id" ).val();
+                                return $( "#id_member" ).val();
                             }
                         }
                     }                           
