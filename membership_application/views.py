@@ -312,7 +312,7 @@ def user_index(request):
         'doc_types' : doc_types,
     }
 
-    return render(request, 'index_membership_request.html', context) 
+    return render(request, 'User/Membership/index_membership_request.html', context) 
 
 
 @login_required
@@ -357,7 +357,7 @@ def user_filter(request):
         'doc_types' : doc_types,
     }
 
-    return render(request, 'index_membership_request.html', context) 
+    return render(request, 'User/Membership/index_membership_request.html', context) 
 
 
 #OBJECIONES
@@ -407,7 +407,7 @@ def create_objection(request):
             'member' : member,
         }
 
-        return render(request, 'Objections_members.html', context)
+        return render(request, 'User/Membership/objections_members.html', context)
 
 
 #@login_required
@@ -432,7 +432,7 @@ def objection_index(request):
         'member': member,
     }
 
-    return render(request, 'Objections_members.html', context)
+    return render(request, 'User/Membership/objections_members.html', context)
 
 
 
