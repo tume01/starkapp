@@ -2,23 +2,23 @@
 {% load staticfiles %}
 
 {% block head_title %}
-Admin: bungalows
+Admin: reserva de bungalows
 {% endblock %}
 
 {% block head_dahsboard %}
-Bungalows
+Reserva de Bungalows
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de bungalows
+Lista de reservas activas
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Bungalows
+Reserva de Bungalows
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de bungalows
+Lista de reservas
 {% endblock %}
 
 {% block content %}
@@ -82,41 +82,8 @@ Lista de bungalows
 
     <!-- Simple Table Full -->
     <div class="block block-bordered">
-        <div class="block-content">
-            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-            <table class="table table-bordered table-striped js-dataTable-simple">
-                <thead>
-                    <tr>
-                        <th class="text-center">#</th>
-                        <th>Arrival Date</th>
-                        <th>Departure Date</th>
-                        <th class="hidden-xs">Check-In</th>
-                        <th class="hidden-xs">Check-Out</th>
-                        <th>Precio (S/.)</th>
-                        <th >Acción</th>
-                    </tr>
-                </thead>
-                <tbody id="table-content">
-                    {% for reservation in reservations %}
-                        <tr>
-                            <td class="text-center" id="reservation_id">{{reservation.id}}</td>
-                            <td class="font-w600">{{ reservation.arrival_date }}</td>
-                            <td class="font-w600">{{ reservation.departure_date }}</td>
-                            <td class="hidden-xs" id="check_in">{{ reservation.check_in }}</td>
-                            <td class="hidden-xs" id="check_out">{{ reservation.check_out }}</td>
-                            <td class="text-center">{{ reservation.price }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    {% if not reservation.check_in %}<button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Check-In" id="btn-check-in"><i class="fa fa-sign-in"></i></button>{%endif%}
-                                    {% if not reservation.check_out %}<button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Check-Out" id="btn-check-out"><i class="fa fa-sign-out"></i></button>{%endif%}
-                                    <button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Actualizar Reserva" id="btn-edit"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>    
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="block-content" id="table-content">
+            {% include 'Admin/bungalowReservation/index_table.html' %}
         </div>
     </div>
     <!-- END Simple Table Full -->
@@ -164,7 +131,6 @@ Lista de bungalows
             });
         </script>
         
-        <script src='{% static "assets/js/tablas.js" %}'></script>
         <script src='{% static "assets/js/Admin/bungalowReservation/main.js" %}'></script>
 
 

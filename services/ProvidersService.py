@@ -27,3 +27,6 @@ class ProvidersService(object):
 
     def find_ruc(self, find_ruc):
         return self.__provider_repository.find_ruc(find_ruc)
+
+    def filter(self,filters):
+        return self.__provider_repository.filter(filters)
