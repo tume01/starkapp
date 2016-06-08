@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'identity_document_type',
     'ubigeo',
     'affiliate',
-
+    'suspension'
 ]
 
 MIDDLEWARE_CLASSES = [
