@@ -183,6 +183,8 @@ Nuevo afiliado
 {% block scripts %}
 
 <script>
+var CSRF_TOKEN = '{{ csrf_token }}';
+var url= "{% url 'users:verify_user_member' %}"
     $(document).ready(function () {
         $('#department').change(function(){
         var department = $('#department :selected').text();
@@ -234,7 +236,7 @@ Nuevo afiliado
 <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
 <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
-<script src='{% static "assets/js/Admin/Membership/affiliate_forms_validations.js" %}'></script>
+<script src='{% static "assets/js/Admin/Membership/affiliate_forms_validation.js" %}'></script>
 
 
 
