@@ -226,6 +226,20 @@
                                 </li>
                             </ul>
                         </li>
+                         {% if perms.dummy.permission_admin %} 
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-car"></i><span class="sidebar-mini-hide">Ingreso</span></a>
+                            <ul>                                        
+                                <li>
+                                   <a href=''>Lista de ingresos</a> 
+                                </li>
+                                <li>
+                                    <a href='{% url 'entry:create_index' %}'>Registrar ingreso</a>
+                                </li> 
+                            </ul>
+                        </li>   
+                        {% endif %}  
+
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
                             <ul>  
