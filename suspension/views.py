@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import permission_required
 from .forms import SuspensionForms
 
 @login_required
-@permission_required('dummy.permission_suspension', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_suspension_index(request):
 
@@ -28,7 +28,7 @@ def create_suspension_index(request):
     return render(request, 'Admin/Suspension/new_suspension.html', context)
 
 @login_required
-@permission_required('dummy.permission_suspension', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_suspension(request):
 
@@ -66,12 +66,12 @@ def create_suspension(request):
 
         suspension_service.create(insert_data)
 
-        return HttpResponseRedirect(reverse('suspension:index'))
+        return HttpResponseRedirect(reverse('members:index'))
 
 
 
 @login_required
-@permission_required('dummy.permission_suspension', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_suspension_index(request):
 
@@ -88,11 +88,11 @@ def edit_suspension_index(request):
     return render(request, 'Admin/Suspension/edit_suspension.html', context)
 
 @login_required
-@permission_required('dummy.permission_suspension', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_suspension(request):
 
-    suspension_id = request.POST['suspension_id']
+    suspension_id = request.POST['id_suspension']
 
     suspension_service = SuspensionService()
 
@@ -122,10 +122,10 @@ def edit_suspension(request):
 
         suspension_service.update(suspension_id, edit_data)
 
-        return HttpResponseRedirect(reverse('suspension:index'))
+        return HttpResponseRedirect(reverse('members:index'))
 
 @login_required
-@permission_required('dummy.permission_suspension', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def suspension_index(request):
 
@@ -144,6 +144,7 @@ def suspension_index(request):
     suspensions = suspension_service.filter(filter_data)
 
     context = {
+        'id': membershipId,
         'suspensions': suspensions,
         'membership' : membership
     }
@@ -151,7 +152,7 @@ def suspension_index(request):
     return render(request, 'Admin/Suspension/index_suspensions.html', context)
 
 @login_required
-@permission_required('dummy.permission_suspension', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def suspension_filter(request):
 
@@ -185,6 +186,7 @@ def suspension_filter(request):
     suspensions = suspension_service.filter(filter_suspensions)
 
     context = {
+        'id': membershipId,
         'suspensions': suspensions,
         'membership': membership
     }
@@ -193,7 +195,7 @@ def suspension_filter(request):
 
 
 @login_required
-@permission_required('dummy.permission_suspension', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_suspension(request):
     edit_data = {}
@@ -206,4 +208,4 @@ def delete_suspension(request):
 
     suspension_service.update(id_edit, edit_data)
 
-    return HttpResponseRedirect(reverse('suspension:index'))
+    return HttpResponseRedirect(reverse('members:index'))

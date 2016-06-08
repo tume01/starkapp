@@ -2,7 +2,7 @@ from django import forms
 from datetime import datetime
 
 class SuspensionForms(forms.Form):
-    reasons = forms.CharField(max_length=200, error_messages={'required': 'El campo Comentarios es requerido', 'max_length': 'El campo Comentarios debe tener una longitud maxima de 200 caracteres'})
+    reason = forms.CharField(max_length=200, error_messages={'required': 'El campo Razon es requerido', 'max_length': 'El campo Razon debe tener una longitud maxima de 200 caracteres'})
     initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'})
     finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'})
 
