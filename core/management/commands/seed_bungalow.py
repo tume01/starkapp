@@ -1,8 +1,6 @@
 from django.core.management.base import BaseCommand
 from bungalow.models import Bungalow
 from bungalow_type.models import BungalowType
-from headquarters.models import Headquarters
-import random
 
 class Command(BaseCommand):
     help = 'This command will seed the database (Bungalow)'
@@ -63,6 +61,9 @@ def insertBungalow():
     bt3.bungalow_set.create(number= 303, status= 1, headquarter=getRandomHeadquarter() )
 
     print('    Bungalows have been inserted')
+
+import random
+from headquarters.models import Headquarters
 
 def getRandomHeadquarter():
     headquarters = Headquarters.objects.all()

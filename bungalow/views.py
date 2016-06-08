@@ -43,8 +43,6 @@ def index(request):
 @require_http_methods(['POST'])
 def refresh_table(request):
 
-    from django.core import serializers
-
     bungalow_type_id = int(request.POST['bungalow_type_id'])
     headquarter_id = int(request.POST['headquarter_id'])
     page = 1
