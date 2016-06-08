@@ -6,6 +6,7 @@ app_name = 'entry'
 urlpatterns = [
 
     url(r'^create', views.create_index, name='create_index'),
+    url(r'^create/insert', views.insert, name='insert'),
     url(r'^', views.index, name='index'),
 
 ]
