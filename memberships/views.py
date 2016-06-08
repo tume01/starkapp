@@ -236,7 +236,7 @@ def create_membership(request):
 
         user = User.objects.create_user(username=form2.cleaned_data['num_doc'], email=form2.cleaned_data['email'],   password='1111')
 
-        group = Group.objects.get(id=1)
+        group = Group.objects.get(name='usuarios')
 
         group.user_set.add(user)
 

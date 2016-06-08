@@ -31,6 +31,8 @@ def affiliate_index(request):
 
     filter_affiliate["member"] = member
 
+    filter_affiliate["state"] = 1
+
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
@@ -54,12 +56,12 @@ def create_index(request):
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
-    departments = ubigeo_service.distinctDepartment()
+    ubigeo = ubigeo_service.distinctDepartment()
 
     context = {
         'id_member': id_member,
         'ubigeo': ubigeo,
-        'departments': doc_types
+        'doc_types': doc_types
     }
 
     return render(request, 'Admin/Affiliates/new_affiliate.html', context)
@@ -85,7 +87,7 @@ def create_affiliate(request):
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo = ubigeo_service.distinctDepartment()
 
         context = {
             'id_member': id_member,
@@ -93,39 +95,47 @@ def create_affiliate(request):
             'doc_types': doc_types
         }
 
-        return render(request, 'Admin/Members/new_affiliate.html', context)
+        return render(request, 'Admin/Affiliates/new_affiliate.html', context)
 
     else:
 
-        edit_data = {}
+        create_data = {}
 
-        edit_data["identity_document_type_id"] = identity_doc_type
+        create_data["identity_document_type_id"] = identity_doc_type
 
-        edit_data["name"] = form.cleaned_data['name']
+        create_data["name"] = form.cleaned_data['name']
 
-        edit_data["paternalLastName"] = form.cleaned_data['paternalLastName']
+        create_data["paternalLastName"] = form.cleaned_data['paternalLastName']
 
-        edit_data["maternalLastName"] = form.cleaned_data['maternalLastName']
+        create_data["maternalLastName"] = form.cleaned_data['maternalLastName']
 
-        edit_data["document_number"] = form.cleaned_data['num_doc']
+        create_data["document_number"] = form.cleaned_data['num_doc']
 
-        edit_data["phone"] = form.cleaned_data['phone']
+        create_data["phone"] = form.cleaned_data['phone']
 
-        edit_data["address"] = form.cleaned_data['address']
+        create_data["address"] = form.cleaned_data['address']
 
-        edit_data["email"] = form.cleaned_data['email']
+        create_data["email"] = form.cleaned_data['email']
 
-        edit_data["member_id"] = id_member
+        create_data["member_id"] = id_member
 
-        id_ubigeo = request.POST['district']
+        create_data["state"] = 1
 
-        ubi = ubigeo_service.getUbigeoById(id_ubigeo)
+        filter_ubigeo = {}
 
-        edit_data["ubigeo"] = ubi
+        filter_ubigeo["department"] = request.POST['department']
 
-        affilliate_service = AffiliateService()
+        filter_ubigeo["province"] = request.POST['province']
 
-        affiliate_service.create(edit_data)
+        filter_ubigeo["district"] = request.POST['district']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        create_data["ubigeo"] = ubi[0]
+
+        affiliate_service = AffiliateService()
+
+        affiliate_service.create(create_data)
 
         member_service = MembersService()
 
@@ -134,6 +144,8 @@ def create_affiliate(request):
         filter_affiliate = {}
 
         filter_affiliate["member"] = member
+
+        filter_affiliate["state"] = 1
 
         affiliates = affiliate_service.filter(filter_affiliate)
 
@@ -166,13 +178,13 @@ def edit_affiliate_index(request):
 
     filter_ubigeo = {}
 
-    filter_ubigeo["department"] = member.ubigeo.department
+    filter_ubigeo["department"] = affiliate.ubigeo.department
 
     provinces = ubigeo_service.distinctProvince(filter_ubigeo)
 
     filter_ubigeo = {}
 
-    filter_ubigeo["province"] = member.ubigeo.province
+    filter_ubigeo["province"] = affiliate.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
@@ -240,13 +252,19 @@ def edit_affiliate(request):
 
         edit_data["email"] = form.cleaned_data['email']
 
-        id_ubigeo = request.POST['district']
+        filter_ubigeo = {}
 
-        ubi = ubigeo_service.getUbigeoById(id_ubigeo)
+        filter_ubigeo["department"] = request.POST['department']
 
-        edit_data["ubigeo"] = ubi
+        filter_ubigeo["province"] = request.POST['province']
 
-        affilliate_service = AffiliateService()
+        filter_ubigeo["district"] = request.POST['district']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        edit_data["ubigeo"] = ubi[0]
+
+        affiliate_service = AffiliateService()
 
         affiliate_service.update(id_edit, edit_data)
 
@@ -254,7 +272,13 @@ def edit_affiliate(request):
 
         id_member = affiliate.member.id
 
-        affiliates = affiliate_service.filter(member=affiliate.member)
+        filter_affiliate = {}
+
+        filter_affiliate["member"] = affiliate.member
+
+        filter_affiliate["state"] = 1
+
+        affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
             'id_member' : id_member,
@@ -283,7 +307,13 @@ def delete_affiliate(request):
 
     id_member = affiliate.member.id
 
-    affiliates = affiliate_service.filter(member=member)
+    filter_affiliate = {}
+
+    filter_affiliate["member"] = affiliate.member
+
+    filter_affiliate["state"] = 1
+
+    affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
         'id_member' : id_member,
