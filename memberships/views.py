@@ -8,6 +8,7 @@ from services.MembershipTypeService import MembershipTypeService
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.MembershipService import MembershipService
+from services.SuspensionService import SuspensionService
 from services.ObjectionService import ObjectionsService
 from services.UbigeoService import UbigeoService
 from services.MemberService import MembersService
@@ -387,4 +388,3 @@ def membership_edit(request):
         membership_service.update(id_edit, edit_data)
 
         return HttpResponseRedirect(reverse('members:index'))
-
