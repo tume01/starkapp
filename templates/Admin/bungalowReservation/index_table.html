@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th class="text-center">Hab.</th>
-            <th class="text-center">Miembro</th>
+            <th class="text-center">Socio</th>
             <th class="text-center">Status</th>
             <th class="text-center">Entrada</th>
             <th class="text-center">Salida</th>
@@ -17,7 +17,6 @@
                 <td class="text-center" id="reservation_id">{{reservation.bungalow_number}}</td>
                 <td class="text-center">{{ reservation.member_name }}</td>
                 <td class="hidden-xs"><span class="label label-danger">{{ reservation.getStatusName }}</span></td>
-                <td class="text-center">{{ reservation.member_name }}</td>
                 <td class="text-center">{{ reservation.arrival_date }}</td>
                 <td class="text-center">{{ reservation.departure_date }}</td>
                 <td class="text-center hidden-xs" id="check_in">{{ reservation.check_in }}</td>

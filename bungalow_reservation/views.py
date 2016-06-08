@@ -10,6 +10,8 @@ from services.BungalowReservationService import BungalowReservationService
 
 from services.BungalowTypeService import BungalowTypeService
 from services.HeadquarterService import HeadquarterService
+from services.MemberService import MembersService
+from services.BungalowService import BungalowService
 
 from bungalow_reservation.models import BungalowReservation
 import datetime
@@ -100,24 +102,42 @@ def check_out(request):
 
 
 @require_http_methods(['GET'])
-def create_index(request):
-    pass
+def create_index_admin(request):
+
+    context = {
+        'bungalows': BungalowService.getBungalows(),
+        'headquarters': HeadquarterService().getHeadquarters(),
+        'titulo': 'titulo'
+    }
+
+    return render(request, 'Admin/bungalowReservation/reserve_bungalow.html', context)
 
 
 @require_http_methods(['POST'])
 def create_bungalow_reservation(request):
     insert_data = {}
 
-    insert_data["bungalow_id"] = request.POST['bungalow_id']
-    insert_data["member_id"] = request.POST['member_id']
+    bungalow_id = request.POST['bungalow_id']
+    member_id = request.POST['member_id']
+    insert_data["arrival_date"] = request.POST['arrival_date']
+    insert_data["departure_date"] = request.POST['departure_date']
     insert_data["status"] = request.POST['status']
 
-    bungalowTypeId = request.POST['bungalow_type_id']
-    insert_data["bungalow_type"] = BungalowTypeService.findBungalowType(bungalowTypeId)
+    bungalow = BungalowService.findBungalow(bungalow_id)
+    insert_data["arrival_date"] = request.POST['arrival_date']
+    insert_data["bungalow_number"] = bungalow.number
+    insert_data["bungalow_price"] = bungalow.bungalow.bungalow_type.price
+    insert_data["bungalow_capacity"] = bungalow.bungalow_type.capacity
+    insert_data["bungalow_headquarter_name"] = bungalow.headquarter.name
+
+    member = MembersService().getMember(member_id)
+    insert_data["membership_name"] = member.membership.membership_type.name
+    insert_data["name"] = member.name
+    insert_data["paternalLastName"] = member.paternalLastName
+    insert_data["maternalLastName"] = member.maternalLastName
 
     BungalowReservationService.create(insert_data)
-
-    return HttpResponseRedirect(reverse('bungalow:index'))
+    return HttpResponseRedirect(reverse('bungalowReservation:index'))
 
 
 @require_http_methods(['GET'])
