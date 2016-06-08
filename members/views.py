@@ -7,10 +7,14 @@ from services.MemberService import MembersService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
+from services.GuestService import GuestService
+from services.AffiliateService import AffiliateService
 from Adapters.FormValidator import FormValidator
 from .forms import  MemberForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.core import serializers
+import json
 
 
 @login_required
@@ -156,3 +160,90 @@ def edit_member(request):
         member_service.update(id_edit, edit_data)
 
         return HttpResponseRedirect(reverse('members:index'))
+
+
+
+@login_required
+@require_http_methods(['POST'])
+def get_member(request):
+
+    member_service = MembersService()
+
+    filter_member = {}
+
+    filter_member["document_number"] = request.POST['document_number']
+
+    member = member_service.filter(filter_member)
+
+    member = serializers.serialize('json', member)
+
+    return  HttpResponse(member, content_type = "application/json")
+
+
+@login_required
+@require_http_methods(['POST'])
+def get_entry(request):
+
+    member_service = MembersService()
+
+    filter_member = {}
+
+    filter_member["document_number"] = request.POST['document_number']
+
+    member = member_service.filter(filter_member)
+
+    if(member):      
+
+        member = serializers.serialize("json", (member[0],))
+
+        resp_obj = json.loads(member)
+
+        resp_obj[0]['fields']['tipo'] = 1
+
+        member = json.dumps(resp_obj)
+
+        return  HttpResponse(member, content_type = "application/json")
+
+    affiliate_service = AffiliateService()
+
+    filter_affiliate = {}
+
+    filter_affiliate["document_number"] = request.POST['document_number']
+
+    affiliate = affiliate_service.filter(filter_affiliate)
+
+    if(affiliate):   
+
+        affiliate = serializers.serialize("json", (affiliate[0],))
+
+        resp_obj = json.loads(affiliate)
+
+        resp_obj[0]['fields']['tipo'] = 2
+
+        affiliate = json.dumps(resp_obj)
+
+        return  HttpResponse(affiliate, content_type = "application/json")
+
+    guest_service = GuestService()
+
+    filter_guest = {}
+
+    filter_guest["dni"] = request.POST['document_number']
+
+    guest = guest_service.filter(filter_guest)
+
+    if(guest):
+
+        guest = serializers.serialize("json", (guest[0],))
+
+        resp_obj = json.loads(guest)
+
+        resp_obj[0]['fields']['tipo'] = 3
+
+        guest = json.dumps(resp_obj)
+
+        return  HttpResponse(guest, content_type = "application/json")
+
+    guest = serializers.serialize('json', guest)
+
+    return  HttpResponse(guest, content_type = "application/json")

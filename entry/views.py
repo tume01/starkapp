@@ -6,7 +6,8 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
-# Create your views here.
+from services.EntryService import EntryService
+
 
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')
@@ -30,3 +31,13 @@ def create_index(request):
     }
 
     return render(request, 'Admin/Guests/new_guests_members.html', context)
+
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
+@require_http_methods(['POST'])
+def insert(request):
+
+    edit_data = {}
+
+    return HttpResponseRedirect(reverse('entry:index'))
