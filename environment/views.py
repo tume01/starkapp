@@ -1,5 +1,7 @@
 from datetime import datetime
 import json
+from .forms import EnvReservationForm
+from adapters.FormValidator import FormValidator
 from django.contrib import messages
 from django.template import loader
 from django.shortcuts import render, render_to_response
@@ -182,22 +184,25 @@ def getReservationFilters(request):
     return filters
 
 @require_http_methods(['GET'])
-def create_index(request):
+def create_reservation(request):
 
     environments_service = EnvironmentService()
+    headquarter_service = HeadquarterService()
 
+    headquarters = headquarter_service.getHeadquarters()
     environments = environments_service.getEnvironment()
 
     context = {
         'titulo': 'tittle',
         'environments': environments,
+        'headquarters' : headquarters
     }
 
     return render(request, 'Admin/Environments/Create_Reservation.html', context)
 
 
 @require_http_methods(['GET'])
-def create_index_post(request):
+def create_reservation_post(request):
 
     environment_service = EnvironmentService()
 
@@ -215,3 +220,53 @@ def create_index_post(request):
         return render(request, 'Admin/Environments/Create_not_available.html', context)   
 
     return render(request, 'Admin/Environments/Create_Reservation_Form', context)
+
+@require_http_methods(['POST'])
+def insert_reservation(request):
+
+    form = EnvReservationForm(request.POST)
+
+    context = {
+        'titulo': 'titulo'
+    }
+
+    request = FormValidator.validateForm(form, request)
+
+    environment_service = EnvironmentService()
+
+    if not request:
+
+        
+
+        price = form.cleaned_data['price']
+        start_date = form.cleaned_data['start_date']
+        end_date   = form.cleaned_data['end_date']
+        enviroment_id = form.cleaned_data['enviroment_id']
+
+        enviroment = environments_service.getEnviromentById(enviroment_id)
+
+        insert_data = {
+            'price'      : price,
+            'start_date' : start_date,
+            'end_date'   : end_date,
+            'enviroment' : enviroment
+        }
+
+        environment_service.createReservation(insert_data)
+
+        return HttpResponseRedirect(reverse('enviroment:index_book'))
+
+    else:
+        
+        headquarter_service = HeadquarterService()
+
+        headquarters = headquarter_service.getHeadquarters()
+        environments = environments_service.getEnvironment()
+
+        context = {
+            'reservations' : reservations,
+            'headquarters' : headquarters,
+            'titulo'       : 'titulo'
+        }
+
+        return render(request, 'Admin/Activities/Create_Reservation.html', context)

@@ -3,11 +3,12 @@ $('#filters-form').on('submit', function(event){
     submitFilters();
 });
 
-// Prevent Default Current Page
-$( "#current-page" ).click(function(event) {
-    event.preventDefault();
-    console.log('CURRENT')
+
+$('#headquarter_id').on('change', function(event){
+    chargeEnvironments();
 });
+
+
 
 function submitFilters() {
     // event.preventDefault();
@@ -15,29 +16,31 @@ function submitFilters() {
     var requestData = getFilters();
     requestData.csrfmiddlewaretoken = getCookie('csrftoken');
 
-    reloadTable(requestData);
+    verifyDay(requestData);
 };
 
-function prevPage() {
-    console.log('PREV Page')
-    event.preventDefault();
+function chargeEnvironments() {
+    
+    $.ajax({
+        url : "book/create/getEnvs", // the endpoint
+        type : "GET", // http method
+        data : {
+            'headquarter_id'  : $('#headquarter_id option:selected').val(),
+        }, // data sent with the post request
 
-    var requestData = getFilters();
-    requestData.page = $('#page').text() - 1;
-    requestData.csrfmiddlewaretoken = getCookie('csrftoken');
-    
-    reloadTable(requestData);
-};
+        // handle a successful response
+        success : function(response) {
+            $('#select-env').html(response);
+        },
 
-function nextPage() {
-    console.log('NEXT Page')
-    event.preventDefault();
-    
-    var requestData = getFilters();
-    requestData.page = parseInt($('#page').text(),10) + 1;
-    requestData.csrfmiddlewaretoken = getCookie('csrftoken');
-    
-    reloadTable(requestData);
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log("ERROR"); // another sanity check
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
 };
 
 function getFilters() {
@@ -51,7 +54,7 @@ function getFilters() {
     return filter;
 };
 
-function reloadTable(requestData){
+function verifyDay(requestData){
     $.ajax({
         url : "book/create/post", // the endpoint
         type : "POST", // http method
@@ -59,12 +62,7 @@ function reloadTable(requestData){
 
         // handle a successful response
         success : function(response) {
-            $('#table-content').html(response);
-
-            // Prevent Default Current Page
-            $( "#current-page" ).click(function(event) {
-                console.log('CURRENT')
-            });
+            $('#form-content').html(response);
         },
 
         // handle a non-successful response

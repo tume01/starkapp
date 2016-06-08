@@ -5,12 +5,10 @@ app_name = 'environment'
 
 urlpatterns = [
     url(r'^book/index', views.index_book, name='index_book'),
-    url(r'^book/create', views.create_index, name='create_index'),
-    url(r'^book/create/post$', views.create_index_post, name='create_index_post'),
+    url(r'^book/create', views.create_reservation, name='create_reservation'),
+    url(r'^book/create/post', views.create_reservation_post, name='create_reservation_post'),
+    url(r'^book/create/insert', views.insert_reservation, name='insert_reservation'),
     """
-    url(r'^check_in$', views.check_in, name='check_in'),
-    url(r'^check_out$', views.check_out, name='check_out'),
-    url(r'^create/post', views.create_bungalow, name='create'),
     url(r'^(?P<bungalow_reservation_id>[0-9]+)/update/post', views.update_bungalow, name='update'),
     url(r'^(?P<bungalow_reservation_id>[0-9]+)/update', views.update_index, name='update_index'),
     """

@@ -31,3 +31,6 @@ class EnvironmentService(object):
 
     def filterReservations(self, filters):
         return self.__environment_reservation_repository.filter(filters)
+
+    def createReservation(self, insert_data):
+        return self.__environment_reservation_repository.create(insert_data)
