@@ -108,6 +108,8 @@ def create_index(request):
         'titulo' : 'titulo'
     }
 
+    print(types)
+
     return render(request, 'Admin/Membership/new_membership_request.html', context)
 
 

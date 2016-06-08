@@ -38,6 +38,7 @@ urlpatterns = [
     url(r'^events', include('events.urls')),
     url(r'^login/', include('login.urls')),
     url(r'^ubigeo/', include('ubigeo.urls')),
+    url(r'^affiliate/', include('affiliate.urls')),
     url(r'^suspension/', include('suspension.urls')),
 ]
 
