@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 class BungalowReservation(models.Model):
     STATUS_CHOICES = (
         (0, 'Pendiente'),
@@ -42,3 +42,13 @@ class BungalowReservation(models.Model):
         index = self.status
         statusData = self.STATUS_CHOICES[index]
         return statusData[1]
+
+    def getDays(self):
+        days = []
+
+        for date in range((self.departure_date - self.arrival_date).days + 1):
+            days.append(self.arrival_date + datetime.timedelta(days=date))
+
+        return days
+
+

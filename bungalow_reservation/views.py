@@ -114,6 +114,30 @@ def create_index_admin(request):
 
 
 @require_http_methods(['POST'])
+def refresh_bungalow(request):
+    arrival_date = request.POST['arrival_date']
+    headquarter_id = int(request.POST['headquarter_id'])
+
+    bungalows = BungalowService.getBungalows()
+
+    if (headquarter_id != -1):
+        print("Filter by Headquarter_ID")
+        bungalows = bungalows.filter(headquarter_id=headquarter_id)
+
+    if (arrival_date != ""):
+        print("Filter if available")
+        reservations_month = BungalowReservationService.getReservations()
+        reservations_month.filter()
+        # bungalows = bungalows.filter(bungalow_type_id=bungalow_type_id)
+
+    context = {
+        'bungalows': bungalows
+    }
+
+    return render_to_response('Admin/bungalowReservation/combo_bungalow.html', context)
+
+
+@require_http_methods(['POST'])
 def create_bungalow_reservation(request):
     insert_data = {}
 

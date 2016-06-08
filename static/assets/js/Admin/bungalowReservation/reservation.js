@@ -3,27 +3,32 @@
 //     submitFilters();
 // });
 //
-//$('#headquarter_id_1').change(function() {
-//    pickHeadquarter1();
-//});
+$('#headquarter_id_1').change(function() {
+    refreshBungalow1();
+});
+//
+$('input[id=arrival_date]').change(function() {
+    refreshBungalow1();
+});
 
-function pickHeadquarter1(){
-    var request = {
+function refreshBungalow1(){
+
+    var requestData = {
         'headquarter_id' : $('#headquarter_id_1 option:selected').val(),
+        'arrival_date' : $('#arrival_date').val(),
+        'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
-//    refreshBungalow1(request);
-    console.log("THIS PICKER", request)
-}
 
-
-function refreshBungalow1(requestData){
+    console.log("AJAX REQUEST", requestData)
     $.ajax({
-        url : "./post", // the endpoint
+        url : "create/refresh_bungalow", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 
         // handle a successful response
         success : function(data) {
+
+    console.log("AJAX REQUEST", requestData)
             $('#bungalow_1_content').html(data);
             $('#stay_days_1').prop('disabled', true);
             $('#reserve_1').prop('disabled', true);
