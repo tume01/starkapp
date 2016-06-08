@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^ubigeo/', include('ubigeo.urls')),
     url(r'^entry/', include('entry.urls')),
     url(r'^guests/', include('guests.urls')),
+    url(r'^affiliate/', include('affiliate.urls')),
     url(r'^suspension/', include('suspension.urls')),
 
 ]
