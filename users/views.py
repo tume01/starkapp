@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MemberService import MembersService
+from services.AffiliateService import AffiliateService
 
 
 #TIPOS DE USUARIO
@@ -291,17 +292,9 @@ def verify_user(request):
 
     try:
 
-        member_application_service = Membership_ApplicationService()
-
-        filter_member_application = {}
-
-        filter_member_application["document_number"] = request.POST['username']
-
-        filter_member_application["status"] = 1
-
-        if( member_application_service.filter(filter_member_application)):
-
-            return  HttpResponse("false")
+        if request.POST['username'].isdigit():
+            
+            return HttpResponse("false")
 
         return  HttpResponse("true")
 
@@ -336,13 +329,25 @@ def verify_user_member(request):
 
         member_application_service = Membership_ApplicationService()
 
-        filter_member_application = {}
+        affiliate_service = AffiliateService()
 
-        filter_member_application["document_number"] = request.POST['username']
+        filter_data = {}
 
-        filter_member_application["status"] = 1
+        filter_data["document_number"] = request.POST['username']
 
-        if( member_application_service.filter(filter_member_application)):
+        filter_data["status"] = 1
+
+        filter_data2 = {}
+
+        filter_data2["document_number"] = request.POST['username']
+
+        filter_data2["state"] = 1
+
+        if( member_application_service.filter(filter_data)):
+
+            return  HttpResponse("false")
+
+        if( affiliate_service.filter(filter_data2)):
 
             return  HttpResponse("false")
 

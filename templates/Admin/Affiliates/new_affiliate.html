@@ -79,7 +79,7 @@ Nuevo afiliado
                                         <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
                                                 <div class="col-lg-8">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" value="" pattern="[0-9]*" >
+                                                        <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="" pattern="[0-9]*" >
                                                     </div>
                                                 </div>
                                         </div>                                           
@@ -184,7 +184,7 @@ Nuevo afiliado
 
 <script>
 var CSRF_TOKEN = '{{ csrf_token }}';
-var url= "{% url 'users:verify_user_member' %}"
+var url= "{% url 'affiliate:verify_affiliate' %}"
     $(document).ready(function () {
         $('#department').change(function(){
         var department = $('#department :selected').text();
