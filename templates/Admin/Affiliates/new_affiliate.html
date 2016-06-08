@@ -3,23 +3,23 @@
 {% load staticfiles %}
 
 {% block head_title %}
-Admin: membresia
+Admin: afiliados
 {% endblock %}
 
 {% block head_dahsboard %}
-Membresía
+Afiliado
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Nueva membresía
+Nuevo afiliado
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Membresía
+Afiliado
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Nueva membresía
+Nuevo afiliado
 {% endblock %}
 
 {% block content %}
@@ -102,7 +102,7 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Direccion</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input1-group2" name="department" placeholder="address" value="{{member.address}}" type="text">
+                                                <input class="form-control" id="example-input1-group2" name="address" placeholder="Direccion" value="" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -111,8 +111,8 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="department" name="department" size="1">
-                                                        <option value="">Seleccione</option>
-                                                            {% for u in departments%}
+                                                            <option value="">Seleccione</option>
+                                                            {% for u in ubigeo%}
                                                                 <option value="{{u.department}}">{{u.department}}</option>
                                                             {% endfor %}
                                                     </select>
@@ -124,10 +124,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="province" name="province" size="1">
-                                                        <option value="">Seleccione</option>
-                                                            {% for u in provinces%}
-                                                                    <option value="{{u.province}}">{{u.province}}</option>
-                                                            {% endfor %}
+                                                            <option value="">Seleccione</option>                                                          
                                                     </select>
                                                 </div>
                                             </div>
@@ -137,10 +134,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="district" name="district" size="1">
-                                                        <option value="">Seleccione</option>
-                                                        {% for u in districts%}
-                                                                <option value="{{u.district}}">{{u.district}}</option>
-                                                        {% endfor %}
+                                                       <option value="">Seleccione</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -174,7 +168,7 @@ Nueva membresía
                                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Registrar</button>
                                     </div>
                                     <div class="col-xs-2">
-                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "affiliate:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "members:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
                                     </div>
 
                                 </div>
@@ -240,7 +234,7 @@ Nueva membresía
 <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
 <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
-<script src='{% static "assets/js/Admin/Membership/member_forms_validations.js" %}'></script>
+<script src='{% static "assets/js/Admin/Membership/affiliate_forms_validations.js" %}'></script>
 
 
 

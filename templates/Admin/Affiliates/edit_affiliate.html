@@ -3,23 +3,23 @@
 {% load staticfiles %}
 
 {% block head_title %}
-Admin: miembros
+Admin: afiliados
 {% endblock %}
 
 {% block head_dahsboard %}
-Miembro
+Afiliado
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Editar miembro
+Editar mafiliado
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Miembro
+Afiliado
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Editar miembro
+Editar afiliado
 {% endblock %}
 
 {% block content %}
@@ -36,21 +36,14 @@ Editar miembro
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "members:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:edit" %}' method="post" >
                             {% csrf_token %}
                              <div class="row">
                                     <div class="col-lg-3" >
                                         <div class="form-group" style="display: none;">
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="id" name="id"  value="{{member.id}}"  type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group" style="display: none;">
-                                            <div class="col-md-12">
-                                               <div class="input-group">
-                                                    <input class="form-control"  name="membership_type_id"  value="{{membership_application.membership_type_id}}" type="text">
+                                                    <input class="form-control" id="id" name="id"  value="{{affiliate.id}}"  type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -58,7 +51,7 @@ Editar miembro
                                         <label class="col-xs-12" for="example-number-input">Nombres</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombres" value="{{member.name}}"  type="text">
+                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombres" value="{{affiliate.name}}"  type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -67,7 +60,7 @@ Editar miembro
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Apellido paterno</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="{{member.paternalLastName}}" type="text">
+                                                <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="{{affiliate.paternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -75,7 +68,7 @@ Editar miembro
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Apellido materno</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input6-group1" name="maternalLastName" placeholder="Apellido materno" value="{{member.maternalLastName}}" type="text">
+                                                <input class="form-control" id="example-input6-group1" name="maternalLastName" placeholder="Apellido materno" value="{{affiliate.maternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -86,7 +79,7 @@ Editar miembro
                                         <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
                                                 <div class="col-lg-8">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="{{member.document_number}}" pattern="[0-9]*" >
+                                                        <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="{{affiliate.document_number}}" pattern="[0-9]*" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -97,7 +90,7 @@ Editar miembro
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="example-select" name="identity_document_type" size="1">
                                                         {% for doc_type in doc_types %}
-                                                            {% if doc_type.id == member.identity_document_type.id %}
+                                                            {% if doc_type.id == affiliate.identity_document_type.id %}
                                                                 <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
                                                             {% else %}
                                                                 <option value="{{doc_type.id}}">{{doc_type.name}}</option>
@@ -114,7 +107,7 @@ Editar miembro
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Direccion</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input1-group2" name="department" placeholder="address" value="{{member.address}}" type="text">
+                                                <input class="form-control" id="example-input1-group2" name="address" placeholder="address" value="{{affiliate.address}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -125,7 +118,7 @@ Editar miembro
                                                     <select class="form-control" id="department" name="department" size="1">
                                                         <option value="">Seleccione</option>
                                                             {% for u in departments%}
-                                                                {% if u.department == member.ubigeo.department %}
+                                                                {% if u.department == affiliate.ubigeo.department %}
                                                                 <option selected value="{{u.department}}">{{u.department}}</option>
                                                                 {% else %}
                                                                 <option value="{{u.department}}">{{u.department}}</option>
@@ -142,7 +135,7 @@ Editar miembro
                                                     <select class="form-control" id="province" name="province" size="1">
                                                         <option value="">Seleccione</option>
                                                             {% for u in provinces%}
-                                                                {% if u.province == member.ubigeo.province %}
+                                                                {% if u.province == affiliate.ubigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
                                                                     <option value="{{u.province}}">{{u.province}}</option>
@@ -159,7 +152,7 @@ Editar miembro
                                                     <select class="form-control" id="district" name="district" size="1">
                                                         <option value="">Seleccione</option>
                                                         {% for u in districts%}
-                                                            {% if u.district == member.ubigeo.district %}
+                                                            {% if u.district == affiliate.ubigeo.district %}
                                                                 <option selected value="{{u.district}}">{{u.district}}</option>
                                                             {% else %}
                                                                 <option value="{{u.district}}">{{u.district}}</option>
@@ -177,7 +170,7 @@ Editar miembro
                                         <label class="col-xs-12" for="example-select">Teléfono</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="phone" placeholder="Teléfono" value="{{member.phone}}"  >
+                                                    <input class="form-control" id="example-number1-group2" name="phone" placeholder="Teléfono" value="{{affiliate.phone}}"  >
                                                 </div>
                                             </div>
                                         </div>
@@ -186,7 +179,7 @@ Editar miembro
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Correo</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-input4-group2" name="email" value="{{member.email}}" placeholder="Correo" type="text">
+                                                <input class="form-control" id="example-input4-group2" name="email" value="{{affiliate.email}}" placeholder="Correo" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -265,7 +258,7 @@ var url= "{% url 'users:verify_user_member' %}"
 <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
 <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
-<script src='{% static "assets/js/Admin/Membership/member_forms_validations.js" %}'></script>
+<script src='{% static "assets/js/Admin/Membership/affiliate_forms_validations.js" %}'></script>
 
 
 
