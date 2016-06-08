@@ -126,7 +126,7 @@ def index_book(request):
 
     headquarters = headquarter_service.getHeadquarters()
 
-    filters = getReservationFilters(request)
+    filters      = getReservationFilters(request)
     reservations = environment_service.filterReservations(filters)
 
     paginator = Paginator(reservations, 10)
@@ -145,7 +145,7 @@ def index_book(request):
     context = {
         'reservations' : reservations,
         'headquarters' : headquarters,
-        'titulo' : 'titulo'
+        'titulo'       : 'titulo'
     }
 
     return render(request, 'Admin/Environments/List_Reservations.html', context)
@@ -156,7 +156,7 @@ def getReservationFilters(request):
 
     filters = {}
 
-    if request.GET.get('env_name') || request.GET.get('headquarter_id'):
+    if request.GET.get('env_name') || request.GET.get('headquarter_id') || request.GET.get('environment_id'):
 
         environment_service = EnvironmentService()
         data = {}
@@ -166,6 +166,9 @@ def getReservationFilters(request):
 
         if request.GET.get('headquarter_id'):
             data['headquarter_id'] = request.GET.get('headquarter_id')
+
+        if request.GET.get('environment_id'):
+            data['environment_id'] = request.GET.get('environment_id')
 
         env_tmp = environment_service.filter(data).first()
         if env_tmp:
@@ -186,15 +189,12 @@ def getReservationFilters(request):
 @require_http_methods(['GET'])
 def create_reservation(request):
 
-    environments_service = EnvironmentService()
     headquarter_service = HeadquarterService()
 
     headquarters = headquarter_service.getHeadquarters()
-    environments = environments_service.getEnvironment()
 
     context = {
         'titulo': 'tittle',
-        'environments': environments,
         'headquarters' : headquarters
     }
 
@@ -212,7 +212,7 @@ def create_reservation_post(request):
     
     context = {
         'reservations' : reservations,
-        'titulo' : 'titulo'
+        'titulo'       : 'titulo'
     }
 
     #Si encuentra reserva alguna en la fecha no esta disponible
@@ -220,6 +220,21 @@ def create_reservation_post(request):
         return render(request, 'Admin/Environments/Create_not_available.html', context)   
 
     return render(request, 'Admin/Environments/Create_Reservation_Form', context)
+
+@require_http_methods(['GET'])
+def create_reservation_getEnvs(request):
+
+    environment_service = EnvironmentService()
+
+    environments = environment_service.filter({'headquarter_id' : request.GET.get('headquarter_id')})
+
+    
+    context = {
+        'environments' : environments,
+        'titulo' : 'titulo'
+    }
+
+    return render(request, 'Admin/Environments/Create_Reservation_Envs', context)
 
 @require_http_methods(['POST'])
 def insert_reservation(request):
@@ -238,33 +253,31 @@ def insert_reservation(request):
 
         
 
-        price = form.cleaned_data['price']
-        start_date = form.cleaned_data['start_date']
-        end_date   = form.cleaned_data['end_date']
-        enviroment_id = form.cleaned_data['enviroment_id']
+        price          = form.cleaned_data['price']
+        start_date     = form.cleaned_data['start_date']
+        end_date       = form.cleaned_data['end_date']
+        environment_id = form.cleaned_data['environment_id']
 
-        enviroment = environments_service.getEnviromentById(enviroment_id)
+        environment = environments_service.getEnviromentById(environment_id)
 
         insert_data = {
-            'price'      : price,
-            'start_date' : start_date,
-            'end_date'   : end_date,
-            'enviroment' : enviroment
+            'price'       : price,
+            'start_date'  : start_date,
+            'end_date'    : end_date,
+            'environment' : environment
         }
 
         environment_service.createReservation(insert_data)
 
-        return HttpResponseRedirect(reverse('enviroment:index_book'))
+        return HttpResponseRedirect(reverse('environment:index_book'))
 
     else:
         
         headquarter_service = HeadquarterService()
 
         headquarters = headquarter_service.getHeadquarters()
-        environments = environments_service.getEnvironment()
 
         context = {
-            'reservations' : reservations,
             'headquarters' : headquarters,
             'titulo'       : 'titulo'
         }

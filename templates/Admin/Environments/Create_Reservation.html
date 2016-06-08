@@ -31,15 +31,8 @@ Lista de ambientes reservados
     <!-- Table Header (Filters) -->
     <div class="block">
         <div class="block-content">
-            <form class="form" id="filters-form" action="{% url 'environment:index_book' %}" method="post" onsubmit="return false;">{% csrf_token %}
+            <form class="form" id="filters-form" method="post" onsubmit="return false;">{% csrf_token %}
                 <div class="row">
-
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label" for="env_name">Nombre Ambiente</label>
-                            <input class="form-control" type="text"  id="env_name" name="env_name"   >
-                        </div>
-                    </div>
 
                     <div class="col-lg-4">
                         <div class="form-group">
@@ -50,6 +43,11 @@ Lista de ambientes reservados
                                 <option value="{{headquarter.id}}">{{headquarter.name}}</option>
                                 {% endfor %}
                             </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group" id="select_env">
+                            {% include 'Admin/Environments/Create_Reservation_Envs.html' %}
                         </div>
                     </div>
                 </div>

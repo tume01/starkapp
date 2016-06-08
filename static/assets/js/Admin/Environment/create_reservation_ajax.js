@@ -30,7 +30,7 @@ function chargeEnvironments() {
 
         // handle a successful response
         success : function(response) {
-            $('#select-env').html(response);
+            $('#select_env').html(response);
         },
 
         // handle a non-successful response
