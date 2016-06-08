@@ -114,7 +114,7 @@ def edit_environment(request):
     return HttpResponseRedirect(reverse('environment:index'))
 
 
-#Metodos para la reserva de ambientes
+# Metodos para la reserva de ambientes
 
 @require_http_methods(['GET'])
 def index_book(request):
@@ -155,12 +155,15 @@ def getReservationFilters(request):
     filters = {}
 
     if request.GET.get('env_name') || request.GET.get('headquarter_id'):
+
         environment_service = EnvironmentService()
-        
-        data = {
-            'name__icontains': request.GET.get('env_name'),
-            'headquarter_id': request.GET.get('headquarter_id'),
-        }
+        data = {}
+
+        if request.GET.get('env_name'):
+            data['name__icontains'] = request.GET.get('env_name')
+
+        if request.GET.get('headquarter_id'):
+            data['headquarter_id'] = request.GET.get('headquarter_id')
 
         env_tmp = environment_service.filter(data).first()
         if env_tmp:
@@ -177,3 +180,38 @@ def getReservationFilters(request):
         filters['end_date__lte'] = end_date
 
     return filters
+
+@require_http_methods(['GET'])
+def create_index(request):
+
+    environments_service = EnvironmentService()
+
+    environments = environments_service.getEnvironment()
+
+    context = {
+        'titulo': 'tittle',
+        'environments': environments,
+    }
+
+    return render(request, 'Admin/Environments/Create_Reservation.html', context)
+
+
+@require_http_methods(['GET'])
+def create_index_post(request):
+
+    environment_service = EnvironmentService()
+
+    filters = getReservationFilters(request)
+    reservations = environment_service.filterReservations(filters)
+
+    
+    context = {
+        'reservations' : reservations,
+        'titulo' : 'titulo'
+    }
+
+    #Si encuentra reserva alguna en la fecha no esta disponible
+    if reservations.count() > 0 :
+        return render(request, 'Admin/Environments/Create_not_available.html', context)   
+
+    return render(request, 'Admin/Environments/Create_Reservation_Form', context)
