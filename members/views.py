@@ -145,11 +145,17 @@ def edit_member(request):
 
         edit_data["email"] = form.cleaned_data['email']
 
-        id_ubigeo = request.POST['district']
+        filter_ubigeo = {}
 
-        ubi = ubigeo_service.getUbigeoById(id_ubigeo)
+        filter_ubigeo["department"] = request.POST['department']
 
-        edit_data["ubigeo"] = ubi
+        filter_ubigeo["province"] = request.POST['province']
+
+        filter_ubigeo["district"] = request.POST['district']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        edit_data["ubigeo"] = ubi[0]
 
         member_service = MembersService()
 
