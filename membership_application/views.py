@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MembershipTypeService import MembershipTypeService
 from services.MemberService import MembersService
+from services.AffiliateService import AffiliateService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
@@ -486,3 +487,38 @@ def approve_membership_application(request):
 
 
 
+@login_required
+@require_http_methods(['POST'])
+def verify_document_number(request):
+
+    member_application_service = Membership_ApplicationService()
+
+    member_service = MembersService()
+
+    affiliate_service = AffiliateService()
+
+    filter_data = {}
+
+    filter_data["document_number"] = request.POST['username']
+
+    filter_data["status"] = 1
+
+    filter_data2 = {}
+
+    filter_data2["document_number"] = request.POST['username']
+
+    filter_data2["state"] = 1
+
+    if( member_service.filter(filter_data2)):
+
+        return  HttpResponse("false")
+
+    if( member_application_service.filter(filter_data)):
+
+        return  HttpResponse("false")
+
+    if( affiliate_service.filter(filter_data2)):
+
+        return  HttpResponse("false")
+
+    return  HttpResponse("true")
