@@ -23,3 +23,6 @@ class EnvironmentService(object):
 
     def getEnvironmentByStatus(self):
         return self.__environment_repository.getActiveEnvironment()
+
+    def filter(self,filters):
+        return self.__environment_repository.filter(filters)
