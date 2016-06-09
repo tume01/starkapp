@@ -1,37 +1,39 @@
 <!-- Simple Table Full tbody -->
-<table class="table table-bordered table-striped js-dataTable-simple">
+<table class="table table-bordered table-striped">
     <thead>
-        <tr>
-            <th class="text-center">#</th>
-            <th>Sede</th>
-            <th>Bungalow</th>
-            <th class="hidden-xs">Capacidad</th>
-            <th class="hidden-xs">Tipo</th>
-            <th class="hidden-xs">Estado</th>
-            <th>Precio (S/.)</th>
-            <th >Acción</th>
-        </tr>
+    <tr>
+        <th class="text-center">#</th>
+        <th>Sede</th>
+        <th>Bungalow</th>
+        <th class="hidden-xs">Capacidad</th>
+        <th class="hidden-xs">Tipo</th>
+        <th class="hidden-xs">Estado</th>
+        <th>Precio (S/.)</th>
+        <th>Acción</th>
+    </tr>
     </thead>
     <tbody>
-        {% for bungalow in bungalows %}
-            <tr>
-                <td class="text-center">{{bungalow.id}}</td>
-                <td class="font-w600">{{bungalow.headquarter.name}}</td>
-                <td class="font-w600">Bungalow {{bungalow.number}}</td>
-                <td class="hidden-xs">{{ bungalow.bungalow_type.capacity }}</td>
-                <td class="hidden-xs">{{ bungalow.bungalow_type.name }}</td>
-                <td class="hidden-xs"><span class="label label-danger">{{ bungalow.getStatusName }}</span></td>
-                <td class="text-center">{{ bungalow.bungalow_type.price }}</td>
-                <td class="text-center">
-                    <div class="btn-group">
-                        <form class="form" action="{% url 'bungalow:update_index' bungalow.id %}" method="get">
-                            <button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
-                            <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
+    {% for bungalow in bungalows %}
+    <tr>
+        <td class="text-center">{{bungalow.id}}</td>
+        <td class="font-w600">{{bungalow.headquarter.name}}</td>
+        <td class="font-w600">Bungalow {{bungalow.number}}</td>
+        <td class="hidden-xs">{{ bungalow.bungalow_type.capacity }}</td>
+        <td class="hidden-xs">{{ bungalow.bungalow_type.name }}</td>
+        <td class="hidden-xs"><span class="label label-danger">{{ bungalow.getStatusName }}</span></td>
+        <td class="text-center">{{ bungalow.bungalow_type.price }}</td>
+        <td class="text-center">
+            <div class="btn-group">
+                <form class="form" action="{% url 'bungalow:update_index' bungalow.id %}" method="get">
+                    <button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip"
+                            title="Actualizar Reserva"><i class="fa fa-pencil"></i></button>
+                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip"
+                            title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
+                </form>
+            </div>
+        </td>
+    </tr>
+    {% endfor %}
     </tbody>
 </table>
 
