@@ -258,6 +258,7 @@ def remove_member(request, activity_id, member_id):
     activity_service = ActivityService()
 
     if activity_service.removeMember(activity_id, member_id):
+        messages.error(request, 'Miembro retirado de actvidad exitosamente')
         return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
 
     messages.error(request, 'Error al remover miembro')

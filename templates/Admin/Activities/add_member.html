@@ -49,7 +49,10 @@ Miembros
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <label for="activity_type">Miembros</label>
-                                <select class="form-control" id="activity_type" name="activity_type">
+                                <select class="form-control" id="member" name="member">
+                                    {% for member in members%}
+                                        <option value="{{member.id}}">{{member.name}}</option>
+                                    {% endfor%}
                                 </select>
                             </div>
                         </div>

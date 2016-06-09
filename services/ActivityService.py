@@ -38,6 +38,13 @@ class ActivityService(object):
         return activity.activityregistration_set.filter(deleted_at=None)
 
     def addMember(self, activity_id, member):
-        activity = self,getActivity(activity_id)
+        activity = self.getActivity(activity_id)
 
-        return activity.members.add(member)
+        assistants = activity.activityregistration_set.count()
+
+        if activity.attendance > assistants:
+
+            if not activity.activityregistration_set.filter(member_id=member.id, deleted_at=None):
+                return self.__activity_repository.addMember(activity, member)
+
+        return None
