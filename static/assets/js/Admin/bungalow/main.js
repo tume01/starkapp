@@ -1,34 +1,75 @@
 // Submit post on submit
-$('#filters-form').on('submit', function(event){
-    event.preventDefault();
-    submit_filters();
+// $('#filters-form').on('submit', function(event){
+//     submitFilters();
+// });
+
+$( "#bungalow_type_id" ).change(function() {
+    submitFilters();
 });
 
-// {% url 'update_index' bungalow.id %}
+$( "#headquarter_id" ).change(function() {
+    submitFilters();
+});
 
-function submit_filters() {
-    console.log('Submit Filters')
+// Prevent Default Current Page
+$( "#current-page" ).click(function(event) {
+    event.preventDefault();
+    console.log('CURRENT')
+});
 
-    console.log($('#bungalow_type_id option:selected').val())
-    console.log($('#member_name').val())
-    console.log($('#headquarter_id option:selected').val())
-    // var csrftoken = getCookie('csrftoken');
-    // console.log(csrftoken)
+function submitFilters() {
+    // event.preventDefault();
 
+    var requestData = getFilters();
+    requestData.csrfmiddlewaretoken = getCookie('csrftoken');
+
+    reloadTable(requestData);
+};
+
+function prevPage() {
+    console.log('PREV Page')
+    event.preventDefault();
+
+    var requestData = getFilters();
+    requestData.page = $('#page').text() - 1;
+    requestData.csrfmiddlewaretoken = getCookie('csrftoken');
+    
+    reloadTable(requestData);
+};
+
+function nextPage() {
+    console.log('NEXT Page')
+    event.preventDefault();
+    
+    var requestData = getFilters();
+    requestData.page = parseInt($('#page').text(),10) + 1;
+    requestData.csrfmiddlewaretoken = getCookie('csrftoken');
+    
+    reloadTable(requestData);
+};
+
+function getFilters() {
+    var filter = {
+        'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
+        'headquarter_id' : $('#headquarter_id option:selected').val(),
+    }
+    return filter;
+};
+
+function reloadTable(requestData){
     $.ajax({
         url : "post", // the endpoint
         type : "POST", // http method
-        data : {
-            'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
-            'member_name' : $('#member_name').val(),
-            'headquarter_id' : $('#headquarter_id option:selected').val(),
-            'csrfmiddlewaretoken' :  getCookie('csrftoken')
-            // '{% csrf_token %}'
-        }, // data sent with the post request
+        data : requestData, // data sent with the post request
 
         // handle a successful response
         success : function(data) {
             $('#table-content').html(data);
+
+            // Prevent Default Current Page
+            $( "#current-page" ).click(function(event) {
+                console.log('CURRENT')
+            });
         },
 
         // handle a non-successful response
@@ -39,8 +80,9 @@ function submit_filters() {
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
+}
 
-};
+
 
 function getCookie(name) {
     var cookieValue = null;
