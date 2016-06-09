@@ -92,27 +92,27 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a data-toggle="theme" data-theme="assets/css/themes/amethyst.min.css" tabindex="-1" href="javascript:void(0)">
+                                        <a data-toggle="theme" data-theme='{% static "assets/css/themes/amethyst.min.css" %}' tabindex="-1" href="javascript:void(0)">
                                             <i class="fa fa-circle text-amethyst pull-right"></i> <span class="font-w600">Amethyst</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a data-toggle="theme" data-theme="assets/css/themes/city.min.css" tabindex="-1" href="javascript:void(0)">
+                                        <a data-toggle="theme" data-theme='{% static "assets/css/themes/city.min.css" %}' tabindex="-1" href="javascript:void(0)">
                                             <i class="fa fa-circle text-city pull-right"></i> <span class="font-w600">City</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a data-toggle="theme" data-theme="assets/css/themes/flat.min.css" tabindex="-1" href="javascript:void(0)">
+                                        <a data-toggle="theme" data-theme='{% static "assets/css/themes/flat.min.css" %}' tabindex="-1" href="javascript:void(0)">
                                             <i class="fa fa-circle text-flat pull-right"></i> <span class="font-w600">Flat</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a data-toggle="theme" data-theme="assets/css/themes/modern.min.css" tabindex="-1" href="javascript:void(0)">
+                                        <a data-toggle="theme" data-theme='{% static "assets/css/themes/modern.min.css" %}' tabindex="-1" href="javascript:void(0)">
                                             <i class="fa fa-circle text-modern pull-right"></i> <span class="font-w600">Modern</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a data-toggle="theme" data-theme="assets/css/themes/smooth.min.css" tabindex="-1" href="javascript:void(0)">
+                                        <a data-toggle="theme" data-theme='{% static "assets/css/themes/smooth.min.css" %}' tabindex="-1" href="javascript:void(0)">
                                             <i class="fa fa-circle text-smooth pull-right"></i> <span class="font-w600">Smooth</span>
                                         </a>
                                     </li>
@@ -128,15 +128,7 @@
                         <div class="side-content">
                             <ul class="nav-main">
                                 <li class="open">
-                                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-home"></i><span class="sidebar-mini-hide">Home</span></a>
-                                    <ul>
-                                        <li>
-                                            <a class="active" href="frontend_home.html">Default Navigation</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_home_header_nav.html">Header Navigation</a>
-                                        </li>
-                                    </ul>
+                                    <a class="nav-submenu"  href='{% url "home" %}'><i class="si si-home"></i><span class="sidebar-mini-hide">Inicio</span></a>                                    
                                 </li>
                                 <li>
                                     <a href="frontend_features.html"><i class="si si-energy"></i><span class="sidebar-mini-hide">Features</span></a>
@@ -308,7 +300,7 @@
             <!-- Main Container -->
             <main id="main-container">
                 <!-- Hero Content -->
-                <div class="bg-image" style="background-image: url('assets/img/various/hero1.jpg');">
+                <div class="bg-image" style="background-image: url('{% static "assets/img/various/hero1.jpg" %}');">
                     <div class="bg-primary-dark-op">
                         <section class="content content-full content-boxed overflow-hidden">
                             <!-- Section Content -->
@@ -319,7 +311,7 @@
                             </div>
                             <div class="row visibility-hidden" data-toggle="appear" data-class="animated fadeInUp">
                                 <div class="col-sm-8 col-sm-offset-2">
-                                    <img class="img-responsive pull-b" src="assets/img/various/promo1.jpg" alt="">
+                                    <img class="img-responsive pull-b" src='{% static "assets/img/various/promo1.jpg" %}' alt="">
                                 </div>
                             </div>
                             <!-- END Section Content -->
@@ -484,13 +476,13 @@
                 <!-- END Classic Features #2 -->
 
                 <!-- Ratings -->
-                <div class="bg-image" style="background-image: url('assets/img/photos/photo3@2x.jpg');">
+                <div class="bg-image" style="background-image: url('{% static "assets/img/photos/photo3@2x.jpg" %}');">
                     <div class="bg-primary-dark-op">
                         <section class="content content-full content-boxed">
                             <!-- Section Content -->
                             <div class="row items-push-2x push-50-t text-center">
                                 <div class="col-sm-4 visibility-hidden" data-toggle="appear" data-offset="-150">
-                                    <img class="img-avatar img-avatar-thumb" src="assets/img/avatars/avatar4.jpg" alt="">
+                                    <img class="img-avatar img-avatar-thumb" src='{% static "assets/img/avatars/avatar4.jpg" %}' alt="">
                                     <div class="text-warning push-10-t push-15">
                                         <i class="fa fa-fw fa-star"></i>
                                         <i class="fa fa-fw fa-star"></i>
@@ -502,7 +494,7 @@
                                     <div class="h6 text-gray">- Susan Elliott</div>
                                 </div>
                                 <div class="col-sm-4 visibility-hidden" data-toggle="appear" data-offset="-150" data-timeout="150">
-                                    <img class="img-avatar img-avatar-thumb" src="assets/img/avatars/avatar11.jpg" alt="">
+                                    <img class="img-avatar img-avatar-thumb" src='{% static "assets/img/avatars/avatar11.jpg" %}' alt="">
                                     <div class="text-warning push-10-t push-15">
                                         <i class="fa fa-fw fa-star"></i>
                                         <i class="fa fa-fw fa-star"></i>
@@ -514,7 +506,7 @@
                                     <div class="h6 text-gray">- Adam Hall</div>
                                 </div>
                                 <div class="col-sm-4 visibility-hidden" data-toggle="appear" data-offset="-150" data-timeout="300">
-                                    <img class="img-avatar img-avatar-thumb" src="assets/img/avatars/avatar8.jpg" alt="">
+                                    <img class="img-avatar img-avatar-thumb" src='{% static "assets/img/avatars/avatar8.jpg" %}' alt="">
                                     <div class="text-warning push-10-t push-15">
                                         <i class="fa fa-fw fa-star"></i>
                                         <i class="fa fa-fw fa-star"></i>
