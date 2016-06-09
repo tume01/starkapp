@@ -175,9 +175,15 @@ def get_member(request):
 
     member_service = MembersService()
 
+    doc=request.POST['document_number']
+
+    if(not doc.isdigit()):
+
+        return  HttpResponse("")
+
     filter_member = {}
 
-    filter_member["document_number"] = request.POST['document_number']
+    filter_member["document_number"] = doc
 
     member = member_service.filter(filter_member)
 

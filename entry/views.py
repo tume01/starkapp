@@ -16,11 +16,16 @@ from datetime import datetime
 @require_http_methods(['GET'])
 def index(request):
 
+
+    entry_service = EntryService()
+
+    entries = entry_service.getEntries()
+
     context = {
         'entries' : entries,
     }
 
-    return render(request, 'Admin/Guests/index_entry.html', context) 
+    return render(request, 'Admin/Guests/index_entries.html', context) 
 
 
 @login_required
