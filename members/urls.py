@@ -10,5 +10,5 @@ urlpatterns = [
     url(r'^get', views.get_member, name='get_member'),
     url(r'^entry', views.get_entry, name='get_entry'),
     url(r'^', views.member_index, name='index'),
-
+    url(r'^filter', views.member_filter, name='filter'),
 ]

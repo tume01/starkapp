@@ -25,10 +25,15 @@ def member_index(request):
 
     member_service = MembersService()
 
+    identity_service = IdentityDocumentTypeService()
+
     members = member_service.getMembers()
+
+    doc_types = identity_service.getIdentityDocumentTypes()
 
     context = {
         'members' : members,
+        'doc_types' : doc_types
     }
 
     return render(request, 'Admin/Members/index_members.html', context) 
@@ -172,9 +177,13 @@ def edit_member(request):
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
-def  member_filter(request):
+def member_filter(request):
 
     member_service = MembersService()
+
+    identity_service = IdentityDocumentTypeService()
+
+    doc_types = identity_service.getIdentityDocumentTypes()
 
     filter_member = {}
 
@@ -184,21 +193,26 @@ def  member_filter(request):
 
     maternalLastName = request.POST['maternalLastName']
 
-    document = request.POST['document']
+    document = request.POST['num_doc']
 
     suspended = request.POST['suspended']
 
+    identity_document_type = request.POST['identity_document_type']
+
     if paternalLastName != '':
-        filter_member["paternalLastName"] = paternalLastName
+        filter_member['paternalLastName'] = paternalLastName
 
     if maternalLastName != '':
-        filter_member["maternalLastName"] = maternalLastName
+        filter_member['maternalLastName'] = maternalLastName
 
     if document != '':
         filter_member['document'] = document
 
     if name != '':
-        filter_member["name"] = name
+        filter_member['name'] = name
+
+    if identity_document_type != '':
+        filter_member['identity_document_type'] = identity_document_type
 
     members = member_service.filter(filter_member)
 
@@ -207,6 +221,7 @@ def  member_filter(request):
 
         context = {
             'members': members,
+            'doc_types': doc_types
         }
 
         return render(request, 'Admin/Members/index_members.html', context)
@@ -216,12 +231,14 @@ def  member_filter(request):
 
         context = {
             'members': members,
+            'doc_types': doc_types
         }
 
         return render(request, 'Admin/Members/index_members.html', context)
 
     context = {
         'members': members,
+        'doc_types': doc_types
     }
 
     return render(request, 'Admin/Members/index_members.html', context)
