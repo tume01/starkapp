@@ -20,7 +20,8 @@ class Activity(models.Model):
     )
 
 class ActivityRegistration(models.Model):
-    register_day = models.DateTimeField(null=True)
+    registered_at = models.DateTimeField(null=True)
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     activity = models.ForeignKey(Activity, on_delete=models.CASCADE)
+    deleted_at = models.DateTimeField(null=True)
  

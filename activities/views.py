@@ -50,7 +50,7 @@ def getActivityFilters(request):
 
     filters = {}
 
-    filters['status'] = None;
+    filters['deleted_at'] = None;
 
     if request.GET.get('name'):
         filters['name__contains'] = request.GET.get('name')
@@ -142,7 +142,7 @@ def delete(request, activity_id):
 
     activity_service = ActivityService()
 
-    activity = activity_service.update(activity_id, {'status': datetime.now()})
+    activity = activity_service.update(activity_id, {'deleted_at': datetime.now()})
 
     return HttpResponseRedirect(reverse('activities:index'))
 
@@ -155,6 +155,7 @@ def update_index(request, activity_id):
     environments_service = EnvironmentService()
 
     activity  = activity_service.getActivity(activity_id)
+
     activity_types = activity_types_service.getActivityTypes()
     environments = environments_service.getEnvironment()
 
@@ -237,3 +238,31 @@ def index_course(request):
     }
 
     return render(request, 'Admin/Activities/index_course.html', context)
+
+def index_members(request, activity_id):
+
+    activity_service = ActivityService()
+
+    registrations = activity_service.getActivityMembers(activity_id)
+
+    context = {
+        'activity_id' : activity_id,
+        'registrations' : registrations
+    }
+
+    return render(request, 'Admin/Activities/index_members.html', context)
+
+def remove_member(request, activity_id, member_id):
+
+    activity_service = ActivityService()
+
+    if activity_service.removeMember(activity_id, member_id):
+        return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
+    else:
+        messages.error(request, 'Error al remover miembro')
+        return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
+
+    return HttpResponse(activity_id)
+
+def index_add_member(request, activity_id):
+    pass
