@@ -24,7 +24,7 @@ var SuspensionFormValidation = function() {
                 'reason': {
                     required: true,
                     maxlength: 200
-                }
+                },
                 'initialDate': {
                     required: true
                 },
@@ -36,7 +36,7 @@ var SuspensionFormValidation = function() {
                 'reason': {
                     required: 'Por favor ingrese un comentario',
                     maxlength: 'El comentario no puede tener más de 200 caracteres'
-                }
+                },
                 'initialDate': {
                     required: 'Por favor ingrese una fecha inicial'
                 },
