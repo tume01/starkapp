@@ -21,5 +21,5 @@ class Bungalow_serviceService(object):
         return cls._repository.allNotDeleted()
 
     @classmethod
-    def findBungalowType(cls, id):
+    def findBungalow_service(cls, id):
         return cls._repository.find(id)

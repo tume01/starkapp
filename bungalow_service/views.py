@@ -43,3 +43,30 @@ def getServices(request, id):
 
     return HttpResponse( json.dumps(req_list), content_type='application/json')
 
+
+@require_http_methods(['POST'])
+def saveServicesByBungalowType(request, id):
+
+    update_data = {}
+    req = json.loads( request.body.decode('utf-8') )
+    print(req.get("arrayIdServices"))
+
+    bungalow_type = BungalowTypeService.findBungalowType(id)
+
+    update_data["name"] = bungalow_type.name
+    update_data["description"] = bungalow_type.description
+    update_data["price"] = bungalow_type.price
+    update_data["capacity"] = bungalow_type.capacity
+    update_data["deleted_at"] = bungalow_type.deleted_at
+
+    list_services = []
+    for i in req.get("arrayIdServices"):
+        list_services.append(Bungalow_serviceService.findBungalow_service(i))
+
+    update_data["bungalow_services"] = list_services
+
+    BungalowTypeService.update(id, update_data);
+
+
+    return HttpResponse( json.dumps(req), content_type='application/json')
+

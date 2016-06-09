@@ -56,6 +56,29 @@ $('#bungalow_type').change(function(){
 
 $('#SaveServices').click(function(){
     console.log( "save service" );
+
+    data = {};
+    data.arrayIdServices = $('#select2BungalowService').val();
+
+    console.log(data);
+
+    var xhr = $.ajax({
+        type: "POST", 
+        url: "/bungalow_service/saveServicesByBungalowType/"+ $('#bungalow_type').val(), //url que procesa
+        dataType: "json",
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+    });
+
+    xhr.done(function(data) {
+        window.location="/bungalow_service";
+    });
+
+    xhr.fail(function(xhr, status, text){
+        console.log("Error " + xhr.readyState + " " +text);
+
+    });
+
 });
 
 $('#CancelSaveServices').click(function(){
