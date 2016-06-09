@@ -2,7 +2,8 @@ from datetime import datetime,timedelta
 from .forms import ActivityForm
 import json
 from django.template import loader
-from services.EnvironmentService import EnvironmentService
+from services.EnvironmentService import EnvironmentService 
+from services.MemberService import MembersService
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponse
@@ -258,11 +259,35 @@ def remove_member(request, activity_id, member_id):
 
     if activity_service.removeMember(activity_id, member_id):
         return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
-    else:
-        messages.error(request, 'Error al remover miembro')
-        return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
 
-    return HttpResponse(activity_id)
+    messages.error(request, 'Error al remover miembro')
+    return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
 
 def index_add_member(request, activity_id):
-    pass
+    
+    members_service = MembersService()
+
+    members = members_service.getMembers()
+
+    context = {
+        'members' : members,
+        'activity_id' : activity_id
+    }
+
+    return render(request, 'Admin/Activities/add_member.html', context)
+
+def add_member(request, activity_id):
+
+    member_id = request.POST.get('member')
+
+    activity_service = ActivityService()
+    members_service = MembersService()
+
+    member = members_service.getMember(member_id)
+
+    if activity_service.addMember(activity_id, member):
+        messages.error(request, 'Miembro ananido correctamente')
+        return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
+    
+    messages.error(request, 'Error al anadir miembro')
+    return HttpResponseRedirect(reverse('activities:add_member', args=[activity_id]))

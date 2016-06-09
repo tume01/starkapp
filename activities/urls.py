@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^create', views.create_index, name='create_index'),
     url(r'^update/(?P<activity_id>[0-9]+)', views.update_index, name='select'),
     url(r'^members/(?P<activity_id>[0-9]+)', views.index_members, name='members'),
+    url(r'^members/add/(?P<activity_id>[0-9]+)/insert', views.add_member, name='insert_member'),
     url(r'^members/add/(?P<activity_id>[0-9]+)', views.index_add_member, name='add_member'),
     url(r'^members/remove/(?P<activity_id>[0-9]+)/(?P<member_id>[0-9]+)', views.remove_member, name='member_remove'),
     url(r'^save/(?P<activity_id>[0-9]+)', views.update, name='update'),

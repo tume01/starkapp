@@ -36,3 +36,8 @@ class ActivityService(object):
         activity = self.getActivity(activity_id)
 
         return activity.activityregistration_set.filter(deleted_at=None)
+
+    def addMember(self, activity_id, member):
+        activity = self,getActivity(activity_id)
+
+        return activity.members.add(member)
