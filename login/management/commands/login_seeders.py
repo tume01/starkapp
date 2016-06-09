@@ -8,6 +8,7 @@ from membership_application.models import *
 from members.models import *
 from ubigeo.models import *
 from fine.models import *
+from suspension.models import *
 from promotions.models import *
 
 
@@ -25,6 +26,7 @@ class Command(BaseCommand):
         self.insertData()
 
     def cleanDB(self):
+        Suspension.objects.all().delete()
         Member.objects.all().delete()
         Membership_Application.objects.all().delete()
         Membership.objects.all().delete()
@@ -1903,7 +1905,6 @@ class Command(BaseCommand):
         u = Ubigeo(department='Ucayali', province='Padre Abad', district='Alexander Von Humboldt').save()
         u = Ubigeo(department='Ucayali', province='Purús', district='Purus').save()
 
-        user1 = User.objects.create_user(username='usuario', password='1111')
         user2 = User.objects.create_user(username='administrador', password='1111')
         user3 = User.objects.create_user(username='responsableBungalow', password='1111')
         user4 = User.objects.create_user(username='responsableProveedor', password='1111')
@@ -1935,7 +1936,6 @@ class Command(BaseCommand):
         multa = Group.objects.create(name='multa')
         empresa = Group.objects.create(name='empresas')
 
-        usuarios.user_set.add(user1)
         admin.user_set.add(user2)
         bungalows.user_set.add(user3)
         proveedores.user_set.add(user4)
@@ -2092,6 +2092,14 @@ class Command(BaseCommand):
                        paternalLastName='Coronado', maternalLastName='Overwatch', document_number=22334563, phone=1337420,
                        email='mailm3@mailcito.com', address='Bliizard HQ', state=1)
         memb3.save()
+
+        susp1 = Suspension(membership=mship1, reason='Falta de overwatch', initialDate=datetime.now(),
+                           finalDate=datetime.now() + timedelta(8), status=1)
+        susp1.save()
+
+        susp2 = Suspension(membership=mship2, reason='Falta de TAC', initialDate=datetime.now() - timedelta(5),
+                           finalDate=datetime.now() - timedelta(1), status=0)
+        susp2.save()
 
         ftype1 = FineType(reason='Destruccion de silla', price=300, status=1)
         ftype1.save()

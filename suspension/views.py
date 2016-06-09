@@ -81,6 +81,9 @@ def edit_suspension_index(request):
 
     suspension = suspension_service.getSuspension(suspension_id)
 
+    suspension.initialDate = datetime.strftime(suspension.initialDate, '%m/%d/%Y')
+
+
     context = {
         'suspension' : suspension,
     }
