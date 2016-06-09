@@ -3,23 +3,23 @@
 {% load staticfiles %}
 
 {% block head_title %}
-Admin: solicitud de membresia
+Admin: suspension
 {% endblock %}
 
 {% block head_dahsboard %}
-Solicitud de membresía
+Suspension
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Nueva solicitud de membresía
+Nueva suspension
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Solicitud de membresía
+Suspension
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Nueva solicitud de membresía
+Nueva suspension
 {% endblock %}
 
 {% block content %}
@@ -71,10 +71,10 @@ Nueva solicitud de membresía
                                 </div>                   
                                 <div class="form-group">
                                     <div class="col-xs-6">
-                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "suspension:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "members:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
                                     </div>
                                     <div class="col-xs-6">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
                                     </div>                                    
                                 </div>
 
@@ -92,5 +92,6 @@ Nueva solicitud de membresía
 <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
 <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
+<script src='{% static "assets/js/Admin/Suspension/suspension_forms_validation.js" %}'></script>
 
 {% endblock %}
