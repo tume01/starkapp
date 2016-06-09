@@ -144,7 +144,7 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
                             <ul>  
                                 <li>
-                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía</a> 
+                                    <a href='{% url "membership_application:user_index" %}'>Solicitudes de membresía</a> 
                                 </li>
                                                                 <li>
                                     <a href='{% url "memberships:show" %}'> Ver Membresía</a>
@@ -154,6 +154,9 @@
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
+                                <li>
+                                    <a href='% url "users:password"'>Cambiar Contraseña</a>
+                                </li>
                             </ul>
                         </li>  
 
