@@ -398,11 +398,13 @@ def create_objection(request):
     else:
         member_application_service = Membership_ApplicationService()
 
+        member_service = MembersService()
+
         membership_application = member_application_service.getMembership_Application(requestId)
 
         current_user = request.user
 
-        member = MembersService.getMemberByUser(current_user)
+        member = member_service.getMemberByUser(current_user)
 
         context = {
             'membership_application': membership_application,
