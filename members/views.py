@@ -211,7 +211,7 @@ def member_filter(request):
     if name != '':
         filter_member['name'] = name
 
-    if identity_document_type != '':
+    if identity_document_type != 'Todos':
         filter_member['identity_document_type'] = identity_document_type
 
     members = member_service.filter(filter_member)
@@ -242,6 +242,7 @@ def member_filter(request):
     }
 
     return render(request, 'Admin/Members/index_members.html', context)
+
 
 def is_member_suspended(member):
 
