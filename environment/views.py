@@ -204,7 +204,7 @@ def create_reservation(request):
     return render(request, 'Admin/Environments/Create_Reservation.html', context)
 
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def create_reservation_post(request):
 
     environment_service = EnvironmentService()
@@ -220,9 +220,9 @@ def create_reservation_post(request):
 
     #Si encuentra reserva alguna en la fecha no esta disponible
     if reservations.count() > 0 :
-        return render(request, 'Admin/Environments/Create_not_available.html', context)   
+        return render_to_response('Admin/Environments/Create_not_available.html', context)   
 
-    return render(request, 'Admin/Environments/Create_Reservation_Form', context)
+    return render_to_response('Admin/Environments/Create_Reservation_Form.html', context)
 
 @require_http_methods(['GET'])
 def create_reservation_getEnvs(request):
@@ -237,7 +237,7 @@ def create_reservation_getEnvs(request):
         'titulo' : 'titulo'
     }
 
-    return render(request, 'Admin/Environments/Create_Reservation_Envs', context)
+    return render_to_response('Admin/Environments/Create_Reservation_Envs.html', context)
 
 @require_http_methods(['POST'])
 def insert_reservation(request):
