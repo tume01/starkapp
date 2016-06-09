@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'identity_document_type',
     'ubigeo',
     'affiliate',
-
+    'bungalow_service',
 ]
 
 MIDDLEWARE_CLASSES = [
