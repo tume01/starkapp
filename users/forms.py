@@ -14,20 +14,6 @@ class UserForm(forms.Form):
                                                'max_length': 'El campo contraseña debe tener una longitud maxima de 200 caracteres'})
 
     user_type = forms.IntegerField(error_messages={'required': 'El campo tipo de usuario es requerido'})
-
-    def clean_name(self):
-        
-        data = self.cleaned_data["name"]
-        
-        try:
-            existingUser = User.objects.get(username=data)
-            
-            if(existingUser != None):
-                raise forms.ValidationError("El nombre de usuario ya existe")
-        except User.DoesNotExist:
-            pass
-        
-        return data
         
 
 class UserTypeForm(forms.Form):

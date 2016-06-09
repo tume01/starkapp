@@ -207,7 +207,15 @@ def edit_user(request):
 
         return HttpResponseRedirect(reverse('users:index'))
 
-
+#user
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
+@require_http_methods(['POST'])
+def edit_password(request):
+    user = User.objects.get(id=id_edit)
+    user.set_password(form.cleaned_data['password'])
+    user.save()
+    return HttpResponseRedirect(reverse('users:password'))
 
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')

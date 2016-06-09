@@ -1,5 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
 Admin: invitados
 {% endblock %}
@@ -38,14 +40,14 @@ Nuevo Invitado
 
                     <div class="block block-bordered">
                             <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10">
+                            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap2">
                                 <div class="row">
                                     <div class="col-lg-5">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Documento del responsable</label>
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <input class="form-control" type="text" id="document_number" name="names" placeholder="Dni del responsable" >
+                                                    <input class="form-control" type="text" id="document_number" name="document_number" placeholder="Dni del responsable" >
                                                 </div>
                                             </div>
                                             </div>  
@@ -76,7 +78,7 @@ Nuevo Invitado
                              </form>
                         </div>
                           <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10">
+                            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap3">
                                 <div class="row">
                                     <div class="col-lg-5">
                                          <div class="form-group">
@@ -101,7 +103,7 @@ Nuevo Invitado
                         </div>
      
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "entry:insert" %}' method="post" >
+                            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" id="form" action='{% url "entry:insert" %}' method="post" >
                             {% csrf_token %}
                             <input class="form-control" type="text" id="type" name="type" value="0" style="display: none;" >
                             <input class="form-control" type="text" id="doc_member" name="doc_member" style="display: none;" >
@@ -156,7 +158,7 @@ Nuevo Invitado
                                         <button class="btn btn-danger" type="button" onclick="location.href='{% url "entry:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
                                     </div>
                                     <div class="col-xs-6">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Crear</button>
+                                        <button class="btn btn-success" id="create" type="button"><i class="fa fa-check push-5-r"></i> Crear</button>
                                     </div>                                    
                                 </div>
                             </form>
@@ -167,18 +169,32 @@ Nuevo Invitado
                 <!-- END Page Content -->
 
 
-                {% endblock %}
+{% endblock %}
+
+
 
 
 {% block scripts %}
 
+        <!-- Page JS Plugins -->
+
 <script>
+
+
 var responsable = 0;
 var tipo = 0;
 
 //1 para miembro, 2 para afiliado, 3 para invitado, 0 para nuevo invitado
 
     $(document).ready(function () {
+
+        $( "#create" ).click(function() {
+            if(responsable!=0){
+                $( "#form" ).submit();
+            }
+
+        });
+
         $('#button1').click(function(){
         var document_number = $('#document_number').val();
         {
@@ -188,7 +204,7 @@ var tipo = 0;
                 data:{document_number:document_number, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 cache:false,
                 success: function(returndata){
-                    if(returndata.length){ 
+                    if(returndata != ""){ 
                     responsable=1;
                     $('#doc').text('Documento: '+ returndata[0].fields.document_number);
                     $('#name').text('Nombre: '+ returndata[0].fields.name +' ' + returndata[0].fields.paternalLastName );
@@ -238,5 +254,12 @@ var tipo = 0;
     });
 </script>
 
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/Entry/entry_forms_validation.js" %}'></script>
+
+
 
 {% endblock %}
+

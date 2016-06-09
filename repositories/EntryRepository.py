@@ -6,6 +6,3 @@ class EntryRepository(BaseRepository):
 
     def __init__(self):
         BaseRepository.__init__(self, Entry)
-
-    def all(self):
-        return self.model.objects.filter(status=1)

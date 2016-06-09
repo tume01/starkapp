@@ -143,10 +143,13 @@ def suspension_index(request):
 
     suspensions = suspension_service.filter(filter_data)
 
+    show = not any(s.status == 1 for s in suspensions)
+
     context = {
         'id': membershipId,
         'suspensions': suspensions,
-        'membership' : membership
+        'membership' : membership,
+        'show' : show
     }
 
     return render(request, 'Admin/Suspension/index_suspensions.html', context)
@@ -185,10 +188,13 @@ def suspension_filter(request):
 
     suspensions = suspension_service.filter(filter_suspensions)
 
+    show = not any(s.status == 1 for s in suspensions)
+
     context = {
         'id': membershipId,
         'suspensions': suspensions,
-        'membership': membership
+        'membership': membership,
+        'show' : show
     }
 
     return render(request, 'Admin/Suspension/index_suspensions.html', context)
