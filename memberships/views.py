@@ -388,3 +388,22 @@ def membership_edit(request):
         membership_service.update(id_edit, edit_data)
 
         return HttpResponseRedirect(reverse('members:index'))
+
+#user		
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')	
+def membership_show(request):
+
+	user = request.user
+    
+	member_service = MembersService()
+	filter = {}
+	filter["user"] =user
+	member = member_service.filter(filter)
+	context = {
+		'membership' : member[0].membership
+	}
+	return render(request, 'User/membership.html',context)
+	
+
+	
