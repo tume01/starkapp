@@ -1,4 +1,5 @@
 from django.db import models
+from headquarters.models import Headquarters
 
 # Create your models here.
 class Environment(models.Model):
@@ -12,8 +13,8 @@ class Environment(models.Model):
 
 
 class EnvironmentReservation(models.Model):
-    Environment = models.ForeignKey(Environment, on_delete=models.CASCADE)
-    end_date = models.DateTimeField()
-    start_date = models.DateTimeField()
-    price = models.DecimalField(max_digits=6, decimal_places=2)
-    status = models.IntegerField()
+    environment  = models.ForeignKey(Environment, on_delete=models.CASCADE)
+    end_date     = models.DateTimeField()
+    start_date   = models.DateTimeField()
+    price        = models.DecimalField(max_digits=6, decimal_places=2)
+    status       = models.IntegerField()

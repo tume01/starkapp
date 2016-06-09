@@ -156,7 +156,7 @@ def getReservationFilters(request):
 
     filters = {}
 
-    if request.GET.get('env_name') || request.GET.get('headquarter_id') || request.GET.get('environment_id'):
+    if request.GET.get('env_name') or request.GET.get('headquarter_id') or request.GET.get('environment_id'):
 
         environment_service = EnvironmentService()
         data = {}
@@ -170,9 +170,12 @@ def getReservationFilters(request):
         if request.GET.get('environment_id'):
             data['environment_id'] = request.GET.get('environment_id')
 
-        env_tmp = environment_service.filter(data).first()
-        if env_tmp:
-            filters['environment_id'] = env_tmp.id
+        qry_env = environment_service.filter(data).values_list('id', flat=True)
+
+        if qry_env:
+            filters['environment_id__in'] = list(qry_env)
+        else:
+            filters['environment_id'] = -1  #With this value, the filter will return no values.
 
     if request.GET.get('start_date'):
         start_date = datetime.strptime(request.GET.get('start_date'), "%m/%d/%Y")

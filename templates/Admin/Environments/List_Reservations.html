@@ -31,7 +31,7 @@ Lista de ambientes reservados
     <!-- Table Header (Filters) -->
     <div class="block">
         <div class="block-content">
-            <form class="form" id="filters-form" action="{% url 'environment:index_book' %}" method="post" onsubmit="return false;">{% csrf_token %}
+            <form class="form" id="filters-form" action="{% url 'environment:index_book' %}" method="get">{% csrf_token %}
                 <div class="row">
 
                     <div class="col-lg-4">
@@ -44,8 +44,7 @@ Lista de ambientes reservados
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label class="col-xs-12" for="headquarter_id">Seleccione una sede</label>
-                            <select class="form-control" id="headquarter_id" size="1">
-                                <option value="-1">Todas</option>
+                            <select class="form-control" id="headquarter_id" name="headquarter_id" size="1">
                                 {% for headquarter in headquarters %}
                                 <option value="{{headquarter.id}}">{{headquarter.name}}</option>
                                 {% endfor %}
@@ -85,7 +84,6 @@ Lista de ambientes reservados
     <div class="block block-bordered">
         <div class="block-content" id="table-content">
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-            <!--{% include 'Admin/bungalowReservation/index_table.html' %}-->
             <table class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
@@ -102,7 +100,7 @@ Lista de ambientes reservados
                     {% for reservation in reservations %}
                         <tr>
                             <td class="text-center" id="reservation_id">{{reservation.id}}</td>
-                            <td class="font-w600">{{ reservation.env.name }}</td>
+                            <td class="font-w600">{{ reservation.environment.name }}</td>
                             <td class="font-w600">{{ reservation.start_date }}</td>
                             <td class="font-w600">{{ reservation.end_date }}</td>
                             <td class="hidden-xs" id="check_out">{{ reservation.status }}</td>
@@ -165,7 +163,6 @@ Lista de ambientes reservados
         </script>
         
         <script src='{% static "assets/js/tablas.js" %}'></script>
-        <!--<script src='{% static "assets/js/Admin/bungalowReservation/main.js" %}'></script>-->
 
 
 {% endblock %}

@@ -31,7 +31,7 @@ Lista de ambientes reservados
     <!-- Table Header (Filters) -->
     <div class="block">
         <div class="block-content">
-            <form class="form" id="filters-form" method="post" onsubmit="return false;">{% csrf_token %}
+            <form class="form" id="filters-form" method="post">{% csrf_token %}
                 <div class="row">
 
                     <div class="col-lg-4">
@@ -132,7 +132,7 @@ Lista de ambientes reservados
         </script>
         
         <script src='{% static "assets/js/tablas.js" %}'></script>
-        <script src='{% static "assets/js/Admin/bungalowReservation/create_reservation_ajax.js" %}'></script>
+        <script src='{% static "assets/js/Admin/Environment/create_reservation_ajax.js" %}'></script>
 
 
 {% endblock %}
