@@ -40,7 +40,7 @@ class ActivityService(object):
     def addMember(self, activity_id, member):
         activity = self.getActivity(activity_id)
 
-        assistants = activity.activityregistration_set.count()
+        assistants = activity.activityregistration_set.filter(deleted_at=None).count()
 
         if activity.attendance > assistants:
 

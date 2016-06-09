@@ -258,7 +258,7 @@ def remove_member(request, activity_id, member_id):
     activity_service = ActivityService()
 
     if activity_service.removeMember(activity_id, member_id):
-        messages.error(request, 'Miembro retirado de actvidad exitosamente')
+        messages.success(request, 'Miembro retirado de actvidad exitosamente')
         return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
 
     messages.error(request, 'Error al remover miembro')
@@ -287,8 +287,75 @@ def add_member(request, activity_id):
     member = members_service.getMember(member_id)
 
     if activity_service.addMember(activity_id, member):
-        messages.error(request, 'Miembro ananido correctamente')
+        messages.success(request, 'Miembro ananido correctamente')
         return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
     
     messages.error(request, 'Error al anadir miembro')
     return HttpResponseRedirect(reverse('activities:add_member', args=[activity_id]))
+
+def index_signUp(request):
+
+    activity_service = ActivityService()
+
+    activities = activity_service.getActivities()
+
+    context = {
+        'activities' : activities
+    }
+
+    return render(request, 'User/Activities/index.html', context)
+
+def select_signUp(request, activity_id):
+    
+    activity_service = ActivityService()
+
+    activity = activity_service.getActivity(activity_id)
+
+    context = {
+        'activity' : activity
+    }
+
+    return render(request, 'User/Activities/select.html', context)
+
+def signup(request, activity_id):
+    
+    activity_service = ActivityService()
+    members_service = MembersService()
+
+    member = members_service.filter({'user_id':request.user.id}).first()
+
+    if activity_service.addMember(activity_id, member):
+        messages.success(request, 'Registro en Actividad exitoso')
+        return HttpResponseRedirect(reverse('activities:user_activities'))
+
+    messages.error(request, 'No se ha podido registrar en la activdad')
+    return HttpResponseRedirect(reverse('activities:select_signup', args=[activity_id]))
+
+def signout(request, activity_id):
+    
+    activity_service = ActivityService()
+    members_service = MembersService()
+
+    member = members_service.filter({'user_i':request.user.id}).first()
+
+    if activity_service.removeMember(activity_id, member.id):
+        messages.success(request, 'Miembro retirado de actvidad exitosamente')
+        return HttpResponseRedirect(reverse('activities:user_activities'))
+
+    messages.error(request, 'Error al remover miembro')
+    return HttpResponseRedirect(reverse('activities:user_activities'))
+
+def user_activities(request):
+    
+    members_service = MembersService()
+
+    member = members_service.filter({'user_id':request.user.id}).first() 
+
+    activities = member.activityregistration_set.all
+
+    context = {
+        'activities' : activities
+    }
+
+    return HttpResponse(activities)
+    return render(request, 'User/Activities/user_activities.html', context)
