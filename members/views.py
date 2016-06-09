@@ -8,6 +8,7 @@ from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
 from services.GuestService import GuestService
+from services.SuspensionService import SuspensionService
 from services.AffiliateService import AffiliateService
 from Adapters.FormValidator import FormValidator
 from .forms import  MemberForm
@@ -24,10 +25,15 @@ def member_index(request):
 
     member_service = MembersService()
 
+    identity_service = IdentityDocumentTypeService()
+
     members = member_service.getMembers()
+
+    doc_types = identity_service.getIdentityDocumentTypes()
 
     context = {
         'members' : members,
+        'doc_types' : doc_types
     }
 
     return render(request, 'Admin/Members/index_members.html', context) 
@@ -167,6 +173,87 @@ def edit_member(request):
 
         return HttpResponseRedirect(reverse('members:index'))
 
+
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
+@require_http_methods(['POST'])
+def member_filter(request):
+
+    member_service = MembersService()
+
+    identity_service = IdentityDocumentTypeService()
+
+    doc_types = identity_service.getIdentityDocumentTypes()
+
+    filter_member = {}
+
+    name = request.POST['name']
+
+    paternalLastName = request.POST['paternalLastName']
+
+    maternalLastName = request.POST['maternalLastName']
+
+    document = request.POST['num_doc']
+
+    suspended = request.POST['suspended']
+
+    identity_document_type = request.POST['identity_document_type']
+
+    if paternalLastName != '':
+        filter_member['paternalLastName'] = paternalLastName
+
+    if maternalLastName != '':
+        filter_member['maternalLastName'] = maternalLastName
+
+    if document != '':
+        filter_member['document'] = document
+
+    if name != '':
+        filter_member['name'] = name
+
+    if identity_document_type != '':
+        filter_member['identity_document_type'] = identity_document_type
+
+    members = member_service.filter(filter_member)
+
+    if suspended == 1:
+        members = filter(is_member_suspended, members)
+
+        context = {
+            'members': members,
+            'doc_types': doc_types
+        }
+
+        return render(request, 'Admin/Members/index_members.html', context)
+
+    if suspended == 0:
+        members = filter(not is_member_suspended, members)
+
+        context = {
+            'members': members,
+            'doc_types': doc_types
+        }
+
+        return render(request, 'Admin/Members/index_members.html', context)
+
+    context = {
+        'members': members,
+        'doc_types': doc_types
+    }
+
+    return render(request, 'Admin/Members/index_members.html', context)
+
+def is_member_suspended(member):
+
+    suspension_service = SuspensionService()
+
+    filter_data = {}
+
+    filter_data['membership_id'] = member.id
+
+    member_suspensions = suspension_service.filter(filter_data)
+
+    return any(s.status == 1 for s in member_suspensions)
 
 
 @login_required
