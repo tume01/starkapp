@@ -99,7 +99,7 @@
                             <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Administración del Club</span></li>
-                        {% if perms.dummy.permission_bungalows %} 
+                        {% if perms.dummy.permission_bungalow %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
@@ -121,6 +121,7 @@
                             </ul>
                         </li>
                         {% endif %} 
+                        {% if perms.dummy.permission_proveedor %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
                             <ul>
@@ -132,6 +133,8 @@
                                 </li>
                             </ul>
                         </li> 
+                        {% endif %}
+                        {% if perms.dummy.permission_curso %} 
                         <li>
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
                             <ul>
@@ -143,6 +146,8 @@
                                 </li>
                             </ul>
                         </li> 
+                        {% endif %}
+                        {% if perms.dummy.permission_actividad %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
                             <ul>
@@ -154,6 +159,8 @@
                                 </li>                                
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if perms.dummy.permission_sede %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
                             <ul>
@@ -165,6 +172,8 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if perms.dummy.permission_evento %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
                             <ul>
@@ -182,6 +191,8 @@
                                 </li>                                 
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if perms.dummy.permission_servicio %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
                             <ul>
@@ -194,7 +205,8 @@
                                 
                             </ul>
                         </li>
-                        {% if perms.dummy.permission_canchas %} 
+                        {% endif %}
+                        {% if perms.dummy.permission_cancha %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Canchas</span></a>
                             <ul>
@@ -207,7 +219,7 @@
                             </ul>
                         </li>
                         {% endif %}  
-                        {% if perms.dummy.permission_canchas %} 
+                        {% if perms.dummy.permission_servicio %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos y Servicios</span></a>
                             <ul>
@@ -232,7 +244,7 @@
                             </ul>
                         </li>
                         {% endif %}  
-                         {% if perms.dummy.permission_admin %} 
+                         {% if perms.dummy.permission_cajero %} 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-car"></i><span class="sidebar-mini-hide">Ingreso</span></a>
                             <ul>                                        
@@ -291,7 +303,7 @@
                         </li>  
                         {% endif %} 
                         
-                        {% if perms.dummy.permission_admin %}  
+                        {% if perms.dummy.permission_promocion %}  
                           <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-money"></i><span class="sidebar-mini-hide">Promociones</span></a>
                             <ul>                                        
@@ -305,7 +317,7 @@
                         </li>
                         {% endif %}  
 
-                         {% if perms.dummy.permission_admin %} 
+                         {% if perms.dummy.permission_multa %} 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
                             <ul>                                        
