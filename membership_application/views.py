@@ -108,6 +108,8 @@ def create_index(request):
         'titulo' : 'titulo'
     }
 
+    print(types)
+
     return render(request, 'Admin/Membership/new_membership_request.html', context)
 
 
@@ -312,7 +314,7 @@ def user_index(request):
         'doc_types' : doc_types,
     }
 
-    return render(request, 'index_membership_request.html', context) 
+    return render(request, 'User/Membership/index_membership_request.html', context) 
 
 
 @login_required
@@ -357,7 +359,7 @@ def user_filter(request):
         'doc_types' : doc_types,
     }
 
-    return render(request, 'index_membership_request.html', context) 
+    return render(request, 'User/Membership/index_membership_request.html', context) 
 
 
 #OBJECIONES
@@ -407,7 +409,7 @@ def create_objection(request):
             'member' : member,
         }
 
-        return render(request, 'Objections_members.html', context)
+        return render(request, 'User/Membership/objections_members.html', context)
 
 
 #@login_required
@@ -432,7 +434,7 @@ def objection_index(request):
         'member': member,
     }
 
-    return render(request, 'Objections_members.html', context)
+    return render(request, 'User/Membership/objections_members.html', context)
 
 
 
@@ -455,7 +457,7 @@ def approve_membership_application(request):
 
         ubigeo_service = UbigeoService()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo = ubigeo_service.distinctDepartment()
 
         context = {
             'titulo' : 'titulo',

@@ -7,10 +7,14 @@ from services.MemberService import MembersService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
+from services.GuestService import GuestService
+from services.AffiliateService import AffiliateService
 from Adapters.FormValidator import FormValidator
 from .forms import  MemberForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.core import serializers
+import json
 
 
 @login_required
@@ -46,11 +50,25 @@ def edit_member_index(request):
 
     ubigeo_service = UbigeoService()
 
-    ubigeo = ubigeo_service.getAllUbigeo()
+    departments = ubigeo_service.distinctDepartment()
+
+    filter_ubigeo = {}
+
+    filter_ubigeo["department"] = member.ubigeo.department
+
+    provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+    filter_ubigeo = {}
+
+    filter_ubigeo["province"] = member.ubigeo.province
+
+    districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
     context = {
         'member' : member,
-        'ubigeo' : ubigeo,
+        'departments' : departments,
+        'provinces' : provinces,
+        'districts' : districts,
         'doc_types': doc_types,
     }
 
@@ -131,14 +149,113 @@ def edit_member(request):
 
         edit_data["email"] = form.cleaned_data['email']
 
-        id_ubigeo = request.POST['district']
+        filter_ubigeo = {}
 
-        ubi = ubigeo_service.getUbigeoById(id_ubigeo)
+        filter_ubigeo["department"] = request.POST['department']
 
-        edit_data["ubigeo"] = ubi
+        filter_ubigeo["province"] = request.POST['province']
+
+        filter_ubigeo["district"] = request.POST['district']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        edit_data["ubigeo"] = ubi[0]
 
         member_service = MembersService()
 
         member_service.update(id_edit, edit_data)
 
         return HttpResponseRedirect(reverse('members:index'))
+
+
+
+@login_required
+@require_http_methods(['POST'])
+def get_member(request):
+
+    member_service = MembersService()
+
+    doc=request.POST['document_number']
+
+    if(not doc.isdigit()):
+
+        return  HttpResponse("")
+
+    filter_member = {}
+
+    filter_member["document_number"] = doc
+
+    member = member_service.filter(filter_member)
+
+    member = serializers.serialize('json', member)
+
+    return  HttpResponse(member, content_type = "application/json")
+
+
+@login_required
+@require_http_methods(['POST'])
+def get_entry(request):
+
+    member_service = MembersService()
+
+    filter_member = {}
+
+    filter_member["document_number"] = request.POST['document_number']
+
+    member = member_service.filter(filter_member)
+
+    if(member):      
+
+        member = serializers.serialize("json", (member[0],))
+
+        resp_obj = json.loads(member)
+
+        resp_obj[0]['fields']['tipo'] = 1
+
+        member = json.dumps(resp_obj)
+
+        return  HttpResponse(member, content_type = "application/json")
+
+    affiliate_service = AffiliateService()
+
+    filter_affiliate = {}
+
+    filter_affiliate["document_number"] = request.POST['document_number']
+
+    affiliate = affiliate_service.filter(filter_affiliate)
+
+    if(affiliate):   
+
+        affiliate = serializers.serialize("json", (affiliate[0],))
+
+        resp_obj = json.loads(affiliate)
+
+        resp_obj[0]['fields']['tipo'] = 2
+
+        affiliate = json.dumps(resp_obj)
+
+        return  HttpResponse(affiliate, content_type = "application/json")
+
+    guest_service = GuestService()
+
+    filter_guest = {}
+
+    filter_guest["dni"] = request.POST['document_number']
+
+    guest = guest_service.filter(filter_guest)
+
+    if(guest):
+
+        guest = serializers.serialize("json", (guest[0],))
+
+        resp_obj = json.loads(guest)
+
+        resp_obj[0]['fields']['tipo'] = 3
+
+        guest = json.dumps(resp_obj)
+
+        return  HttpResponse(guest, content_type = "application/json")
+
+    guest = serializers.serialize('json', guest)
+
+    return  HttpResponse(guest, content_type = "application/json")

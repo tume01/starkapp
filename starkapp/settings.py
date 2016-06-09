@@ -60,7 +60,10 @@ INSTALLED_APPS = [
     'events',
     'identity_document_type',
     'ubigeo',
-
+    'affiliate',
+    'entry',
+    'guests',
+    'suspension'
 ]
 
 MIDDLEWARE_CLASSES = [

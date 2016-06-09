@@ -53,3 +53,10 @@ class BaseRepository(AbstractBaseRepository):
     def filter(self, filters):
         return self.model.objects.filter(**filters)
 
+    def distinct(self, value):
+        return self.model.objects.values(value).distinct()
+
+    def distinctFilter(self, value, filters):
+        return self.model.objects.filter(**filters).values(value).distinct()
+
+
