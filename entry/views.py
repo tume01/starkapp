@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import permission_required
 from services.EntryService import EntryService
 from services.MemberService import MembersService
 from services.GuestService import GuestService
+from services.AffiliateService import AffiliateService
 from datetime import datetime
 
 @login_required
@@ -57,6 +58,8 @@ def insert(request):
 
     filter_data["document_number"] = request.POST['doc_member']
 
+    filter_data["state"] = 1
+
     member = member_service.filter(filter_data)
 
     insert_data["member"] = member[0]
@@ -68,7 +71,9 @@ def insert(request):
 
         filter_data = {}
 
-        filter_data["document_number"] = request.POST['doc_member']
+        filter_data["document_number"] = request.POST['dni']
+
+        filter_data["state"] = 1
 
         affiliate = affiliate_service.filter(filter_data)
 
@@ -80,7 +85,7 @@ def insert(request):
 
         filter_data = {}
 
-        filter_data["dni"] = request.POST['doc_member']
+        filter_data["dni"] = request.POST['dni']
 
         guest = guest_service.filter(filter_data)
 
@@ -114,4 +119,4 @@ def insert(request):
 
     entry_service.create(insert_data)
 
-    return HttpResponseRedirect(reverse('promotions:index'))
+    return HttpResponseRedirect(reverse('entry:index'))

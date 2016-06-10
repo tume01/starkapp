@@ -1,3 +1,4 @@
+from django.contrib import auth
 from django.template import loader
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -16,7 +17,7 @@ from services.AffiliateService import AffiliateService
 
 #TIPOS DE USUARIO
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def user_type_index(request):
 
@@ -30,7 +31,7 @@ def user_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def create_user_type_index(request):
 
@@ -42,7 +43,7 @@ def create_user_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user_type_index(request):
 
@@ -58,7 +59,7 @@ def edit_user_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_user_type(request):
 
@@ -86,7 +87,7 @@ def create_user_type(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user_type(request):
 
@@ -120,7 +121,7 @@ def edit_user_type(request):
 
 #USUARIOS
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user_member(request):
 
@@ -145,7 +146,7 @@ def edit_user_member(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user_index(request):
 
@@ -166,7 +167,7 @@ def edit_user_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user(request):
 
@@ -207,10 +208,52 @@ def edit_user(request):
 
         return HttpResponseRedirect(reverse('users:index'))
 
-
-
+#user
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
+@require_http_methods(['POST'])
+def edit_password(request):
+    form = UserForm(request.POST)
+    id_edit = request.POST['id']
+
+    if FormValidator.validateForm(form,request):
+        
+        user = User.objects.get(id=id_edit)
+
+        group = user.groups.all()[0].id
+
+        context = {
+            'user' : user,
+            'group' : group
+        }
+        return render(request, 'User/user.html', context)
+	
+    else:
+		
+        user = User.objects.get(id=id_edit)
+        
+        user.set_password(form.cleaned_data['password'])
+        user.save()
+
+        user2 = auth.authenticate(username=user.username, password=form.cleaned_data['password'])
+        auth.login(request,user2)
+        
+        return HttpResponseRedirect(reverse('users:show_user'))
+		
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
+@require_http_methods(['GET'])
+def show_user(request):
+    user = request.user
+    group = user.groups.all()[0].id
+    context = {
+	'user':user,
+        'group':group
+    }
+    return render(request, 'User/user.html',context)
+		
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def create_user_index(request):
 
@@ -225,7 +268,7 @@ def create_user_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_user(request):
 
@@ -260,7 +303,7 @@ def create_user(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def user_index(request):
 

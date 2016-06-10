@@ -81,6 +81,10 @@ def edit_suspension_index(request):
 
     suspension = suspension_service.getSuspension(suspension_id)
 
+    suspension.initialDate = datetime.strftime(suspension.initialDate, '%m/%d/%Y')
+
+    suspension.finalDate = datetime.strftime(suspension.finalDate, '%m/%d/%Y')
+
     context = {
         'suspension' : suspension,
     }
@@ -143,10 +147,13 @@ def suspension_index(request):
 
     suspensions = suspension_service.filter(filter_data)
 
+    show = not any(s.status == 1 for s in suspensions)
+
     context = {
         'id': membershipId,
         'suspensions': suspensions,
-        'membership' : membership
+        'membership' : membership,
+        'show' : show
     }
 
     return render(request, 'Admin/Suspension/index_suspensions.html', context)
@@ -185,10 +192,19 @@ def suspension_filter(request):
 
     suspensions = suspension_service.filter(filter_suspensions)
 
+    filter_all_suspensions = {}
+
+    filter_all_suspensions['membership_id'] = membershipId
+
+    all_Suspensions = suspension_service.filter(filter_all_suspensions)
+
+    show = not any(s.status == 1 for s in all_Suspensions)
+
     context = {
         'id': membershipId,
         'suspensions': suspensions,
-        'membership': membership
+        'membership': membership,
+        'show' : show
     }
 
     return render(request, 'Admin/Suspension/index_suspensions.html', context)

@@ -1,23 +1,23 @@
 {% extends 'Admin/Layouts/base.html' %}
 
 {% block head_title %}
-Admin: miembros
+Admin: suspension
 {% endblock %}
 
 {% block head_dahsboard %}
-Miembros
+Suspension
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de miembros
+Lista completa de suspensiones
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Miembros
+Suspension
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de miembros
+Lista de suspensiones
 {% endblock %}
 
 {% block content %}
@@ -99,7 +99,7 @@ Lista de miembros
             <div class="block-content">
                 <form  action="{% url "suspension:create_index" %}" method="post">
                 {% csrf_token %}  
-                <input type="hidden" id="hid1" name="id"/>            
+                <input type="hidden" id="hid3" name="id"/>
                 <div class="col-lg-6" style="display: none;">
                     <div class="form-group">
                         <div class="col-md-6">
@@ -109,20 +109,22 @@ Lista de miembros
                         </div>
                     </div>
                 </div>
+                {% if show %}
                 <div class="form-group">
-                    <div class="col-xs-6">
-                        <button class="btn btn-success" type="submit" ><i class="fa fa-times push-5-r"></i> Crear</button>
+                    <div class="col-xs-2 col-xs-offset-5">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Nueva Suspension</button>
                     </div>
                 </div>
+                {% endif %}
                 </form>
             <table class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
-                            <th>Fecha Inicio</th>
-                            <th>Fecha Fin</th>
-                            <th>Razon</th>
-                            <th>Acciones</th>
-                        </tr>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Razon</th>
+                        <th>Acciones</th>
+                    </tr>
                     </thead>
                     <tbody>
                         {% for suspension in suspensions %}
