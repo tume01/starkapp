@@ -1,116 +1,147 @@
-{% extends 'Admin/Layouts/base_a.html' %}
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
 
 {% block head_title %}
-Admin: environments
+Admin: ambientes
 {% endblock %}
 
 {% block head_dahsboard %}
-Environments
+Ambientes
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de ambientes
+Nuevo Ambiente
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Environments
+Ambiente
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de ambientes
+Creación de Ambientes
 {% endblock %}
 
 {% block content %}
+<div class="content content-narrow">
+    <div class="block">
+        <div class="block-header">
+            <ul class="block-options">
+                <li>
+                    <button type="reset" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                </li>
+            </ul>
+            <!--<h3 class="block-title">AMBIENTES</h3>-->
+        </div>
 
-                <!-- Page Content -->
-                <div class="content">
-                    <div class="block">
-                        <div class="block-header">
-                            <ul class="block-options">
-                                <li>
-                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                                </li>
-                            </ul>
-                            <h3 class="block-title">AMBIENTES</h3>
+        <div class="block-content">
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "environment:insert" %}' method="post" >
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="name">Nombre (*)</label>
+                                {{form.name}}
+                            </div> 
                         </div>
-
-                        <!-- Block v2 -->
-                        <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action={% url "environment:insert" %} method="post">
-                            {% csrf_token %}
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                        <div class="form-group">
-                                            <div class="hidden">
-                                                <label for="mega-firstname">Codigo</label>
-                                                <input class="control-label" type="text" id="mega-firstname" name="id" placeholder="" disabled>
-                                            </div>
-                                            <div class="col-xs-6">
-                                                <label class="col-xs-12" for="mega-lastname">Nombre</label>
-                                                <input class="control-label" type="text" id="mega-lastname" name="name" placeholder="Ingrese el nombre..">
-                                            </div>
-                                            <div class="col-xs-6">
-                                                <label class="col-xs-12" for="mega-lastname">Aforo</label>
-                                                <input class="control-label" type="text" id="mega-lastname" name="capacity" placeholder="Ingrese el aforo..">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-5">
-                                        <div class="form-group">
-                                            <label class="col-xs-12" for="example-select">Sede</label>
-                                            
-                                                <select class="control-label" id="example-select" name="sede" size="1">
-                                                    <option value="0">Seleccione una sede</option>
-                                                    <option value="1">Sede #1</option>
-                                                    <option value="2">Sede #2</option>
-                                                    <option value="3">Sede #3</option>
-                                                </select>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-7"> 
-                                        <div class="form-group">
-                                            <div class="col-xs-6">
-                                                <label class="col-xs-12" for="example-select">Estado</label>
-                                               
-                                                <select class="control-label" id="example-select" name="status" size="1" >
-                                                    <option value="0">Seleccione un estado</option>
-                                                    <option value="1" selected >Activo</option>
-                                                    <option value="2">Inactivo</option>
-                                                    <option value="3">Ocupado</option>
-                                                </select>
-                                             </div>
-                                        </div>  
-                                    </div>
-                                    <div class="col-sm-5"> 
-                                        <div class="form-group">
-                                            <div class="col-xs-6">
-                                                <label class="col-xs-12" for="mega-bio">Descripción</label>
-                                               
-                                                <textarea class="control-label" id="mega-bio" name="description" rows="5" placeholder="Ingrese una breve descripción del ambiente.."></textarea>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-5">
-                                        <div class="col-xs-6">
-                                            <button class="btn btn-danger" type="button" onclick="location.href='{% url "environment:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
-                                        </div>
-                                        <div class="col-xs-6">
-                                            <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
-                                        </div> 
-                                    </div>
-                                </div>
-                            </form>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="capacity">Aforo (*)</label> 
+                                {{form.Capacity}}
+                            </div>
                         </div>
-
-                        <!-- END Block v2 -->
-
-
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="headquarter">Sede (*)</label>
+                                {{form.headquarter}}
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="status">Estado (*)</label>
+                                {{form.status}}
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="description">Descripción (*)</label>
+                                {{form.description}}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">                    
+                    <div class="col-xs-2 col-xs-offset-4">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Guardar</button>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href='{% url "environment:index" %}'><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                    </div> 
+                </div>
+            </form>
+        </div>
+    </div>  
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+<script>
+    
+    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+
+
+        <script src='{% static "assets/js/Admin/Provider/environment_forms_validation.js" %}'></script>
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        
 
 {% endblock %}

@@ -1,3 +1,4 @@
+from django.contrib import auth
 from django.template import loader
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -9,11 +10,14 @@ from .forms import UserForm, UserTypeForm
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from services.Membership_ApplicationService import Membership_ApplicationService
+from services.MemberService import MembersService
+from services.AffiliateService import AffiliateService
 
 
 #TIPOS DE USUARIO
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def user_type_index(request):
 
@@ -27,7 +31,7 @@ def user_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def create_user_type_index(request):
 
@@ -39,7 +43,7 @@ def create_user_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user_type_index(request):
 
@@ -55,7 +59,7 @@ def edit_user_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_user_type(request):
 
@@ -83,7 +87,7 @@ def create_user_type(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user_type(request):
 
@@ -117,7 +121,32 @@ def edit_user_type(request):
 
 #USUARIOS
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
+@require_http_methods(['POST'])
+def edit_user_member(request):
+
+    id_member = request.POST['id']
+
+    member_service = MembersService()
+
+    member = member_service.getMember(id_member)
+
+    user = User.objects.get(id=member.user_id)
+
+    groups = Group.objects.all()
+
+    user.type = user.groups.all()[0].id
+
+    context = {
+        'user' : user,
+        'groups' : groups,
+    }
+
+    return render(request, 'Admin/Users/edit_user.html', context)
+
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user_index(request):
 
@@ -138,7 +167,7 @@ def edit_user_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_user(request):
 
@@ -179,10 +208,52 @@ def edit_user(request):
 
         return HttpResponseRedirect(reverse('users:index'))
 
-
-
+#user
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
+@require_http_methods(['POST'])
+def edit_password(request):
+    form = UserForm(request.POST)
+    id_edit = request.POST['id']
+
+    if FormValidator.validateForm(form,request):
+        
+        user = User.objects.get(id=id_edit)
+
+        group = user.groups.all()[0].id
+
+        context = {
+            'user' : user,
+            'group' : group
+        }
+        return render(request, 'User/user.html', context)
+	
+    else:
+		
+        user = User.objects.get(id=id_edit)
+        
+        user.set_password(form.cleaned_data['password'])
+        user.save()
+
+        user2 = auth.authenticate(username=user.username, password=form.cleaned_data['password'])
+        auth.login(request,user2)
+        
+        return HttpResponseRedirect(reverse('users:show_user'))
+		
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
+@require_http_methods(['GET'])
+def show_user(request):
+    user = request.user
+    group = user.groups.all()[0].id
+    context = {
+	'user':user,
+        'group':group
+    }
+    return render(request, 'User/user.html',context)
+		
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def create_user_index(request):
 
@@ -197,7 +268,7 @@ def create_user_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_user(request):
 
@@ -232,7 +303,7 @@ def create_user(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def user_index(request):
 
@@ -243,3 +314,84 @@ def user_index(request):
     }
 
     return render(request, 'Admin/Users/index_user.html', context) 
+
+@login_required
+@require_http_methods(['POST'])
+def verify_user(request):
+
+    try:
+
+        if(request.POST['username'] == request.POST['user']):
+
+            return  HttpResponse("true")
+
+        if( User.objects.get(username=(request.POST['username']))):
+     
+            return  HttpResponse("false")
+
+    except User.DoesNotExist:
+
+        pass
+
+    try:
+
+        if request.POST['username'].isdigit():
+            
+            return HttpResponse("false")
+
+        return  HttpResponse("true")
+
+    except ValueError:
+
+        return  HttpResponse("true")
+
+
+
+@login_required
+@require_http_methods(['POST'])
+def verify_user_member(request):
+
+    try:
+
+        if( User.objects.get(username=(request.POST['username']))):
+
+            member_service = MembersService()
+
+            member = member_service.getMember(request.POST['id_member'])
+
+            user = User.objects.get(username=(request.POST['username']))
+
+            if(member.user_id == user.id):
+
+                return  HttpResponse("true")
+     
+            return  HttpResponse("false")
+
+
+    except User.DoesNotExist:
+
+        member_application_service = Membership_ApplicationService()
+
+        affiliate_service = AffiliateService()
+
+        filter_data = {}
+
+        filter_data["document_number"] = request.POST['username']
+
+        filter_data["status"] = 1
+
+        filter_data2 = {}
+
+        filter_data2["document_number"] = request.POST['username']
+
+        filter_data2["state"] = 1
+
+        if( member_application_service.filter(filter_data)):
+
+            return  HttpResponse("false")
+
+        if( affiliate_service.filter(filter_data2)):
+
+            return  HttpResponse("false")
+
+        return  HttpResponse("true")

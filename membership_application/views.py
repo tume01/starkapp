@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MembershipTypeService import MembershipTypeService
 from services.MemberService import MembersService
+from services.AffiliateService import AffiliateService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
@@ -107,6 +108,8 @@ def create_index(request):
         'doc_types': doc_types,
         'titulo' : 'titulo'
     }
+
+    print(types)
 
     return render(request, 'Admin/Membership/new_membership_request.html', context)
 
@@ -312,7 +315,7 @@ def user_index(request):
         'doc_types' : doc_types,
     }
 
-    return render(request, 'index_membership_request.html', context) 
+    return render(request, 'User/Membership/index_membership_request.html', context) 
 
 
 @login_required
@@ -357,7 +360,7 @@ def user_filter(request):
         'doc_types' : doc_types,
     }
 
-    return render(request, 'index_membership_request.html', context) 
+    return render(request, 'User/Membership/index_membership_request.html', context) 
 
 
 #OBJECIONES
@@ -396,18 +399,20 @@ def create_objection(request):
     else:
         member_application_service = Membership_ApplicationService()
 
+        member_service = MembersService()
+
         membership_application = member_application_service.getMembership_Application(requestId)
 
         current_user = request.user
 
-        member = MembersService.getMemberByUser(current_user)
+        member = member_service.getMemberByUser(current_user)
 
         context = {
             'membership_application': membership_application,
             'member' : member,
         }
 
-        return render(request, 'Objections_members.html', context)
+        return render(request, 'User/Membership/objections_members.html', context)
 
 
 #@login_required
@@ -432,7 +437,7 @@ def objection_index(request):
         'member': member,
     }
 
-    return render(request, 'Objections_members.html', context)
+    return render(request, 'User/Membership/objections_members.html', context)
 
 
 
@@ -455,7 +460,7 @@ def approve_membership_application(request):
 
         ubigeo_service = UbigeoService()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo = ubigeo_service.distinctDepartment()
 
         context = {
             'titulo' : 'titulo',
@@ -482,3 +487,38 @@ def approve_membership_application(request):
 
 
 
+@login_required
+@require_http_methods(['POST'])
+def verify_document_number(request):
+
+    member_application_service = Membership_ApplicationService()
+
+    member_service = MembersService()
+
+    affiliate_service = AffiliateService()
+
+    filter_data = {}
+
+    filter_data["document_number"] = request.POST['username']
+
+    filter_data["status"] = 1
+
+    filter_data2 = {}
+
+    filter_data2["document_number"] = request.POST['username']
+
+    filter_data2["state"] = 1
+
+    if( member_service.filter(filter_data2)):
+
+        return  HttpResponse("false")
+
+    if( member_application_service.filter(filter_data)):
+
+        return  HttpResponse("false")
+
+    if( affiliate_service.filter(filter_data2)):
+
+        return  HttpResponse("false")
+
+    return  HttpResponse("true")

@@ -296,3 +296,69 @@ def filter(request):
     }
 
     return render(request, 'Admin/Fines/index_fine.html', context)
+
+
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
+@require_http_methods(['GET'])
+def user_index(request):
+
+    member_service = MembersService()
+
+    current_user = request.user
+
+    member = member_service.getMemberByUser(current_user)
+
+    fine_service = FineService()
+
+    fine_type_service = FineTypeService()
+
+    fines = fine_service.getFineByUser(member.id)
+
+    for fine in fines:
+        fine.reason = (fine_type_service.getFine(fine.fine_type.id)).reason
+        fine.price = (fine_type_service.getFine(fine.fine_type.id)).price
+
+    context = {
+        'fines': fines,
+        'member': member,
+    }
+
+    return render(request, 'User/Fines/index_fines.html', context)
+
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
+@require_http_methods(['POST'])
+def user_filter(request):
+
+    member_service = MembersService()
+
+    current_user = request.user
+
+    member = member_service.getMemberByUser(current_user)
+
+    fine_service = FineService()
+
+    fine_type_service = FineTypeService()
+
+    filter_fines = {}
+
+    fineStatus = request.POST['status']
+
+    filter_fines["member_id"] = member.id
+
+    if fineStatus != 'Pendiente de Pago':
+        filter_fines["status"] = fineStatus
+
+    fines = fine_service.filter(filter_fines)
+
+    for fine in fines:
+        fine.reason = (fine_type_service.getFine(fine.fine_type.id)).reason
+        fine.price = (fine_type_service.getFine(fine.fine_type.id)).price
+
+    context = {
+        'fines': fines,
+        'member': member,
+    }
+
+    return render(request, 'User/Fines/index_fines.html', context)

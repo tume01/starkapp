@@ -20,7 +20,10 @@ def login_view(request):
         # Correct password, and the user is marked "active"
         auth.login(request, user)
         # Redirect to a success page.
-        return HttpResponseRedirect(reverse('login:ini'))
+        if request.user.groups.all()[0].name == 'usuarios':
+            return HttpResponseRedirect(reverse('login:iniUser'))
+        else:
+            return HttpResponseRedirect(reverse('login:iniAdmin'))
     else:
         # Show an error page
     	return HttpResponseRedirect(reverse("login:index"))
@@ -42,7 +45,15 @@ def index(request):
 
 @login_required
 @require_http_methods(['GET'])
-def ini(request): 
+def iniUser(request): 
     
     # Redirect to a success page.
-    return render(request, 'User/starting_screen.html') 
+    return render(request, 'User/starting_screen.html')
+
+
+@login_required
+@require_http_methods(['GET'])
+def iniAdmin(request): 
+    
+    # Redirect to a success page.
+    return render(request, 'Admin/starting_screen.html')
