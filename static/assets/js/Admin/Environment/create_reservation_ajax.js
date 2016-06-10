@@ -1,11 +1,18 @@
 // Submit post on submit
 $('#filters-form').on('submit', function(event){
-    submitFilters();
+    var req_data = submitFilters();
+    verifyDay(req_data);
+});
+
+$('#insert-form').on('submit', function(event){
+    var req_data = submitFilters();
+    insertReservation(req_data);
 });
 
 
 $('#headquarter_id').on('change', function(event){
-    chargeEnvironments();
+    var req_data = submitFilters();
+    chargeEnvironments(req_data);
 });
 
 
@@ -15,18 +22,14 @@ function submitFilters() {
 
     var requestData = getFilters();
     requestData.csrfmiddlewaretoken = getCookie('csrftoken');
-
-    verifyDay(requestData);
+    return requestData;
 };
 
-function chargeEnvironments() {
-    
+function chargeEnvironments(requestData) {    
     $.ajax({
-        url : "book/create/getEnvs", // the endpoint
-        type : "GET", // http method
-        data : {
-            'headquarter_id'  : $('#headquarter_id option:selected').val(),
-        }, // data sent with the post request
+        url : "create/getEnvs", // the endpoint
+        type : "POST", // http method
+        data : requestData, // data sent with the post request
 
         // handle a successful response
         success : function(response) {
@@ -50,13 +53,14 @@ function getFilters() {
         'headquarter_id' : $('#headquarter_id option:selected').val(),
         'start_date'     : $('#start_date').val(),
         'end_date'       : $('#end_date').val(),
+        'price'          : $('#price').val(),
     }
     return filter;
 };
 
 function verifyDay(requestData){
     $.ajax({
-        url : "book/create/post", // the endpoint
+        url : "create/post", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 
@@ -73,7 +77,29 @@ function verifyDay(requestData){
             console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
-}
+};
+
+function insertReservation(requestData){
+    $.ajax({
+        url : "create/insert", // the endpoint
+        type : "POST", // http method
+        data : requestData, // data sent with the post request
+
+        // handle a successful response
+        success : function(response) {
+            console.log("SUCCESS");
+            window.location.href = response;
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log("ERROR"); // another sanity check
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};
 
 
 
@@ -91,4 +117,4 @@ function getCookie(name) {
         }
     }
     return cookieValue;
-}
+};

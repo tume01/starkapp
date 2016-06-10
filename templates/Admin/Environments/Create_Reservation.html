@@ -31,7 +31,7 @@ Lista de ambientes reservados
     <!-- Table Header (Filters) -->
     <div class="block">
         <div class="block-content">
-            <form class="form" id="filters-form" method="post">{% csrf_token %}
+            <form class="form" id="filters-form" action="{% url 'environment:create_reservation' %}" method="post" onsubmit="return false;">{% csrf_token %}
                 <div class="row">
 
                     <div class="col-lg-4">
@@ -82,8 +82,6 @@ Lista de ambientes reservados
     <!-- Simple Table Full -->
     <div class="block block-bordered">
         <div class="block-content" id="form-content">
-            {% include 'Admin/Environments/Create_Reservation_Form.html' %}
-            {% include 'Admin/Environments/Create_not_available.html' %}
         </div>
     </div>
     <!-- END Simple Table Full -->

@@ -168,7 +168,7 @@ def getReservationFilters(request):
             data['headquarter_id'] = request.GET.get('headquarter_id')
 
         if request.GET.get('environment_id'):
-            data['environment_id'] = request.GET.get('environment_id')
+            data['id'] = request.GET.get('environment_id')
 
         qry_env = environment_service.filter(data).values_list('id', flat=True)
 
@@ -177,15 +177,61 @@ def getReservationFilters(request):
         else:
             filters['environment_id'] = -1  #With this value, the filter will return no values.
 
+    #Verify date section:
+    
+    start_date = datetime.min
+    end_date   = datetime.max
+
     if request.GET.get('start_date'):
         start_date = datetime.strptime(request.GET.get('start_date'), "%m/%d/%Y")
 
-        filters['start_date__gte'] = start_date
-
     if request.GET.get('end_date'):
-        end_date = datetime.strptime(request.GET.get('end_date'), "%m/%d/%Y")
+        end_date   = datetime.strptime(request.GET.get('end_date'), "%m/%d/%Y")
 
-        filters['end_date__lte'] = end_date
+    filters['start_date__lte'] = end_date
+    filters['end_date__gte']   = start_date
+
+    return filters
+
+#Este recibe como parametro un dict.
+def getReservationFiltersDict(request):
+
+    filters = {}
+
+    if ('env_name' in request) or ('headquarter_id' in request) or ('environment_id' in request):
+
+        environment_service = EnvironmentService()
+        data = {}
+
+        if 'env_name' in request:
+            data['name__icontains'] = request['env_name']
+
+        if 'headquarter_id' in request:
+            data['headquarter_id'] = request['headquarter_id']
+
+        if 'environment_id' in request:
+            data['id'] = request['environment_id']
+
+        qry_env = environment_service.filter(data).values_list('id', flat=True)
+
+        if qry_env:
+            filters['environment_id__in'] = list(qry_env)
+        else:
+            filters['environment_id'] = -1  #With this value, the filter will return no values.
+
+    #Verify date section:
+    
+    start_date = datetime.min
+    end_date   = datetime.max
+
+    if 'start_date' in request:
+        start_date = datetime.strptime(request['start_date'], "%m/%d/%Y")
+
+    if 'end_date'   in request:
+        end_date   = datetime.strptime(request['end_date'], "%m/%d/%Y")
+
+    filters['start_date__lte'] = end_date
+    filters['end_date__gte']   = start_date
 
     return filters
 
@@ -198,20 +244,21 @@ def create_reservation(request):
 
     context = {
         'titulo': 'tittle',
-        'headquarters' : headquarters
+        'headquarters' : headquarters,
     }
 
     return render(request, 'Admin/Environments/Create_Reservation.html', context)
 
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def create_reservation_post(request):
 
     environment_service = EnvironmentService()
+    
 
-    filters = getReservationFilters(request)
+    filters = getReservationFiltersDict(request.POST.dict())
+    #return HttpResponse(filters['end_date__lte'])
     reservations = environment_service.filterReservations(filters)
-
     
     context = {
         'reservations' : reservations,
@@ -220,24 +267,23 @@ def create_reservation_post(request):
 
     #Si encuentra reserva alguna en la fecha no esta disponible
     if reservations.count() > 0 :
-        return render(request, 'Admin/Environments/Create_not_available.html', context)   
+        return render_to_response('Admin/Environments/Create_not_available.html', context)   
 
-    return render(request, 'Admin/Environments/Create_Reservation_Form', context)
+    return render_to_response('Admin/Environments/Create_Reservation_Form.html', context)
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def create_reservation_getEnvs(request):
 
     environment_service = EnvironmentService()
 
-    environments = environment_service.filter({'headquarter_id' : request.GET.get('headquarter_id')})
+    environments = environment_service.filter({'headquarter_id' : request.POST.get('headquarter_id')})
 
     
     context = {
         'environments' : environments,
         'titulo' : 'titulo'
     }
-
-    return render(request, 'Admin/Environments/Create_Reservation_Envs', context)
+    return render_to_response('Admin/Environments/Create_Reservation_Envs.html', context)
 
 @require_http_methods(['POST'])
 def insert_reservation(request):
@@ -261,21 +307,25 @@ def insert_reservation(request):
         end_date       = form.cleaned_data['end_date']
         environment_id = form.cleaned_data['environment_id']
 
-        environment = environments_service.getEnviromentById(environment_id)
+        environment = environment_service.getEnviromentById(environment_id)
 
         insert_data = {
             'price'       : price,
             'start_date'  : start_date,
             'end_date'    : end_date,
-            'environment' : environment
+            'environment' : environment,
+            'status'      : 0
         }
 
         environment_service.createReservation(insert_data)
 
-        return HttpResponseRedirect(reverse('environment:index_book'))
+        return HttpResponse("index")
 
     else:
-        
+        return HttpResponse("create")
+      
+
+        """
         headquarter_service = HeadquarterService()
 
         headquarters = headquarter_service.getHeadquarters()
@@ -285,4 +335,5 @@ def insert_reservation(request):
             'titulo'       : 'titulo'
         }
 
-        return render(request, 'Admin/Activities/Create_Reservation.html', context)
+        return render(request, 'Admin/Environments/Create_Reservation.html', context)
+        """
