@@ -97,16 +97,16 @@ Lista de solicitudes de actividades
                             </tr>
                         </thead>
                         <tbody>
-                            {% for activity in activities %}                                       
+                            {% for registration in activities %}                                       
                                 <tr>
-                                    <td class="font-w600">{{activity.name}}</td>
-                                    <td class="font-w600">{{activity.attendance}}</td>
-                                    <td class="font-w600">{{activity.enviroment.name}}</td>
-                                    <td class="font-w600">{{activity.start_date|date:"d/m/Y H:i"}}</td>
-                                    <td class="font-w600">{{activity.end_date|date:"d/m/Y H:i"}}</td>
+                                    <td class="font-w600">{{registration.activity.name}}</td>
+                                    <td class="font-w600">{{registration.activity.attendance}}</td>
+                                    <td class="font-w600">{{registration.activity.enviroment.name}}</td>
+                                    <td class="font-w600">{{registration.activity.start_date|date:"d/m/Y H:i"}}</td>
+                                    <td class="font-w600">{{registration.activity.end_date|date:"d/m/Y H:i"}}</td>
                                     <td class="text-center">
                                        <div class="btn-group">
-                                            <a href="{% url 'activities:select_signup' activity.id%}"><button class="btn btn-xs btn-default objetar" type="button" data-toggle="tooltip" title="Ver Detalle"><i class="fa fa-eye"></i></button></a>
+                                            <a href="{% url 'activities:signout' registration.activity.id%}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Cancelar Inscripcion"><i class="fa fa-times"></i></button></a>
                                         </div>
                                     </td>    
                                 </tr>

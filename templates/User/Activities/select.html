@@ -22,62 +22,91 @@ Lista de solicitudes de actividades
 
 {% block content %}
 <div class="content">
-    <form class="form" action="{% url 'activities:index_signup' %}" method="get">
-        <div class="block">
-            <div class="block-content">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label">Nombre</label>
-                                <input class="form-control" type="text" id="name" name="name">
-                            </div>
-                        </div>
-                        <div class="col-lg-1">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label">Capacidad</label>
-                                <input class="form-control" type="text" id="attendance" name="attendance">
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-
-                            <div class="form-group">
-                                <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
-                                <div class="col-xs-12">
-                                    <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                        <input class="form-control input-datetime" type="text" id="start_date" name="start_date" placeholder="Desde">
-                                        <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                        <input class="form-control input-datetime" type="text" id="end_date" name="end_date" placeholder="hasta">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="col-xs-12" for="example-select">Tipo de Actividad</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control" id="activity_type_id" name="activity_type_id" size="1">
-                                        <option value>Todas las sedes</option>
-                                        {% for activity_type in activity_types %}
-                                        <option value="{{ activity_type.id }}">{{ activity_type.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-warning" role="alert">
+                {{msg.message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="content">
+    <div class="block">
+        <div class="block-content">
+            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:signup" activity.id%}' method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="name">Nombre: {{activity.name}}</label>
                         </div>
                     </div>
-            </div>
-            <div class="block-content">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-3 col-lg-offset-9">
-                            <div class="col-lg-12 text-right">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
-                            </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="attendance">Capacidad: {{activity.attendance}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="price">Precio: S/ {{activity.price}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label for="activity_type">Tipo: {{activity.activity_type.name}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="environments">Ambiente: {{activity.enviroment.name}}</label>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="start_date">Fecha/Hora Inicio Actividad: {{activity.start_date|date:"d/m/Y H:i"}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="end_date">Fecha/Hora Fin Actividad: {{activity.end_date|date:"d/m/Y H:i"}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Inscribirse</button></a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="{% url 'activities:index_signup' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                        </div>
+                        <div class="col-xs-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
         </div>
-    </form>
+    </div>
 </div>
 {% endblock %}

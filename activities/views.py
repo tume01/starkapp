@@ -14,6 +14,8 @@ from services.ActivityService import ActivityService
 from services.ActivityTypeService import ActivityTypeService
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
+from django.core import serializers
 
 @require_http_methods(['GET'])
 def index(request):
@@ -305,6 +307,7 @@ def index_signUp(request):
 
     return render(request, 'User/Activities/index.html', context)
 
+@require_http_methods(['GET'])
 def select_signUp(request, activity_id):
     
     activity_service = ActivityService()
@@ -317,6 +320,7 @@ def select_signUp(request, activity_id):
 
     return render(request, 'User/Activities/select.html', context)
 
+@require_http_methods(['POST'])
 def signup(request, activity_id):
     
     activity_service = ActivityService()
@@ -327,7 +331,7 @@ def signup(request, activity_id):
     if activity_service.addMember(activity_id, member):
         messages.success(request, 'Registro en Actividad exitoso')
         return HttpResponseRedirect(reverse('activities:user_activities'))
-
+    
     messages.error(request, 'No se ha podido registrar en la activdad')
     return HttpResponseRedirect(reverse('activities:select_signup', args=[activity_id]))
 
@@ -336,7 +340,7 @@ def signout(request, activity_id):
     activity_service = ActivityService()
     members_service = MembersService()
 
-    member = members_service.filter({'user_i':request.user.id}).first()
+    member = members_service.filter({'user_id':request.user.id}).first()
 
     if activity_service.removeMember(activity_id, member.id):
         messages.success(request, 'Miembro retirado de actvidad exitosamente')
@@ -351,11 +355,10 @@ def user_activities(request):
 
     member = members_service.filter({'user_id':request.user.id}).first() 
 
-    activities = member.activityregistration_set.all
-
+    activities = member.activityregistration_set.filter(deleted_at=None)
+    
     context = {
         'activities' : activities
     }
 
-    return HttpResponse(activities)
     return render(request, 'User/Activities/user_activities.html', context)
