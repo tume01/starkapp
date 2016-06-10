@@ -283,6 +283,7 @@ def create_reservation_getEnvs(request):
         'environments' : environments,
         'titulo' : 'titulo'
     }
+    
     return render_to_response('Admin/Environments/Create_Reservation_Envs.html', context)
 
 @require_http_methods(['POST'])
