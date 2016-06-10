@@ -7,24 +7,63 @@ from services.ProvidersService import ProvidersService
 from django.views.decorators.http import require_http_methods
 from .forms import ProviderForm
 
+from datetime import datetime,timedelta
+
+
 @require_http_methods(['GET'])
 def index(request):
 
     provider_service = ProvidersService()
 
+    filters = getProviderFilters(request)
+
+    providers2 = provider_service.filter(filters)
+
     providers = provider_service.getProviders()
 
     context = {
-        'proveedores' : providers,
+        'proveedores' : providers2,
         'titulo' : 'titulo'
     }
 
     return render(request, 'Admin/Providers/index_provider.html', context)
 
+
+def getProviderFilters(request):
+
+    filters = {}
+
+    if request.GET.get('filter-ruc'):
+        filters['ruc__contains'] = request.GET.get('filter-ruc')
+
+    if request.GET.get('filter-status'):
+        filters['status'] = request.GET.get('filter-status') 
+
+    if request.GET.get('filter-registrationDate1'):
+        start_date = datetime.strptime(request.GET.get('filter-registrationDate1'), "%d/%m/%Y")
+
+        filters['registrationDate__gte'] = start_date
+
+    if request.GET.get('filter-registrationDate2'):
+        end_date = datetime.strptime(request.GET.get('filter-registrationDate2'), "%d/%m/%Y")
+        #end_date = end_date + timedelta(hours=24)
+
+        filters['registrationDate__lt'] = end_date
+
+    if request.GET.get('filter-businessName'):
+        filters['businessName'] = request.GET.get('filter-businessName')
+
+    if request.GET.get('filter-contactName'):
+        filters['contactName'] = request.GET.get('filter-contactName')
+
+    return filters
+
 @require_http_methods(['GET'])
 def create_index(request):
 
+    #regions = Region.objects.all()
     form = ProviderForm()
+    #form.region = regions
     context = {
         'titulo' : 'titulo',
         'form' : form
@@ -37,30 +76,32 @@ def create_provider(request):
 
     if request.POST:
         form = ProviderForm(request.POST)
-        print(request.POST)
+        
         #print(form['ruc'])
         if form.is_valid():
-            #form.save()
+            print("no pasa")
 
             provider_service = ProvidersService()
 
             providerRuc = provider_service.find_ruc(request.POST['ruc'])
 
             if(providerRuc == None):
-
+                print("pasa")
                 insert_data = {}
                 insert_data["ruc"] = request.POST['ruc']
                 insert_data["businessName"] = request.POST['businessName']
                 insert_data["status"] = request.POST['status']
                 insert_data["distric"] = request.POST['distric']
                 insert_data["province"] = request.POST['province']
+                insert_data["region"] = request.POST['region']
                 insert_data["address"] = request.POST['address']
+                insert_data["postal"] = request.POST['postal']
                 insert_data["phone"] = request.POST['phone']
                 insert_data["email"] = request.POST['email']
                 insert_data["registrationDate"] = request.POST['registrationDate']
                 insert_data["contactName"] = request.POST['contactName']
                 insert_data["contactPhone"] = request.POST['contactPhone']
-                insert_data["effectiveTime"] = request.POST['effectiveTime']
+
 
                 provider_service = ProvidersService()
 
@@ -106,9 +147,10 @@ def edit_provider(request,id):
 
     if request.POST:
         form = ProviderForm(request.POST)
-        print(request.POST)
+        
         #print(form['ruc'])
         if form.is_valid():
+
             #form.save()
 
             insert_data = {}
@@ -117,13 +159,16 @@ def edit_provider(request,id):
             insert_data["status"] = request.POST['status']
             insert_data["distric"] = request.POST['distric']
             insert_data["province"] = request.POST['province']
+            insert_data["region"] = request.POST['region']
             insert_data["address"] = request.POST['address']
+            insert_data["postal"] = request.POST['postal']
             insert_data["phone"] = request.POST['phone']
             insert_data["email"] = request.POST['email']
             insert_data["registrationDate"] = request.POST['registrationDate']
             insert_data["contactName"] = request.POST['contactName']
             insert_data["contactPhone"] = request.POST['contactPhone']
-            insert_data["effectiveTime"] = request.POST['effectiveTime']
+
+
 
             provider_service = ProvidersService()
 
@@ -137,3 +182,66 @@ def edit_provider(request,id):
                 print(error)
             context = {'form' : form}
             return render(request, 'Admin/Providers/edit_provider.html', context)
+
+@require_http_methods(['POST'])
+def filter_product(request):
+    filter_data = {}
+    req = json.loads( request.body.decode('utf-8') )
+
+    print("id= "+req.get("id"))
+
+
+    product_name = ""
+
+    qry = "SELECT p.id, p.businessName, p.status, p.registrationDate, p.contactName, p.contactPhone, p.email "
+    qry += " FROM providers_provider p "
+
+
+    if req.get("f_ruc") == '' and req.get("f_businessName") == '' and req.get("f_registrationDate1") == '' and req.get("f_registrationDate2") == '' and req.get("f_contactName") == '':
+        print("sin filtro")
+    else:
+        if req.get("f_selectProductType") != '0':
+            qry += " AND p.product_type_id="+req.get("f_selectProductType") + " "
+        
+        if req.get("f_select2Provider") != None:
+            i=0
+            for prov_id in req.get("f_select2Provider"):
+                if i == 0:
+                    qry += " AND ( pxp.provider_id="+ prov_id + " "
+                    i += 1
+                else:
+                    qry += " OR pxp.provider_id="+ prov_id + " "
+
+            qry += " ) "
+
+        if req.get("f_name") != '':
+            qry += " AND p.name LIKE %s"
+            product_name = req.get("f_name")
+
+    print("qry= "+qry)
+
+    req_list = []
+
+    try:
+        if product_name != '':
+            list_products = Product.objects.raw(qry, [product_name])
+        else:
+            list_products = Product.objects.raw(qry)
+        
+        for p in list_products:
+            data_item = {}
+            data_item["id"] = p.id
+            data_item["name"] = p.name
+            data_item["price"] = p.price
+            data_item["actual_stock"] = p.actual_stock
+            data_item["minimum_stock"] = p.minimum_stock
+            data_item["status"] = p.status
+            data_item["description"] = p.description
+            #data_item["id"] = p.id
+            req_list.append(data_item)
+
+    except IntegrityError:
+        handle_exception()
+        list_products = None
+
+    return HttpResponse( json.dumps(req_list), content_type='application/json')

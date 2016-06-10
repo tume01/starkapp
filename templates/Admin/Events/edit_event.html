@@ -57,8 +57,11 @@ Editar Inscripción
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
                                                     <select class="form-control" id="example-select" value="{{event.event_type_id}}" placeholder="{{event.event_type_id}}" name="event_type" size="1">
-                                                        <option value="1">Privado</option>
-                                                        <option value="2">Público</option>
+                                                    {% if event.event_type_id == 8 %}
+                                                        <option value="{{event.event_type_id}}">Privado</option>
+                                                    {% else %}
+                                                        <option value="{{event.event_type_id}}">Publico</option>
+                                                    {% endif %}
                                                     </select>
                                                 </div>
                                             </div>
@@ -70,7 +73,7 @@ Editar Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="user" placeholder="DNI del usuario" value="{{event.user_id}}" >
+                                                    <input class="form-control" type="text" id="example-input1-group1" name="user" placeholder="{{event.user_id}}" value="{{event.user_id}}" >
                                                 </div>
                                             </div>
                                         </div>
@@ -93,7 +96,9 @@ Editar Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="seat" placeholder="{{event.seat}}"value="{{event.seat}}" >
+                                                    <select class="form-control" id="example-select" value="{{event.headquarter}}" placeholder="{{event.headquarter.name}}" name="headquarter" size="1">
+                                                        <option value="{{event.headquarter.name}}">{{event.headquarter.name}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -103,8 +108,11 @@ Editar Inscripción
                                             <label class="col-xs-12" for="example-select">Ambiente</label>
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="example-input1-group1" name="environment" placeholder="ambiente">
+                                                    <span class=""></span>
+                                                        {% for environment in event.environment_set.all %}
+                                                            <input type="radio" name="environment" checked value="{{environment.id}}">{{environment.name}}</input>environment
+                                                        {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,7 +125,7 @@ Editar Inscripción
                                             <label class="col-xs-12" for="example-datetimepicker3">Fechas del Evento</label>
                                             <div class="col-md-6">
                                                 <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="start_date" placeholder="{{event.start_date}}" value="{{event.start_date}}.format('m/%d/%Y %H:%M %p')">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="start_date" placeholder="{{event.start_date}}" value="{{event.start_date|date:"d/m/Y H:i A"}}">
                                                     <span class="input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </span>
@@ -125,7 +133,7 @@ Editar Inscripción
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="end_date" placeholder="{{event.end_date}}" value="{{event.end_date}}.format('m/%d/%Y %H:%M %p')">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="end_date" placeholder="{{event.end_date}}" value="{{event.end_date|date:"d/m/Y H:i A"}}">
                                                     <span class="input-group-addon">
                                                         <span class="fa fa-calendar"></span>
                                                     </span>
@@ -167,11 +175,18 @@ Editar Inscripción
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Costo de entrada</label>
                                             <div class="col-md-6">
+                                                <div class="col-md-6">
+                                                Para socios
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                                    <input class="form-control" type="number" id="example-input1-group1" name="price" placeholder="{{event.price}}" value="{{event.price}}">
+                                                    <input class="form-control" type="number" id="price" name="price" value="{{event.price_member}}" placeholder="S/.">
                                                 </div>
                                             </div>
+                                                Para invitados
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                    <input class="form-control" type="number" id="price" name="price" value="{{event.price_invited}}" placeholder="S/.">
+                                                </div>
                                         </div>
                                     </div>
                                 </div>

@@ -21,101 +21,47 @@ Lista de sedes
 {% endblock %}
 
 {% block content %}
-<main id="main-container">
-    <!-- Page Header -->
-    <div class="content bg-image overflow-hidden" style="background-image: url('assets/img/photos/photo3@2x.jpg');">
-        <div class="push-50-t push-15">
-            <h1 class="h2 text-white animated zoomIn">Dashboard</h1>
-            <h2 class="h5 text-white-op animated zoomIn">Bienvenido Usuario</h2>
+<!-- Page Content -->
+<div class="content">
+    <!-- Simple Table Full -->
+    <div class="block">
+        <div class="block-content">
+            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+            <table class="table table-bordered table-striped js-dataTable-simple">
+                <thead>
+                    <tr>
+                        <th class="text-center">Codigo</th>
+                        <th class="font-w600">Sede</th>
+                        <th class="hidden-xs">Dirección</th>
+                        <th class="hidden-xs">Descripcion</th>
+                        <!--<th class="hidden-xs" style="width: 15%;">Estado</th>-->
+                        <th class="text-center" style="width: 10%;">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for headquarter in headquarters %}  
+                    <tr>
+                        <td class="text-center">{{headquarter.id}}</td>
+                        <td class="font-w600">{{headquarter.name}}</td>
+                        <td class="hidden-xs">{{headquarter.location}}</td>
+                        <td class="hidden-xs">{{headquarter.description}}</td>
+                        <!--<td class="hidden-xs">
+                            <span class="label label-danger">TBD</span>
+                        </td>-->
+                        <td class="text-center">
+                            <div class="btn-group">
+                                <a href="{% url 'headquarters:select' headquarter.id %}"><button class="btn btn-xs btn-default editar" data-id="{{headquarter.id}}" type="button"  data-toggle="tooltip" title="Editar Sede"><i class="fa fa-pencil"></i></button></a>
+
+                                <a href="{% url 'headquarters:delete' headquarter.id %}"><button class="btn btn-xs btn-default eliminar" data-id="{{headquarter.id}}" type="button" data-toggle="tooltip" title="Eliminar Sede"><i class="fa fa-times"></i></button></a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
-
-
-    <div class="content bg-gray-lighter">
-        <div class="row items-push">
-            <div class="col-sm-7">
-                <h1 class="page-heading">
-                    Sedes <small>Lista completa de sedes</small>
-                </h1>
-            </div>
-            <div class="col-sm-5 text-right hidden-xs">
-                <ol class="breadcrumb push-10-t">
-                    <li>Sedes</li>
-                    <li><a class="link-effect" href="">Lista de sedes</a></li>
-                </ol>
-            </div>
-        </div>
-    </div>
-    <!-- END Page Header -->
-
-    <!-- Page Content -->
-    <div class="content">
-        <!-- Simple Table Full -->
-        <div class="block">
-            <!--<div class="block-header">
-                <h3 class="block-title">Simple Table <small>Full</small></h3>
-            </div>-->
-            <div class="block-content">
-                <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-                <table class="table table-bordered table-striped js-dataTable-simple">
-                    <thead>
-                        <tr>
-                            <th class="text-center"></th>
-                            <th class="font-w600">Sede</th>
-                            <th class="hidden-xs">Dirección</th>
-                            <th class="hidden-xs" style="width: 15%;">Estado</th>
-                            <th class="text-center" style="width: 10%;">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">1</td>
-                            <td class="font-w600">Sede 1</td>
-                            <td class="hidden-xs">Direccion 1</td>
-                            <td class="hidden-xs">
-                                <span class="label label-danger">Activa</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="./EditClubFranchices.html"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Sede"><i class="fa fa-pencil"></i></button></a>
-                                    <button class="btn btn-xs btn-default" type="button" title="Eliminar Sede" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">2</td>
-                            <td class="font-w600">Sede 2</td>
-                            <td class="hidden-xs">Direccion 2</td>
-                            <td class="hidden-xs">
-                                <span class="label label-warning">En mantenimiento</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="./EditClubFranchices.html"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Sede"><i class="fa fa-pencil"></i></button></a>
-                                    <button class="btn btn-xs btn-default" type="button" title="Eliminar Sede"><i class="fa fa-times" data-toggle="modal" data-target="#deleteModal"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">4</td>
-                            <td class="font-w600">Sede 3</td>
-                            <td class="hidden-xs">Direccion 3</td>
-                            <td class="hidden-xs">
-                                <span class="label label-success">Desactivada</span>
-                            </td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <a href="./EditClubFranchices.html"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Sede"><i class="fa fa-pencil"></i></button></a>
-                                    <button class="btn btn-xs btn-default" type="button" title="Eliminar Sede" data-toggle="modal" data-target="#deleteModal"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <!-- END Simple Table Full -->
-    </div>
-    <!-- END Page Content -->
-</main>
+    <!-- END Simple Table Full -->
+</div>
+<!-- END Page Content -->
 {% endblock %}

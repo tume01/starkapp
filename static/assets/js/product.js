@@ -33,39 +33,49 @@ $(function () {
 /******************************************************************/
 
 $('#SaveProduct').click(function(){
-//function SaveProduct(){
 	console.log('click Guardar');
-	data = {};
-	data.name = $('#name').val();
-	data.actualStock = $('#actualStock').val();
-	data.minStock = $('#minStock').val();
-	data.productType = $('#selectProductType').val();
-	data.description = $('#description').val();
-	data.providers = $('#select2Provider').val();
-	data.price = $('#price').val();
 
-	console.log(data);
+	if ($('#name').val() == '' || $('#actualStock').val() == '' || $('#minStock').val() == '' ||
+		$('#price').val() == '' || 
+		$('#selectProductType').val() == '' || $('#selectProductType').val() == null){
 
-	var xhr = $.ajax({
-	    type: "POST", 
-	    url: "/products/create/insert/", //url que procesa
-	    dataType: "text",
-	    data: JSON.stringify(data),
-	    contentType: "application/json; charset=utf-8",
-    });
+		$('#formNewProduct').submit();
+		//console.log('form');
+		//console.log($('#selectProductType').val());
+	}
+	else{
+		console.log('ajax');
+		data = {};
+		data.name = $('#name').val();
+		data.actualStock = $('#actualStock').val();
+		data.minStock = $('#minStock').val();
+		data.productType = $('#selectProductType').val();
+		data.description = $('#description').val();
+		data.providers = $('#select2Provider').val();
+		data.price = $('#price').val();
 
-	xhr.done(function(data) {
-		console.log('done='+data);
-		window.location = "/products";
-    });
+		console.log(data);
 
-    xhr.fail(function(xhr, status, text){
-        console.log("Error " + xhr.readyState + " " +text);
+		var xhr = $.ajax({
+		    type: "POST", 
+		    url: "/products/create/insert/", //url que procesa
+		    dataType: "text",
+		    data: JSON.stringify(data),
+		    contentType: "application/json; charset=utf-8",
+	    });
 
-    });
+		xhr.done(function(data) {
+			console.log('done='+data);
+			window.location = "/products";
+	    });
 
-    return xhr;
-//}
+	    xhr.fail(function(xhr, status, text){
+	        console.log("Error " + xhr.readyState + " " +text);
+
+	    });
+
+	    return xhr;
+	}
 });
 
 
@@ -142,7 +152,20 @@ $('#filterProduct').click(function(){
     });
 
 	xhr.done(function(data) {
-		console.log('done='+data); //data que recibes de controller
+		//console.log('done='+list); //data que recibes de controller
+		var array_products = $.parseJSON(data);
+
+		//$("#productsTable").empty(); //delete rows on table
+		var contents = $("#productsTable").find('tbody').contents().detach();
+		//addTableHeader();		
+		
+		for (var i=0; i<array_products.length; i++){
+			var item = array_products[i];
+			console.log(item);
+			addRowsOnTable(item, i);
+		}
+
+		
 		//window.location = "/products"; //url que abrira
     });
 
@@ -154,6 +177,83 @@ $('#filterProduct').click(function(){
     return xhr;
 
 });
+
+function addRowsOnTable(item, i){
+	var textStatus = '';
+	var color = '';
+
+	if (item == 0) textStatus = 'Inactivo';
+	else textStatus = 'Activo';
+
+	if (i%2 != 0) color = '#FFF'; //color blanco para el td
+
+	$("#productsTable")
+    		.append($('<tbody>')
+        		.append($('<tr>')
+        			.css('background-color',color)
+        			.append($('<td>')
+                		.attr('class', 'text-center')
+                		.text(item.id)
+                	)
+                	.append($('<td>')
+                		.text(item.name)
+                	)
+                	.append($('<td>')
+                		.text(item.price)
+                	)
+                	.append($('<td>')
+                		.attr('class', 'hidden-xs')
+                		.text(item.actual_stock)
+                	)
+                	.append($('<td>')
+                		.text(item.minimum_stock)
+                	)
+                	.append($('<td>')
+                		.text(textStatus)
+                	)
+                	.append($('<td>')
+                		.attr('class', 'text-center')
+                		.attr('style', 'width: 10%;')
+                		.text(item.description)
+                	)
+                	.append($('<td>')
+                		.attr('class', 'text-center')
+                		.append($('<div>')
+                			.attr('class', 'btn-group')
+                			.append($('<a>')
+                				.attr('href', '/products/edit/'+item.id)
+                				.append($('<button>')
+                					.attr('class', 'btn btn-xs btn-default')
+                					.attr('type', 'button')
+                					.attr('data-toggle', 'tooltip')
+                					.attr('title', 'Editar Producto')
+                					.append($('<i>')
+                						.attr('class', 'fa fa-pencil')
+                					)
+                				)
+
+                			)
+                			.append($('<a>')
+                				.attr('href', '/products/delete/update/'+item.id)
+                				.append($('<button>')
+                					.attr('class', 'btn btn-xs btn-default')
+                					.attr('type', 'button')
+                					.attr('data-toggle', 'tooltip')
+                					.attr('title', 'Borrar Producto')
+                					.append($('<i>')
+                						.attr('class', 'fa fa-times')
+                					)
+                				)
+
+                			)
+
+                		)
+                	)
+        		)
+    	);
+
+}
+
 
 /*
 $('#formNewProduct').submit(function(){

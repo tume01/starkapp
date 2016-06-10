@@ -9,7 +9,7 @@ Sedes
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de sedes
+Crear sede
 {% endblock %}
 
 {% block sub_head_dahsboard %}
@@ -17,50 +17,38 @@ Sedes
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de sedes
+Crear sede
 {% endblock %}
 
 {% block content %}
 <div class="content">
-    <div class="block">
-        <div class="block-header">
-            <ul class="block-options">
-                <li>
-                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
-                </li>
-            </ul>
-            <h3 class="block-title">SEDES</h3>
+    <div class="block">        
+        <div class="content">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{msg.message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
         </div>
-
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action="base_forms_premade.html" method="post" onsubmit="return false;">
+            <form class="form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >
+            {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="form-group">
-                            <div class="col-xs-6">
+                            <!--<div class="col-xs-6">
                                 <label for="mega-firstname">Codigo</label>
                                 <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter the headquarter's id.." value="001" disabled>
-                            </div>
-                            <div class="col-xs-6">
+                            </div>-->
+                            <div class="col-xs-5">
                                 <label for="mega-lastname">Nombre</label>
-                                <input class="form-control input-lg" type="text" id="mega-lastname" name="mega-lastname" placeholder="Enter the headquarter's name.." value="">
+                                <input class="form-control input-lg" type="text" id="mega-lastname" name="name" placeholder="Enter the headquarter's name.." value="{{headquarters.name}}">
                             </div>
                         </div>
                     </div>
-                    <!--<div class="col-sm-5">
-                        <div class="form-group">
-                            <label class="col-xs-12" for="example-select">Local</label>
-                            <div class="col-sm-9">
-                                <select class="form-control input-lg" id="example-select" name="example-select" size="1">
-                                    <option value="0">Seleccione un local</option>
-                                    <option value="1">Local #1</option>
-                                    <option value="2">Local #2</option>
-                                    <option value="3">Local #3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
 
                 <div class="row">
@@ -68,57 +56,33 @@ Lista de sedes
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="mega-firstname">Descripcion</label>
-                                <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter a brief description..">
+                                <input class="form-control input-lg" type="text" id="mega-firstname" name="description" placeholder="Enter a brief description.." value="{{headquarters.description}}">
                             </div>
 
                         </div>
                     </div>
-                    <!--<div class="col-sm-5">
-                        <div class="form-group">
-                            <div class="col-xs-12">
-                                <label for="mega-lastname">Fecha Actividad</label>
-                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
-                                    <input class="form-control input-lg" type="text" id="example-datetimepicker3" name="example-datetimepicker3" placeholder="Choose a date..">
-                                    <span class="input-group-addon">
-                                        <span class="fa fa-calendar"></span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
-
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label for="mega-bio">Direccion</label>
-                                <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="22" placeholder="Enter the location of this headquarter.."></textarea>
+                                <input class="form-control input-lg" id="mega-bio" name="location" rows="2" placeholder="Enter the location of this headquarter.." value="{{headquarters.location}}"></input>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-3">
+                    <div class="col-xs-2">
+                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "headquarters:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
                     </div>
                     <div class="col-xs-2">
-                        <a href="./ClubFranchices.html"><button class="btn btn-primary" type="button" data-toggle="modal" data-target="#saveModal"><i class="fa fa-check push-5-r"></i> Crear</button></a>
-                    </div>
-                    <div class="col-xs-2">
-                        <a href="./ClubFranchices.html"><button class="btn btn-warning" type="button"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
-                    </div>
-                    <div class="col-xs-2">
-                        <a href="./ClubFranchices.html"><button class="btn btn-danger" type="button"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
-                    </div>
-                    <div class="col-xs-3">
-                    </div>
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                    </div>                                  
                 </div>
             </form>
         </div>
-
         <!-- END Block v2 -->
-
-
     </div>
 </div>
 

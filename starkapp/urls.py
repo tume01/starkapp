@@ -17,12 +17,14 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 urlpatterns = [
 
     url(r'^products/', include('products.urls')),
     url(r'^activities/', include('activities.urls')),
-    url(r'^bungalows/', include('bungalows.urls')),
+    url(r'^bungalows/', include('bungalow.urls')),
+    url(r'^bungalowReservations/', include('bungalow_reservation.urls')),
     url(r'^promotions/', include('promotions.urls')),
     url(r'^memberships/', include('memberships.urls')),
     url(r'^membership_application/', include('membership_application.urls')),
@@ -30,11 +32,15 @@ urlpatterns = [
     url(r'^members/', include('members.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^eventstype/', include('events_type.urls')),
-    url(r'^providers/', include('providers.urls')),
-    url(r'^headquarters/', include('headquarters.urls')),
+    url(r'^providers/', include('providers.urls')),    
     url(r'^servicios/', include('servicios.urls')),
     url(r'^environment/', include('environment.urls')),
+    url(r'^headquarters/', include('headquarters.urls')),
     url(r'^events', include('events.urls')),
+    url(r'^login/', include('login.urls')),
+    url(r'^ubigeo/', include('ubigeo.urls')),
+    url(r'^$', TemplateView.as_view(template_name="frontend_home.html"), name='home'),
+
 ]
 
 if settings.DEBUG:

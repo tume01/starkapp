@@ -1,8 +1,6 @@
-from bungalows.models import Bungalow
-from contracts.repositories import AbstractBaseRepository
-from .BaseRepository import BaseRepository 
+from bungalow.models import Bungalow
+from repositories.BaseRepository import BaseRepository 
 
-class BungalowsRepository(BaseRepository):
-
+class BungalowRepository(BaseRepository):
     def __init__(self):
         BaseRepository.__init__(self, Bungalow) 

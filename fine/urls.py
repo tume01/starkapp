@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^create/insert', views.create, name='insert'),
     url(r'^create', views.create_index, name='create_index'),
     url(r'^index', views.index, name='index'),
+    url(r'^filter', views.filter, name='filter'),
 ]

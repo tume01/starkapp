@@ -1,12 +1,14 @@
 from django.db import models
 from events_type.models import EventsType
 from environment.models import Environment
+from headquarters.models import Headquarters
 from users.models import User
 
 class Event(models.Model):
     event_type  =   models.ForeignKey(EventsType, on_delete=models.CASCADE,default=None)
-    environment =   models.ForeignKey(Environment, on_delete=models.CASCADE,default=None)
-    user        =   models.ForeignKey(User, on_delete=models.CASCADE,default=None)
+    environment =   models.ManyToManyField(Environment)
+    user        =   models.ManyToManyField(User)
+    headquarter =   models.ForeignKey(Headquarters, on_delete=models.CASCADE,default=None)
 
     name        =   models.CharField(max_length=100)
     description =   models.CharField(max_length=200)
@@ -15,5 +17,6 @@ class Event(models.Model):
     start_date  =   models.DateTimeField()
     end_date    =   models.DateTimeField()
     assistance  =   models.IntegerField()
-    price       =   models.FloatField()
+    price_member=   models.FloatField()
+    price_invited=  models.FloatField()
     status      =   models.IntegerField()

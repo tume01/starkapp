@@ -1,0 +1,61 @@
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Hab.</th>
+            <th class="text-center">Socio</th>
+            <th class="text-center">Status</th>
+            <th class="text-center">Entrada</th>
+            <th class="text-center">Salida</th>
+            <th class="text-center hidden-xs">Check-In</th>
+            <th class="text-center hidden-xs">Check-Out</th>
+            <th >Acción</th>
+        </tr>
+    </thead>
+    <tbody id="table-content">
+        {% for reservation in reservations %}
+            <tr>
+                <td class="text-center" id="reservation_id">{{reservation.bungalow_number}}</td>
+                <td class="text-center">{{ reservation.member_name }}</td>
+                <td class="hidden-xs"><span class="label label-danger">{{ reservation.getStatusName }}</span></td>
+                <td class="text-center">{{ reservation.arrival_date }}</td>
+                <td class="text-center">{{ reservation.departure_date }}</td>
+                <td class="text-center hidden-xs" id="check_in">{{ reservation.check_in }}</td>
+                <td class="text-center hidden-xs" id="check_out">{{ reservation.check_out }}</td>
+                <td class="text-center">
+                    <div class="btn-group">
+                        {% if not reservation.check_in %}
+                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Check-In" onclick="check_in()"><i class="fa fa-sign-in"></i></button>
+                        {%endif%}
+                        {% if reservation.check_in and not reservation.check_out %}
+                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Check-Out" onclick="check_out()"><i class="fa fa-sign-out"></i></button>
+                        {%endif%}
+                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Actualizar Reserva" id="btn-edit"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
+                    </div>
+                </td>    
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-sm-offset-6 col-sm-6">
+        <div class="dataTables_paginate paging_simple_numbers">
+            <ul class="pagination">
+                {% if reservations.has_previous %}
+                <li class="paginate_button" onclick="prevPage()" id="prev-page"><i class="fa fa-angle-left"></i></li>
+                {% else %}
+                <li class="paginate_button" onclick="return false" id="prev-page"><i class="fa fa-angle-left"></i></li>
+                {% endif %}
+
+                <li class="paginate_button active" id="current-page">Página <strong id=page>{{ reservations.number }}</strong> de <strong>{{reservations.paginator.num_pages}}</strong></li>
+
+                {% if reservations.has_next %}
+                <li class="paginate_button" onclick="nextPage()" id="next-page"><i class="fa fa-angle-right"></i></li>
+                {% else %}
+                <li class="paginate_button" onclick="return false" id="next-page"><i class="fa fa-angle-right"></i></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>

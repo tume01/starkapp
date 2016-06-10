@@ -5,6 +5,8 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.EventsService import EventsService
 from services.EnvironmentService import EnvironmentService
+from services.HeadquarterService import HeadquarterService
+from services.EventsTypeService import EventsTypeService
 from django.views.decorators.http import require_http_methods
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
@@ -59,11 +61,21 @@ def create_index(request):
 
     environment_service = EnvironmentService()
 
+    headquearter_service = HeadquarterService()
+
+    eventstype_service = EventsTypeService()
+
     environments = environment_service.getEnvironment()
 
+    headquarters = headquearter_service.getHeadquarters()
+
+    eventstype = eventstype_service.getEventsType()
+    
     context = {
         'titulo' : 'titulo',
-        'environments' : environments
+        'environments' : environments,
+        'headquarters' : headquarters,
+        'eventstype' : eventstype
     }
 
     return render(request, 'Admin/Events/new_event.html', context)
@@ -78,7 +90,7 @@ def create_event(request):
         'titulo' : 'titulo'
     }
 
-    insert_data = {}
+    insert_data = {} 
 
 
     if not form.is_valid():
@@ -101,23 +113,25 @@ def create_event(request):
 
         insert_data["name"] = form.cleaned_data.get('name')
 
-        insert_data["description"] = form.cleaned_data.get('description')
+        insert_data["description"] = form.cleaned_data.get('description') 
 
-        insert_data["environment_id"] = form.cleaned_data.get('environment')
+        insert_data["environment_id"] = form.cleaned_data.get('environment') 
 
-        insert_data["user_id"] = request.POST.get('user')
+        insert_data["user_id"] = form.cleaned_data.get('user') 
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
-        insert_data["seat"] = request.POST.get('seat')
-
+        insert_data["headquarter_id"] = request.POST.get('headquarter')
+     
         insert_data["start_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
 
-        insert_data["end_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
+        insert_data["end_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")   
 
         insert_data["assistance"] = request.POST.get('assistance')
 
-        insert_data["price"] = request.POST.get('price')
+        insert_data["price_member"] = request.POST.get('price_member')
+
+        insert_data["price_invited"] = request.POST.get('price_invited')
 
         insert_data["status"] = 0
 
@@ -144,7 +158,7 @@ def update_index(request,event_id):
 
     context = {
         'titulo' : 'titulo',
-        'events' : events
+        'events' : events,
     }
 
     return render(request,'Admin/Events/edit_event.html',context)
@@ -166,22 +180,22 @@ def update_events(request, event_id):
         insert_data["name"] = request.POST.get('name')
 
     if request.POST.get('description'):
-        insert_data["description"] = request.POST.get('description')
+        insert_data["description"] = request.POST.get('description') 
 
     if request.POST.get('ruc'):
         insert_data["ruc"]  = request.POST.get('ruc')
 
     if request.POST.get('environment'):
 
-        insert_data["environment_id"] = request.POST.get('environment')
+        insert_data["environment_id"] = request.POST.get('environment') 
 
     if request.POST.get('user'):
-
-        insert_data["user_id"] = request.POST.get('user')
+        
+        insert_data["user_id"] = request.POST.get('user') 
 
     if request.POST.get('seat'):
         insert_data["seat"] = request.POST.get('seat')
-
+         
     if request.POST.get("start_date"):
         insert_data["start_date"] = datetime.datetime.strptime(request.POST.get("start_date"),"%m/%d/%Y %H:%M %p").date()
 

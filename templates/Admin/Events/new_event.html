@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base_a.html' %}
+{% extends 'Admin/Layouts/base.html' %}
 
 {% load staticfiles %}
 
@@ -63,9 +63,9 @@ Nueva Inscripción
                                             <label class="col-xs-12" for="event_type">Tipo de evento</label>
                                             <div class="col-sm-6">
                                                 <select class="form-control" id="event_type" name="event_type" size="1">
-                                                    <option value="">Seleccionar</option>
-                                                    <option value="1">Privado</option>
-                                                    <option value="2">Público</option>
+                                                    {% for eventtype in eventstype %}
+                                                    <option value="{{eventtype.id}}">{{eventtype.name}}</option>
+                                                    {% endfor %}
                                                 </select>
                                             </div>
                                         </div>
@@ -83,7 +83,7 @@ Nueva Inscripción
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="ruc">Razón Social</label>
+                                            <label class="col-xs-12" for="ruc">R.U.C de la empresa</label>
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
@@ -99,21 +99,23 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="text" id="seat" name="seat" placeholder="Sede Principal" value="{{form.seat}}" >
+                                                    <select class="form-control" id="example-select" name="headquarter" size="1">
+                                                    {% for headquarter in headquarters %}
+                                                        <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                                                    {% endfor %}
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="environment">Ambiente</label>
+                                            <label class="col-xs-12" for="environment">Ambientes</label>
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                     <select class="form-control" id="environment" name="environment" size="1">
-                                                        <option value="">Seleccionar</option>
+                                                    <span class=""></span>
                                                         {% for environment in environments%}
-                                                            <option value="{{environment.id}}">{{environment.name}}</option>
+                                                            <input type="radio" name="environment" value="{{environment.id}}">{{environment.name}}</input>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
@@ -159,11 +161,17 @@ Nueva Inscripción
                                         <div class="form-group">
                                             <label class="col-xs-12" for="price">Costo de entrada</label>
                                             <div class="col-md-6">
+                                                Para socios
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                                    <input class="form-control" type="number" id="price" name="price" value="{{form.price}}" placeholder="S/.">
+                                                    <input class="form-control" type="number" id="price" name="price_member" value="{{form.price_member}}" placeholder="S/.">
                                                 </div>
                                             </div>
+                                                Para invitados
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                    <input class="form-control" type="number" id="price" name="price_invited" value="{{form.price_invited}}" placeholder="S/.">
+                                                </div>
                                         </div>
                                     </div>
                                 </div>

@@ -85,5 +85,16 @@ ENV/
 # Spyder project settings
 .spyderproject
 
+# Pychar generated files
+.idea/
+
 # Rope project settings
 .ropeproject
+
+#Ignore Migrations
+*/migrations/0*
+
+
+################################
+#     DO NOT MODIFY PLEASE     #
+################################

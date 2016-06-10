@@ -24,5 +24,10 @@ class MembersService(object):
     def filter(self, filters):
         return self.__member_repository.filter(filters)
 
+    def getMemberByUser(self, user):
+        filter_data = {}
+        filter_data['user'] = user
+        return self.__member_repository.filter(filter_data)[0]
+
 
     
