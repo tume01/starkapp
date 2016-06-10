@@ -1,0 +1,6 @@
+                            <label class="col-xs-12" for="environment_id">Seleccione un Ambiente</label>
+                            <select class="form-control" id="environment_id" size="1">
+                                {% for environment in environments %}
+                                <option value="{{environment.id}}">{{environment.name}}</option>
+                                {% endfor %}
+                            </select>

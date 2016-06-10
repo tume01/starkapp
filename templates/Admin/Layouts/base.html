@@ -101,24 +101,35 @@
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Administración del Club</span></li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href='{% url "bungalow:index" %}'>Consultar Bungalows</a>
-                                        </li>
-                                        <li>
-                                            <a href='{% url "bungalow:create_index" %}'>Crear Bungalows</a>
-                                        </li>
-                                        <li>
-                                            <a href="Register_InOutBungalows.html">Editar disponibilidad de Bungalows</a>
-                                        </li>
-                                        <li>
-                                            <a href="Make_Sorteo.html">Sorteo de bungalows</a>
-                                        </li>
-                                        <li>
-                                            <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
-                                        </li>
-                                    </ul>
+                            <ul>
+                                <li>
+                                    <a href='{% url "bungalow:index" %}'>Consultar Bungalows</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "bungalow:create_index" %}'>Crear Bungalows</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "bungalowReservation:index" %}'>Editar disponibilidad de Bungalows</a>
+                                </li>
+                                <li>
+                                    <a href="Make_Sorteo.html">Sorteo de bungalows</a>
+                                </li>
+                                <li>
+                                    <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
+                                </li>
+                            </ul>
                         </li>
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "providers:index" %}'>Consultar proveedores</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "providers:create_index" %}'>Agregar proveedor</a>
+                                </li>
+                            </ul>
+                        </li> 
                         <li>
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
                             <ul>
@@ -134,18 +145,21 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar actividades</a>
+                                    <a href='{% url 'activities:index' %}'>Consultar actividades</a>
+                                </li>
+                                <li>
+                                    <a href='{% url 'activities:create_index' %}'>Crear actividad</a>
                                 </li>                                
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-flag"></i><span class="sidebar-mini-hide">Sedes</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-flag-o"></i><span class="sidebar-mini-hide">Sedes</span></a>
                             <ul>
                                 <li>
-                                    <a href='{% url 'headquarters:index' %}'>Consultar sede</a>
+                                    <a href='{% url "headquarters:index" %}'>Consultar sedes</a>
                                 </li>   
                                 <li>
-                                    <a href='{% url 'headquarters:create_index' %}'>Nueva sede</a>
+                                    <a href='{% url "headquarters:create_index" %}'>Nueva sede</a>
                                 </li>
                             </ul>
                         </li>
@@ -153,11 +167,29 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
                             <ul>
                                 <li>
-                                    <a href=''>Consultar Eventos</a>
-                                </li>                                
+                                    <a href='{% url "events:index" %}'>Consultar eventos</a>
+                                </li>                               
                                 <li>
-                                    <a href=''>Ver inscripción de Eventos</a>
-                                </li>                                
+                                    <a href='{% url "events:create_index" %}'>Crear nuevo evento</a>
+                                </li>  
+                                <li>
+                                    <a href='{% url "events_type:index" %}'>Tipos de eventos</a>
+                                </li>   
+                                <li>
+                                    <a href='{% url "events_type:create_index" %}'>Crear tipo de evento</a>
+                                </li>                                 
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
+                            <ul>
+                                <li>
+                                    <a href="{% url 'servicios:index' %}">Consultar Servicios</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "servicios:create_index" %}'>Crear Servicios</a>
+                                </li>
+                                
                             </ul>
                         </li>
                         <li>
@@ -172,15 +204,26 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos y Servicios</span></a>
                             <ul>
                                 <li>
-                                    <a href="{% url 'servicios:index' %}">Consultar Servicios</a>
+                                    <a href='{% url "products:index" %}'>Consultar productos</a>
                                 </li>
                                 <li>
-                                    <a href='{% url "servicios:create_index" %}'>Crear Servicios</a>
+                                    <a href='{% url "products:create_index" %}'>Crear productos</a>
                                 </li>
-                                
+                                <li>
+                                    <a href=''>Consultar servicios</a>
+                                </li>
+                                <li>
+                                    <a href=''>Crear servicios</a>
+                                </li>
+                                <li>
+                                    <a href=''>Consultar servicios</a>
+                                </li>
+                                <li>
+                                    <a href=''>Ver solicitudes de servicios</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -198,11 +241,6 @@
                                 </li>
                                 <li> 
                                     <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
-                                </li>
-                                {% endif %}
-                                {% if perms.dummy.permission_usuario %} 
-                                <li>
-                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía</a> 
                                 </li>
                                 {% endif %}
                                 {% if perms.dummy.permission_membresia %} 
@@ -453,7 +491,7 @@
         <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
-        <script src='{% static "assets/js/product.js" %}'></script>
+        <!--<script src='{% static "assets/js/product.js" %}'></script>-->
 
         <!-- Page JS Code -->
         <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script>
@@ -470,8 +508,8 @@
         <!--<script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script> -->
         <!-- Page JS Code -->
         <!--<script src="assets/js/pages/base_forms_validation.js"></script>-->
-        <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-        <script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
         
 {% block scripts %}
 {% endblock %}
