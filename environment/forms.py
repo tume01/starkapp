@@ -13,3 +13,9 @@ class EnvironmentForm(forms.Form):
         if (data < 0):
             raise forms.ValidationError("El campo de Aforo tiene que ser mayor que 0")
         return data
+
+class EnvReservationForm(forms.Form):
+    price = forms.CharField(error_messages={'required': 'El campo precio es requerido'})
+    end_date = forms.DateTimeField(error_messages={'required': 'El campo fecha fin es requerido'}, input_formats=['%m/%d/%Y'])
+    start_date = forms.DateTimeField(error_messages={'required': 'El campo fecha inicio es requerido'}, input_formats=['%m/%d/%Y'])
+    environment_id = forms.IntegerField()
