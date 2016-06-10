@@ -1,17 +1,20 @@
-$('#headquarter_id').change(function() {
-    refreshField();
-});
-//
-$('input[id=arrival_date]').change(function() {
-    refreshField();
-});
+$(document).ready(function(){
+    $('#headquarter_id').change(function() {
+        refreshField();
+    });
+    //
+    $('input[id=arrival_date]').change(function() {
+        refreshField();
+    });
 
-$('#environment_content').change(function(){
-    refreshHours();
-});
+    $('#start_hour').change(function(){
+        refreshHours();
+    });
 
-$('#stay_content').change(function(){
-    refreshTime();
+    $('#reserved_hours').change(function(){
+        refreshTime();
+    });
+
 });
 
 function refreshField(){
@@ -22,53 +25,48 @@ function refreshField(){
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
-    //console.log("AJAX REQUEST", requestData)
-    $.ajax({
-        url : "create/refresh_field", // the endpoint
-        type : "POST", // http method
-        data : requestData, // data sent with the post request
+    console.log(requestData);
 
-        // handle a successful response
+    $.ajax({
+        url : "create/refresh_field", 
+        type : "POST", 
+        data : requestData, 
+
+
         success : function(data) {
 
-    //console.log("AJAX REQUEST", requestData)
             $('#environment_id').html(data);
-            $('#reserved_hours').prop('disabled', true);
+            $('#stay_content').prop('disabled', true);
             $('#start_hour').prop('disabled', true);
+            $('#environment_content').prop('disabled', true);
         },
 
-        // handle a non-successful response
         error : function(xhr,errmsg,err) {
-            console.log("ERROR"); // another sanity check
+            console.log("ERROR"); 
         }
     });
 }
 
-function refreshHour(){
+function refreshHours(){
 
     var requestData = {
-        'environment_content' : $('#environment_content').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
-    //console.log("AJAX REQUEST", requestData)
     $.ajax({
-        url : "create/refresh_hour", // the endpoint
-        type : "POST", // http method
-        data : requestData, // data sent with the post request
+        url : "create/refresh_hour", 
+        type : "POST", 
+        data : requestData, 
 
-        // handle a successful response
+
         success : function(data) {
 
-    //console.log("AJAX REQUEST", requestData)
-            $('#environment_id').html(data);
-            $('#reserved_hours').prop('disabled', true);
             $('#start_hour').prop('disabled', true);
         },
 
-        // handle a non-successful response
+
         error : function(xhr,errmsg,err) {
-            console.log("ERROR"); // another sanity check
+            console.log("ERROR"); 
         }
     });
 }
@@ -76,28 +74,42 @@ function refreshHour(){
 function refreshTime(){
 
     var requestData = {
-        'stay_content' : $('#stay_content').val(),
+        'start_hour' : $('#start_hour').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
-    //console.log("AJAX REQUEST", requestData)
     $.ajax({
-        url : "create/refresh_max_time", // the endpoint
-        type : "POST", // http method
-        data : requestData, // data sent with the post request
+        url : "create/refresh_max_time", 
+        type : "POST", 
+        data : requestData, 
 
-        // handle a successful response
+
         success : function(data) {
 
-    //console.log("AJAX REQUEST", requestData)
-            $('#stay_content').html(data);
-            $('#reserved_hours').prop('disabled', true);
-            $('#start_hour').prop('disabled', true);
+
+            $('#start_hour').html(data);
         },
 
-        // handle a non-successful response
+
         error : function(xhr,errmsg,err) {
-            console.log("ERROR"); // another sanity check
+            console.log("ERROR"); 
         }
     });
+}
+
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie != '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

@@ -1,8 +1,8 @@
 <div class="form-group">
     <label class="col-xs-12">Horas disponibles</label>
-    <select class="form-control" id="{{ select_id }}" size="1">
+    <select class="form-control" id="{{ select_id }}" name="start_hour" size="1">
         {% for hour in hours %}
-        	<option>{{hour}}</option>
+        	<option value="{{hour}}">{{hour}}</option>
         {% endfor %}
     </select>
 </div>
