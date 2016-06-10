@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^verify', views.verify_user, name='verify_user'),
     url(r'^create/insert', views.create_user, name='insert'),
     url(r'^create', views.create_user_index, name='create_index'),
-    url(r'^', views.user_index, name='index'),
-
+    url(r'^view/edit',views.edit_password, name='password'),
+    url(r'^view',views.show_user, name='show_user'),
+    url(r'^', views.user_index, name='index'),    
 ]

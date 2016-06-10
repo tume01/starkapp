@@ -86,7 +86,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a class="h5 text-white" href="index.html">
+                    <a class="h5 text-white">
                         <i class="fa fa-circle-o-notch text-primary"></i> <span class="h4 font-w600 sidebar-mini-hide">ne</span>
                     </a>
                 </div>
@@ -144,19 +144,28 @@
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
                             <ul>  
                                 <li>
-                                    <a href='{% url 'membership_application:user_index' %}'>Solicitudes de membresía</a> 
+                                    <a href='{% url "membership_application:user_index" %}'>Solicitudes de membresía</a> 
                                 </li>
+                                                                <li>
+                                    <a href='{% url "memberships:show" %}'> Ver Membresía</a>
+                                  </li>  
                             </ul>
                         </li> 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
+                                <li>
+                                    <a href='{% url "users:show_user" %}'>Cambiar Contraseña</a>
+                                </li>
                             </ul>
                         </li>  
 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
-                            <ul>      
+                            <ul>
+                                <li>
+                                    <a href='{% url 'fine:user_index' %}'>Ver Multas</a>
+                                </li>
                             </ul>
                         </li>   
 
@@ -264,7 +273,7 @@
         <div class="content bg-image overflow-hidden" style="background-image: url('{% static "assets/img/photos/photo3@2x.jpg" %}');">
             <div class="push-50-t push-15">
                 <h1 class="h2 text-white animated zoomIn">Dashboard</h1>
-                <h2 class="h5 text-white-op animated zoomIn">Bienvenido Administrador</h2>
+                <h2 class="h5 text-white-op animated zoomIn">Bienvenido Miembro</h2>
             </div>
         </div>
 

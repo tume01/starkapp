@@ -99,6 +99,7 @@
                             <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Administración del Club</span></li>
+                        {% if perms.dummy.permission_bungalow %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
@@ -119,6 +120,8 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %} 
+                        {% if perms.dummy.permission_proveedor %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-social-dropbox"></i><span class="sidebar-mini-hide">Proveedores</span></a>
                             <ul>
@@ -130,6 +133,8 @@
                                 </li>
                             </ul>
                         </li> 
+                        {% endif %}
+                        {% if perms.dummy.permission_curso %} 
                         <li>
                         <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-book"></i><span class="sidebar-mini-hide">Cursos</span></a>
                             <ul>
@@ -141,6 +146,8 @@
                                 </li>
                             </ul>
                         </li> 
+                        {% endif %}
+                        {% if perms.dummy.permission_actividad %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
                             <ul>
@@ -152,6 +159,8 @@
                                 </li>                                
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if perms.dummy.permission_sede %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa-flag on fa-circle"></i><span class="sidebar-mini-hide">Sedes</span></a>
                             <ul>
@@ -163,6 +172,8 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if perms.dummy.permission_evento %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
                             <ul>
@@ -180,6 +191,8 @@
                                 </li>                                 
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if perms.dummy.permission_servicio %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
                             <ul>
@@ -192,6 +205,8 @@
                                 
                             </ul>
                         </li>
+                        {% endif %}
+                        {% if perms.dummy.permission_cancha %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Canchas</span></a>
                             <ul>
@@ -203,6 +218,8 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}  
+                        {% if perms.dummy.permission_servicio %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos y Servicios</span></a>
                             <ul>
@@ -226,10 +243,25 @@
                                 </li>
                             </ul>
                         </li>
+                        {% endif %}  
+                         {% if perms.dummy.permission_cajero %} 
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-car"></i><span class="sidebar-mini-hide">Ingreso</span></a>
+                            <ul>                                        
+                                <li>
+                                   <a href='{% url 'entry:index' %}'>Lista de ingresos</a> 
+                                </li>
+                                <li>
+                                    <a href='{% url 'entry:create_index' %}'>Registrar ingreso</a>
+                                </li> 
+                            </ul>
+                        </li>   
+                        {% endif %}  
+                        {% if perms.dummy.permission_membresia %}  
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
                             <ul>  
-                                {% if perms.dummy.permission_membresia %}     
+                                   
                                 <li>
                                     <a href='{% url 'memberships:type/index' %}'>Tipos de membresía</a> 
                                 </li>
@@ -242,14 +274,13 @@
                                 <li> 
                                     <a href='{% url 'membership_application:create_index' %}'>Nueva solicitud de membresía</a> 
                                 </li>
-                                {% endif %}
-                                {% if perms.dummy.permission_membresia %} 
+                                
                                 <li>
                                     <a href='{% url 'members:index' %}'>Miembros</a>
-                                </li>
-                                {% endif %}                                
+                                </li>                              
                             </ul>
                         </li> 
+                        {% endif %}
                         {% if perms.dummy.permission_admin %}  
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
@@ -272,7 +303,7 @@
                         </li>  
                         {% endif %} 
                         
-                        {% if perms.dummy.permission_admin %}  
+                        {% if perms.dummy.permission_promocion %}  
                           <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-money"></i><span class="sidebar-mini-hide">Promociones</span></a>
                             <ul>                                        
@@ -286,7 +317,7 @@
                         </li>
                         {% endif %}  
 
-                         {% if perms.dummy.permission_admin %} 
+                         {% if perms.dummy.permission_multa %} 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
                             <ul>                                        

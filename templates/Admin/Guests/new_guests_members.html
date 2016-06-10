@@ -1,0 +1,266 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: invitados
+{% endblock %}
+
+{% block head_dahsboard %}
+Ingreso
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Invitados
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Ingreso
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Nuevo Invitado
+{% endblock %}
+
+{% block content %}
+
+                <!-- Page Content -->
+                <div class="content content-narrow">
+                    <div class="content">
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{msg.message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <!-- Mega Form -->
+
+
+                    <div class="block block-bordered">
+                            <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap2">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Documento del responsable</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" id="document_number" name="document_number" placeholder="Dni del responsable" >
+                                                </div>
+                                            </div>
+                                            </div>  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                         <label class="col-xs-12" for="example-select"> &nbsp </label>
+                                        <div class="col-md-6">
+                                        <button class="btn btn-info" id="button1" type="button"><i class="fa fa-search push-5-r"></i> Buscar</button>
+                                        </div>
+                                    </div>  
+                                    </div>  
+                                </div>    
+                                <div class="row" id="oculto" hidden="true">
+                                    <div class="col-lg-5">
+                                        <div class="form-group">
+                                            <label class="col-xs-12"id="doc"> </label>                                        
+                                            </div>  
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                         <label class="col-xs-12"id="name"></label>
+                                        <div class="col-md-6">
+                                    </div>  
+                                    </div> 
+                                    </div>  
+                                </div>                                        
+                             </form>
+                        </div>
+                          <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap3">
+                                <div class="row">
+                                    <div class="col-lg-5">
+                                         <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Documento del ingresante</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" id="document_number_entry" name="names" placeholder="Dni del ingresante" >
+                                                </div>
+                                            </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                         <div class="form-group">
+                                         <label class="col-xs-12" for="example-select"> &nbsp </label>
+                                         <div class="col-md-6">
+                                        <button class="btn btn-info" id ="button2" type="button"><i class="fa fa-search push-5-r"></i> Buscar</button>
+                                        </div> 
+                                        </div>
+                                    </div>                                   
+                                </div>                                                              
+                            </form>   
+                        </div>
+     
+                        <div class="block-content">
+                            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" id="form" action='{% url "entry:insert" %}' method="post" >
+                            {% csrf_token %}
+                            <input class="form-control" type="text" id="type" name="type" value="0" style="display: none;" >
+                            <input class="form-control" type="text" id="doc_member" name="doc_member" style="display: none;" >
+                                <div class="row bloquear">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Nombres de invitado</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" id="names" name="names" placeholder="Nombre de invitado" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Apellidos de invitado</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input class="form-control" type="text" id="surnames" name="surnames" placeholder="Apellidos de invitado" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="bloquear col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">DNI de invitado</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <input class="form-control" pattern="[0-9]*" id="dni" name="dni" placeholder="DNI de invitado" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-daterange1">Duración de la entrada</label>
+                                            <div class="col-md-10">
+                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" placeholder="Desde">
+                                                    <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" placeholder="hasta">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                
+                               <div class="form-group">                    
+                                    <div class="col-xs-2 col-xs-offset-4">
+                                        <button class="btn btn-success" id="create" type="button"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "entry:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>
+                <!-- END Page Content -->
+
+
+{% endblock %}
+
+
+
+
+{% block scripts %}
+
+        <!-- Page JS Plugins -->
+
+<script>
+
+
+var responsable = 0;
+var tipo = 0;
+
+//1 para miembro, 2 para afiliado, 3 para invitado, 0 para nuevo invitado
+
+    $(document).ready(function () {
+
+        $( "#create" ).click(function() {
+            if(responsable!=0){
+                $( "#form" ).submit();
+            }
+
+        });
+
+        $('#button1').click(function(){
+        var document_number = $('#document_number').val();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "members:get_member" %}',
+                data:{document_number:document_number, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    if(returndata != ""){ 
+                    responsable=1;
+                    $('#doc').text('Documento: '+ returndata[0].fields.document_number);
+                    $('#name').text('Nombre: '+ returndata[0].fields.name +' ' + returndata[0].fields.paternalLastName );
+                    $('#oculto').show();
+                    $('#doc_member').val(returndata[0].fields.document_number);
+                    }else{
+                    $('#doc').text('');
+                    $('#name').text('');
+                    $('#oculto').hide();
+                    responsable = 0;
+                   }
+                },
+                
+            });
+        }
+        });
+
+        $('#button2').click(function(){
+        var document_number = $('#document_number_entry').val();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "members:get_entry" %}',
+                data:{document_number:document_number, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    if(returndata.length){ 
+                        tipo=returndata[0].fields.tipo;
+                        $('#dni').val(returndata[0].fields.document_number);
+                        $('#names').val(returndata[0].fields.name);
+                        $('#surnames').val(returndata[0].fields.name);
+                        $('.bloquear input').prop('readonly', true);
+                    }else{
+                        $('.bloquear input').prop('readonly', false);
+                        $('.bloquear input').val('');
+                        tipo = 0;
+                   }
+                   $('#type').val(tipo);
+
+                },
+                
+            });
+        }
+        });
+
+        
+    });
+</script>
+
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/Entry/entry_forms_validation.js" %}'></script>
+
+
+
+{% endblock %}
+

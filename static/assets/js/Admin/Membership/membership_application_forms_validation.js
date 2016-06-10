@@ -34,14 +34,16 @@ var ProviderFormValidation = function() {
                     maxlength:200
                 },
                 'num_doc': {
-                    required: true,    
+                    required: true,
+                    number: true, 
+                    min: 1,  
                     remote: {
                         url: url,
                         type: "post",
                         data: {
                             username: function() {
                                 return $( "#num_doc" ).val();
-                            }, 'csrfmiddlewaretoken': CSRF_TOKEN
+                            }, 'csrfmiddlewaretoken': CSRF_TOKEN,
                         }
                     }                           
                 },
@@ -70,7 +72,9 @@ var ProviderFormValidation = function() {
                     maxlength: 'El apellido debe tener máximo 200 caracteres'                    
                 },
                 'num_doc': {
-                    required: 'Por favor ingrese un dni' ,
+                    required: 'Por favor ingrese un número de documento' ,
+                    number: 'Por favor ingrese un documento válido' ,
+                    min: 'Por favor ingrese un documento válido' ,
                     remote: 'Este documento ya esta en uso'                   
                 },
                 'comments': {

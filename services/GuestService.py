@@ -18,3 +18,6 @@ class GuestService(object):
 
     def getGuest(self, id):
         return self.__guest_repository.find(id)
+
+    def filter(self,filters):
+        return self.__guest_repository.filter(filters)

@@ -9,7 +9,7 @@ class AffiliateService(object):
     def create(self,insert_data):
         return self.__affiliate_repository.create(insert_data)
 
-    def update(self,id,update_date):
+    def update(self,id,update_data):
         return self.__affiliate_repository.update(id,update_data)
 
     def delete(self,id):
