@@ -269,7 +269,9 @@ def create_membership(request):
 
         filter_ubigeo = {}
 
-        print(request.POST['district'])
+        filter_ubigeo["department"] = request.POST['department']
+
+        filter_ubigeo["province"] = request.POST['province']
 
         filter_ubigeo["district"] = request.POST['district']
 

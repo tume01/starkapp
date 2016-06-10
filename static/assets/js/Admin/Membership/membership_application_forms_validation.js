@@ -25,18 +25,26 @@ var ProviderFormValidation = function() {
                     required: true,
                     maxlength: 200
                 },
-                'lastName': {
+                'paternalLastName': {
                     required: true,
                     maxlength:200
-                    //email: true
+                },
+                'maternalLastName': {
+                    required: true,
+                    maxlength:200
                 },
                 'num_doc': {
-                    required: true                    
+                    required: true,    
+                    remote: {
+                        url: url,
+                        type: "post",
+                        data: {
+                            username: function() {
+                                return $( "#num_doc" ).val();
+                            }, 'csrfmiddlewaretoken': CSRF_TOKEN
+                        }
+                    }                           
                 },
-                /*'val-confirm-password': {
-                    required: true,
-                    equalTo: '#val-password'
-                },*/
                 'comments': {
                     required: true,
                     maxlength:200
@@ -53,12 +61,17 @@ var ProviderFormValidation = function() {
                     required: 'Por favor ingrese un nombre',
                     maxlength: 'El nombre debe tener máximo 200 caracteres'
                 },
-                'lastName': {
-                    required: 'Por favor ingrese un nombre',
+                'paternalLastName': {
+                    required: 'Por favor ingrese un apellido',
+                    maxlength: 'El apellido debe tener máximo 200 caracteres'                    
+                },
+                'maternalLastName': {
+                    required: 'Por favor ingrese un apellido',
                     maxlength: 'El apellido debe tener máximo 200 caracteres'                    
                 },
                 'num_doc': {
-                    required: 'Por favor ingrese un dni'                    
+                    required: 'Por favor ingrese un dni' ,
+                    remote: 'Este documento ya esta en uso'                   
                 },
                 'comments': {
                     required: 'Por favor ingrese un comentario',
@@ -70,13 +83,6 @@ var ProviderFormValidation = function() {
                 'finalDate': {
                     required: 'Por favor ingrese una dirección'
                 }
-                /*
-                'val-confirm-password': {
-                    required: 'Please provide a password',
-                    minlength: 'Your password must be at least 5 characters long',
-                    equalTo: 'Please enter the same password as above'
-                },*/
-
             }
         });
     };
