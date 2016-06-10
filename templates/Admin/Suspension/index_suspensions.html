@@ -41,6 +41,7 @@ Lista de suspensiones
                                             </div>
                                         </div>
                                     </div>
+                                    <br>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-sm-10 control-label" for="initialDate">Rango de fechas</label>
@@ -53,6 +54,7 @@ Lista de suspensiones
                                             </div>
                                         </div>
                                     </div>
+
 
 
                                 </div>
@@ -74,15 +76,15 @@ Lista de suspensiones
                                 <br>
                                 <div class="row">
 
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                            <div class="col-lg-8 col-lg-offset-4">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="col-lg-8 col-lg-offset-4">
+                                        <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <br>
+                        <br>
                             </form>
                         </div>
     </div>
@@ -124,6 +126,7 @@ Lista de suspensiones
                         <th>Fecha Fin</th>
                         <th>Razon</th>
                         <th>Acciones</th>
+                        <th hidden="true"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -144,6 +147,7 @@ Lista de suspensiones
                                     </div>
                                 {% endif %}
                             </td>
+                            <td hidden="true" class="text-center"></td>
                         </tr>
                         {% endfor %}
                     </tbody>
