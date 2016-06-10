@@ -37,6 +37,8 @@ Lista de productos
             <h3 class="block-title">Filtros</h3>
         </div>
         <div class="block-content">
+            <form id="formIndexProduct" class="js-validation-bootstrap form-horizontal push-10-t push-10">
+            {% csrf_token %}
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="row">
                 <div class="col-lg-3">                                    
@@ -145,7 +147,7 @@ Lista de productos
                     </div>
                 </div>
                 <div class="block">    
-                    <table class="table table-bordered table-striped js-dataTable-simple">
+                    <table id="productsTable" class="table table-bordered table-striped js-dataTable-simple">
                         <thead>
                             <tr>
                                 <th class="text-center">#</th>
