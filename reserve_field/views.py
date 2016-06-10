@@ -7,7 +7,9 @@ from services.EnvironmentService import EnvironmentService
 from django.views.decorators.http import require_http_methods
 from services.HeadquarterService import HeadquarterService
 from services.FieldReservationService import FieldReservationService
-
+from services.MemberService import MembersService
+from django.views.decorators.csrf import csrf_protect
+from django.shortcuts import render_to_response
 
 @require_http_methods(['GET'])
 def index(request):
@@ -35,10 +37,9 @@ def index(request):
 
     return render(request, 'User/Reservation/fields.html', context)
 
-
 @require_http_methods(['POST'])
+@csrf_protect
 def refresh_field(request):
-
     arrival_date = request.POST['arrival_date']
     headquarter_id = int(request.POST['headquarter_id'])
 
@@ -46,14 +47,18 @@ def refresh_field(request):
 
     filters = {
         'arrival_date' : arrival_date,
-        'headquarter_id' : headquarter_id,
+        'headquarters_id' : headquarter_id,
         'environment_type_id' : 1
     }
 
 
+
     if (headquarter_id != -1):
         print("Filter by Headquarter_ID")
-        fields = environment_service.filter(headquarter_id=headquarter_id)
+        headquarter_filter={
+            'headquarters_id' : headquarter_id
+        }
+        fields = environment_service.filter(headquarter_filter)
 
     if (arrival_date != ""):
         print("Filter if available")
@@ -66,11 +71,11 @@ def refresh_field(request):
     return render_to_response('User/Reservation/combo_fields.html', context)
 
 @require_http_methods(['POST'])
+@csrf_protect
 def refresh_hour(request):
 
     environment = request.POST['environment_content']
 
-    environment_service = EnvironmentService()
     field_reservation_service   = FieldReservationService()
 
     filters = {
@@ -93,17 +98,76 @@ def refresh_hour(request):
 
     return render_to_response('User/Reservation/combo_hour.html', context)
 
-
 @require_http_methods(['POST'])
+@csrf_protect
 def refresh_max_time(request):
-
-    stay_time = request.POST['stay_content']
 
     field_reservation_service   = FieldReservationService()
 
-    content = {
-        ''
+    environment = request.POST['environment_content']
 
+    filters = {
+        'court_name'  : environment
+    }
+
+    current_court = field_reservation_service.filter(filters)
+
+    hours_reservated = []
+
+    for court in current_court:
+        hours_reservated.append(court.reservation_hour)
+
+    start_hour = request.POST['start_hour']
+
+    max_hours = [1,2]
+
+    stay_max_hours = []
+
+    for hour in max_hours:
+        if(hour + start_hour) not in hours_reservated:
+            stay_max_hours.append(hour)
+
+    context = {
+        'stay_max_hours' : stay_max_hours
     }
 
     return render_to_response('User/Reservation/combo_hour.html', context)
+
+@require_http_methods(['POST'])
+@csrf_protect
+def reservate_court(request):
+
+    headquarter_service = HeadquarterService()
+
+    insert_data = {}
+
+    insert_data['court_name']               = request.POST.get('environment_content')
+    headquarter_id                          = request.POST.get('headquarter_id')
+
+    headquarter                             = headquarter_service.findHeadquarter(headquarter_id)
+    insert_data['court_headquarter_name']   = headquarter.name
+
+
+    insert_data['reservation_hour']         = request.POST.get('start_hour')
+    insert_data['reservation_duration']     = request.POST.get('stay_content')
+    insert_data['reservation_date']         = request.POST.get('arrival_date')
+
+    member_service                          = MembersService()
+    user                                    = member_service.getMemberByUser(request.user)
+    
+    insert_data['member_membership_name']   = user.membership
+    insert_data['member_name']              = user.name
+    insert_data['member_paternalLastName']  = user.paternalLastName
+    insert_data['member_maternalLastName']  = user.maternalLastName
+
+    insert_data['status']                   = 1
+
+    field_reservation_service               = FieldReservationService()
+
+    field_reservation_service.create(insert_data)
+
+    context={
+        'success' : 'El evento ha sido registrado de manera correcta'
+    }
+
+    return render(request, 'User/Reservation/fields.html', context)
