@@ -149,7 +149,7 @@ Nueva solicitud de membresía
         <!-- Page JS Plugins -->
 <script>
 var CSRF_TOKEN = '{{ csrf_token }}';
-var url= "{% url 'users:verify_user' %}"
+var url= "{% url 'membership_application:verify_document_number' %}"
 </script>
 
 <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>

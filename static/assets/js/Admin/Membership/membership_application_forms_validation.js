@@ -44,7 +44,6 @@ var ProviderFormValidation = function() {
                             username: function() {
                                 return $( "#num_doc" ).val();
                             }, 'csrfmiddlewaretoken': CSRF_TOKEN,
-                            user: ""
                         }
                     }                           
                 },

@@ -216,7 +216,7 @@ def member_filter(request):
 
     members = member_service.filter(filter_member)
 
-    if suspended == 1:
+    if suspended == '1':
         members = filter(is_member_suspended, members)
 
         context = {
@@ -226,8 +226,8 @@ def member_filter(request):
 
         return render(request, 'Admin/Members/index_members.html', context)
 
-    if suspended == 0:
-        members = filter(not is_member_suspended, members)
+    if suspended == '0':
+        members = filter(is_member_not_suspended, members)
 
         context = {
             'members': members,
@@ -255,6 +255,18 @@ def is_member_suspended(member):
     member_suspensions = suspension_service.filter(filter_data)
 
     return any(s.status == 1 for s in member_suspensions)
+
+def is_member_not_suspended(member):
+
+    suspension_service = SuspensionService()
+
+    filter_data = {}
+
+    filter_data['membership_id'] = member.id
+
+    member_suspensions = suspension_service.filter(filter_data)
+
+    return not any(s.status == 1 for s in member_suspensions)
 
 
 @login_required
