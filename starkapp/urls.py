@@ -44,6 +44,7 @@ urlpatterns = [
     url(r'^affiliate/', include('affiliate.urls')),
     url(r'^suspension/', include('suspension.urls')),
     url(r'^$', TemplateView.as_view(template_name="frontend_home.html"), name='home'),
+    url(r'^fieldsReservations/',include('reserve_field.urls')),
 ]
 
 if settings.DEBUG:

@@ -2,9 +2,16 @@ from django.db import models
 from django.forms import ModelChoiceField
 from headquarters.models import Headquarters
 
+class EnvironmentType(models.Model):
+
+    name        = models.TextField(max_length=100)
+    description = models.TextField(max_length=200)
+    status      = models.IntegerField()
+
 class Environment(models.Model):
-    #sede = models.ForeignKey(Sede, on_delete=models.CASCADE)
+
     status_choices = ((0,'Inactivo'),(1,'Activo'),)
+    environment_type = models.ForeignKey(EnvironmentType,on_delete=models.CASCADE,default=None)
     name = models.TextField(max_length=100)
     description = models.CharField(null=False, blank=False,max_length=200)
     capacity = models.BigIntegerField(null=False, blank=False)
