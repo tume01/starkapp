@@ -9,3 +9,4 @@ class Headquarters(models.Model):
     location = models.CharField(max_length=250)
     status = models.IntegerField()
     ubigeos = models.ForeignKey(Ubigeo, on_delete=models.CASCADE)
+    deleted_at = models.DateTimeField(null=True)

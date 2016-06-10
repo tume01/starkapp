@@ -1,13 +1,5 @@
 // Submit post on submit
-// $('#filters-form').on('submit', function(event){
-//     submitFilters();
-// });
-
-$( "#bungalow_type_id" ).change(function() {
-    submitFilters();
-});
-
-$( "#headquarter_id" ).change(function() {
+$('#filters-form').on('submit', function(event){
     submitFilters();
 });
 
@@ -50,21 +42,24 @@ function nextPage() {
 
 function getFilters() {
     var filter = {
-        'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
+        'env_name'       : $('#env_name').val(),
+        'environment_id' : $('#environment_id option:selected').val(),
         'headquarter_id' : $('#headquarter_id option:selected').val(),
+        'start_date'     : $('#start_date').val(),
+        'end_date'       : $('#end_date').val(),
     }
     return filter;
 };
 
 function reloadTable(requestData){
     $.ajax({
-        url : "post", // the endpoint
+        url : "book/create/post", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 
         // handle a successful response
-        success : function(data) {
-            $('#table-content').html(data);
+        success : function(response) {
+            $('#table-content').html(response);
 
             // Prevent Default Current Page
             $( "#current-page" ).click(function(event) {
