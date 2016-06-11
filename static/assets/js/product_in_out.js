@@ -39,7 +39,7 @@ $('#RegisterMove').click(function(){
 
 
 
-        //window.location="/bungalow_service";
+        window.location="/products";
     });
 
     xhr.fail(function(xhr, status, text){
