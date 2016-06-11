@@ -47,7 +47,7 @@ Registro de Ingresos y Salidas
                         <div class="col-xs-12">
                             <label class="control-label" >Producto</label>
                             <select class="form-control" name="selectProduct" id="selectProduct" size="1" >
-                                
+                                <option></option>
                                 {% for p in products%}
                                 <option value="{{p.id}}">{{p.name}}</option>
                                 {% endfor %}                                                    
@@ -64,13 +64,13 @@ Registro de Ingresos y Salidas
                     </div>
                 </div>
 
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <div class="form-group">                                            
                         <div class="col-xs-12">
                             <label class="control-label" >Movimiento</label>
                             <select class="form-control" name="selectMove" id="selectMove" size="1" >
                                 
-                                
+                                <option></option>
                                 <option value="0">Ingreso</option>
                                 <option value="1">Salida</option>
                                                                                    
