@@ -1,0 +1,147 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+
+{% block head_title %}
+Admin: ambientes
+{% endblock %}
+
+{% block head_dahsboard %}
+Ambientes
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Editar Ambiente
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Ambiente
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Edición de Ambientes
+{% endblock %}
+
+{% block content %}
+<div class="content content-narrow">
+    <div class="block">
+        <div class="block-header">
+            <ul class="block-options">
+                <li>
+                    <button type="reset" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                </li>
+            </ul>
+            <!--<h3 class="block-title">AMBIENTES</h3>-->
+        </div>
+
+        <div class="block-content">
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "environment:insert" %}' method="post" >
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="name">Nombre (*)</label>
+                                {{form.name}}
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="capacity">Aforo (*)</label> 
+                                {{form.Capacity}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="headquarter">Sede (*)</label>
+                                {{form.headquarter}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="status">Estado (*)</label>
+                                {{form.status}}
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="description">Descripción (*)</label>
+                                {{form.description}}
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">                    
+                    <div class="col-xs-2 col-xs-offset-4">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Guardar</button>
+                    </div>
+                    <div class="col-xs-2">
+                        <a href='{% url "environment:index" %}'><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                    </div> 
+                </div>
+            </form>
+        </div>
+    </div>  
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+<script>
+    
+    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+
+
+        <script src='{% static "assets/js/Admin/Provider/environment_forms_validation.js" %}'></script>
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        
+
+{% endblock %}

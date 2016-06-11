@@ -1,0 +1,130 @@
+{% extends 'Admin/Layouts/base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: reserva de bungalows
+{% endblock %}
+
+{% block head_dahsboard %}
+Reserva de Bungalows
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista de reservas activas
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Reserva de Bungalows
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de reservas
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+
+    <!-- Table Header (Filters) -->
+    <div class="block">
+        <div class="block-content">
+            <div class="row">
+                <div class="col-lg-5">
+                    <h3>Seleccionar por Fecha</h3></br>
+                    <div class="row">
+                        {% include 'Admin/bungalowReservation/combo_headquarter.html' with select_id="headquarter_id_1" %}
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label class="col-xs-12">Seleccione la fecha</label>
+                            <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                <input class="form-control" type="text" id="arrival_date" placeholder="Llegada">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="bungalow_1_content">
+                        {% include 'Admin/bungalowReservation/combo_bungalow.html' with select_id="bungalow_id_1" %}
+                    </div>
+                    <div class="row" id="stay_1_content">
+                        {% include 'Admin/bungalowReservation/combo_duration.html' with select_id="stay_days_1" %}
+                    </div>
+                </div>
+                <div class="col-lg-offset-2 col-lg-5">
+                    <h3>Seleccionar por Bungalow</h3></br>
+                    <div class="row">
+                        {% include 'Admin/bungalowReservation/combo_headquarter.html' with select_id="headquarter_id_2" %}
+                    </div>
+                    <div class="row">
+                        {% include 'Admin/bungalowReservation/combo_bungalow.html' with select_id="bungalow_id_2" %}
+                    </div>
+                    <div class="row">
+                        {% include 'Admin/bungalowReservation/combo_month.html' with select_id="month_2" %}
+                    </div>
+                    <div class="row">
+                        {% include 'Admin/bungalowReservation/combo_day.html' with select_id="day_2" %}
+                    </div>
+                    <div class="row">
+                        {% include 'Admin/bungalowReservation/combo_duration.html' with select_id="stay_days_2" %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END Table Header (Filters) -->
+</div>
+<!-- END Page Content -->
+
+<!-- HASTA AQUÍ -->
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+<script>
+                    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+
+
+
+</script>
+
+<!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+
+
+<script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+
+
+
+</script>
+
+<script src='{% static "assets/js/Admin/bungalowReservation/reservation.js" %}'></script>
+
+
+{% endblock %}

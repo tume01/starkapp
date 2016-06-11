@@ -1,0 +1,251 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+Usuario: eventos
+{% endblock %}
+
+{% block head_dahsboard %}
+Eventos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Creación
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Eventos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Nueva Inscripción
+{% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+                <div class="content content-narrow">
+                    <div class="block block-bordered">
+                        <div class="block-header">
+                            <ul class="block-options">
+                                <li>
+                                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                                </li>
+                            </ul>
+                            <h3 class="block-title"></h3>
+                        </div>
+
+                        {% if messages %}
+                            {% for msg in messages %}       
+                                <div class="alert alert-warning" role="alert">
+                                    {{msg.message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <!-- Block v2 -->
+                        <div class="block-content">
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "events:insert" %}' method="post" >{% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="name">Evento elegido</label>
+                                            <div class="col-md-10">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-bicycle"></i></span>
+                                                    <input class="form-control" type="text" id="name" name="name" placeholder="Evento" value="">
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="event_type">Tipo de evento</label>
+                                            <div class="col-sm-6">
+                                                <select class="form-control" id="event_type" name="event_type" size="1">
+                                                    {% for eventtype in eventstype %}
+                                                    <option value="{{eventtype.id}}">{{eventtype.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="user">Código del usuario</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                                    <input class="form-control" type="number" id="user" name="user" value="" placeholder="Id del usuario" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="ruc">R.U.C de la empresa</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                                    <input class="form-control" type="number" maxlength="8" id="ruc" name="ruc" placeholder="R.U.C" value="" >
+                                                </div>
+                                                <label><b><i>Si el evento es para una empresa llenar este campo</i></b></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="seat">Sede elegida</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                                                    <select class="form-control" id="example-select" name="headquarter" size="1">
+                                                    {% for headquarter in headquarters %}
+                                                        <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                                                    {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="environment">Ambientes</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class=""></span>
+                                                        {% for environment in environments%}
+                                                            <input type="radio" name="environment" value="{{environment.id}}">{{environment.name}}</input>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="start_date">Fechas del Evento</label>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="start_date" name="start_date" placeholder="Fecha y hora del Inicio del Evento" value="{{form.start_date}}" >
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="end_date" name="end_date" placeholder="Fecha y hora del Fin del Evento" value="{{form.end_date}}" >
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="assitance">Cantidad máxima de participantes</label>
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                                    <input class="form-control" type="number" id="assistance"  maxlength="11" name="assistance" value="{{form.assistance}}" placeholder="Cantidad máxima de participantes" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="price">Costo de entrada</label>
+                                            <div class="col-md-6">
+                                                Para socios
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                    <input class="form-control" type="number" id="price" name="price_member" value="{{form.price_member}}" placeholder="S/.">
+                                                </div>
+                                            </div>
+                                                Para invitados
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-money"></i></span>
+                                                    <input class="form-control" type="number" id="price" name="price_invited" value="{{form.price_invited}}" placeholder="S/.">
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-10">
+                                        <div class="form-group">
+                                            <div class="col-xs-12">
+                                                <label for="description">Observaciones</label>
+                                                <textarea class="form-control input-lg" id="description" name="description" rows="8" placeholder="Ingrese alguna observación adicional que debamos tener en cuenta para atenderlo mejor." value="{{form.description}}"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-xs-2">
+                                        <button href="" class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                    </div>
+                                    <div class="col-xs-2 col-xs-offset-4"button><!-- type="submit" -->
+                                        <a href="{% url 'events:index' %}" class="btn btn-danger" type="button"><i class="fa fa-times push-5-r"></i> Cancelar</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- END Block v2 -->                        
+                    </div>  
+                </div>
+                <!-- END Page Content -->
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+<script>
+    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+
+
+        <script src='{% static "assets/js/Admin/Events/events_validation.js" %}'></script>
+        <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+
+{% endblock %}

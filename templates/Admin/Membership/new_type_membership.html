@@ -1,0 +1,111 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: tipos de membresias
+{% endblock %}
+
+{% block head_dahsboard %}
+Tipos de membresía
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de tipos de membresías
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Tipos de membresías
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de tipos de membresías
+{% endblock %}
+
+{% block content %}
+     <div class="content content-narrow">
+        <div class="content">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{msg.message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-content">
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "memberships:type/insert" %}' method="post" >
+                            {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Tipo de membresía</label>
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="name" placeholder="Tipo de mebresía"  type="text" value= "{{membershipType.name}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Invitados</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-number-input" name="guests" placeholder="Invitados" value= "{{membershipType.guests}}" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>          
+                                <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Precio</label>
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group2" name="price" placeholder="Precio"  value= "{{membershipType.price}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input2">Tipo de cobro</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="example-number-input2" name="billing" placeholder="Tipo de cobro" value= "{{membershipType.billing}}"  type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                               
+                                <div class="form-group">                    
+                                    <div class="col-xs-2 col-xs-offset-4">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "memberships:type/index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                </form>
+            </div>
+        </div>
+        <!-- END Mega Form -->
+    </div>    
+
+{% endblock %}
+
+{% block scripts %}
+
+
+        <!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/Membership/membershipType_forms_validation.js" %}'></script>
+
+
+
+{% endblock %}

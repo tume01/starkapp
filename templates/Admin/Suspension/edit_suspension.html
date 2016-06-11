@@ -1,0 +1,97 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: editar suspension
+{% endblock %}
+
+{% block head_dahsboard %}
+Suspension
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Editar suspension
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Suspension
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Editar suspension
+{% endblock %}
+
+{% block content %}
+     <div class="content content-narrow">
+                    <div class="content">
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{msg.message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-content">
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "suspension:edit" %}' method="post" >
+                            {% csrf_token %}
+                                <div class="row">
+                                     <div class="col-lg-6" style="display: none;">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input0-group1" name="id_suspension" placeholder="ID"  type="number" value= "{{suspension.id}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="comments">Razon</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control input-lg" id="comments" name="reason" rows="8">{{suspension.reason}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-daterange1">Duración de la suspensión</label>
+                                            <div class="col-md-10">
+                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" value="{{suspension.initialDate}}" placeholder="Desde">
+                                                    <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" value="{{suspension.finalDate}}" placeholder="hasta">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                   
+                                <div class="form-group">
+                                    <div class="col-xs-2 col-xs-offset-4">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "members:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>    
+
+{% endblock %}
+
+{% block scripts %}
+
+        <!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/Suspension/suspension_forms_validation.js" %}'></script>
+
+{% endblock %}

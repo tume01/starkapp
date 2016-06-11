@@ -1,0 +1,204 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: actividades
+{% endblock %}
+
+{% block head_dahsboard %}
+Actividades
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Nueva Actividad
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Actividades
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Creación de Actividades
+{% endblock %}
+
+{% block content %}
+<div class="content content-narrow">
+    <div class="content">
+        {% if messages %}
+            {% for msg in messages %}
+                <div class="alert alert-warning" role="alert">
+                    {{msg.message}}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <div class="block block-bordered">
+        <div class="block-header">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                </li>
+            </ul>
+            <h3 class="block-title"></h3>
+        </div>
+
+        <!-- Block v2 -->
+        <div class="block-content">
+            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:insert" %}' method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="name">Nombre</label>
+                                <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Ingrese un nombre.." value="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="attendance">Capacidad</label>
+                                <input class="form-control input-lg" type="text" id="attendance" name="attendance" placeholder="Ingrese capacidad de actividad..">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="price">Precio</label>
+                                <input class="form-control input-lg" type="text" id="price" name="price" placeholder="Ingrese precio de actividad..">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <label for="activity_type">Tipo</label>
+                                <select class="form-control" id="activity_type" name="activity_type">
+                                    {% for activity_type in activity_types %}
+                                    <option value="{{activity_type.id}}">{{activity_type.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="environments">Ambiente</label>
+                                <select class="form-control" id="environments" name="environments">
+                                    {% for enviroment in environments %}
+                                    <option value="{{enviroment.id}}">{{enviroment.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="start_date">Fecha/Hora Inicio Actividad</label>
+                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg input-datetime" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha..">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="end_date">Fecha/Hora Fin Actividad</label>
+                                <div class="input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                    <input class="form-control input-lg input-datetime" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha..">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-4">
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                    </div>
+                    <div class="col-xs-4">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- END Block v2 -->
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+<script src='{% static "assets/js/datetimepicker/jquery.datetimepicker.full.min.js" %}'></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+                
+        $('.input-datetime').datetimepicker({
+            format: "d/m/Y H:m",
+        });  
+            
+    });
+</script>
+<script>
+    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script>
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+
+
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+
+
+
+        <script src='{% static "assets/js/Admin/Activities/activities_forms_validation.js" %}'></script>
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        <script src='{% static "assets/js/product.js" %}'></script>
+        <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+
+
+{% endblock %}
