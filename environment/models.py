@@ -1,5 +1,4 @@
 from django.db import models
-<<<<<<< HEAD
 from django.forms import ModelChoiceField
 from headquarters.models import Headquarters
 
