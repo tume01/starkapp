@@ -10,6 +10,7 @@ from services.FieldReservationService import FieldReservationService
 from services.MemberService import MembersService
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response
+import datetime
 
 @require_http_methods(['GET'])
 def index(request):
@@ -19,7 +20,7 @@ def index(request):
 
 
     filters = {
-        'environment_type_id' : 1,
+        'environment_type_id' : 7,
     }
 
     fields = environment_service.filter(filters)
@@ -40,23 +41,22 @@ def index(request):
 @require_http_methods(['POST'])
 @csrf_protect
 def refresh_field(request):
-    arrival_date = request.POST['arrival_date']
-    headquarter_id = int(request.POST['headquarter_id'])
+    arrival_date = request.POST.get('arrival_date')
+    headquarter_id = int(request.POST.get('headquarter_id'))
+
 
     environment_service = EnvironmentService()
 
     filters = {
         'arrival_date' : arrival_date,
-        'headquarters_id' : headquarter_id,
-        'environment_type_id' : 1
+        'headquarter_id' : headquarter_id,
+        'environment_type_id' : 7
     }
-
-
 
     if (headquarter_id != -1):
         print("Filter by Headquarter_ID")
         headquarter_filter={
-            'headquarters_id' : headquarter_id
+            'headquarter_id' : headquarter_id
         }
         fields = environment_service.filter(headquarter_filter)
 
@@ -150,7 +150,7 @@ def reservate_court(request):
 
     insert_data['reservation_hour']         = request.POST.get('start_hour')
     insert_data['reservation_duration']     = request.POST.get('stay_content')
-    insert_data['reservation_date']         = request.POST.get('arrival_date')
+    insert_data['reservation_date']         = datetime.datetime.strptime(request.POST.get('arrival_date'),"%m/%d/%Y").date()
 
     member_service                          = MembersService()
     user                                    = member_service.getMemberByUser(request.user)
