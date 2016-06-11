@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'affiliate',
     'entry',
     'guests',
-    'suspension',
     'reserve_field',
     'suspension'
 ]

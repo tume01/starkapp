@@ -14,10 +14,8 @@ class Command(BaseCommand):
         cleanHeadquarter()
         cleanBungalow()
         cleanBungalowReservation()
-        cleanEnvironments()
 
         print('\n    Inserting...')
         insertHeadquarter()
         insertBungalow()
         insertBungalowReservation()
-        insertEnvironments()
