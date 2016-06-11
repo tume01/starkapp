@@ -63,8 +63,8 @@ INSTALLED_APPS = [
     'affiliate',
     'entry',
     'guests',
-    'reserve_field',
-    'suspension'
+    'suspension',
+    'reserve_field'
 ]
 
 MIDDLEWARE_CLASSES = [
