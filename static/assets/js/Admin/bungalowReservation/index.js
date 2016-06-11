@@ -87,15 +87,14 @@ function reloadTable(requestData){
     });
 }
 
-function check_in() {
-    console.log($('#reservation_id').text())
+function check_in(reservationId) {
     console.log("CHECK IN")
 
     $.ajax({
         url : "check_in", // the endpoint
         type : "POST", // http method
         data : {
-            'reservation_id' : $('#reservation_id').text(),
+            'reservation_id' : reservationId,
             'csrfmiddlewaretoken' :  getCookie('csrftoken')
         }, // data sent with the post request
 
@@ -116,15 +115,14 @@ function check_in() {
     });
 };
 
-function check_out() {
-    console.log($('#reservation_id').text())
+function check_out(reservationId) {
     console.log("CHECK OUT")
 
     $.ajax({
         url : "check_out", // the endpoint
         type : "POST", // http method
         data : {
-            'reservation_id' : $('#reservation_id').text(),
+            'reservation_id' : reservationId,
             'csrfmiddlewaretoken' :  getCookie('csrftoken')
         }, // data sent with the post request
 
