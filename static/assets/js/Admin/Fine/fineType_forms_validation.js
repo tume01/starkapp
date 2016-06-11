@@ -26,7 +26,9 @@ var FineTypeFormValidation = function() {
                     maxlength: 200
                 },
                 'price':{
-                	required:true
+                	required:true,
+                    number: true,
+                    min: 1
                 	
                 }
             },
@@ -36,7 +38,9 @@ var FineTypeFormValidation = function() {
                     maxlength: 'El motivo no puede tener más de 200 caracteres'
                 },
                 'price':{
-                	required: 'Por favor ingrese un precio'
+                	required: 'Por favor ingrese un precio',
+                    number: 'Por favor ingrese un precio válido',
+                    min: 'Por favor ingrese un precio válido',
                 	
                 }                
 

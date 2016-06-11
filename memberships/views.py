@@ -8,6 +8,7 @@ from services.MembershipTypeService import MembershipTypeService
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.MembershipService import MembershipService
+from services.SuspensionService import SuspensionService
 from services.ObjectionService import ObjectionsService
 from services.UbigeoService import UbigeoService
 from services.MemberService import MembersService
@@ -235,7 +236,7 @@ def create_membership(request):
 
         user = User.objects.create_user(username=form2.cleaned_data['num_doc'], email=form2.cleaned_data['email'],   password='1111')
 
-        group = Group.objects.get(id=1)
+        group = Group.objects.get(name='usuarios')
 
         group.user_set.add(user)
 
@@ -269,7 +270,9 @@ def create_membership(request):
 
         filter_ubigeo = {}
 
-        print(request.POST['district'])
+        filter_ubigeo["department"] = request.POST['department']
+
+        filter_ubigeo["province"] = request.POST['province']
 
         filter_ubigeo["district"] = request.POST['district']
 
@@ -386,3 +389,21 @@ def membership_edit(request):
 
         return HttpResponseRedirect(reverse('members:index'))
 
+#user		
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')	
+def membership_show(request):
+
+	user = request.user
+    
+	member_service = MembersService()
+	filter = {}
+	filter["user"] =user
+	member = member_service.filter(filter)
+	context = {
+		'membership' : member[0].membership
+	}
+	return render(request, 'User/membership.html',context)
+	
+
+	
