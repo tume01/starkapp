@@ -1,6 +1,9 @@
 from django import forms
 from datetime import datetime
 from django.core.validators import RegexValidator
+from services.Membership_ApplicationService import Membership_ApplicationService
+from services.MemberService import MembersService
+from services.AffiliateService import AffiliateService
 
 class MembershipApplicationForm(forms.Form):
     alphabetic = RegexValidator(r'^[a-zA-Z]*$', 'Only alphabetic characters are allowed.')
@@ -20,6 +23,31 @@ class MembershipApplicationForm(forms.Form):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
         if (data > 100000000):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
+
+        membership_applicationService = Membership_ApplicationService()
+
+        existingMembershipApplication = membership_applicationService.find(num_doc=data)
+
+        members_service = MembersService()
+
+        existingMember = members_service.find(num_doc=data)
+
+        affiliate_service = AffiliateService()
+
+        existingAffiliate = affiliate_service.find(num_doc=data)
+
+        if(existingMembershipApplication != None):
+            raise forms.ValidationError("El numero de documento ingresado ya existe y ha"+
+                                        "solicitado una membresia")
+        if(existingMember != None):
+            raise forms.ValidationError("El numero de documento ingresado ya existe y"+
+                                        "es un miembro")
+        if(existingAffiliate != None):
+            raise forms.ValidationError("El numero de documento ingresado ya existe y esta"+
+                                        "afiliado al miembro "+existingAffiliate.member.name + " "+
+                                        existingAffiliate.member.paternalLastName + " "+
+                                        existingAffiliate.member.maternalLastName)
+        
         return data
 
     def clean_finalDate(self):

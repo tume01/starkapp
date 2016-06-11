@@ -5,7 +5,7 @@ from .BaseRepository import BaseRepository
 class AffiliateRepository(BaseRepository):
 
     def __init__(self):
-        BaseRepository.__init__self(Affiliate)
+        BaseRepository.__init__(self, Affiliate)
 
     
     def all(self):
