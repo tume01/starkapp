@@ -64,8 +64,7 @@ INSTALLED_APPS = [
     'entry',
     'guests',
     'suspension',
-    'reserve_field',
-    'suspension'
+    'reserve_field'
 ]
 
 MIDDLEWARE_CLASSES = [
