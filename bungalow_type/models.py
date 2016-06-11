@@ -1,4 +1,5 @@
 from django.db import models
+from bungalow_service.models import Bungalow_service
 
 class BungalowType(models.Model):
     name = models.CharField(max_length=100)
@@ -7,4 +8,6 @@ class BungalowType(models.Model):
     capacity = models.IntegerField()
     
     deleted_at = models.DateTimeField(null=True)
+
+    bungalow_services = models.ManyToManyField(Bungalow_service)
 

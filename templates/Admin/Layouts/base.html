@@ -118,6 +118,9 @@
                                 <li>
                                     <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
                                 </li>
+                                <li>
+                                    <a href='{% url "bungalow_service:index" %}'>Servicios por Tipo de Bungalow</a>
+                                </li>
                             </ul>
                         </li>
                         {% endif %} 
@@ -228,6 +231,9 @@
                                 </li>
                                 <li>
                                     <a href='{% url "products:create_index" %}'>Crear productos</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "products:index_in_out" %}'>Registro de Ingresos y Salidas</a>
                                 </li>
                                 <li>
                                     <a href=''>Consultar servicios</a>
