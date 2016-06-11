@@ -13,7 +13,7 @@ $(function() {
             } else {
               link.fadeOut(100);
             }
-          });
+          }); 
 
         // On click get to top
         link.click(function() {
