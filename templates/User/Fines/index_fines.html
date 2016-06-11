@@ -5,7 +5,7 @@ Usuario
 {% endblock %}
 
 {% block head_dahsboard %}
-Tipos de multas
+Multas
 {% endblock %}
 
 {% block function_head_dahsboard %}
@@ -13,11 +13,11 @@ Lista de multas
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Tipos de multas
+Multas
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de tipos de multas
+Lista de multas
 {% endblock %}
 
 {% block content %}
@@ -32,7 +32,7 @@ Lista de tipos de multas
 
                         <div class="block-content">
 
-                            <form class="form" action='{% url "fine:filter" %}' method="post" >
+                            <form class="form" action='{% url "fine:user_filter" %}' method="post" >
                                 {% csrf_token %}
                                 <div class row>
                                     <div class="col-lg-6" style="display: none;">

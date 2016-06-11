@@ -1,5 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
+{% load staticfiles %}
+
 {% block head_title %}
 Admin: sedes
 {% endblock %}
@@ -34,49 +36,81 @@ Crear sede
         </div>
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >
+            <!--<form class="form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >-->
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >
             {% csrf_token %}
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <!--<div class="col-xs-6">
                                 <label for="mega-firstname">Codigo</label>
                                 <input class="form-control input-lg" type="text" id="mega-firstname" name="mega-firstname" placeholder="Enter the headquarter's id.." value="001" disabled>
                             </div>-->
-                            <div class="col-xs-5">
+                            <div class="col-xs-6">
                                 <label for="mega-lastname">Nombre</label>
-                                <input class="form-control input-lg" type="text" id="mega-lastname" name="name" placeholder="Enter the headquarter's name.." value="{{headquarters.name}}">
+                                <input class="form-control input-lg" type="text" id="name" name="name" placeholder="Enter the headquarter's name.." value="{{headquarters.name}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                        <label class="col-xs-8" for="id_ubigeo_departamento">Departamento</label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="department" name="department" size="1">
+                                <option value="">Seleccione</option>
+                                {% for ubigeo in ubigeos %}
+                                    <option value="{{ubigeo.department}}">{{ubigeo.department}}</option>
+                                {% endfor %}
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-4">
                         <div class="form-group">
-                            <div class="col-xs-12">
+                            <div class="col-xs-8">
                                 <label for="mega-firstname">Descripcion</label>
-                                <input class="form-control input-lg" type="text" id="mega-firstname" name="description" placeholder="Enter a brief description.." value="{{headquarters.description}}">
+                                <input class="form-control input-lg" type="text" id="description" name="description" placeholder="Enter a brief description.." value="{{headquarters.description}}">
                             </div>
-
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                        <label class="col-xs-8" for="id_ubigeo_province">Provincia</label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="province" name="province" size="1">
+                                    <option value="">Seleccione</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-7">
+                    <div class="col-sm-4">
                         <div class="form-group">
-                            <div class="col-xs-12">
+                            <div class="col-xs-8">
                                 <label for="mega-bio">Direccion</label>
-                                <input class="form-control input-lg" id="mega-bio" name="location" rows="2" placeholder="Enter the location of this headquarter.." value="{{headquarters.location}}"></input>
+                                <input class="form-control input-lg" id="location" name="location" rows="2" placeholder="Enter the location of this headquarter.." value="{{headquarters.location}}"></input>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                        <label class="col-xs-8" for="id_ubigeo_district">Distrito</label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="district" name="district" size="1">
+                                    <option value="">Seleccione</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-xs-2">
-                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "headquarters:index" %}'"><i class="fa fa-times push-5-r"></i> Cancelar</button>
+                    <div class="col-xs-4">
+                        <a href="{% url 'headquarters:index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
                     </div>
-                    <div class="col-xs-2">
+                    <div class="col-xs-4">
                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
                     </div>                                  
                 </div>
@@ -85,5 +119,100 @@ Crear sede
         <!-- END Block v2 -->
     </div>
 </div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    $(document).ready(function () {
+        $('#department').change(function(){
+        var department = $('#department :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:provincias" %}',
+                data:{department:department, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){ 
+                    $('#province').empty();
+                    $('#province').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $('#district').empty();
+                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        $('#province').append($('<option>', { 
+                            text : item.province 
+                        }));
+                    });
+                }
+            });
+        }
+        });
+
+        $('#province').change(function(){
+        var province = $('#province :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:distritos" %}',
+                data:{province:province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){ 
+                    $('#district').empty();
+                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        $('#district').append($('<option>', { 
+                            text : item.district 
+                        }));
+                    });
+                }
+            });
+        }
+        });
+        
+    });
+</script>
+<!-- Page Plugins -->
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+<script>
+    jQuery(function () {
+        // Init page helpers (Slick Slider plugin)
+        App.initHelpers('slick');
+    });
+</script>
+
+<!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+
+
+<script>
+    jQuery(function () {
+        // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+        App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+    });
+</script>
+
+
+
+<script src='{% static "assets/js/Admin/Headquarters/headquarters_forms_validations.js" %}'></script>
+<script src='{% static "assets/js/tablas.js" %}'></script>
+<script src='{% static "assets/js/product.js" %}'></script>
+<!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
+
 
 {% endblock %}

@@ -26,6 +26,101 @@ Lista de miembros
 
 <!-- Page Content -->
 <div class="content">
+    <div class="block">
+            <div class="block-content">
+                <form class="form" action='{% url "members:filter" %}' method="post" >
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-5" >
+                            <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Nombre</label>
+                                <div class="col-md-12">
+                                   <div class="input-group">
+                                        <input class="form-control" id="example-number1-group2" name="name" placeholder="nombre" type="text"  size="60">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5" >
+                            <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Apellido Paterno</label>
+                                <div class="col-sm-12">
+                                   <div class="input-group">
+                                        <input class="form-control" id="example-number1-group2" name="paternalLastName" placeholder="Apellido Paterno" type="text"  size="60">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-5" >
+                            <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Numero de Documento</label>
+                                <div class="col-lg-12">
+                                   <div class="input-group">
+                                        <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Num Documento" pattern="[0-9]*"  size="60">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5" >
+                            <div class="form-group">
+                            <label class="col-lg-6" for="example-select">Apellido Materno</label>
+                                <div class="col-lg-12">
+                                   <div class="input-group">
+                                        <input class="form-control" id="example-number1-group2" name="maternalLastName" placeholder="Apellido Materno" type="text" size="60" >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <br>
+                    <div class="row">
+                        <div class="col-lg-5" >
+                            <div class="form-group">
+                            <label class="col-lg-6 " for="example-select">Estado de Suspension</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="example-select" name="suspended" size="1">
+                                        <option value="2">Todos</option>
+                                        <option value="0">No suspendido</option>
+                                        <option value="1">Suspendido</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5" >
+                            <div class="form-group">
+                            <label class="col-xs-6 " for="example-select">Documento de Identidad</label>
+                                <div class="col-sm-12">
+                                    <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                        <option value="Todos">Todos</option>
+                                        {% for doc_type in doc_types %}
+                                            <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+
+        <div class="col-lg-12">
+            <div class="form-group">
+                <div class="col-lg-8 col-lg-offset-4">
+                    <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+                </form>
+            </div>
+                    </div>
   <!-- Simple Table Full -->
     <div class="block block-bordered">
             <form id="myFormEdit" action="{% url 'members:edit_index' %} " method="post">
@@ -40,7 +135,7 @@ Lista de miembros
                 {% csrf_token %}  
                 <input type="hidden" id="hid3" name="id"/>
             </form>
-            <form id="myFormUser" action="{% url 'users:edit_index' %}" method="post">
+            <form id="myFormUser" action="{% url 'users:edit_user_member' %}" method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid4" name="id"/>
             </form>
@@ -51,6 +146,14 @@ Lista de miembros
             <form id="myFormFines" action=" {% url 'fine:index' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" id="hid6" name="id"/>
+            </form>
+            <form id="myFormAffiliates" action=" {% url 'affiliate:index' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="hid7" name="id"/>
+            </form>
+            <form id="myFormSuspension" action=" {% url 'suspension:index' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="hid8" name="id"/>
             </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
@@ -85,6 +188,8 @@ Lista de miembros
                                     <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-edit"></i></button>
                                     <button class="btn btn-xs btn-default fine" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Agregar Multa"><i class="fa fa-warning"></i></button>
                                     <button class="btn btn-xs btn-default fines" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Ver Multas"><i class="fa fa-navicon"></i></button>
+                                    <button class="btn btn-xs btn-default affiliates" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Ver Afiliados"><i class="fa fa-navicon"></i></button>
+                                    <button class="btn btn-xs btn-default suspension" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Suspender Miembro"><i class="fa fa-navicon"></i></button>
                                 </div>
                             </td>    
                         </tr>
@@ -133,9 +238,19 @@ Lista de miembros
             var id = $(this).attr("data-id")
             $('#hid6').val(id)
             document.forms["myFormFines"].submit();
+        });
+        $('.affiliates').click(function (e) {
+            var id = $(this).attr("data-id")
+            $('#hid7').val(id)
+            document.forms["myFormAffiliates"].submit();
 
         });
-        
+        $('.suspension').click(function (e) {
+            var id = $(this).attr("data-id")
+            $('#hid8').val(id)
+            document.forms["myFormSuspension"].submit();
+        });
+
     });
     </script>
     <!-- HASTA AQUÍ -->       

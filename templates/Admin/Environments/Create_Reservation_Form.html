@@ -1,0 +1,113 @@
+{% load staticfiles %}            
+
+            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" id="insert-form" action='{% url "environment:create_reservation" %}' method="post" onsubmit="return false;">
+                {% csrf_token %}
+                <!--
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="start_date">Fecha Inicio Reserva</label>
+                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                    <input class="form-control input-lg" type="text" id="start_date" name="start_date" placeholder="Escoja una fecha..">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="end_date">Fecha Fin Reserva</label>
+                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                    <input class="form-control input-lg" type="text" id="end_date" name="end_date" placeholder="Escoja una fecha..">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                    </div>
+
+
+                </div>
+                -->
+
+                <div class="row">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="price">Precio</label>
+                                <input class="form-control input-lg" type="text" id="price" name="price" placeholder="Ingrese precio de actividad..">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-xs-4">
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a><button class="btn btn-danger" type="button"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
+                    </div>
+                    <div class="col-xs-4">
+                    </div>
+                </div>
+            </form>
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+                <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+                <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+                <script>
+                    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+        
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+        
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        <script src='{% static "assets/js/Admin/Environment/create_reservation_ajax.js" %}'></script>
+
+
+{% endblock %}
