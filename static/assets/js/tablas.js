@@ -8,7 +8,7 @@ var BaseTableDatatables = function() {
     // Init full DataTable, for more examples you can check out https://www.datatables.net/
     var initDataTableFull = function() {
         jQuery('.js-dataTable-full').dataTable({
-            columnDefs: [ { orderable: false, targets: [ 4 ] } ],
+            columnDefs: [ { orderable: false, targets: [ 1 ] } ],
             pageLength: 10,
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]]
         });
@@ -17,12 +17,15 @@ var BaseTableDatatables = function() {
     // Init simple DataTable, for more examples you can check out https://www.datatables.net/
     var initDataTableSimple = function() {
         jQuery('.js-dataTable-simple').dataTable({
-            columnDefs: [ { orderable: true, targets: [ 4 ] } ],
+            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
             pageLength: 10,
             lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
             searching: false,
             oLanguage: {
-                sLengthMenu: ""
+                sLengthMenu: "",                
+                sInfoEmpty:"No hay entradas",
+                sZeroRecords:"No hay datos disponibles",
+                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
             },
             dom:
                 "<'row'<'col-sm-12'tr>>" +
@@ -43,7 +46,9 @@ var BaseTableDatatables = function() {
             renderer: 'bootstrap',
             oLanguage: {
                 sLengthMenu: "_MENU_",
-                sInfo: "Showing <strong>_START_</strong>-<strong>_END_</strong> of <strong>_TOTAL_</strong>",
+                sInfoEmpty:"No hay entradas",
+                sZeroRecords:"No hay datos disponibles",
+                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
                 oPaginate: {
                     sPrevious: '<i class="fa fa-angle-left"></i>',
                     sNext: '<i class="fa fa-angle-right"></i>'
