@@ -97,26 +97,7 @@ Lista de suspensiones
             </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
-                <form  action="{% url "suspension:create_index" %}" method="post">
-                {% csrf_token %}  
-                <input type="hidden" id="hid3" name="id"/>
-                <div class="col-lg-6" style="display: none;">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                           <div class="input-group">
-                                <input class="form-control" id="example-input0-group1" name="membership_id" placeholder="ID"  type="number" value= "{{membership.id}}" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% if show %}
-                <div class="form-group">
-                    <div class="col-xs-2 col-xs-offset-5">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Nueva Suspension</button>
-                    </div>
-                </div>
-                {% endif %}
-                </form>
+
             <table class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
@@ -148,6 +129,26 @@ Lista de suspensiones
                         {% endfor %}
                     </tbody>
                 </table>
+                <form  action="{% url "suspension:create_index" %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="hid3" name="id"/>
+                <div class="col-lg-6" style="display: none;">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                           <div class="input-group">
+                                <input class="form-control" id="example-input0-group1" name="membership_id" placeholder="ID"  type="number" value= "{{membership.id}}" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if show %}
+                <div class="form-group">
+                    <div class="col-xs-2 col-xs-offset-5">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Nueva Suspension</button>
+                    </div>
+                </div>
+                {% endif %}
+                </form>
             </div>
         </div>
         <!-- END Simple Table Full -->

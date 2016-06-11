@@ -38,24 +38,7 @@ Lista de miembros
             </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
-            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:create_index" %}' method="post" >
-                {% csrf_token %}
-                <div class="row">
-                    <div class="form-group" style="display: none;">
-                            <div class="col-md-12">
-                                 <div class="input-group">
-                                      <input class="form-control" id="example-input1-group1" name="id" value="{{id_member}}"  type="text">
-                                 </div>
-                            </div>
-                    </div>
 
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-2 col-xs-offset-5">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Registrar</button>
-                    </div>
-                </div>
-            </form>
             <table class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
@@ -89,7 +72,24 @@ Lista de miembros
                         {% endfor %}
                     </tbody>
                 </table>
+                <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:create_index" %}' method="post" >
+                {% csrf_token %}
+                <div class="row">
+                    <div class="form-group" style="display: none;">
+                            <div class="col-md-12">
+                                 <div class="input-group">
+                                      <input class="form-control" id="example-input1-group1" name="id" value="{{id_member}}"  type="text">
+                                 </div>
+                            </div>
+                    </div>
 
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-2 col-xs-offset-5">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Registrar</button>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
         <!-- END Simple Table Full -->
