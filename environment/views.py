@@ -34,12 +34,12 @@ def create_index(request):
 
     form = EnvironmentForm()
 
-    environment_service = EnvironmentService()
-    environments = environment_service.getEnvironmentByStatus()
+    environment_service = EnvironmentTypeService()
+    type_environment = environment_service.getEnvironmentByStatus()
 
     context = {
         'titulo' : 'titulo',
-        'environments' : environments,
+        'type_environment' : type_environment,
         'form' : form
     }
 

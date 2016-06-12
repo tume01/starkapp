@@ -51,7 +51,7 @@ Lista de ambientes
                         <td class="text-center">{{environment.id}}</td>
                         <td class="font-w600">Sede principal</td>
                         <td class="hidden-xs">{{ environment.name }}</td>
-                        {% if provider.status == 0 %}
+                        {% if environment.status == 0 %}
                         <td class="text-center">Inactivo</td>
                         {% else %}
                         <td class="text-center">Activo</td>
