@@ -40,10 +40,10 @@ def edit_index(request, id):
     environments = environment_service.getEnviromentById(id)
     print(id)
     #Falta validación de try except dentro de base repository
-    if (environment == None):
+    if (environments == None):
         return HttpResponseRedirect(reverse('Environments:index'))
 
-    form = EnvironmentForm(instance=provider)
+    form = EnvironmentForm(instance=environments)
     context = {
 		'id' :id,
         'form' : form,
@@ -74,25 +74,20 @@ def create_environment(request):
         form = EnvironmentForm(request.POST)
         
         if form.is_valid():
-            print("no pasa")
-
-            if(environmentId == None):
-                print("pasa")
-                insert_data = {}
-                insert_data["name"] = request.POST['name']
-                insert_data["capacity"] = request.POST['capacity']
-                insert_data["status"] = request.POST['status']
-                #insert_data["headquarter"] = request.POST['headquarter']
-                insert_data["description"] = request.POST['description']
+            print("pasa")
+            insert_data = {}
+            insert_data["name"] = request.POST['name']
+            insert_data["capacity"] = request.POST['capacity']
+            insert_data["status"] = request.POST['status']
+            #insert_data["headquarter"] = request.POST['headquarter']
+            insert_data["description"] = request.POST['description']
                 
-                environment_service = EnvironmentService()
+            environment_service = EnvironmentService()
 
-                environment_service.create(insert_data)
+            environment_service.create(insert_data)
 
-                return HttpResponseRedirect(reverse('environment:index'))
-            else:
-                context = {'form' : form}
-                return render(request, 'Admin/Environments/Create_Environment.html', context)
+            return HttpResponseRedirect(reverse('environment:index'))
+
         else:
 
             errors = form.errors.as_data()
