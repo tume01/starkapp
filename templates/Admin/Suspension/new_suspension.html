@@ -33,8 +33,28 @@ Nueva suspension
                             {% endfor %}
                         {% endif %}
                     </div>
+
                     <!-- Mega Form -->
                     <div class="block block-bordered">
+                                            <div class="block-content">
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Nombres: {{member.name}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Apellido Paterno: {{member.paternalLastName}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Apellidos Materno: {{member.maternalLastName}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
                         <div class="block-content">
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "suspension:insert" %}' method="post" >
                             {% csrf_token %}
