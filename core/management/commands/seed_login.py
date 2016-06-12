@@ -1905,20 +1905,20 @@ class Command(BaseCommand):
         u = Ubigeo(department='Ucayali', province='Padre Abad', district='Alexander Von Humboldt').save()
         u = Ubigeo(department='Ucayali', province='Purús', district='Purus').save()
 
-        user2 = User.objects.create_user(username='administrador', password='1111')
-        user3 = User.objects.create_user(username='responsableBungalow', password='1111')
-        user4 = User.objects.create_user(username='responsableProveedor', password='1111')
-        user5 = User.objects.create_user(username='responsableCurso', password='1111')
-        user6 = User.objects.create_user(username='responsableActividad', password='1111')
-        user7 = User.objects.create_user(username='responsableSede', password='1111')
-        user8 = User.objects.create_user(username='responsableEvento', password='1111')
-        user9= User.objects.create_user(username='responsableServicio', password='1111')
-        user10 = User.objects.create_user(username='responsableCancha', password='1111')
-        user11 = User.objects.create_user(username='responsableCajero', password='1111')
-        user12 = User.objects.create_user(username='responsableMembresia', password='1111')
-        user13 = User.objects.create_user(username='responsablePromocion', password='1111')
-        user14 = User.objects.create_user(username='responsableMulta', password='1111')
-        user15 = User.objects.create_user(username='empresa', password='1111')
+        user2 = User.objects.create_user(username='administrador', password='1111', first_name='Administrador')
+        user3 = User.objects.create_user(username='responsableBungalow', password='1111', first_name='Bungalow')
+        user4 = User.objects.create_user(username='responsableProveedor', password='1111', first_name='Proveedor')
+        user5 = User.objects.create_user(username='responsableCurso', password='1111', first_name='Curso')
+        user6 = User.objects.create_user(username='responsableActividad', password='1111', first_name='Actividad')
+        user7 = User.objects.create_user(username='responsableSede', password='1111', first_name='Sede')
+        user8 = User.objects.create_user(username='responsableEvento', password='1111', first_name='Evento')
+        user9= User.objects.create_user(username='responsableServicio', password='1111', first_name='Servicio')
+        user10 = User.objects.create_user(username='responsableCancha', password='1111', first_name='Cancha')
+        user11 = User.objects.create_user(username='responsableCajero', password='1111', first_name='Cajero')
+        user12 = User.objects.create_user(username='responsableMembresia', password='1111', first_name='Mebresía')
+        user13 = User.objects.create_user(username='responsablePromocion', password='1111', first_name='Promoción')
+        user14 = User.objects.create_user(username='responsableMulta', password='1111', first_name='Multa')
+        user15 = User.objects.create_user(username='empresa', password='1111', first_name='Empresa')
 
         usuarios = Group.objects.create(name='usuarios')
         admin = Group.objects.create(name='admins')
@@ -2069,7 +2069,7 @@ class Command(BaseCommand):
                                                finalDate=datetime.now() - timedelta(1), status=0)
         mApplication6.save()
 
-        user1 = User.objects.create_user(username=27389283, email='mailm1@mailcito.com', password='1111')
+        user1 = User.objects.create_user(username=27389283, email='mailm1@mailcito.com', password='1111',first_name='Enrique', last_name='Valeriano')
         usuarios.user_set.add(user1)
 
         memb1 = Member(membership=mship1, identity_document_type=doc1, ubigeo=u2, user=user1, name='Enrique',
@@ -2077,7 +2077,7 @@ class Command(BaseCommand):
                        email='mailm1@mailcito.com', address='Av. KyaWeeb', state=1)
         memb1.save()
 
-        user2 = User.objects.create_user(username=21334473, email='mailm2@mailcito.com', password='1111')
+        user2 = User.objects.create_user(username=21334473, email='mailm2@mailcito.com', password='1111', first_name='Jose', last_name='Luis')
         usuarios.user_set.add(user2)
 
         memb2 = Member(membership=mship2, identity_document_type=doc1, ubigeo=u3, user=user2, name='Jose',
@@ -2085,7 +2085,7 @@ class Command(BaseCommand):
                        email='mailm2@mailcito.com', address='Documentos', state=1)
         memb2.save()
 
-        user3 = User.objects.create_user(username=22334563, email='mailm3@mailcito.com', password='1111')
+        user3 = User.objects.create_user(username=22334563, email='mailm3@mailcito.com', password='1111', first_name='Diego', last_name='Coronado')
         usuarios.user_set.add(user3)
 
         memb3 = Member(membership=mship3, identity_document_type=doc1, ubigeo=u4, user=user3, name='Diego',

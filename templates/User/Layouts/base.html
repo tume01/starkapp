@@ -190,7 +190,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header">Perfil</li>
+                        <li class="dropdown-header">{{ user.groups.all.0  }} - {{ user.first_name }} {{ user.last_name }}</li>
                         <li>
                             <a tabindex="-1" href="base_pages_inbox.html">
                                 <i class="si si-envelope-open pull-right"></i>
