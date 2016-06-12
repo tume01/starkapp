@@ -9,6 +9,7 @@ from Adapters.FormValidator import FormValidator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from .forms import SuspensionForms
+from services.MemberService import MembersService
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
@@ -21,8 +22,17 @@ def create_suspension_index(request):
 
     membership = membership_service.getMembership(membership_id)
 
+    member_service = MembersService()
+
+    filter_member = {}
+
+    filter_member["membership"] =membership
+
+    member = member_service.filter(filter_member)
+
     context = {
         'membership': membership,
+        'member':member[0]
     }
 
     return render(request, 'Admin/Suspension/new_suspension.html', context)

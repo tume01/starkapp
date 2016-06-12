@@ -103,6 +103,24 @@ Lista de tipos de multas
                         {% endfor %}
                     </tbody>
                 </table>
+                 <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "fine:create_index" %}' method="post" >
+                {% csrf_token %}
+                <div class="row">
+                    <div class="form-group" style="display: none;">
+                            <div class="col-md-12">
+                                 <div class="input-group">
+                                      <input class="form-control" id="example-input1-group1" name="id" value="{{member.id}}"  type="text">
+                                 </div>
+                            </div>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-2 col-xs-offset-5">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Registrar</button>
+                    </div>
+                </div>
+                </form>
             </div>
         </div>
         <!-- END Simple Table Full -->
