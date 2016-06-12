@@ -29,6 +29,9 @@ var EnvironmentFormValidation = function() {
                 },
                 'description': {
                     required: true
+                },
+                'environment_type': {
+                    required: true
                 }
             },
             messages: {
@@ -40,6 +43,9 @@ var EnvironmentFormValidation = function() {
                 },
                 'description': {
                     required: 'Por favor ingrese una descripción'                    
+                },
+                'environment_type': {
+                    required: 'Por favor seleccione un tipo'
                 }
             }
         });

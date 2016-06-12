@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.EnvironmentService import EnvironmentService
+from services.EnvironmentTypeService import EnvironmentTypeService
 from services.HeadquarterService import HeadquarterService
 from django.views.decorators.http import require_http_methods
 from .forms import EnvironmentForm
@@ -32,8 +33,13 @@ def index(request):
 def create_index(request):
 
     form = EnvironmentForm()
+
+    environment_service = EnvironmentService()
+    environments = environment_service.getEnvironmentByStatus()
+
     context = {
         'titulo' : 'titulo',
+        'environments' : environments,
         'form' : form
     }
 
@@ -86,6 +92,7 @@ def create_environment(request):
             insert_data["name"] = request.POST['name']
             insert_data["capacity"] = request.POST['capacity']
             insert_data["status"] = request.POST['status']
+            insert_data["environment_type"] = request.POST['environment_type']
             #insert_data["headquarter"] = request.POST['headquarter']
             insert_data["description"] = request.POST['description']
                 
@@ -117,6 +124,7 @@ def edit_environment(request, id):
             edit_data["name"] = request.POST['name']
             edit_data["capacity"] = request.POST['capacity']
             edit_data["status"] = request.POST['status']
+            edit_data["environment_type"] = request.POST['environment_type']
             #insert_data["headquarter"] = request.POST['headquarter']
             edit_data["description"] = request.POST['description']
 

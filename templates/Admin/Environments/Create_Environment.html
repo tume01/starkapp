@@ -50,8 +50,12 @@ Creación de Ambientes
                     <div class="col-sm-4">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label class="control-label" for="capacity">Aforo (*)</label> 
-                                {{form.capacity}}
+                                <label class="control-label" for="environment_type">Tipo de Ambiente (*)</label>           
+                                <select class="form-control" name="environment_type" multiple="multiple" id="environment_type" >
+                                    {% for i in type_environment %}
+                                        <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select> 
                             </div>
                         </div>
                     </div>
@@ -65,7 +69,7 @@ Creación de Ambientes
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label class="control-label" for="status">Estado (*)</label>
@@ -73,7 +77,15 @@ Creación de Ambientes
                             </div>                            
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label" for="capacity">Aforo (*)</label> 
+                                {{form.capacity}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <div class="col-xs-12">
                                 <label class="control-label" for="description">Descripción (*)</label>
