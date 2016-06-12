@@ -1,5 +1,6 @@
 from repositories.BungalowReservationRepository import BungalowReservationRepository
 
+
 class BungalowReservationService(object):
     """docstring for BungalowsService"""
 

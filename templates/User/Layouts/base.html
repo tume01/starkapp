@@ -9,7 +9,7 @@
     <title>YoQúeríaPHP -{% block head_title %}{% endblock %}</title>    
 
     <meta name="description" content="YoQúeríaPHP - Admin">
-    <meta name="author" content="Javier" >
+    <meta name="author" content="TeamStark" >
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
 
@@ -377,8 +377,8 @@
         <!--<script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script> -->
         <!-- Page JS Code -->
         <!--<script src="assets/js/pages/base_forms_validation.js"></script>-->
-        <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-        <script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
         
 {% block scripts %}
 {% endblock %}
