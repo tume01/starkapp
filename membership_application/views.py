@@ -390,6 +390,8 @@ def create_objection(request):
 
         insert_data["member_id"] = memberId
 
+        insert_data['date'] = datetime.now()
+
         objection_service = ObjectionsService()
 
         objection_service.create(insert_data)
