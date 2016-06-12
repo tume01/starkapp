@@ -2,7 +2,8 @@ from datetime import datetime,timedelta
 from .forms import ActivityForm
 import json
 from django.template import loader
-from services.EnvironmentService import EnvironmentService
+from services.EnvironmentService import EnvironmentService 
+from services.MemberService import MembersService
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponse
@@ -13,6 +14,8 @@ from services.ActivityService import ActivityService
 from services.ActivityTypeService import ActivityTypeService
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import JsonResponse
+from django.core import serializers
 
 @require_http_methods(['GET'])
 def index(request):
@@ -50,7 +53,7 @@ def getActivityFilters(request):
 
     filters = {}
 
-    filters['status'] = None;
+    filters['deleted_at'] = None;
 
     if request.GET.get('name'):
         filters['name__contains'] = request.GET.get('name')
@@ -142,7 +145,7 @@ def delete(request, activity_id):
 
     activity_service = ActivityService()
 
-    activity = activity_service.update(activity_id, {'status': datetime.now()})
+    activity = activity_service.update(activity_id, {'deleted_at': datetime.now()})
 
     return HttpResponseRedirect(reverse('activities:index'))
 
@@ -155,6 +158,7 @@ def update_index(request, activity_id):
     environments_service = EnvironmentService()
 
     activity  = activity_service.getActivity(activity_id)
+
     activity_types = activity_types_service.getActivityTypes()
     environments = environments_service.getEnvironment()
 
@@ -237,3 +241,124 @@ def index_course(request):
     }
 
     return render(request, 'Admin/Activities/index_course.html', context)
+
+def index_members(request, activity_id):
+
+    activity_service = ActivityService()
+
+    registrations = activity_service.getActivityMembers(activity_id)
+
+    context = {
+        'activity_id' : activity_id,
+        'registrations' : registrations
+    }
+
+    return render(request, 'Admin/Activities/index_members.html', context)
+
+def remove_member(request, activity_id, member_id):
+
+    activity_service = ActivityService()
+
+    if activity_service.removeMember(activity_id, member_id):
+        messages.success(request, 'Miembro retirado de actvidad exitosamente')
+        return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
+
+    messages.error(request, 'Error al remover miembro')
+    return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
+
+def index_add_member(request, activity_id):
+    
+    members_service = MembersService()
+
+    members = members_service.getMembers()
+
+    context = {
+        'members' : members,
+        'activity_id' : activity_id
+    }
+
+    return render(request, 'Admin/Activities/add_member.html', context)
+
+def add_member(request, activity_id):
+
+    member_id = request.POST.get('member')
+
+    activity_service = ActivityService()
+    members_service = MembersService()
+
+    member = members_service.getMember(member_id)
+
+    if activity_service.addMember(activity_id, member):
+        messages.success(request, 'Miembro ananido correctamente')
+        return HttpResponseRedirect(reverse('activities:members', args=[activity_id]))
+    
+    messages.error(request, 'Error al anadir miembro')
+    return HttpResponseRedirect(reverse('activities:add_member', args=[activity_id]))
+
+def index_signUp(request):
+
+    activity_service = ActivityService()
+
+    activities = activity_service.getActivities()
+
+    context = {
+        'activities' : activities
+    }
+
+    return render(request, 'User/Activities/index.html', context)
+
+@require_http_methods(['GET'])
+def select_signUp(request, activity_id):
+    
+    activity_service = ActivityService()
+
+    activity = activity_service.getActivity(activity_id)
+
+    context = {
+        'activity' : activity
+    }
+
+    return render(request, 'User/Activities/select.html', context)
+
+@require_http_methods(['POST'])
+def signup(request, activity_id):
+    
+    activity_service = ActivityService()
+    members_service = MembersService()
+
+    member = members_service.filter({'user_id':request.user.id}).first()
+
+    if activity_service.addMember(activity_id, member):
+        messages.success(request, 'Registro en Actividad exitoso')
+        return HttpResponseRedirect(reverse('activities:user_activities'))
+    
+    messages.error(request, 'No se ha podido registrar en la activdad')
+    return HttpResponseRedirect(reverse('activities:select_signup', args=[activity_id]))
+
+def signout(request, activity_id):
+    
+    activity_service = ActivityService()
+    members_service = MembersService()
+
+    member = members_service.filter({'user_id':request.user.id}).first()
+
+    if activity_service.removeMember(activity_id, member.id):
+        messages.success(request, 'Miembro retirado de actvidad exitosamente')
+        return HttpResponseRedirect(reverse('activities:user_activities'))
+
+    messages.error(request, 'Error al remover miembro')
+    return HttpResponseRedirect(reverse('activities:user_activities'))
+
+def user_activities(request):
+    
+    members_service = MembersService()
+
+    member = members_service.filter({'user_id':request.user.id}).first() 
+
+    activities = member.activityregistration_set.filter(deleted_at=None)
+    
+    context = {
+        'activities' : activities
+    }
+
+    return render(request, 'User/Activities/user_activities.html', context)

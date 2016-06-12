@@ -26,7 +26,9 @@ var PromotionFormValidation = function() {
                     maxlength: 200
                 },
                 'percentage':{
-                	required:true
+                	required:true,
+                    number: true,
+                    min: 1
                 	
                 }
             },
@@ -36,7 +38,9 @@ var PromotionFormValidation = function() {
                     maxlength: 'La descripcion no puede tener más de 200 caracteres'
                 },
                 'percentage':{
-                	required: 'Por favor ingrese un porcentaje'
+                	required: 'Por favor ingrese un porcentaje',
+                    number: 'Por favor ingrese un número válido',
+                    min: 'Por favor ingrese un número positivo'
                 	
                 }
                 /*

@@ -1,0 +1,112 @@
+{% extends 'User/Layouts/base.html' %}
+
+{% block head_title %}
+User: Actividades Disponibles
+{% endblock %}
+
+{% block head_dahsboard %}
+Registro en Actividad
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de actividades
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Registro Actividad
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de solicitudes de actividades
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-warning" role="alert">
+                {{msg.message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="content">
+    <div class="block">
+        <div class="block-content">
+            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:signup" activity.id%}' method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="name">Nombre: {{activity.name}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="attendance">Capacidad: {{activity.attendance}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="price">Precio: S/ {{activity.price}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <label for="activity_type">Tipo: {{activity.activity_type.name}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="environments">Ambiente: {{activity.enviroment.name}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="start_date">Fecha/Hora Inicio Actividad: {{activity.start_date|date:"d/m/Y H:i"}}</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                            <label for="end_date">Fecha/Hora Fin Actividad: {{activity.end_date|date:"d/m/Y H:i"}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-xs-4">
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Inscribirse</button></a>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="{% url 'activities:index_signup' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                        </div>
+                        <div class="col-xs-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

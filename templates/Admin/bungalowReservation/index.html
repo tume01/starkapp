@@ -1,24 +1,24 @@
-{% extends 'Admin/Layouts/base_a.html' %}
+{% extends 'Admin/Layouts/base.html' %}
 {% load staticfiles %}
 
 {% block head_title %}
-Admin: bungalows
+Admin: reserva de bungalows
 {% endblock %}
 
 {% block head_dahsboard %}
-Bungalows
+Reserva de Bungalows
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de bungalows
+Lista de reservas activas
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Bungalows
+Reserva de Bungalows
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de bungalows
+Lista de reservas
 {% endblock %}
 
 {% block content %}
@@ -31,31 +31,13 @@ Lista de bungalows
     <!-- Table Header (Filters) -->
     <div class="block">
         <div class="block-content">
-            <form class="form" id="filters-form" action="{% url 'bungalowReservation:index' %}" method="post" onsubmit="return false;">{% csrf_token %}
+            <form class="form" id="filters-form" action="{% url 'bungalowReservation:index' %}" method="post" onsubmit="return false;">
+                {% csrf_token %}
                 <div class="row">
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="col-sm-12 control-label" >Seleccione un tipo</label>
-                            <select class="form-control" id="bungalow_type_id" size="1">
-                                <option value="-1">Todos</option>
-                                {% for bungalowType in bungalowTypes %}
-                                <option value="{{bungalowType.id}}">{{bungalowType.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label class="col-sm-12 control-label">Nombre Miembro</label>
-                            <input class="form-control" type="text"  id="member_name" name="pro_Codigo"   >
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="form-group">
-                            <label class="col-xs-12" for="example-select">Seleccione una sede</label>
+                            <label class="col-xs-12 control-label">Seleccione una sede</label>
                             <select class="form-control" id="headquarter_id" size="1">
                                 <option value="-1">Todas</option>
                                 {% for headquarter in headquarters %}
@@ -64,17 +46,19 @@ Lista de bungalows
                             </select>
                         </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-lg-offset-10 col-lg-2">
+                    <div class="col-lg-6">
                         <div class="form-group">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                            <label class="col-xs-12 control-label">Estado de reserva</label>
+                            <select class="form-control" id="status" size="1">
+                                <option value="-1">Todos</option>
+                                {% for status in status_choices %}
+                                <option value="{{ status.0 }}">{{ status.1 }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
                     </div>
                 </div>
-
-                <br>
             </form>
         </div>
     </div>
@@ -82,90 +66,60 @@ Lista de bungalows
 
     <!-- Simple Table Full -->
     <div class="block block-bordered">
-        <div class="block-content">
-            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-            <table class="table table-bordered table-striped js-dataTable-simple">
-                <thead>
-                    <tr>
-                        <th class="text-center">#</th>
-                        <th>Arrival Date</th>
-                        <th>Departure Date</th>
-                        <th class="hidden-xs">Check-In</th>
-                        <th class="hidden-xs">Check-Out</th>
-                        <th>Precio (S/.)</th>
-                        <th >Acción</th>
-                    </tr>
-                </thead>
-                <tbody id="table-content">
-                    {% for reservation in reservations %}
-                        <tr>
-                            <td class="text-center" id="reservation_id">{{reservation.id}}</td>
-                            <td class="font-w600">{{ reservation.arrival_date }}</td>
-                            <td class="font-w600">{{ reservation.departure_date }}</td>
-                            <td class="hidden-xs" id="check_in">{{ reservation.check_in }}</td>
-                            <td class="hidden-xs" id="check_out">{{ reservation.check_out }}</td>
-                            <td class="text-center">{{ reservation.price }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    {% if not reservation.check_in %}<button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Check-In" id="btn-check-in"><i class="fa fa-sign-in"></i></button>{%endif%}
-                                    {% if not reservation.check_out %}<button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Check-Out" id="btn-check-out"><i class="fa fa-sign-out"></i></button>{%endif%}
-                                    <button class="btn btn-xs btn-default" type="submit" data-toggle="tooltip" title="Actualizar Reserva" id="btn-edit"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
-                                </div>
-                            </td>    
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="block-content" id="table-content">
+            {% include 'Admin/bungalowReservation/index_table.html' %}
         </div>
     </div>
     <!-- END Simple Table Full -->
 </div>
 <!-- END Page Content -->
 
-                <!-- HASTA AQUÍ -->       
+<!-- HASTA AQUÍ -->
 
-                {% endblock %}
+{% endblock %}
 
 {% block scripts %}
 
 <!-- Page Plugins -->
-                <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
-                <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
 
-                <script>
+<script>
                     jQuery(function () {
                 // Init page helpers (Slick Slider plugin)
                 App.initHelpers('slick');
             });
-        </script> 
 
-        <!-- Page JS Plugins -->
-        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
-        
-        
-        <script>
+
+</script>
+
+<!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+
+
+<script>
             jQuery(function () {
                 // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
                 App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
             });
-        </script>
-        
-        <script src='{% static "assets/js/tablas.js" %}'></script>
-        <script src='{% static "assets/js/Admin/bungalowReservation/main.js" %}'></script>
+
+
+</script>
+
+<script src='{% static "assets/js/Admin/bungalowReservation/index.js" %}'></script>
 
 
 {% endblock %}

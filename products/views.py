@@ -177,40 +177,61 @@ def filter_product(request):
     filter_data = {}
     req = json.loads( request.body.decode('utf-8') )
 
-    #print(req.get("f_selectProductType"))
+    print("nombre= "+req.get("f_name"))
+    print(req.get("f_select2Provider"))
+    print("tipo= "+req.get("f_selectProductType"))
 
-    param = []
-    param.append(req.get("f_name"))
-    #param = [3, 2] #id y stock min
+    product_name = ""
 
-    #if req.get("f_selectProductType") == '' && req.get("f_name") == '' && req.get("f_select2Provider") == null:
-    #    qry = "SELECT * FROM products_product "
-    #else:
-    #    qry = "SELECT * FROM products_product WHERE "
+    qry = "SELECT p.id, p.price, p.actual_stock, p.minimum_stock, p.status, p.description, p.name, p.product_type_id "
+    qry += " FROM products_product p, products_product_provider pxp WHERE p.id = pxp.product_id "
 
-    #   if req.get("f_selectProductType") == '':
-    #       qry += "product_type_id = " + req.get("f_selectProductType")
+
+    if req.get("f_selectProductType") == '0' and req.get("f_name") == '' and req.get("f_select2Provider") == None:
+        print("sin filtro")
+    else:
+        if req.get("f_selectProductType") != '0':
+            qry += " AND p.product_type_id="+req.get("f_selectProductType") + " "
         
+        if req.get("f_select2Provider") != None:
+            i=0
+            for prov_id in req.get("f_select2Provider"):
+                if i == 0:
+                    qry += " AND ( pxp.provider_id="+ prov_id + " "
+                    i += 1
+                else:
+                    qry += " OR pxp.provider_id="+ prov_id + " "
 
-    #print(qry)
-    qry = "SELECT * FROM products_product WHERE id<5"
-    #logging.debug(qry)
+            qry += " ) "
 
+        if req.get("f_name") != '':
+            qry += " AND p.name LIKE %s"
+            product_name = req.get("f_name")
 
+    print("qry= "+qry)
+
+    req_list = []
 
     try:
-        list_products = Product.objects.raw(qry)
-        #print('hola')
+        if product_name != '':
+            list_products = Product.objects.raw(qry, [product_name])
+        else:
+            list_products = Product.objects.raw(qry)
+        
         for p in list_products:
-            print(p.id)
-
-        req_list = serializers.serialize('json', list_products)
+            data_item = {}
+            data_item["id"] = p.id
+            data_item["name"] = p.name
+            data_item["price"] = p.price
+            data_item["actual_stock"] = p.actual_stock
+            data_item["minimum_stock"] = p.minimum_stock
+            data_item["status"] = p.status
+            data_item["description"] = p.description
+            #data_item["id"] = p.id
+            req_list.append(data_item)
 
     except IntegrityError:
         handle_exception()
         list_products = None
-
-    
-    
 
     return HttpResponse( json.dumps(req_list), content_type='application/json')
