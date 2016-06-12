@@ -36,7 +36,7 @@ Edición de Ambientes
         </div>
 
         <div class="block-content">
-            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "environment:insert" %}' method="post" >
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "environment:update" id %}' method="post" >
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-2">

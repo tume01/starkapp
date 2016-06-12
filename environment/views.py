@@ -106,16 +106,16 @@ def edit_environment(request, id):
 
             #form.save()
 
-            insert_data = {}
-            insert_data["name"] = request.POST['name']
-            insert_data["capacity"] = request.POST['capacity']
-            insert_data["status"] = request.POST['status']
+            edit_data = {}
+            edit_data["name"] = request.POST['name']
+            edit_data["capacity"] = request.POST['capacity']
+            edit_data["status"] = request.POST['status']
             #insert_data["headquarter"] = request.POST['headquarter']
-            insert_data["description"] = request.POST['description']
+            edit_data["description"] = request.POST['description']
 
             environment_service = EnvironmentService()
 
-            environment_service.update(id, insert_data)
+            environment_service.update(id, edit_data)
 
             return HttpResponseRedirect(reverse('environment:index'))
         else:
