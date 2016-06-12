@@ -20,12 +20,12 @@ class Command(BaseCommand):
         print('\n  Users Seeder is running...\n')
 
         print('    Deleting...')
-        self.cleanDB()
+        self.cleanLogin()
 
         print('    Inserting...')
-        self.insertData()
+        self.insertLogin()
 
-    def cleanDB(self):
+    def cleanLogin(self):
         Suspension.objects.all().delete()
         Member.objects.all().delete()
         Membership_Application.objects.all().delete()
@@ -42,7 +42,7 @@ class Command(BaseCommand):
         Ubigeo.objects.all().delete()
         print('    Data has been deleted\n')
 
-    def insertData(self):
+    def insertLogin(self):
 
         u = Ubigeo(department='Amazonas', province='Chachapoyas', district='Chachapoyas').save()
         u = Ubigeo(department='Amazonas', province='Chachapoyas', district='Asunción').save()
