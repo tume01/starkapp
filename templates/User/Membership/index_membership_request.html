@@ -29,7 +29,7 @@ Lista de solicitudes de membresía
     <!-- Simple Table Full -->
     <div class="block">
                         <div class="block-content">
-                            <form class="form-horizontal push-10-t push-10" action='{% url "membership_application:user_filter" %}' method="post" >
+                            <form id='busqueda' class="form-horizontal push-10-t push-10" method="post" >
                                 {% csrf_token %}  
                                 <div class="row">
                                     <div class="col-lg-4" >
@@ -82,7 +82,7 @@ Lista de solicitudes de membresía
                                 <div class="row">                                    
                                     <div class="form-group">
                                         <div class="col-lg-8 col-lg-offset-4">
-                                            <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                                            <button class="btn btn-sm btn-primary"  id='button' type="button">Buscar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@ Lista de solicitudes de membresía
             </form>     
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-                            <table class="table table-bordered table-striped js-dataTable-simple">
+                            <table class="table table-bordered table-striped js-dataTable-simple"  id='tabla'>
                                  <thead>
                                     <tr>
                                         <th>Doc. de Identidad</th>
@@ -111,7 +111,7 @@ Lista de solicitudes de membresía
                                         <th>Acciones</th>                                      
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id='tbodyid'>
                                     {% for membershipApp in membershipApplications %}                                       
                                         <tr>
                                             <td class="font-w600">{{membershipApp.identity_document_type.name}}</td>
@@ -142,14 +142,76 @@ Lista de solicitudes de membresía
 {% block scripts %}
 
     <script>
-    $(document).ready(function () {
-        $('.objetar').click(function (e) {
+  function objetar() {
+     $('.objetar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid1').val(id)
             document.forms["myFormObject"].submit();    
 
         });        
+    }
+
+
+    $(document).ready(function () {
+        objetar();
+
+        $('#button').click(function(){
+        {
+            var frm = $('#busqueda');
+            $.ajax({
+                type:'post',
+                url:'{% url "membership_application:user_filter" %}',
+                data: frm.serialize(),
+                cache:false,
+                success: function(returndata){
+                    $('#tabla').dataTable().fnDestroy();
+                    $("#tbodyid").empty();                  
+                    $.each (returndata, function (key, value) {
+                        doc=returndata[key].fields.identity_document_type;
+                        doc_num=returndata[key].fields.document_number;
+                        name=returndata[key].fields.firstName;
+                        pat=returndata[key].fields.paternalLastName;
+                        mat=returndata[key].fields.maternalLastName;
+                        iniD=returndata[key].fields.initialDate;
+                        endD=returndata[key].fields.finalDate;
+                        comm=returndata[key].fields.comments;
+                        id=returndata[key].pk;
+                        var html =  '<div class="btn-group"><button class="btn btn-xs btn-default objetar" data-id="'+id+'"type="button"  data-toggle="tooltip" title="Agregar objeción"><i class="fa fa-pencil"></i></button></div>'
+                        if(doc==1){
+                            doc='DNI'
+                        }else if(doc==2){
+                            doc='Pasaporte'
+                        }
+                        $("#tbodyid").append('<tr><td class="font-w600">'+doc+'</td><td class="font-w600">'+doc_num+'</td><td class="font-w600">'+name+'</td><td class="font-w600">'+pat+'</td><td class="font-w600">'+mat+'</td><td class="font-w600">'+iniD+'</td><td class="font-w600">'+endD+'</td><td class="font-w600">'+comm+'</td><td class="text-center">'+html+'</td></tr>');
+                        
+                    }); 
+
+                    $('#tabla').dataTable({
+                            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
+                            pageLength: 10,
+                            "autoWidth": false,
+                            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                            searching: false,
+                            oLanguage: {
+                                sLengthMenu: "",                
+                                sInfoEmpty:"No hay entradas",
+                                sZeroRecords:"No hay datos disponibles",
+                                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
+                            },
+                            dom:
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-6'i><'col-sm-6'p>>"
+                    });   
+                    objetar();
+              
+                },
+                
+            });
+        }
+        });
+        
     });
+       
     </script>
                 <!-- HASTA AQUÍ -->       
 

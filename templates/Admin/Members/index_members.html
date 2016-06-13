@@ -28,7 +28,7 @@ Lista de miembros
 <div class="content">
     <div class="block">
             <div class="block-content">
-                <form class="form" action='{% url "members:filter" %}' method="post" >
+                <form class="form" method="post" id='busqueda'>
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-lg-5" >
@@ -112,13 +112,13 @@ Lista de miembros
         <div class="col-lg-12">
             <div class="form-group">
                 <div class="col-lg-8 col-lg-offset-4">
-                    <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                    <button class="btn btn-sm btn-primary" id="button" type="button">Buscar</button>
                 </div>
             </div>
         </div>
     </div>
     <br>
-                </form>
+    </form>
             </div>
                     </div>
   <!-- Simple Table Full -->
@@ -143,17 +143,13 @@ Lista de miembros
                 {% csrf_token %}
                 <input type="hidden" id="hid6" name="id"/>
             </form>
-            <form id="myFormAffiliates" action=" {% url 'affiliate:index' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" id="hid7" name="id"/>
-            </form>
             <form id="myFormSuspension" action=" {% url 'suspension:index' %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" id="hid8" name="id"/>
             </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
-            <table class="table table-bordered table-striped js-dataTable-simple">
+            <table class="table table-bordered table-striped js-dataTable-simple" id='tabla'>
                 <thead>
                     <tr>
                             <th>Doc. Identidad</th>
@@ -166,7 +162,7 @@ Lista de miembros
                             <th>Acciónes</th>                                        
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id='tbodyid'>
                         {% for member in members %}                                       
                         <tr>
                             <td class="font-w600">{{member.identity_document_type.name}}</td>
@@ -183,7 +179,6 @@ Lista de miembros
                                     <button class="btn btn-xs btn-default membre" style="height:30px; width:30px" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Membresia"><i class="fa fa-pencil-square"></i></button>
                                    <!-- <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-edit"></i></button>  -->                                  
                                     <button class="btn btn-xs btn-default fines" style="height:30px; width:30px" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Ver Multas"><i class="fa fa-exclamation-triangle"></i></button>
-                                    <button class="btn btn-xs btn-default affiliates" style="height:30px; width:30px" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Ver Afiliados"><i class="fa fa-users"></i></button>
                                     <button class="btn btn-xs btn-default suspension" style="height:30px; width:30px" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Suspender Miembro"><i class="fa fa-legal"></i></button>
                                 </div>
                             </td>    
@@ -201,46 +196,106 @@ Lista de miembros
 {% block scripts %}
 
     <script>
-    $(document).ready(function () {
-        $('.editar').click(function (e) {
+
+    function editar() {
+       $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid2').val(id)
             document.forms["myFormEdit"].submit();    
+        });  
+    }
 
-        });     
-        $('.eliminar').click(function (e) {
+    function eliminar() {
+       $('.eliminar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid1').val(id)
             document.forms["myFormDelete"].submit();    
+        });  
+    }
 
-        });    
+    function membre() {
         $('.membre').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid3').val(id)
             document.forms["myFormMembre"].submit();    
-
-        });    
-        $('.user').click(function (e) {
-            var id = $(this).attr("data-id")          
-            $('#hid4').val(id)
-            document.forms["myFormUser"].submit();    
-
         });   
+    }
+
+    function fines() {
         $('.fines').click(function (e) {
             var id = $(this).attr("data-id")
             $('#hid6').val(id)
             document.forms["myFormFines"].submit();
         });
-        $('.affiliates').click(function (e) {
-            var id = $(this).attr("data-id")
-            $('#hid7').val(id)
-            document.forms["myFormAffiliates"].submit();
+    }
 
-        });
+    function suspension() {
         $('.suspension').click(function (e) {
             var id = $(this).attr("data-id")
             $('#hid8').val(id)
             document.forms["myFormSuspension"].submit();
+        });
+    }
+
+    $(document).ready(function () {
+
+        editar();
+        eliminar();  
+        suspension();
+        fines();
+        membre();
+
+        $('#button').click(function(){
+        {
+            var frm = $('#busqueda');
+            $.ajax({
+                type:'post',
+                url:'{% url "members:filter" %}',
+                data: frm.serialize(),
+                cache:false,
+                success: function(returndata){
+                    $('#tabla').dataTable().fnDestroy();
+                    $("#tbodyid").empty();                  
+                    $.each (returndata, function (key, value) {
+                        doc=returndata[key].fields.address;
+                        doc_num=returndata[key].fields.document_number;
+                        name=returndata[key].fields.name;
+                        pat=returndata[key].fields.paternalLastName;
+                        mat=returndata[key].fields.maternalLastName;
+                        phone=returndata[key].fields.phone;
+                        email=returndata[key].fields.email;
+                        id=returndata[key].pk;
+                        var html =  '<div class="btn-group"><button class="btn btn-xs btn-default editar" style="height:30px; width:30px" data-id='+id+ 'type="button"  data-toggle="tooltip" title="Editar Miembro"><i class="fa fa-user"></i></button><button class="btn btn-xs btn-default eliminar" style="height:30px; width:30px" data-id='+id+'type="button"  data-toggle="tooltip" title="Eliminar Miembro"><i class="fa fa-user-times"></i></button><button class="btn btn-xs btn-default membre" style="height:30px; width:30px" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Editar Membresia"><i class="fa fa-pencil-square"></i></button> <!-- <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-edit"></i></button>  --> <button class="btn btn-xs btn-default fines" style="height:30px; width:30px" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Ver Multas"><i class="fa fa-exclamation-triangle"></i></button><button class="btn btn-xs btn-default suspension" style="height:30px; width:30px" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Suspender Miembro"><i class="fa fa-legal"></i></button></div>'
+
+                        $("#tbodyid").append('<tr><td class="font-w600">'+doc+'</td><td class="font-w600">'+doc_num+'</td><td class="font-w600">'+name+'</td><td class="font-w600">'+pat+'</td><td class="font-w600">'+mat+'</td><td class="font-w600">'+phone+'</td><td class="font-w600">'+email+'</td><td class="text-center">'+html+'</td></tr>');
+                    });  
+                    $('#tabla').dataTable({
+                            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
+                            pageLength: 10,
+                            "autoWidth": false,
+                            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                            searching: false,
+                            oLanguage: {
+                                sLengthMenu: "",                
+                                sInfoEmpty:"No hay entradas",
+                                sZeroRecords:"No hay datos disponibles",
+                                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
+                            },
+                            dom:
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-6'i><'col-sm-6'p>>"
+                    });   
+
+                    editar();
+                    eliminar();  
+                    suspension();
+                    fines();
+                    membre();
+
+                },
+                
+            });
+        }
         });
 
     });
