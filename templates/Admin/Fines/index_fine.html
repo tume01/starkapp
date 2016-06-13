@@ -32,7 +32,7 @@ Lista de tipos de multas
 
                         <div class="block-content">
 
-                            <form class="form" action='{% url "fine:filter" %}' method="post" >
+                            <form class="form" id='busqueda' method="post" >
                                 {% csrf_token %}
                                 <div class row>
                                     <div class="col-lg-6" style="display: none;">
@@ -51,9 +51,9 @@ Lista de tipos de multas
                                             <label class="col-xs-1 " for="example-select">Estado</label>
                                                 <div class="col-sm-12">
                                                     <select class="form-control" id="example-select" name="status" size="1">
-                                                        <option value="Pendiente de Pago">Todas</option>
-                                                        <option value="">Pagadas</option>
-                                                        <option value="Pendiente de Pago">Por Pagar</option>
+                                                        <option value="">Todas</option>
+                                                        <option value="Pagada">Pagadas</option>
+                                                        <option value="Por Pagar">Por Pagar</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -68,7 +68,7 @@ Lista de tipos de multas
                     <div class="col-lg-12">
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-4">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                                <button class="btn btn-sm btn-primary" id='button' type="button">Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@ Lista de tipos de multas
                     </div>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
-            <table class="table table-bordered table-striped js-dataTable-simple">
+            <table class="table table-bordered table-striped js-dataTable-simple" id='tabla'>
                 <thead>
                     <tr>
                             <th>Observacion</th>
@@ -89,7 +89,7 @@ Lista de tipos de multas
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id='tbodyid'>
                         {% for fine in fines %}
                         <tr>
                             <td class="font-w600">{{fine.observations}}</td>
@@ -131,3 +131,64 @@ Lista de tipos de multas
 
     {% endblock %}
 
+{% block scripts %}
+
+    <script>
+
+    function editar() {
+    }
+
+
+
+    $(document).ready(function () {
+
+
+        $('#button').click(function(){
+        {
+            var frm = $('#busqueda');
+            $.ajax({
+                type:'post',
+                url:'{% url "fine:filter" %}',
+                data: frm.serialize(),
+                cache:false,
+                success: function(returndata){
+                    $('#tabla').dataTable().fnDestroy();
+                    $("#tbodyid").empty();                  
+                    returndata=JSON.parse(returndata)
+                    $.each (returndata, function (key, value) {
+                        obs=returndata[key].observations;
+                        reason=returndata[key].reason;
+                        price=returndata[key].price;
+                        status=returndata[key].status;
+                        id=returndata[key].id;
+                        
+                        $("#tbodyid").append('<tr><td class="font-w600">'+obs+'</td><td class="font-w600">'+reason+'</td><td class="font-w600"> S/. '+price+'</td><td class="font-w600">'+status+'</td><td class="text-center">'+'</td></tr>');
+                    });  
+                    $('#tabla').dataTable({
+                            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
+                            pageLength: 10,
+                            "autoWidth": false,
+                            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                            searching: false,
+                            oLanguage: {
+                                sLengthMenu: "",                
+                                sInfoEmpty:"No hay entradas",
+                                sZeroRecords:"No hay datos disponibles",
+                                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
+                            },
+                            dom:
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-6'i><'col-sm-6'p>>"
+                    });   
+              
+                },
+                
+            });
+        }
+        });
+        
+    });
+    </script>
+    <!-- HASTA AQUÍ -->       
+
+{% endblock %}
