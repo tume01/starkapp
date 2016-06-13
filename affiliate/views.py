@@ -16,13 +16,17 @@ from django.contrib.auth.decorators import permission_required
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
-@require_http_methods(['POST'])
+@permission_required('dummy.permission_usuario', login_url='login:ini')
+@require_http_methods(['GET'])
 def affiliate_index(request):
 
-    id_member = request.POST['id']
+    user = request.user
 
     member_service = MembersService()
+
+    member = member_service.getMemberByUser(user)
+
+    id_member = member.id
 
     affiliate_service = AffiliateService()
 
@@ -41,11 +45,11 @@ def affiliate_index(request):
         'affiliates' : affiliates,
     }
 
-    return render(request, 'Admin/Affiliates/index_affiliates.html', context) 
+    return render(request, 'User/Affiliates/index_affiliates.html', context)
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_index(request):
 
@@ -65,18 +69,41 @@ def create_index(request):
         'doc_types': doc_types
     }
 
-    return render(request, 'Admin/Affiliates/new_affiliate.html', context)
+    return render(request, 'User/Affiliates/new_affiliate.html', context)
 
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def create_affiliate(request):
 
-    form = AffiliateForm(request.POST)
-
     id_member = request.POST['id_member']
+
+    if "cancel" in request.POST:
+
+        member_service = MembersService()
+
+        affiliate_service = AffiliateService()
+
+        member = member_service.getMember(id_member)
+
+        filter_affiliate = {}
+
+        filter_affiliate["member"] = member
+
+        filter_affiliate["state"] = 1
+
+        affiliates = affiliate_service.filter(filter_affiliate)
+
+        context = {
+            'id_member': id_member,
+            'affiliates': affiliates,
+        }
+
+        return render(request, 'User/Affiliates/index_affiliates.html', context)
+
+    form = AffiliateForm(request.POST)
 
     ubigeo_service = UbigeoService()
 
@@ -96,7 +123,7 @@ def create_affiliate(request):
             'doc_types': doc_types
         }
 
-        return render(request, 'Admin/Affiliates/new_affiliate.html', context)
+        return render(request, 'User/Affiliates/new_affiliate.html', context)
 
     else:
 
@@ -155,11 +182,11 @@ def create_affiliate(request):
             'affiliates' : affiliates,
         }
 
-        return render(request, 'Admin/Affiliates/index_affiliates.html', context)
+        return render(request, 'User/Affiliates/index_affiliates.html', context)
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_affiliate_index(request):
 
@@ -197,17 +224,43 @@ def edit_affiliate_index(request):
         'doc_types': doc_types,
     }
 
-    return render(request, 'Admin/Affiliates/edit_affiliate.html', context)
+    return render(request, 'User/Affiliates/edit_affiliate.html', context)
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_affiliate(request):
 
-    form = AffiliateForm(request.POST)
-
     id_edit = request.POST['id']
+
+    if "cancel" in request.POST:
+        member_service = MembersService()
+
+        affiliate_service = AffiliateService()
+
+        affiliate = affiliate_service.getAffiliate(id_edit)
+
+        id_member = affiliate.member.id
+
+        member = member_service.getMember(id_member)
+
+        filter_affiliate = {}
+
+        filter_affiliate["member"] = member
+
+        filter_affiliate["state"] = 1
+
+        affiliates = affiliate_service.filter(filter_affiliate)
+
+        context = {
+            'id_member': id_member,
+            'affiliates': affiliates,
+        }
+
+        return render(request, 'User/Affiliates/index_affiliates.html', context)
+
+    form = AffiliateForm(request.POST)
 
     ubigeo_service = UbigeoService()
 
@@ -231,7 +284,7 @@ def edit_affiliate(request):
             'doc_types': doc_types
         }
 
-        return render(request, 'Admin/Affiliates/edit_affiliatehtml', context)
+        return render(request, 'User/Affiliates/edit_affiliatehtml', context)
 
     else:
 
@@ -286,11 +339,11 @@ def edit_affiliate(request):
             'affiliates' : affiliates,
         }
 
-        return render(request, 'Admin/Affiliates/index_affiliates.html', context)
+        return render(request, 'User/Affiliates/index_affiliates.html', context)
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def delete_affiliate(request):
 
@@ -321,7 +374,7 @@ def delete_affiliate(request):
         'affiliates' : affiliates,
     }
 
-    return render(request, 'Admin/Affiliates/index_affiliates.html', context)
+    return render(request, 'User/Affiliates/index_affiliates.html', context)
 
 
 

@@ -143,13 +143,9 @@ Lista de miembros
                 {% csrf_token %}
                 <input type="hidden" id="hid6" name="id"/>
             </form>
-            <form id="myFormAffiliates" action=" {% url 'affiliate:index' %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" id="hid7" name="id"/>
-            </form>
             <form id="myFormSuspension" action=" {% url 'suspension:index' %}" method="post">
                 {% csrf_token %}
-                <input type="hidden" id="hid8" name="id"/>
+                <input type="hidden" id="hid7" name="id"/>
             </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
@@ -183,7 +179,6 @@ Lista de miembros
                                     <button class="btn btn-xs btn-default membre" style="height:30px; width:30px" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Membresia"><i class="fa fa-pencil-square"></i></button>
                                    <!-- <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-edit"></i></button>  -->                                  
                                     <button class="btn btn-xs btn-default fines" style="height:30px; width:30px" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Ver Multas"><i class="fa fa-exclamation-triangle"></i></button>
-                                    <button class="btn btn-xs btn-default affiliates" style="height:30px; width:30px" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Ver Afiliados"><i class="fa fa-users"></i></button>
                                     <button class="btn btn-xs btn-default suspension" style="height:30px; width:30px" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Suspender Miembro"><i class="fa fa-legal"></i></button>
                                 </div>
                             </td>    
@@ -231,15 +226,9 @@ Lista de miembros
             $('#hid6').val(id)
             document.forms["myFormFines"].submit();
         });
-        $('.affiliates').click(function (e) {
-            var id = $(this).attr("data-id")
-            $('#hid7').val(id)
-            document.forms["myFormAffiliates"].submit();
-
-        });
         $('.suspension').click(function (e) {
             var id = $(this).attr("data-id")
-            $('#hid8').val(id)
+            $('#hid7').val(id)
             document.forms["myFormSuspension"].submit();
         });
 
