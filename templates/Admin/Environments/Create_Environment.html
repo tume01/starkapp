@@ -62,8 +62,12 @@ Creación de Ambientes
                     <div class="col-sm-2">
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <label class="control-label" for="headquarter">Sede (*)</label>
-                                {{form.headquarter}}
+                                <label class="control-label" for="headquarter">Sede (*)</label>        
+                                <select class="form-control" name="headquarter" multiple="multiple" id="headquarter" >
+                                    {% for i in headquarters %}
+                                        <option value="{{i.id}}">{{i.name}}</option>
+                                    {% endfor %}
+                                </select> 
                             </div>
                         </div>
                     </div>

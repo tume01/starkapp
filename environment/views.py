@@ -19,11 +19,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def index(request):
 
     environment_service = EnvironmentService()
+    headquarter_service = HeadquarterService()
 
+    headquarters = headquarter_service.getHeadquarters()
     environments = environment_service.getEnvironmentByStatus()
 
     context = {
         'environments' : environments,
+        'headquarters' : headquarters,
         'titulo' : 'titulo'
     }
 
@@ -35,11 +38,14 @@ def create_index(request):
     form = EnvironmentForm()
 
     environment_service = EnvironmentTypeService()
-    type_environment = environment_service.getEnvironmentByStatus()
+    type_environment = environment_service.getEnvironment()
+    headquarter_service = HeadquarterService()
+    headquarters = headquarter_service.getHeadquarters()
 
     context = {
         'titulo' : 'titulo',
         'type_environment' : type_environment,
+        'headquarters' : headquarters,
         'form' : form
     }
 
@@ -49,8 +55,13 @@ def create_index(request):
 def edit_index(request, id):
 
     environment_service = EnvironmentService()
+    environment_type_service = EnvironmentTypeService()
+    headquarter_service = HeadquarterService()
 
+    headquarters = headquarter_service.getHeadquarters()
     environments = environment_service.getEnviromentById(id)
+    type_environment = environment_type_service.getEnvironment()
+
     print(id)
     #Falta validación de try except dentro de base repository
     if (environments == None):
@@ -60,6 +71,9 @@ def edit_index(request, id):
     context = {
 		'id' :id,
         'form' : form,
+        'environments' : environments,
+        'type_environment' : type_environment,
+        'headquarters': headquarters,
         'titulo' : 'titulo'
     }
 
@@ -92,8 +106,8 @@ def create_environment(request):
             insert_data["name"] = request.POST['name']
             insert_data["capacity"] = request.POST['capacity']
             insert_data["status"] = request.POST['status']
-            insert_data["environment_type"] = request.POST['environment_type']
-            #insert_data["headquarter"] = request.POST['headquarter']
+            insert_data["environment_type_id"] = request.POST['environment_type']
+            insert_data["headquarter_id"] = request.POST['headquarter']
             insert_data["description"] = request.POST['description']
                 
             environment_service = EnvironmentService()
@@ -124,8 +138,8 @@ def edit_environment(request, id):
             edit_data["name"] = request.POST['name']
             edit_data["capacity"] = request.POST['capacity']
             edit_data["status"] = request.POST['status']
-            edit_data["environment_type"] = request.POST['environment_type']
-            #insert_data["headquarter"] = request.POST['headquarter']
+            edit_data["environment_type_id"] = request.POST['environment_type']
+            edit_data["headquarter_id"] = request.POST['headquarter']
             edit_data["description"] = request.POST['description']
 
             environment_service = EnvironmentService()
