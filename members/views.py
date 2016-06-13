@@ -206,7 +206,7 @@ def member_filter(request):
         filter_member['maternalLastName'] = maternalLastName
 
     if document != '':
-        filter_member['document'] = document
+        filter_member['document_number'] = document
 
     if name != '':
         filter_member['name'] = name
@@ -219,29 +219,17 @@ def member_filter(request):
     if suspended == '1':
         members = filter(is_member_suspended, members)
 
-        context = {
-            'members': members,
-            'doc_types': doc_types
-        }
-
-        return render(request, 'Admin/Members/index_members.html', context)
-
     if suspended == '0':
         members = filter(is_member_not_suspended, members)
 
-        context = {
-            'members': members,
-            'doc_types': doc_types
-        }
+    for memberX in members:
 
-        return render(request, 'Admin/Members/index_members.html', context)
+        memberX.address = memberX.identity_document_type.name
 
-    context = {
-        'members': members,
-        'doc_types': doc_types
-    }
+    data = serializers.serialize("json", members)
 
-    return render(request, 'Admin/Members/index_members.html', context)
+    return HttpResponse(data, content_type='application/json')
+
 
 
 def is_member_suspended(member):
@@ -340,7 +328,7 @@ def get_entry(request):
 
     filter_guest = {}
 
-    filter_guest["dni"] = request.POST['document_number']
+    filter_guest["document_number"] = request.POST['document_number']
 
     guest = guest_service.filter(filter_guest)
 
