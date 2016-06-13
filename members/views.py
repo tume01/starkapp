@@ -199,6 +199,8 @@ def member_filter(request):
 
     identity_document_type = request.POST['identity_document_type']
 
+    filter_member['state'] = 1
+
     if paternalLastName != '':
         filter_member['paternalLastName'] = paternalLastName
 
@@ -217,10 +219,10 @@ def member_filter(request):
     members = member_service.filter(filter_member)
 
     if suspended == '1':
-        members = filter(is_member_suspended, members)
+        members = list(filter(is_member_suspended, members))
 
     if suspended == '0':
-        members = filter(is_member_not_suspended, members)
+        members = list(filter(is_member_not_suspended, members))
 
     for memberX in members:
 

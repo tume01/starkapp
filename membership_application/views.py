@@ -17,7 +17,7 @@ from .forms import MembershipApplicationForm
 from objection import forms as oforms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
-
+from django.core import serializers
 
 #ADMIN
 @login_required
@@ -81,13 +81,10 @@ def filter(request):
 
     membershipApplications = member_application_service.filter(filter_member_application)
 
-    context = {
-        'membershipApplications' : membershipApplications,
-        'doc_types' : doc_types
-    }
+    data = serializers.serialize("json", membershipApplications)
 
-    return render(request, 'Admin/Membership/index_membership_request.html', context) 
-
+    return HttpResponse(data, content_type='application/json')
+    
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
@@ -355,12 +352,9 @@ def user_filter(request):
 
     membershipApplications = member_application_service.filter(filter_member_application)
 
-    context = {
-        'membershipApplications' : membershipApplications,
-        'doc_types' : doc_types,
-    }
+    data = serializers.serialize("json", membershipApplications)
 
-    return render(request, 'User/Membership/index_membership_request.html', context) 
+    return HttpResponse(data, content_type='application/json')
 
 
 #OBJECIONES
