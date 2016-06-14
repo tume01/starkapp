@@ -1,9 +1,3 @@
-// Submit post on submit
-// $('#filters-form').on('submit', function(event){
-//     submitFilters();
-// });
-//
-
 $(document).ready(function() {
 
     $('#calendar').fullCalendar({

@@ -32,6 +32,12 @@ class BungalowReservationService(object):
         num_days = calendar.monthrange(year, month)[1]
         days = [datetime.date(year, month, day) for day in range(1, num_days + 1)]
 
+        reservations = cls.getReservations();
+        reservations = reservations.filter()
+        for day in days:
+            pass
+
+
         availableDays = [{
             'title': 'Disponible',
             'start': day.isoformat()
