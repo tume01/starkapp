@@ -1,5 +1,5 @@
 from repositories.BungalowReservationRepository import BungalowReservationRepository
-
+import datetime, calendar, time
 
 class BungalowReservationService(object):
     """docstring for BungalowsService"""
@@ -25,3 +25,18 @@ class BungalowReservationService(object):
     @classmethod
     def findReservation(cls, id):
         return cls._repository.find(id)
+
+    @classmethod
+    def getMonthAvailableDays(cls, bungalowTypeId, month, year):
+
+        num_days = calendar.monthrange(year, month)[1]
+        days = [datetime.date(year, month, day) for day in range(1, num_days + 1)]
+
+        availableDays = [{
+            'title': 'Disponible',
+            'start': day.isoformat()
+        } for day in days]
+
+        print(availableDays)
+
+        return availableDays
