@@ -5,14 +5,9 @@
 //
 
 $(document).ready(function() {
-    today();
-});
-
-function displayEvents(data){
-    console.log('displayEvents');
 
     $('#calendar').fullCalendar({
-        defaultDate: data.month,
+        defaultDate: new Date(),
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         customButtons: {
@@ -28,20 +23,18 @@ function displayEvents(data){
                     nextMonth();
                 }
             }
-        },
-//        dayClick: function(date, jsEvent, view) {
-//
-//            alert('Clicked on: ' + date.format());
-//
-//            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-//
-//            alert('Current view: ' + view.name);
-//
-//            // change the day's background color just for fun
-//            $(this).css('background-color', 'red');
-//        },
-        events: data.events,
+        }
     });
+
+    today();
+});
+
+function displayEvents(data){
+    console.log('displayEvents',data.month);
+
+    $("#calendar").fullCalendar('removeEvents');
+    $("#calendar").fullCalendar('addEventSource', data.events);
+    $('#calendar').fullCalendar( 'gotoDate', data.month )
 }
 
 
@@ -60,7 +53,7 @@ function refreshEvents(month,year){
 
     console.log(month,year)
     var requestData = {
-        'month' : month,
+        'month' : month + 1,
         'year' : year,
         'headquarter_id' : $('#headquarter_id option:selected').val(),
         'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
@@ -109,7 +102,6 @@ function nextMonth() {
 function getCalendarDate(){
     var date = $('#calendar').fullCalendar('getDate').toDate();
     date.setDate(date.getDate() + 1);
-    console.log(date);
 
     return date;
 }
