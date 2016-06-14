@@ -86,7 +86,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a class="h5 text-white" href="index.html">
+                    <a class="h5 text-white">
                         <i class="fa fa-circle-o-notch text-primary"></i> <span class="h4 font-w600 sidebar-mini-hide">ne</span>
                     </a>
                 </div>
@@ -96,7 +96,7 @@
                 <div class="side-content">
                     <ul class="nav-main">
                         <li>
-                            <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                            <a class="active" href='{% url "login:iniAdmin" %}'><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Administración del Club</span></li>
                         {% if perms.dummy.permission_bungalow %} 
@@ -352,7 +352,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header">Perfil</li>
+                        <li class="dropdown-header">{{ user.groups.all.0  }} - {{ user.first_name }}</li>
                         <li>
                             <a tabindex="-1" href="base_pages_inbox.html">
                                 <i class="si si-envelope-open pull-right"></i>
@@ -522,7 +522,7 @@
         <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
-        <script src='{% static "assets/js/product.js" %}'></script>
+        <!--<script src='{% static "assets/js/product.js" %}'></script>-->
 
         <!-- Page JS Code -->
         <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script>
@@ -539,8 +539,8 @@
         <!--<script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script> -->
         <!-- Page JS Code -->
         <!--<script src="assets/js/pages/base_forms_validation.js"></script>-->
-        <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-        <script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
         
 {% block scripts %}
 {% endblock %}

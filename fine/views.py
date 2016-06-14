@@ -76,7 +76,7 @@ def delete_type(request):
 
     filter_data["fine_type_id"] = id_edit
 
-    filter_data["status"] = 'Pendiente de Pago'
+    filter_data["status"] = 'Por Pagar'
 
     fine_service = FineService()
 

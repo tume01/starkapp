@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from services.BungalowService import BungalowService
 from services.BungalowTypeService import BungalowTypeService
+from services.HeadquarterService import HeadquarterService
 
 from bungalow.models import Bungalow
 from bungalow_type.models import BungalowType
@@ -17,34 +18,54 @@ def index(request):
 
     bungalows = BungalowService.getBungalows()
 
+    paginator = Paginator(bungalows, 10)
+    page = request.GET.get('page')
+
+    try:
+        pagineted_bungalows = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        pagineted_bungalows = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        pagineted_bungalows = paginator.page(paginator.num_pages)
+
     context = {
-        'bungalows' : bungalows,
+        'bungalows' : pagineted_bungalows,
         'bungalowTypes' : BungalowTypeService.getBungalowTypes(),
+        'headquarters' : HeadquarterService().getHeadquarters(),
+        'status_choices' : Bungalow.STATUS_CHOICES,        # Aun no se filtra por Status
         'titulo' : 'titulo'
     }
 
     return render(request, 'Admin/bungalow/index.html', context)
 
 @require_http_methods(['POST'])
-def index_filters(request):
+def refresh_table(request):
 
-    from django.core import serializers
-
-    bungalow_type_id = request.POST['bungalow_type_id']
-    member_name = request.POST['member_name']
-    headquarter_id = request.POST['headquarter_id']
+    bungalow_type_id = int(request.POST['bungalow_type_id'])
+    headquarter_id = int(request.POST['headquarter_id'])
+    page = 1
+    if 'page' in request.POST:
+        page = int(request.POST['page'])
     
+    print('#### >> ',bungalow_type_id,headquarter_id,page)
 
     bungalows = BungalowService.getBungalows()
 
-
     if (bungalow_type_id != -1):
+        print("Filter by Type_ID")
         bungalows = bungalows.filter(bungalow_type_id = bungalow_type_id)
-    # if (headquarter_id != -1):
-    #     bungalows = bungalows.filter(headquarter_id = headquarter_id)
+
+    if (headquarter_id != -1):
+        print("Filter by Headquarter_ID")
+        bungalows = bungalows.filter(headquarter_id = headquarter_id)
+
+    paginator = Paginator(bungalows, 10)
+    pagineted_bungalows = paginator.page(page)
 
     context = {
-        'bungalows' : bungalows
+        'bungalows' : pagineted_bungalows
     }
 
     return render_to_response('Admin/bungalow/index_table.html', context)
@@ -81,18 +102,6 @@ def create_bungalow(request):
     BungalowService.create(insert_data)
 
     return HttpResponseRedirect(reverse('bungalow:index'))
-
-
-# def validateForm(form, request):
-#     if form.is_valid():
-#         errors = form.errors.as_data()
-
-#         for error in errors:
-#             validation_instance = errors[error]
-#             for instance_error in validation_instance:
-#                 for error_message in instance_error:
-#                     messages.error(request, (error_message))    
-#         return request
 
 
 @require_http_methods(['GET'])
