@@ -23,12 +23,12 @@ class Command(BaseCommand):
         
         et1 = EnvironmentType(name='Campo de deporte', description='Canchas para jugar futbol', status=1)
         et1.save()
-        et1.environment_set.create(name='Campo de Futbol 1',headquarter_id=14, capacity=100, description='Pruebas ', status=1)
-        et1.environment_set.create(name='Campo de Futbol 2',headquarter_id=15, capacity=100, description='Pruebas ', status=1)
-        et1.environment_set.create(name='Campo de Básquet 1',headquarter_id=14, capacity=100, description='Pruebas ', status=1)
-        et1.environment_set.create(name='Campo de Básquet 2',headquarter_id=15, capacity=100, description='Pruebas ', status=1)
-        et1.environment_set.create(name='Campo de Voley 1',headquarter_id=14, capacity=100, description='Pruebas ', status=1)
-        et1.environment_set.create(name='Campo de Voley 2',headquarter_id=15, capacity=100, description='Pruebas ', status=1)
+        et1.environment_set.create(name='Campo de Futbol 1',headquarter_id=1, capacity=100, description='Pruebas ', status=1)
+        et1.environment_set.create(name='Campo de Futbol 2',headquarter_id=2, capacity=100, description='Pruebas ', status=1)
+        et1.environment_set.create(name='Campo de Básquet 1',headquarter_id=1, capacity=100, description='Pruebas ', status=1)
+        et1.environment_set.create(name='Campo de Básquet 2',headquarter_id=2, capacity=100, description='Pruebas ', status=1)
+        et1.environment_set.create(name='Campo de Voley 1',headquarter_id=1, capacity=100, description='Pruebas ', status=1)
+        et1.environment_set.create(name='Campo de Voley 2',headquarter_id=2, capacity=100, description='Pruebas ', status=1)
         
 
         print('    Data has been inserted\n')

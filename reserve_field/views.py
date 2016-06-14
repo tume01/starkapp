@@ -10,6 +10,8 @@ from services.FieldReservationService import FieldReservationService
 from services.MemberService import MembersService
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response
+from django.http import JsonResponse
+
 import datetime
 
 @require_http_methods(['GET'])
@@ -37,6 +39,46 @@ def index(request):
     }
 
     return render(request, 'User/Reservation/fields.html', context)
+
+@require_http_methods(['GET'])
+def create_index_admin(request):
+    context = {
+        'headquarters': HeadquarterService().getHeadquarters(),
+        'titulo': 'titulo'
+    }
+    return render(request, 'Admin/courtReservation/reserve_court.html', context)
+
+@require_http_methods(['POST'])
+def refresh_events(request):
+
+    headquarter_id = int(request.POST['headquarter_id'])
+
+    environment_service = EnvironmentService()
+
+    if (headquarter_id != -1):
+
+        print("Filter by Headquarter_ID")
+
+        filters={
+            'headquarter_id' : headquarter_id
+        }
+
+        fields = environment_service.filter(filters)
+
+    context = {
+        'fields': fields
+    }
+
+    return JsonResponse({'events':[
+        {
+            'title': 'Dinner',
+            'start': '2016-04-26T20:00:00'
+        },
+        {
+            'title': 'Birthday Party',
+            'start': '2016-05-13T07:00:00'
+        },
+    ]})
 
 @require_http_methods(['POST'])
 @csrf_protect

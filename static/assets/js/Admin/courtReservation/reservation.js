@@ -5,14 +5,16 @@
 //
 
 $(document).ready(function() {
-    refreshEvents();
+    today();
 });
 
 function displayEvents(eventsData){
 
+    console.log("full calendar");
     $('#calendar').fullCalendar({
         defaultDate: '2016-05-01',
         editable: true,
+        defaultView: 'agendaWeek',
         eventLimit: true, // allow "more" link when too many events
         customButtons: {
             prev: {
@@ -48,7 +50,8 @@ function displayEvents(eventsData){
 
 
 $('#headquarter_id').change(function() {
-    refreshEvents();
+    var date = getCalendarDate();
+    refreshEvents(date.get ,date.getMonth(), date.getFullYear());
 });
 
 
@@ -63,7 +66,6 @@ function refreshEvents(){
         url : "create/refresh_events", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
-
         // handle a successful response
         success : function(data) {
 //            console.log("AJAX REQUEST", data.events);
@@ -86,6 +88,39 @@ function nextMonth() {
     console.log('NEXT Month')
     refreshEvents();
 };
+
+function today() {
+    $('#calendar').fullCalendar( 'prev' );
+    var date = new Date();
+    console.log(date);
+    refreshEvents(date.getMonth(), date.getFullYear());
+};
+
+function prevMonth() {
+    console.log('PREV Month')
+    refreshEvents();
+//    $('#calendar').fullCalendar( 'prev' );
+    var date = getCalendarDate();
+    date.setMonth(date.getMonth() - 1);
+    refreshEvents(date.getMonth(), date.getFullYear());
+};
+  
+  function nextMonth() {
+    console.log('NEXT Month')
+    refreshEvents();
+//    $('#calendar').fullCalendar( 'next' );
+    var date = getCalendarDate();
+    date.setMonth(date.getMonth() + 1);
+    refreshEvents(date.getMonth(), date.getFullYear());
+};
+  
+function getCalendarDate(){
+    var date = $('#calendar').fullCalendar('getDate').toDate();
+    date.setDate(date.getDate() + 1);
+    console.log(date);
+
+    return date;
+}
 
 function getCookie(name) {
     var cookieValue = null;
