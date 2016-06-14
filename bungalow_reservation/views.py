@@ -44,6 +44,7 @@ def index(request):
 
     return render(request, 'Admin/bungalowReservation/index.html', context)
 
+
 @require_http_methods(['POST'])
 def refresh_table(request):
     # bungalow_type_id = int(request.POST['bungalow_type_id'])
@@ -75,6 +76,7 @@ def refresh_table(request):
 
     return render_to_response('Admin/bungalowReservation/index_table.html', context)
 
+
 @require_http_methods(['POST'])
 def check_in(request):
     reservation_id = request.POST['reservation_id']
@@ -85,6 +87,7 @@ def check_in(request):
     BungalowReservationService.update(reservation_id, insert_data)
 
     return HttpResponse("Success")
+
 
 @require_http_methods(['POST'])
 def check_out(request):
@@ -99,8 +102,6 @@ def check_out(request):
     return HttpResponse("Success")
 
 
-
-
 @require_http_methods(['GET'])
 def create_index_admin(request):
     context = {
@@ -109,6 +110,7 @@ def create_index_admin(request):
         'titulo': 'titulo'
     }
     return render(request, 'Admin/bungalowReservation/reserve_bungalow.html', context)
+
 
 @require_http_methods(['POST'])
 def refresh_events(request):
@@ -125,17 +127,15 @@ def refresh_events(request):
         print("Filter by Headquarter_ID")
         bungalows = bungalows.filter(headquarter_id=headquarter_id)
 
-    return JsonResponse({'events':[
-        {
-            'title': 'Dinner',
-            'start': '2016-05-12T20:00:00'
-        },
-        {
-            'title': 'Birthday Party',
-            'start': '2016-05-13T07:00:00'
-        },
-    ]})
+    availableDays = BungalowReservationService.getMonthAvailableDays(1, 6, 2016)
+    response = {
+        'events': availableDays,
+        'month': datetime.date(2016, 6, 1).isoformat()
+    }
+    return JsonResponse(response)
+
     # return render_to_response('Admin/bungalow/index_table.html', context)
+
 
 @require_http_methods(['POST'])
 def create_bungalow_reservation(request):
@@ -162,7 +162,6 @@ def create_bungalow_reservation(request):
 
     BungalowReservationService.create(insert_data)
     return HttpResponseRedirect(reverse('bungalowReservation:index'))
-
 
 
 @require_http_methods(['GET'])

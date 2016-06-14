@@ -5,13 +5,14 @@
 //
 
 $(document).ready(function() {
-    refreshEvents();
+    today();
 });
 
-function displayEvents(eventsData){
+function displayEvents(data){
+    console.log('displayEvents');
 
     $('#calendar').fullCalendar({
-        defaultDate: '2016-05-01',
+        defaultDate: data.month,
         editable: true,
         eventLimit: true, // allow "more" link when too many events
         customButtons: {
@@ -19,15 +20,12 @@ function displayEvents(eventsData){
                 icon: 'left-single-arrow',
                 click: function() {
                     prevMonth();
-                    $('#calendar').fullCalendar( 'prev' )
-//                        alert('clicked the custom button!');
                 }
             },
             next: {
                 icon: 'right-single-arrow',
                 click: function() {
                     nextMonth();
-                    $('#calendar').fullCalendar( 'next' )
                 }
             }
         },
@@ -42,23 +40,28 @@ function displayEvents(eventsData){
 //            // change the day's background color just for fun
 //            $(this).css('background-color', 'red');
 //        },
-        events: eventsData,
+        events: data.events,
     });
 }
 
 
 $('#headquarter_id').change(function() {
-    refreshEvents();
+    var date = getCalendarDate();
+    refreshEvents(date.getMonth(), date.getFullYear());
 });
 
 $('#bungalow_type_id').change(function() {
-    refreshEvents();
+    var date = getCalendarDate();
+    refreshEvents(date.getMonth(), date.getFullYear());
 });
 
 
-function refreshEvents(){
+function refreshEvents(month,year){
 
+    console.log(month,year)
     var requestData = {
+        'month' : month,
+        'year' : year,
         'headquarter_id' : $('#headquarter_id option:selected').val(),
         'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
@@ -71,8 +74,8 @@ function refreshEvents(){
 
         // handle a successful response
         success : function(data) {
-//            console.log("AJAX REQUEST", data.events);
-            displayEvents(data.events);
+            console.log("AJAX REQUEST", data.events);
+            displayEvents(data);
         },
 
         // handle a non-successful response
@@ -82,15 +85,34 @@ function refreshEvents(){
     });
 }
 
+function today() {
+//    $('#calendar').fullCalendar( 'prev' );
+    var date = new Date();
+    console.log(date);
+    refreshEvents(date.getMonth(), date.getFullYear());
+};
+
 function prevMonth() {
-    console.log('PREV Month')
-    refreshEvents();
+//    $('#calendar').fullCalendar( 'prev' );
+    var date = getCalendarDate();
+    date.setMonth(date.getMonth() - 1);
+    refreshEvents(date.getMonth(), date.getFullYear());
 };
 
 function nextMonth() {
-    console.log('NEXT Month')
-    refreshEvents();
+//    $('#calendar').fullCalendar( 'next' );
+    var date = getCalendarDate();
+    date.setMonth(date.getMonth() + 1);
+    refreshEvents(date.getMonth(), date.getFullYear());
 };
+
+function getCalendarDate(){
+    var date = $('#calendar').fullCalendar('getDate').toDate();
+    date.setDate(date.getDate() + 1);
+    console.log(date);
+
+    return date;
+}
 
 function getCookie(name) {
     var cookieValue = null;
