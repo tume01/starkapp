@@ -55,9 +55,13 @@ $('#headquarter_id').change(function() {
 });
 
 
-function refreshEvents(){
+function refreshEvents(day,month,year){
 
+    console.log(day,month,year)
     var requestData = {
+        'dat'   : day,
+        'month' : month,
+        'year' : year,
         'headquarter_id' : $('#headquarter_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
@@ -79,35 +83,21 @@ function refreshEvents(){
     });
 }
 
-function prevMonth() {
-    console.log('PREV Month')
-    refreshEvents();
-};
-
-function nextMonth() {
-    console.log('NEXT Month')
-    refreshEvents();
-};
-
 function today() {
-    $('#calendar').fullCalendar( 'prev' );
+
     var date = new Date();
     console.log(date);
     refreshEvents(date.getMonth(), date.getFullYear());
 };
 
 function prevMonth() {
-    console.log('PREV Month')
-    refreshEvents();
 //    $('#calendar').fullCalendar( 'prev' );
     var date = getCalendarDate();
     date.setMonth(date.getMonth() - 1);
     refreshEvents(date.getMonth(), date.getFullYear());
 };
   
-  function nextMonth() {
-    console.log('NEXT Month')
-    refreshEvents();
+function nextMonth() {
 //    $('#calendar').fullCalendar( 'next' );
     var date = getCalendarDate();
     date.setMonth(date.getMonth() + 1);
