@@ -51,9 +51,13 @@ def create_index_admin(request):
 @require_http_methods(['POST'])
 def refresh_events(request):
 
+    month = int(request.POST['month'])
+    year = int(request.POST['year'])
+
     headquarter_id = int(request.POST['headquarter_id'])
 
     environment_service = EnvironmentService()
+    
 
     if (headquarter_id != -1):
 
@@ -65,6 +69,9 @@ def refresh_events(request):
 
         fields = environment_service.filter(filters)
 
+    #availableDays = FieldReservationService.getDayAvailableHours(1, month, year)
+
+
     context = {
         'fields': fields
     }
@@ -72,11 +79,11 @@ def refresh_events(request):
     return JsonResponse({'events':[
         {
             'title': 'Dinner',
-            'start': '2016-04-26T20:00:00'
+            'start': '2016-06-14T20:00:00'
         },
         {
             'title': 'Birthday Party',
-            'start': '2016-05-13T07:00:00'
+            'start': '2016-06-15T07:00:00'
         },
     ]})
 

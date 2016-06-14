@@ -114,6 +114,7 @@ def create_index_admin(request):
 
 @require_http_methods(['POST'])
 def refresh_events(request):
+    
     month = int(request.POST['month'])
     year = int(request.POST['year'])
     bungalow_type_id = int(request.POST['bungalow_type_id'])

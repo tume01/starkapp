@@ -5,53 +5,44 @@
 //
 
 $(document).ready(function() {
-    today();
-});
 
-function displayEvents(eventsData){
-
-    console.log("full calendar");
     $('#calendar').fullCalendar({
-        defaultDate: '2016-05-01',
+        defaultDate: new Date(),
         editable: true,
-        defaultView: 'agendaWeek',
+        defaultView : 'agendaWeek',
         eventLimit: true, // allow "more" link when too many events
         customButtons: {
             prev: {
                 icon: 'left-single-arrow',
                 click: function() {
                     prevMonth();
-                    $('#calendar').fullCalendar( 'prev' )
-//                        alert('clicked the custom button!');
                 }
             },
             next: {
                 icon: 'right-single-arrow',
                 click: function() {
                     nextMonth();
-                    $('#calendar').fullCalendar( 'next' )
                 }
             }
-        },
-//        dayClick: function(date, jsEvent, view) {
-//
-//            alert('Clicked on: ' + date.format());
-//
-//            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-//
-//            alert('Current view: ' + view.name);
-//
-//            // change the day's background color just for fun
-//            $(this).css('background-color', 'red');
-//        },
-        events: eventsData,
+        }
     });
+
+    today();
+});
+
+
+function displayEvents(data){
+    console.log('displayEvents',data.month);
+
+    $("#calendar").fullCalendar('removeEvents');
+    $("#calendar").fullCalendar('addEventSource', data.events);
+    $('#calendar').fullCalendar( 'gotoDate', data.month )
 }
 
 
 $('#headquarter_id').change(function() {
     var date = getCalendarDate();
-    refreshEvents(date.get ,date.getMonth(), date.getFullYear());
+    refreshEvents(date.getDate() ,date.getMonth(), date.getFullYear());
 });
 
 
@@ -60,7 +51,7 @@ function refreshEvents(day,month,year){
     console.log(day,month,year)
     var requestData = {
         'dat'   : day,
-        'month' : month,
+        'month' : month + 1,
         'year' : year,
         'headquarter_id' : $('#headquarter_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
@@ -73,7 +64,7 @@ function refreshEvents(day,month,year){
         // handle a successful response
         success : function(data) {
 //            console.log("AJAX REQUEST", data.events);
-            displayEvents(data.events);
+            displayEvents(data);
         },
 
         // handle a non-successful response
@@ -86,22 +77,19 @@ function refreshEvents(day,month,year){
 function today() {
 
     var date = new Date();
-    console.log(date);
-    refreshEvents(date.getMonth(), date.getFullYear());
+    refreshEvents(date.getDate(),date.getMonth(), date.getFullYear());
 };
 
 function prevMonth() {
-//    $('#calendar').fullCalendar( 'prev' );
     var date = getCalendarDate();
-    date.setMonth(date.getMonth() - 1);
-    refreshEvents(date.getMonth(), date.getFullYear());
+    date.setMonth(date.getDate() - 7);
+    refreshEvents(date.getDate(),date.getMonth(), date.getFullYear());
 };
   
 function nextMonth() {
-//    $('#calendar').fullCalendar( 'next' );
     var date = getCalendarDate();
-    date.setMonth(date.getMonth() + 1);
-    refreshEvents(date.getMonth(), date.getFullYear());
+    date.setMonth(date.getDate() + 7);
+    refreshEvents(date.getDate(),date.getMonth(), date.getFullYear());
 };
   
 function getCalendarDate(){
