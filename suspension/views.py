@@ -191,11 +191,17 @@ def suspension_filter(request):
 
     filter_suspensions['membership_id'] = membershipId
 
-    if iniDate != '':
-        filter_suspensions["initialDate"] = datetime.strptime(iniDate, '%m/%d/%Y')
+    if iniDate != '' and endDate != '':
+        filter_suspensions["initialDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
+        filter_suspensions["initialDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
+        filter_suspensions["finalDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
+        filter_suspensions["finalDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
+    else:
+        if iniDate != '':
+            filter_suspensions["initialDate"] = datetime.strptime(iniDate, '%m/%d/%Y')
 
-    if endDate != '':
-        filter_suspensions["finalDate"] = datetime.strptime(endDate, '%m/%d/%Y')
+        if endDate != '':
+            filter_suspensions["finalDate"] = datetime.strptime(endDate, '%m/%d/%Y')
 
     if suspStatus != '3':
         filter_suspensions["status"] = suspStatus
