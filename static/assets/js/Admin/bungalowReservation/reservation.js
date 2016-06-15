@@ -1,54 +1,48 @@
 $(document).ready(function() {
-
     $('#calendar').fullCalendar({
         defaultDate: new Date(),
         editable: true,
+        defaultView: "agendaWeek",
         eventLimit: true, // allow "more" link when too many events
-        customButtons: {
-            prev: {
-                icon: 'left-single-arrow',
-                click: function() {
-                    prevMonth();
-                }
-            },
-            next: {
-                icon: 'right-single-arrow',
-                click: function() {
-                    nextMonth();
-                }
-            }
+        events: function(start, end, timezone, callback){
+            var date = new Date(start);
+            console.log(start.toDate().toUTCString());
+            console.log("Current: ", date, date.getMonth(), date.getFullYear());
+            date.setDate(date.getDate() + 1);
+            console.log("New: ", date, date.getMonth(), date.getFullYear());
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            refreshEvents(start, end, callback);
         }
     });
-
-    today();
 });
+
+function toFirstDay(date){
+}
 
 function displayEvents(data){
     console.log('displayEvents',data.month);
-
-    $("#calendar").fullCalendar('removeEvents');
-    $("#calendar").fullCalendar('addEventSource', data.events);
-    $('#calendar').fullCalendar( 'gotoDate', data.month )
 }
 
 
 $('#headquarter_id').change(function() {
-    var date = getCalendarDate();
-    refreshEvents(date.getMonth(), date.getFullYear());
+    $('#calendar').fullCalendar( 'refetchEvents' );
+//    var date = getCalendarDate();
+//    refreshEvents(date.getMonth(), date.getFullYear());
 });
 
 $('#bungalow_type_id').change(function() {
-    var date = getCalendarDate();
-    refreshEvents(date.getMonth(), date.getFullYear());
+    $('#calendar').fullCalendar( 'refetchEvents' );
+//    var date = getCalendarDate();
+//    refreshEvents(date.getMonth(), date.getFullYear());
 });
 
 
-function refreshEvents(month,year){
-
-    console.log(month,year)
+function refreshEvents(start, end, callback){
+    console.log("Refresh Events");
     var requestData = {
-        'month' : month + 1,
-        'year' : year,
+        'start' : start/1000,
+        'end' : end/1000,
         'headquarter_id' : $('#headquarter_id option:selected').val(),
         'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
@@ -63,6 +57,8 @@ function refreshEvents(month,year){
         success : function(data) {
             console.log("AJAX REQUEST", data.events);
             displayEvents(data);
+            callback(data.events);
+
         },
 
         // handle a non-successful response
@@ -78,28 +74,6 @@ function today() {
     console.log(date);
     refreshEvents(date.getMonth(), date.getFullYear());
 };
-
-function prevMonth() {
-//    $('#calendar').fullCalendar( 'prev' );
-    var date = getCalendarDate();
-    date.setMonth(date.getMonth() - 1);
-    refreshEvents(date.getMonth(), date.getFullYear());
-};
-
-function nextMonth() {
-//    $('#calendar').fullCalendar( 'next' );
-    var date = getCalendarDate();
-    date.setMonth(date.getMonth() + 1);
-    refreshEvents(date.getMonth(), date.getFullYear());
-};
-
-function getCalendarDate(){
-    var date = $('#calendar').fullCalendar('getDate').toDate();
-    date.setDate(date.getDate() + 1);
-
-    return date;
-}
-
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {

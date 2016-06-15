@@ -1,5 +1,7 @@
 from repositories.BungalowReservationRepository import BungalowReservationRepository
-import datetime, calendar, time
+import datetime, calendar
+from services.BungalowService import BungalowService
+
 
 class BungalowReservationService(object):
     """docstring for BungalowsService"""
@@ -27,21 +29,33 @@ class BungalowReservationService(object):
         return cls._repository.find(id)
 
     @classmethod
-    def getMonthAvailableDays(cls, bungalowTypeId, month, year):
-
-        num_days = calendar.monthrange(year, month)[1]
-        days = [datetime.date(year, month, day) for day in range(1, num_days + 1)]
+    def getMonthAvailableDays(cls, bungalowHeadquarterId, bungalowTypeId, start, end):
+        startDate = datetime.datetime.fromtimestamp(start)
+        endDate = datetime.datetime.fromtimestamp(end)
+        num_days = (endDate - startDate).days
+        days = [startDate + datetime.timedelta(days=delta) for delta in range(0, num_days)]
 
         reservations = cls.getReservations();
-        reservations = reservations.filter()
-        for day in days:
-            pass
 
+        # reservations = reservations \
+        #     .filter(bungalow_type_id=bungalowTypeId) \
+        #     .filter(bungalow_headquarter_id=bungalowHeadquarterId)
+        #
+        # reservationList = []
+        # for r in reservations:
+        #     reservationList += r.getReservationDays()
+        #
+        # bungalows = BungalowService.getBungalows().count()
+        #
+        # for day in days:
+        #     flag = False
+        #     for r in reservations:
+        #         pass
 
         availableDays = [{
-            'title': 'Disponible',
-            'start': day.isoformat()
-        } for day in days]
+                             'title': 'Disponible',
+                             'start': day.isoformat()
+                         } for day in days]
 
         print(availableDays)
 
