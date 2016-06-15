@@ -349,17 +349,99 @@ def insert_reservation(request):
 
     else:
         return HttpResponse("create")
+
+
+#Este recibe como parametro un dict.
+def getRefreshReservationFilters(request):
+
+    filters = {}
+
+    if ('env_name' in request) or ('headquarter_id' in request) or ('environment_id' in request):
+
+        environment_service = EnvironmentService()
+        data = {}
+
+        if 'env_name' in request:
+            data['name__icontains'] = request['env_name']
+
+        if 'headquarter_id' in request:
+            data['headquarter_id'] = request['headquarter_id']
+
+        if 'environment_id' in request:
+            data['id'] = request['environment_id']
+
+        qry_env = environment_service.filter(data).values_list('id', flat=True)
+
+        if qry_env:
+            filters['environment_id__in'] = list(qry_env)
+        else:
+            filters['environment_id'] = -1  #With this value, the filter will return no values.
+
+
+    if 'month' in request:
+        start_date = datetime.strptime(request['start_date'], "%m/%d/%Y")
+
+    if 'end_date'   in request:
+        end_date   = datetime.strptime(request['end_date'], "%m/%d/%Y")
+
+    filters['start_date__lte'] = end_date
+    filters['end_date__gte']   = start_date
+
+    return filters
+
+
+@require_http_methods(['GET'])
+def refresh_reservation(request):
+
+    environment_service = EnvironmentService()
+    headquarter_service = HeadquarterService()
+
+    headquarters = headquarter_service.getHeadquarters()
+
+    filters      = getReservationFilters(request)
+    reservations = environment_service.filterReservations(filters)
+
+    paginator = Paginator(reservations, 10)
+
+    page = request.GET.get('page')
+
+    try:
+        reservations = paginator.page(page)
+
+    except PageNotAnInteger:
+        reservations = paginator.page(1)
+
+    except EmptyPage:
+        reservations = paginator.page(paginator.num_pages)
+
+    context = {
+        'reservations' : reservations,
+        'headquarters' : headquarters,
+        'titulo'       : 'titulo'
+    }
+
+    return render(request, 'Admin/Environments/List_Reservations.html', context)
+
+
+def getMonthAvailableDays(bungalowTypeId, month, year):
+
+    num_days = calendar.monthrange(year, month)[1]
+    days = [datetime.date(year, month, day) for day in range(1, num_days + 1)]
+
+    reservations = cls.getReservations();
+    reservations = reservations.filter()
+    for day in days:
+        pass
+
+
+    availableDays = [{
+        'title': 'Disponible',
+        'start': day.isoformat()
+    } for day in days]
+
+    print(availableDays)
+
+    return availableDays
+
+
       
-
-        """
-        headquarter_service = HeadquarterService()
-
-        headquarters = headquarter_service.getHeadquarters()
-
-        context = {
-            'headquarters' : headquarters,
-            'titulo'       : 'titulo'
-        }
-
-        return render(request, 'Admin/Environments/Create_Reservation.html', context)
-        """

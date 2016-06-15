@@ -1,0 +1,124 @@
+{% extends 'Admin/Layouts/base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: ambientes reservados
+{% endblock %}
+
+{% block head_dahsboard %}
+Reserva de Ambientes
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de ambientes reservados
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Reserva de Ambientes
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de ambientes reservados
+{% endblock %}
+
+
+{% block links %}
+<link rel="stylesheet" href='{% static "assets/css/fullcalendar/fullcalendar.min.css" %}'>
+<link rel="stylesheet" href='{% static "assets/css/fullcalendar/fullcalendar.print.css" %}' media='print'>
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+
+    <!-- Table Header (Filters) -->
+    <div class="block">
+        <div class="block-content">
+                <div class="row">
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="headquarter_id">Seleccione una sede</label>
+                            <select class="form-control" id="headquarter_id" size="1">
+                                {% for headquarter in headquarters %}
+                                <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group" id="select_env">
+                            {% include 'Admin/Environments/Create_Reservation_Envs.html' %}
+                        </div>
+                    </div>
+                </div>
+                <div id='calendar'></div>
+
+                
+
+        </div>
+    </div>
+    <!-- END Table Header (Filters) -->
+
+    <!-- Simple Table Full -->
+    <div class="block block-bordered">
+        <div class="block-content" id="form-content">
+        </div>
+    </div>
+    <!-- END Simple Table Full -->
+</div>
+<!-- END Page Content -->
+
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}
+
+{% block scripts %}
+
+<!-- Page Plugins -->
+                <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+                <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+
+                <script>
+                    jQuery(function () {
+                // Init page helpers (Slick Slider plugin)
+                App.initHelpers('slick');
+            });
+        </script> 
+
+        <!-- Page JS Plugins -->
+        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+
+        <script src='{% static "assets/js/fullcalendar/moment.min.js" %}'></script>
+        <script src='{% static "assets/js/fullcalendar/fullcalendar.min.js" %}'></script>
+        <script src='{% static "assets/js/fullcalendar/es.js" %}'></script>
+                
+        
+        <script>
+            jQuery(function () {
+                // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
+                App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
+            });
+        </script>
+        
+        <script src='{% static "assets/js/tablas.js" %}'></script>
+        <script src='{% static "assets/js/Admin/Environment/create_reservation_ajax.js" %}'></script>
+
+
+{% endblock %}
