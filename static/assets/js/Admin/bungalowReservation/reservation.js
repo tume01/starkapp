@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('#calendar').fullCalendar({
         defaultDate: new Date(),
         editable: true,
-        defaultView: "agendaWeek",
+        defaultView: "month",
         eventLimit: true, // allow "more" link when too many events
         events: function(start, end, timezone, callback){
             var date = new Date(start);
@@ -17,26 +17,13 @@ $(document).ready(function() {
     });
 });
 
-function toFirstDay(date){
-}
-
-function displayEvents(data){
-    console.log('displayEvents',data.month);
-}
-
-
 $('#headquarter_id').change(function() {
     $('#calendar').fullCalendar( 'refetchEvents' );
-//    var date = getCalendarDate();
-//    refreshEvents(date.getMonth(), date.getFullYear());
 });
 
 $('#bungalow_type_id').change(function() {
     $('#calendar').fullCalendar( 'refetchEvents' );
-//    var date = getCalendarDate();
-//    refreshEvents(date.getMonth(), date.getFullYear());
 });
-
 
 function refreshEvents(start, end, callback){
     console.log("Refresh Events");
@@ -56,24 +43,15 @@ function refreshEvents(start, end, callback){
         // handle a successful response
         success : function(data) {
             console.log("AJAX REQUEST", data.events);
-            displayEvents(data);
             callback(data.events);
 
         },
-
-        // handle a non-successful response
         error : function(xhr,errmsg,err) {
             console.log("ERROR"); // another sanity check
         }
     });
 }
 
-function today() {
-//    $('#calendar').fullCalendar( 'prev' );
-    var date = new Date();
-    console.log(date);
-    refreshEvents(date.getMonth(), date.getFullYear());
-};
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie != '') {
