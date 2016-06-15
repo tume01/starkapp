@@ -339,9 +339,13 @@ def membership_edit_index(request):
 
     membership_service = MembershipService()
 
-    membershipId = request.POST['id']
+    memberId = request.POST['id']
 
-    membership = membership_service.getMembership(membershipId)
+    member_service = MembersService()
+
+    member = member_service.getMember(memberId)
+
+    membership = member.membership
 
     membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
 
