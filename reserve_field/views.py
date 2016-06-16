@@ -46,44 +46,53 @@ def create_index_admin(request):
         'headquarters': HeadquarterService().getHeadquarters(),
         'titulo': 'titulo'
     }
+
     return render(request, 'Admin/courtReservation/reserve_court.html', context)
 
 @require_http_methods(['POST'])
 def refresh_events(request):
 
-    month = int(request.POST['month'])
-    year = int(request.POST['year'])
+    month = int(request.POST['start'])
+    year = int(request.POST['end'])
 
     headquarter_id = int(request.POST['headquarter_id'])
 
+    court_type_id  = int(request.POST['court_type_id'])
+
+    environment_type = 1 #default for courts
+
     environment_service = EnvironmentService()
     
+    courts = environment_service.getEnvironment()
+
+    courts = courts.filter(environment_type_id=environment_type)
 
     if (headquarter_id != -1):
 
         print("Filter by Headquarter_ID")
+        courts = courts.filter(headquarter_id=headquarter_id)
 
-        filters={
-            'headquarter_id' : headquarter_id
-        }
+    if (court_type_id != -1):
 
-        fields = environment_service.filter(filters)
+        print("Filter by court_type_id")
+        courts = courts.filter(court_type=court_type_id)
+
 
     #availableDays = FieldReservationService.getDayAvailableHours(1, month, year)
 
 
     context = {
-        'fields': fields
+        'courts': courts
     }
 
     return JsonResponse({'events':[
         {
             'title': 'Dinner',
-            'start': '2016-06-14T20:00:00'
+            'start': '2016-06-14T22:00:00'
         },
         {
             'title': 'Birthday Party',
-            'start': '2016-06-15T07:00:00'
+            'start': '2016-06-15T22:00:00'
         },
     ]})
 

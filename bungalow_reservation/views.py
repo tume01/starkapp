@@ -114,9 +114,10 @@ def create_index_admin(request):
 
 @require_http_methods(['POST'])
 def refresh_events(request):
-    
-    month = int(request.POST['month'])
-    year = int(request.POST['year'])
+
+    start = int(request.POST['start'])
+    end = int(request.POST['end'])
+
     bungalow_type_id = int(request.POST['bungalow_type_id'])
     headquarter_id = int(request.POST['headquarter_id'])
 
@@ -130,10 +131,9 @@ def refresh_events(request):
         print("Filter by Headquarter_ID")
         bungalows = bungalows.filter(headquarter_id=headquarter_id)
 
-    availableDays = BungalowReservationService.getMonthAvailableDays(1, month, year)
+    availableDays = BungalowReservationService.getMonthAvailableDays(headquarter_id, bungalow_type_id, start, end)
     response = {
-        'events': availableDays,
-        'month': datetime.date(year, month, 1).isoformat()
+        'events': availableDays
     }
     return JsonResponse(response)
 

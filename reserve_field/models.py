@@ -1,11 +1,17 @@
 from django.db import models
+from headquarters.models import Headquarters
+from users.models import User
 
 # Create your models here.
 class FieldReservation(models.Model):
 
+    headquarter          = models.ForeignKey(Headquarters, on_delete=models.CASCADE)
+
     court_name              = models.TextField(max_length=100)
     court_headquarter_name  = models.TextField(max_length=100)
+    court_type              = models.IntegerField()
 
+    member_id               = models.ForeignKey(User,on_delete=models.CASCADE)
     member_membership_name  = models.TextField(max_length=200)
     member_name= models.TextField(max_length=200)
     member_paternalLastName = models.TextField(max_length=200)

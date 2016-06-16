@@ -1,59 +1,38 @@
-// Submit post on submit
-// $('#filters-form').on('submit', function(event){
-//     submitFilters();
-// });
-//
-
 $(document).ready(function() {
-
     $('#calendar').fullCalendar({
         defaultDate: new Date(),
         editable: true,
-        defaultView : 'agendaWeek',
+        allDayDefault: false,
+        defaultView: "agendaWeek",
         eventLimit: true, // allow "more" link when too many events
-        customButtons: {
-            prev: {
-                icon: 'left-single-arrow',
-                click: function() {
-                    prevMonth();
-                }
-            },
-            next: {
-                icon: 'right-single-arrow',
-                click: function() {
-                    nextMonth();
-                }
-            }
+        events: function(start, end, timezone, callback){
+            var date = new Date(start);
+            console.log(start.toDate().toUTCString());
+            console.log("Current: ", date, date.getMonth(), date.getFullYear());
+            date.setDate(date.getDate() + 1);
+            console.log("New: ", date, date.getMonth(), date.getFullYear());
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            refreshEvents(start, end, callback);
         }
     });
-
-    today();
 });
-
-
-function displayEvents(data){
-    console.log('displayEvents',data.month);
-
-    $("#calendar").fullCalendar('removeEvents');
-    $("#calendar").fullCalendar('addEventSource', data.events);
-    $('#calendar').fullCalendar( 'gotoDate', data.month )
-}
-
 
 $('#headquarter_id').change(function() {
-    var date = getCalendarDate();
-    refreshEvents(date.getDate() ,date.getMonth(), date.getFullYear());
+    $('#calendar').fullCalendar( 'refetchEvents' );
 });
 
+$('#court_type_id').change(function() {
+    $('#calendar').fullCalendar( 'refetchEvents' );
+});
 
-function refreshEvents(day,month,year){
-
-    console.log(day,month,year)
+function refreshEvents(start, end, callback){
+    console.log("Refresh Events");
     var requestData = {
-        'dat'   : day,
-        'month' : month + 1,
-        'year' : year,
+        'start' : start/1000,
+        'end' : end/1000,
         'headquarter_id' : $('#headquarter_id option:selected').val(),
+        'court_type_id' : $('#court_type_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
@@ -61,43 +40,17 @@ function refreshEvents(day,month,year){
         url : "create/refresh_events", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
+
         // handle a successful response
         success : function(data) {
-//            console.log("AJAX REQUEST", data.events);
-            displayEvents(data);
-        },
+            console.log("AJAX REQUEST", data.events);
+            callback(data.events);
 
-        // handle a non-successful response
+        },
         error : function(xhr,errmsg,err) {
             console.log("ERROR"); // another sanity check
         }
     });
-}
-
-function today() {
-
-    var date = new Date();
-    refreshEvents(date.getDate(),date.getMonth(), date.getFullYear());
-};
-
-function prevMonth() {
-    var date = getCalendarDate();
-    date.setMonth(date.getDate() - 7);
-    refreshEvents(date.getDate(),date.getMonth(), date.getFullYear());
-};
-  
-function nextMonth() {
-    var date = getCalendarDate();
-    date.setMonth(date.getDate() + 7);
-    refreshEvents(date.getDate(),date.getMonth(), date.getFullYear());
-};
-  
-function getCalendarDate(){
-    var date = $('#calendar').fullCalendar('getDate').toDate();
-    date.setDate(date.getDate() + 1);
-    console.log(date);
-
-    return date;
 }
 
 function getCookie(name) {
