@@ -103,7 +103,7 @@ def check_out(request):
 
 
 @require_http_methods(['GET'])
-def create_index_admin(request):
+def create_index(request):
     context = {
         'headquarters': HeadquarterService().getHeadquarters(),
         'bungalowTypes': BungalowTypeService().getBungalowTypes(),
@@ -113,21 +113,11 @@ def create_index_admin(request):
 
 
 @require_http_methods(['POST'])
-def refresh_events(request):
+def create_refresh_events(request):
     start = int(request.POST['start'])
     end = int(request.POST['end'])
     bungalow_type_id = int(request.POST['bungalow_type_id'])
     headquarter_id = int(request.POST['headquarter_id'])
-
-    bungalows = BungalowService.getBungalows()
-
-    if (bungalow_type_id != -1):
-        print("Filter by Type_ID")
-        bungalows = bungalows.filter(bungalow_type_id=bungalow_type_id)
-
-    if (headquarter_id != -1):
-        print("Filter by Headquarter_ID")
-        bungalows = bungalows.filter(headquarter_id=headquarter_id)
 
     availableDays = BungalowReservationService.getMonthAvailableDays(headquarter_id, bungalow_type_id, start, end)
     response = {
@@ -135,11 +125,32 @@ def refresh_events(request):
     }
     return JsonResponse(response)
 
-    # return render_to_response('Admin/bungalow/index_table.html', context)
+
+@require_http_methods(['GET'])
+def create_reserve_index(request):
+
+    bungalow_type_id = request.GET.get('bungalow_type_id')
+    headquarter_id = request.GET.get('headquarter_id')
+    date = datetime.datetime.fromtimestamp(request.GET.get('date'))
+
+    reservation = BungalowReservation()
+    # reservation.
+    # context = {
+    #     'bungalow_type_id': paginated_reservations,
+    #     'headquarter': BungalowTypeService.getBungalowTypes(),
+    #     'headquarters': HeadquarterService().getHeadquarters(),
+    #     'status_choices': BungalowReservation.STATUS_CHOICES,
+    #     'titulo': 'titulo'
+    # }
+
+    # return render(request, 'Admin/bungalowReservation/index.html', context)
+
+
+    pass
 
 
 @require_http_methods(['POST'])
-def create_bungalow_reservation(request):
+def create_reserve(request):
     insert_data = {}
 
     bungalow_id = request.POST['bungalow_id']
@@ -162,7 +173,7 @@ def create_bungalow_reservation(request):
     insert_data["maternalLastName"] = member.maternalLastName
 
     BungalowReservationService.create(insert_data)
-    return HttpResponseRedirect(reverse('bungalowReservation:index'))
+    return HttpResponseRedirect(reverse('bungalowReservation:create_index'))
 
 
 @require_http_methods(['GET'])

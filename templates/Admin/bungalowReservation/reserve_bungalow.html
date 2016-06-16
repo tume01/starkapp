@@ -39,6 +39,7 @@ Lista de reservas
             <div class="form-group">
                 <label class="col-sm-12 control-label">Seleccione un tipo</label>
                 <select class="form-control" id="bungalow_type_id" size="1">
+                    <option value="-1">Todos</option>
                     {% for bungalowType in bungalowTypes %}
                     <option value="{{bungalowType.id}}">{{bungalowType.name}}</option>
                     {% endfor %}
@@ -50,7 +51,6 @@ Lista de reservas
             <div class="form-group">
                 <label class="col-xs-12 control-label">Seleccione una sede</label>
                 <select class="form-control" id="headquarter_id" size="1">
-                    <option value="-1">Todas</option>
                     {% for headquarter in headquarters %}
                     <option value="{{headquarter.id}}">{{headquarter.name}}</option>
                     {% endfor %}

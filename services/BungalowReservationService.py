@@ -32,31 +32,39 @@ class BungalowReservationService(object):
     def getMonthAvailableDays(cls, bungalowHeadquarterId, bungalowTypeId, start, end):
         startDate = datetime.datetime.fromtimestamp(start)
         endDate = datetime.datetime.fromtimestamp(end)
-        num_days = (endDate - startDate).days
+        num_days = (endDate - startDate).days + 1
         days = [startDate + datetime.timedelta(days=delta) for delta in range(0, num_days)]
 
-        reservations = cls.getReservations();
+        reservations = cls.getReservations()
+        reservations = reservations.filter(departure_date__gte=startDate, arrival_date__lte=endDate)
+        bungalows = BungalowService.getBungalows()
 
-        reservations = reservations \
-            .filter(departure_date__gte=startDate, arrival_date__lte=endDate)
-            # .filter(bungalow_type_id=bungalowTypeId) \
-            # .filter(bungalow_headquarter_id=bungalowHeadquarterId)
-        #
+        if (bungalowTypeId != -1):
+            print("Filter by Type_ID")
+            reservations = reservations.filter(bungalow_type_id=bungalowTypeId)
+            bungalows = bungalows.filter(bungalow_type__id=bungalowTypeId)
 
-        # Get bungalow count
-        bungalowsTotal = BungalowService.getBungalows().count()
+        if (bungalowHeadquarterId != -1):
+            print("Filter by Headquarter_ID")
+            reservations = reservations.filter(bungalow_headquarter_id=bungalowHeadquarterId)
+            bungalows = bungalows.filter(headquarter__id=bungalowHeadquarterId)
 
         # Get list of reserved bungalows (day, #reservations)
+        # print([(r.bungalow_id,r.bungalow_headquarter.id) for r in reservations])
+
         reservationList = []
         for r in reservations:
             reservationList += r.getReservationDays()
         ocurrences = collections.Counter(reservationList)
 
-        days = [(day, bungalowsTotal - ocurrences[int(day.strftime('%Y%m%d'))]) for day in days]
+        print(int(startDate.strftime('%Y%m%d')),int(endDate.strftime('%Y%m%d')))
+        # print(ocurrences)
+        # print([(int(day.strftime('%Y%m%d')),bungalows.count() - ocurrences[int(day.strftime('%Y%m%d'))]) for day in days])
+
+        days = [(day, bungalows.count() - ocurrences[int(day.strftime('%Y%m%d'))]) for day in days]
 
         availableDays = [{
-                             'title': str(day[1]) + ' Bungalows Disponibles' if (day[1] != 0) else "No disponible",
-                             'start': day[0].isoformat()
-                         } for day in days ]
-
+                             'title': str(day[1]) + ' Bungalows Disponibles',
+                             'start': day[0].isoformat(),
+                         } for day in days if (day[1] != 0)]
         return availableDays
