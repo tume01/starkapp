@@ -2,6 +2,7 @@ $(document).ready(function() {
     $('#calendar').fullCalendar({
         defaultDate: new Date(),
         editable: true,
+        allDayDefault: true,
         defaultView: "month",
         eventLimit: true, // allow "more" link when too many events
         events: function(start, end, timezone, callback){

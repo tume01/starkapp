@@ -15,8 +15,8 @@ class BungalowReservation(models.Model):
     bungalow_number = models.IntegerField()
     bungalow_price = models.FloatField()
     bungalow_capacity = models.IntegerField()
-    bungalow_type_id = models.IntegerField()
-    bungalow_headquarter_id = models.IntegerField()
+    bungalow_type_id = models.IntegerField(null=True)
+    bungalow_headquarter_id = models.IntegerField(null=True)
     bungalow_headquarter_name = models.CharField(max_length=250)
 
     # member = models.ForeignKey('members.Member', on_delete=models.CASCADE, null=True)

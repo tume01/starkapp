@@ -1,5 +1,5 @@
 from repositories.BungalowReservationRepository import BungalowReservationRepository
-import datetime, calendar
+import datetime, calendar, collections
 from services.BungalowService import BungalowService
 
 
@@ -37,26 +37,26 @@ class BungalowReservationService(object):
 
         reservations = cls.getReservations();
 
-        # reservations = reservations \
-        #     .filter(bungalow_type_id=bungalowTypeId) \
-        #     .filter(bungalow_headquarter_id=bungalowHeadquarterId)
+        reservations = reservations \
+            .filter(departure_date__gte=startDate, arrival_date__lte=endDate)
+            # .filter(bungalow_type_id=bungalowTypeId) \
+            # .filter(bungalow_headquarter_id=bungalowHeadquarterId)
         #
-        # reservationList = []
-        # for r in reservations:
-        #     reservationList += r.getReservationDays()
-        #
-        # bungalows = BungalowService.getBungalows().count()
-        #
-        # for day in days:
-        #     flag = False
-        #     for r in reservations:
-        #         pass
+
+        # Get bungalow count
+        bungalowsTotal = BungalowService.getBungalows().count()
+
+        # Get list of reserved bungalows (day, #reservations)
+        reservationList = []
+        for r in reservations:
+            reservationList += r.getReservationDays()
+        ocurrences = collections.Counter(reservationList)
+
+        days = [(day, bungalowsTotal - ocurrences[int(day.strftime('%Y%m%d'))]) for day in days]
 
         availableDays = [{
-                             'title': 'Disponible',
-                             'start': day.isoformat()
-                         } for day in days]
-
-        print(availableDays)
+                             'title': str(day[1]) + ' Bungalows Disponibles' if (day[1] != 0) else "No disponible",
+                             'start': day[0].isoformat()
+                         } for day in days ]
 
         return availableDays
