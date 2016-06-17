@@ -83,6 +83,7 @@ def check_in(request):
 
     insert_data = {}
     insert_data["check_in"] = datetime.datetime.now()
+    insert_data["status"] = 2
 
     BungalowReservationService.update(reservation_id, insert_data)
 
@@ -95,7 +96,31 @@ def check_out(request):
 
     insert_data = {}
     insert_data["check_out"] = datetime.datetime.now()
-    insert_data["status"] = 0
+    insert_data["status"] = 4
+
+    BungalowReservationService.update(reservation_id, insert_data)
+
+    return HttpResponse("Success")
+
+
+@require_http_methods(['POST'])
+def accept(request):
+    reservation_id = request.POST['reservation_id']
+
+    insert_data = {}
+    insert_data["status"] = 1
+
+    BungalowReservationService.update(reservation_id, insert_data)
+
+    return HttpResponse("Success")
+
+
+@require_http_methods(['POST'])
+def cancel(request):
+    reservation_id = request.POST['reservation_id']
+
+    insert_data = {}
+    insert_data["deleted_at"] = datetime.datetime.now()
 
     BungalowReservationService.update(reservation_id, insert_data)
 
@@ -110,7 +135,6 @@ def create_index(request):
         'titulo': 'titulo'
     }
     return render(request, 'Admin/bungalowReservation/reserve_bungalow.html', context)
-
 
 @require_http_methods(['POST'])
 def create_refresh_events(request):
@@ -131,22 +155,34 @@ def create_reserve_index(request):
 
     bungalow_type_id = request.GET.get('bungalow_type_id')
     headquarter_id = request.GET.get('headquarter_id')
-    date = datetime.datetime.fromtimestamp(request.GET.get('date'))
+    date = datetime.datetime.fromtimestamp(int(request.GET.get('date')))
+
+    bungalow_type = BungalowTypeService.findBungalowType(bungalow_type_id)
+    bungalowTypes = BungalowTypeService.getBungalowTypes()
+    headquarter = HeadquarterService().findHeadquarter(headquarter_id)
+    headquarters = HeadquarterService().getHeadquarters()
 
     reservation = BungalowReservation()
-    # reservation.
-    # context = {
-    #     'bungalow_type_id': paginated_reservations,
-    #     'headquarter': BungalowTypeService.getBungalowTypes(),
-    #     'headquarters': HeadquarterService().getHeadquarters(),
-    #     'status_choices': BungalowReservation.STATUS_CHOICES,
-    #     'titulo': 'titulo'
-    # }
+    reservation.bungalow_price = bungalow_type.price
+    reservation.bungalow_capacity = bungalow_type.capacity
+    reservation.bungalow_type_id = bungalow_type.id
+    reservation.bungalow_headquarter_id = headquarter.id
+    reservation.bungalow_headquarter_name = headquarter.name
 
-    # return render(request, 'Admin/bungalowReservation/index.html', context)
+    reservation.arrival_date = date
 
 
-    pass
+
+
+    context = {
+        'reservation': reservation,
+        'bungalowTypes': bungalowTypes,
+        'headquarters': headquarters,
+        'durationOptions': [1,2,3,4],
+        'titulo': 'titulo'
+    }
+
+    return render(request, 'Admin/bungalowReservation/reserve_bungalow_part2.html', context)
 
 
 @require_http_methods(['POST'])
@@ -155,9 +191,11 @@ def create_reserve(request):
 
     bungalow_id = request.POST['bungalow_id']
     member_id = request.POST['member_id']
-    insert_data["arrival_date"] = request.POST['arrival_date']
-    insert_data["departure_date"] = request.POST['departure_date']
-    insert_data["status"] = request.POST['status']
+
+    # insert_data["arrival_date"] = request.POST['arrival_date']
+    # insert_data["departure_date"] = request.POST['departure_date']
+
+    insert_data["status"] = 0
 
     bungalow = BungalowService.findBungalow(bungalow_id)
     insert_data["arrival_date"] = request.POST['arrival_date']
@@ -172,8 +210,8 @@ def create_reserve(request):
     insert_data["paternalLastName"] = member.paternalLastName
     insert_data["maternalLastName"] = member.maternalLastName
 
-    BungalowReservationService.create(insert_data)
-    return HttpResponseRedirect(reverse('bungalowReservation:create_index'))
+    # BungalowReservationService.create(insert_data)
+    return HttpResponseRedirect(reverse('bungalow:index'))
 
 
 @require_http_methods(['GET'])

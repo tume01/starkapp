@@ -57,14 +57,20 @@ class BungalowReservationService(object):
             reservationList += r.getReservationDays()
         ocurrences = collections.Counter(reservationList)
 
-        print(int(startDate.strftime('%Y%m%d')),int(endDate.strftime('%Y%m%d')))
-        # print(ocurrences)
+        print(int(startDate.strftime('%Y%m%d')), int(endDate.strftime('%Y%m%d')))
+        print(ocurrences)
+        print(days)
         # print([(int(day.strftime('%Y%m%d')),bungalows.count() - ocurrences[int(day.strftime('%Y%m%d'))]) for day in days])
 
         days = [(day, bungalows.count() - ocurrences[int(day.strftime('%Y%m%d'))]) for day in days]
 
-        availableDays = [{
-                             'title': str(day[1]) + ' Bungalows Disponibles',
-                             'start': day[0].isoformat(),
-                         } for day in days if (day[1] != 0)]
-        return availableDays
+        # Compose the url (Worst Approach EVER!)
+        url = "create/reserve/?";
+        url += "bungalow_type_id=" + str(bungalowTypeId) + "&"
+        url += "headquarter_id=" + str(bungalowHeadquarterId) + "&"
+        url += "date="
+
+        return [{'title': str(day[1]) + ' Bungalows Disponibles',
+                 'start': day[0].isoformat(),
+                 'url': url + str(int(day[0].timestamp()))
+                 } for day in days if (day[1] != 0)]

@@ -39,7 +39,6 @@ Lista de reservas
             <div class="form-group">
                 <label class="col-sm-12 control-label">Seleccione un tipo</label>
                 <select class="form-control" id="bungalow_type_id" size="1">
-                    <option value="-1">Todos</option>
                     {% for bungalowType in bungalowTypes %}
                     <option value="{{bungalowType.id}}">{{bungalowType.name}}</option>
                     {% endfor %}
