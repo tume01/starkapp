@@ -25,6 +25,11 @@ class BungalowReservation(models.Model):
     member_name = models.TextField(max_length=200)
     member_paternalLastName = models.TextField(max_length=200)
     member_maternalLastName = models.TextField(max_length=200)
+
+
+    bungalow_id = models.IntegerField(null=True)
+    member_id = models.IntegerField(null=True)
+
     # member_document_number = models.IntegerField()
     # member_phone = models.IntegerField()
     # TODO: Wait to seeder
