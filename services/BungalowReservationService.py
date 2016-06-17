@@ -79,4 +79,4 @@ class BungalowReservationService(object):
     def getReservationsByMember(cls, member_id):
         filter_data = {}
         filter_data['member_id'] = member_id
-        return cls._repository.filter(filter_data)[0]
+        return cls._repository.filter(filter_data)

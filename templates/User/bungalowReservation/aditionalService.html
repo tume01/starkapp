@@ -40,10 +40,10 @@ Servicios Adicionales
                     <div class="col-lg-3">
                         <div class="form-group">
                             <label class="col-sm-12 control-label">Bungalows</label>
-                            <select class="form-control" id="bungalow_type"  >
+                            <select class="form-control" id="bungalow"  >
                                 <option value="" ></option>
-                                {% for bt in bungalowTypes %}
-                                    <option value="{{bt.id}}" >{{bt.name}}</option>
+                                {% for r in reservations %}
+                                    <option value="{{r.bungalow_id}}" >{{r.bungalow_number}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -103,5 +103,5 @@ Servicios Adicionales
 
 
 {% block scripts %}
-    <script src='{% static "assets/js/bungalow_service.js" %}'></script>
+    <script src='{% static "assets/js/User/bungalowReservation/bungalow_reservation.js" %}'></script>
 {% endblock %}

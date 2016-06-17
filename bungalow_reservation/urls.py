@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^(?P<bungalow_reservation_id>[0-9]+)/update/post$', views.update_bungalow, name='update'),
     url(r'^(?P<bungalow_reservation_id>[0-9]+)/update$', views.update_index, name='update_index'),
     url(r'^aditional/service/bungalow', views.aditionalServiceBungalowIndex, name='aditional_service'),
+    url(r'^filter/aditional/services/(?P<id>\d+)$', views.filterAditionalServiceBungalow, name='filter_service'),
 ]

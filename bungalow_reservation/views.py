@@ -12,11 +12,13 @@ from services.BungalowTypeService import BungalowTypeService
 from services.HeadquarterService import HeadquarterService
 from services.MemberService import MembersService
 from services.BungalowService import BungalowService
+from services.Bungalow_serviceService import Bungalow_serviceService
 
 
 from bungalow_reservation.models import BungalowReservation
 import datetime
 from django.http import JsonResponse
+import json
 
 
 @require_http_methods(['GET'])
@@ -228,12 +230,31 @@ def update_bungalow(request, bungalow_id):
 
 @require_http_methods(['GET'])
 def aditionalServiceBungalowIndex(request):
-    document_number = request.user
-    member = MembersService.getMemberByUser(document_number)
-    reservationsByMember = BungalowService.getReservationsByMember(member.id)
+    members_service = MembersService()
+    bungalow_reservation_service = BungalowReservationService()
+
+    member = members_service.filter({'user_id':request.user.id}).first()
+    print("member id = ")
+    print(member.id)
+
+    reservationsByMember = bungalow_reservation_service.getReservationsByMember(member.id)
+    print("number reservations")
+    print(reservationsByMember[1])
 
     context = {
+        'reservations' : reservationsByMember,
+        'bungalow_services': Bungalow_serviceService.getBungalow_services(),
         'titulo': 'titulo'
     }
-    return render(request, 'User/bungalowReservation/aditionalService.html')
+    return render(request, 'User/bungalowReservation/aditionalService.html', context)
+
+@require_http_methods(['POST'])
+def filterAditionalServiceBungalow(request, id):
+    req = json.loads( request.body.decode('utf-8') )
+
+    bungalow = BungalowService.findBungalow(id)
+
+    print((bungalow.bungalow_type).bungalow_services)
+
+    return HttpResponse( json.dumps(req), content_type='application/json')
 
