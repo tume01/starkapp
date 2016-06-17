@@ -1,10 +1,9 @@
 $(document).ready(function() {
     $('#calendar').fullCalendar({
         defaultDate: new Date(),
-        editable: true,
-        allDayDefault: true,
-        defaultView: "month",
-        eventLimit: true, // allow "more" link when too many events
+        editable: false,
+        allDayDefault: false,
+        defaultView: "agendaWeek", // allow "more" link when too many events
         events: function(start, end, timezone, callback){
             var date = new Date(start);
             console.log(start.toDate().toUTCString());
@@ -14,6 +13,9 @@ $(document).ready(function() {
             var month = date.getMonth();
             var year = date.getFullYear();
             refreshEvents(start, end, callback);
+        },
+        eventClick: function(event) {
+
         }
     });
 });
@@ -22,7 +24,7 @@ $('#headquarter_id').change(function() {
     $('#calendar').fullCalendar( 'refetchEvents' );
 });
 
-$('#bungalow_type_id').change(function() {
+$('#court_type_id').change(function() {
     $('#calendar').fullCalendar( 'refetchEvents' );
 });
 
@@ -32,7 +34,7 @@ function refreshEvents(start, end, callback){
         'start' : start/1000,
         'end' : end/1000,
         'headquarter_id' : $('#headquarter_id option:selected').val(),
-        'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
+        'court_type_id' : $('#court_type_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
@@ -44,6 +46,7 @@ function refreshEvents(start, end, callback){
         // handle a successful response
         success : function(data) {
             console.log("AJAX REQUEST", data.events);
+            console.log(data);
             callback(data.events);
 
         },

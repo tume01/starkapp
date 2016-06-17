@@ -9,6 +9,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.EnvironmentService import EnvironmentService
+from services.EnvironmentTypeService import EnvironmentTypeService
 from services.HeadquarterService import HeadquarterService
 from django.views.decorators.http import require_http_methods
 from .forms import EnvironmentForm
@@ -18,11 +19,14 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def index(request):
 
     environment_service = EnvironmentService()
+    headquarter_service = HeadquarterService()
 
+    headquarters = headquarter_service.getHeadquarters()
     environments = environment_service.getEnvironmentByStatus()
 
     context = {
         'environments' : environments,
+        'headquarters' : headquarters,
         'titulo' : 'titulo'
     }
 
@@ -32,8 +36,16 @@ def index(request):
 def create_index(request):
 
     form = EnvironmentForm()
+
+    environment_service = EnvironmentTypeService()
+    type_environment = environment_service.getEnvironment()
+    headquarter_service = HeadquarterService()
+    headquarters = headquarter_service.getHeadquarters()
+
     context = {
         'titulo' : 'titulo',
+        'type_environment' : type_environment,
+        'headquarters' : headquarters,
         'form' : form
     }
 
@@ -43,17 +55,25 @@ def create_index(request):
 def edit_index(request, id):
 
     environment_service = EnvironmentService()
+    environment_type_service = EnvironmentTypeService()
+    headquarter_service = HeadquarterService()
 
+    headquarters = headquarter_service.getHeadquarters()
     environments = environment_service.getEnviromentById(id)
+    type_environment = environment_type_service.getEnvironment()
+
     print(id)
     #Falta validación de try except dentro de base repository
-    if (environment == None):
+    if (environments == None):
         return HttpResponseRedirect(reverse('Environments:index'))
 
-    form = EnvironmentForm(instance=provider)
+    form = EnvironmentForm(instance=environments)
     context = {
 		'id' :id,
         'form' : form,
+        'environments' : environments,
+        'type_environment' : type_environment,
+        'headquarters': headquarters,
         'titulo' : 'titulo'
     }
 
@@ -81,25 +101,21 @@ def create_environment(request):
         form = EnvironmentForm(request.POST)
         
         if form.is_valid():
-            print("no pasa")
-
-            if(environmentId == None):
-                print("pasa")
-                insert_data = {}
-                insert_data["name"] = request.POST['name']
-                insert_data["capacity"] = request.POST['capacity']
-                insert_data["status"] = request.POST['status']
-                #insert_data["headquarter"] = request.POST['headquarter']
-                insert_data["description"] = request.POST['description']
+            print("pasa")
+            insert_data = {}
+            insert_data["name"] = request.POST['name']
+            insert_data["capacity"] = request.POST['capacity']
+            insert_data["status"] = request.POST['status']
+            insert_data["environment_type_id"] = request.POST['environment_type']
+            insert_data["headquarter_id"] = request.POST['headquarter']
+            insert_data["description"] = request.POST['description']
                 
-                environment_service = EnvironmentService()
+            environment_service = EnvironmentService()
 
-                environment_service.create(insert_data)
+            environment_service.create(insert_data)
 
-                return HttpResponseRedirect(reverse('environment:index'))
-            else:
-                context = {'form' : form}
-                return render(request, 'Admin/Environments/Create_Environment.html', context)
+            return HttpResponseRedirect(reverse('environment:index'))
+
         else:
 
             errors = form.errors.as_data()
@@ -118,16 +134,17 @@ def edit_environment(request, id):
 
             #form.save()
 
-            insert_data = {}
-            insert_data["name"] = request.POST['name']
-            insert_data["capacity"] = request.POST['capacity']
-            insert_data["status"] = request.POST['status']
-            #insert_data["headquarter"] = request.POST['headquarter']
-            insert_data["description"] = request.POST['description']
+            edit_data = {}
+            edit_data["name"] = request.POST['name']
+            edit_data["capacity"] = request.POST['capacity']
+            edit_data["status"] = request.POST['status']
+            edit_data["environment_type_id"] = request.POST['environment_type']
+            edit_data["headquarter_id"] = request.POST['headquarter']
+            edit_data["description"] = request.POST['description']
 
             environment_service = EnvironmentService()
 
-            environment_service.update(id, insert_data)
+            environment_service.update(id, edit_data)
 
             return HttpResponseRedirect(reverse('environment:index'))
         else:

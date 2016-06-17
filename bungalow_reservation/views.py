@@ -15,6 +15,7 @@ from services.BungalowService import BungalowService
 
 from bungalow_reservation.models import BungalowReservation
 import datetime
+from django.http import JsonResponse
 
 
 @require_http_methods(['GET'])
@@ -103,38 +104,40 @@ def check_out(request):
 
 @require_http_methods(['GET'])
 def create_index_admin(request):
-
     context = {
-        'bungalows': BungalowService.getBungalows(),
         'headquarters': HeadquarterService().getHeadquarters(),
+        'bungalowTypes': BungalowTypeService().getBungalowTypes(),
         'titulo': 'titulo'
     }
-
     return render(request, 'Admin/bungalowReservation/reserve_bungalow.html', context)
 
 
 @require_http_methods(['POST'])
-def refresh_bungalow(request):
-    arrival_date = request.POST['arrival_date']
+def refresh_events(request):
+
+    start = int(request.POST['start'])
+    end = int(request.POST['end'])
+
+    bungalow_type_id = int(request.POST['bungalow_type_id'])
     headquarter_id = int(request.POST['headquarter_id'])
 
     bungalows = BungalowService.getBungalows()
+
+    if (bungalow_type_id != -1):
+        print("Filter by Type_ID")
+        bungalows = bungalows.filter(bungalow_type_id=bungalow_type_id)
 
     if (headquarter_id != -1):
         print("Filter by Headquarter_ID")
         bungalows = bungalows.filter(headquarter_id=headquarter_id)
 
-    if (arrival_date != ""):
-        print("Filter if available")
-        reservations_month = BungalowReservationService.getReservations()
-        reservations_month.filter()
-        # bungalows = bungalows.filter(bungalow_type_id=bungalow_type_id)
-
-    context = {
-        'bungalows': bungalows
+    availableDays = BungalowReservationService.getMonthAvailableDays(headquarter_id, bungalow_type_id, start, end)
+    response = {
+        'events': availableDays
     }
+    return JsonResponse(response)
 
-    return render_to_response('Admin/bungalowReservation/combo_bungalow.html', context)
+    # return render_to_response('Admin/bungalow/index_table.html', context)
 
 
 @require_http_methods(['POST'])

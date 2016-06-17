@@ -38,10 +38,10 @@ Lista de reservas
         <div class="col-lg-6">
             <div class="form-group">
                 <label class="col-sm-12 control-label">Seleccione un tipo</label>
-                <select class="form-control" id="bungalow_type_id" size="1">
-                    {% for bungalowType in bungalowTypes %}
-                    <option value="{{bungalowType.id}}">{{bungalowType.name}}</option>
-                    {% endfor %}
+                <select class="form-control" id="court_type_id" size="1">
+                    <option value="0">Cancha de Fútbol</option>
+                    <option value="1">Cancha de Básquet</option>
+                    <option value="2">Cancha de Voley</option>
                 </select>
             </div>
         </div>
@@ -72,5 +72,5 @@ Lista de reservas
 <script src='{% static "assets/js/fullcalendar/fullcalendar.min.js" %}'></script>
 <script src='{% static "assets/js/fullcalendar/es.js" %}'></script>
 
-<script src='{% static "assets/js/Admin/bungalowReservation/reservation.js" %}'></script>
+<script src='{% static "assets/js/Admin/courtReservation/reservation.js" %}'></script>
 {% endblock %}

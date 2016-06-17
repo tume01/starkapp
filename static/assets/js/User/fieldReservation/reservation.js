@@ -1,102 +1,91 @@
-$(document).ready(function(){
-    $('#headquarter_id').change(function() {
-        refreshField();
-    });
-    //
-    $('input[id=arrival_date]').change(function() {
-        refreshField();
-    });
+// Submit post on submit
+// $('#filters-form').on('submit', function(event){
+//     submitFilters();
+// });
+//
 
-    $('#start_hour').change(function(){
-        refreshHours();
-    });
-
-    $('#reserved_hours').change(function(){
-        refreshTime();
-    });
-
+$(document).ready(function() {
+    refreshEvents();
 });
 
-function refreshField(){
+function displayEvents(eventsData){
+
+    $('#calendar').fullCalendar({
+        defaultDate: '2016-05-01',
+        editable: true,
+        eventLimit: true, // allow "more" link when too many events
+        customButtons: {
+            prev: {
+                icon: 'left-single-arrow',
+                click: function() {
+                    prevMonth();
+                    $('#calendar').fullCalendar( 'prev' )
+//                        alert('clicked the custom button!');
+                }
+            },
+            next: {
+                icon: 'right-single-arrow',
+                click: function() {
+                    nextMonth();
+                    $('#calendar').fullCalendar( 'next' )
+                }
+            }
+        },
+//        dayClick: function(date, jsEvent, view) {
+//
+//            alert('Clicked on: ' + date.format());
+//
+//            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+//
+//            alert('Current view: ' + view.name);
+//
+//            // change the day's background color just for fun
+//            $(this).css('background-color', 'red');
+//        },
+        events: eventsData,
+    });
+}
+
+
+$('#headquarter_id').change(function() {
+    refreshEvents();
+});
+
+
+function refreshEvents(){
 
     var requestData = {
         'headquarter_id' : $('#headquarter_id option:selected').val(),
-        'arrival_date' : $('#arrival_date').val(),
-        'csrfmiddlewaretoken' : getCookie('csrftoken')
-    }
-
-    console.log(requestData);
-
-    $.ajax({
-        url : "create/refresh_field", 
-        type : "POST", 
-        data : requestData, 
-
-
-        success : function(data) {
-
-            $('#environment_id').html(data);
-            $('#stay_content').prop('disabled', true);
-            $('#start_hour').prop('disabled', true);
-            $('#environment_content').prop('disabled', true);
-        },
-
-        error : function(xhr,errmsg,err) {
-            console.log("ERROR"); 
-        }
-    });
-}
-
-function refreshHours(){
-
-    var requestData = {
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
     $.ajax({
-        url : "create/refresh_hour", 
-        type : "POST", 
-        data : requestData, 
+        url : "create/refresh_events", // the endpoint
+        type : "POST", // http method
+        data : requestData, // data sent with the post request
 
-
+        // handle a successful response
         success : function(data) {
-
-            $('#start_hour').prop('disabled', true);
+//            console.log("AJAX REQUEST", data.events);
+            displayEvents(data.events);
         },
 
-
+        // handle a non-successful response
         error : function(xhr,errmsg,err) {
-            console.log("ERROR"); 
+            console.log("ERROR"); // another sanity check
         }
     });
 }
 
-function refreshTime(){
+function prevMonth() {
+    console.log('PREV Month')
+    refreshEvents();
+};
 
-    var requestData = {
-        'start_hour' : $('#start_hour').val(),
-        'csrfmiddlewaretoken' : getCookie('csrftoken')
-    }
-
-    $.ajax({
-        url : "create/refresh_max_time", 
-        type : "POST", 
-        data : requestData, 
-
-
-        success : function(data) {
-
-
-            $('#start_hour').html(data);
-        },
-
-
-        error : function(xhr,errmsg,err) {
-            console.log("ERROR"); 
-        }
-    });
-}
-
+function nextMonth() {
+    console.log('NEXT Month')
+    refreshEvents();
+};
 
 function getCookie(name) {
     var cookieValue = null;
