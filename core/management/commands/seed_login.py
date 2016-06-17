@@ -1923,6 +1923,7 @@ class Command(BaseCommand):
         user15 = User.objects.create_user(username='empresa', password='1111', first_name='Empresa')
 
         usuarios = Group.objects.create(name='usuarios')
+        usuarios_suspendidos = Group.objects.create(name='usuarios_suspendidos')
         admin = Group.objects.create(name='admins')
         bungalows = Group.objects.create(name='bungalows')
         proveedores = Group.objects.create(name='proveedores')
@@ -1937,6 +1938,7 @@ class Command(BaseCommand):
         promocion = Group.objects.create(name='promocion')
         multa = Group.objects.create(name='multa')
         empresa = Group.objects.create(name='empresas')
+
 
         admin.user_set.add(user2)
         bungalows.user_set.add(user3)
@@ -1956,6 +1958,7 @@ class Command(BaseCommand):
         content_type = ContentType.objects.create(app_label='dummy', model='unused')
 
         permission_usuario = Permission.objects.create(codename='permission_usuario', name='Can Do User Things', content_type=content_type)
+        permission_usuario_suspendido = Permission.objects.create(codename='permission_usuario_suspendido', name='Cant Do User Things', content_type=content_type)
         permission_admin = Permission.objects.create(codename='permission_admin', name='Can Do Admin Things', content_type=content_type)
         permission_bungalow = Permission.objects.create(codename='permission_bungalow', name='Can Do Bungalow Things', content_type=content_type)
         permission_proveedor = Permission.objects.create(codename='permission_proveedor', name='Can Do Provider Things', content_type=content_type)
@@ -1971,7 +1974,9 @@ class Command(BaseCommand):
         permission_multa = Permission.objects.create(codename='permission_multa', name='Can Do Fine Things', content_type=content_type)
         permission_empresa = Permission.objects.create(codename='permission_empresa', name='Can Do Business Things', content_type=content_type)
 
-        usuarios.permissions.add(permission_usuario)  
+
+        usuarios.permissions.add(permission_usuario)
+        usuarios_suspendidos.permissions.add(permission_usuario_suspendido)
         bungalows.permissions.add(permission_bungalow)
         proveedores.permissions.add(permission_proveedor)
         cursos.permissions.add(permission_curso)
