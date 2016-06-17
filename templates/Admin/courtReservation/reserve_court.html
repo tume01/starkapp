@@ -2,11 +2,11 @@
 {% load staticfiles %}
 
 {% block head_title %}
-Admin: reserva de bungalows
+Admin: reserva de Canchas
 {% endblock %}
 
 {% block head_dahsboard %}
-Reserva de Bungalows
+Reserva de Canchas
 {% endblock %}
 
 {% block function_head_dahsboard %}
@@ -14,7 +14,7 @@ Lista de reservas activas
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Reserva de Bungalows
+Reserva de Canchas
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
@@ -50,7 +50,6 @@ Lista de reservas
             <div class="form-group">
                 <label class="col-xs-12 control-label">Seleccione una sede</label>
                 <select class="form-control" id="headquarter_id" size="1">
-                    <option value="-1">Todas</option>
                     {% for headquarter in headquarters %}
                     <option value="{{headquarter.id}}">{{headquarter.name}}</option>
                     {% endfor %}

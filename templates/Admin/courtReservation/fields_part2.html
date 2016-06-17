@@ -2,11 +2,11 @@
 {% load staticfiles %}
 
 {% block head_title %}
-Usuarios: Cancha
+Usuarios: Canchas
 {% endblock %}
 
 {% block head_dahsboard %}
-Canchar
+Canchas
 {% endblock %}
 
 {% block function_head_dahsboard %}
@@ -34,7 +34,7 @@ Rerserva de canchas
             </ul>
         </div>
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='#' method="post">
+            <form class="form-horizontal push-10-t push-10" action='{% url "reserve_field:insert" %}' method="post">
                 {% csrf_token %}
 
                 <div class="row">
@@ -86,8 +86,8 @@ Rerserva de canchas
 
                         </div>
                         <div class="col-xs-2">
-                            <button class="btn btn-danger" type=""><i class="fa fa-remove push-5-r"></i> Cancelar
-                            </button>
+                            <a class="btn btn-danger" href="{% url 'reserve_field:index_admin' %} "type=""><i class="fa fa-remove push-5-r"></i> Cancelar
+                            </a>
                         </div>
                     </div>
                 </div>
