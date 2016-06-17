@@ -11,7 +11,7 @@ class EnvironmentType(models.Model):
 class Environment(models.Model):
 
     status_choices = ((0,'Inactivo'),(1,'Activo'),)
-    environment_type = models.ForeignKey(EnvironmentType,on_delete=models.CASCADE,default=None)
+    environment_type = models.ForeignKey(EnvironmentType,on_delete=models.CASCADE,default=None, null=True)
     name = models.TextField(max_length=100)
     description = models.CharField(null=False, blank=False,max_length=200)
     capacity = models.BigIntegerField(null=False, blank=False)

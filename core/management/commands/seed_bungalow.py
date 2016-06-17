@@ -51,14 +51,6 @@ def insertBungalow():
     bt3 = BungalowType(name= 'Large', price= 250, capacity= 8)
     bt3.save()
     bt3.bungalow_set.create(number= 301, status= 1, headquarter=getRandomHeadquarter() )
-    bt3.bungalow_set.create(number= 302, status= 1, headquarter=getRandomHeadquarter() )
-    bt3.bungalow_set.create(number= 303, status= 1, headquarter=getRandomHeadquarter() )
-    bt3.bungalow_set.create(number= 304, status= 1, headquarter=getRandomHeadquarter() )
-    bt3.bungalow_set.create(number= 305, status= 1, headquarter=getRandomHeadquarter() )
-    bt3.bungalow_set.create(number= 306, status= 1, headquarter=getRandomHeadquarter() )
-    bt3.bungalow_set.create(number= 307, status= 1, headquarter=getRandomHeadquarter() )
-    bt3.bungalow_set.create(number= 308, status= 1, headquarter=getRandomHeadquarter() )
-    bt3.bungalow_set.create(number= 303, status= 1, headquarter=getRandomHeadquarter() )
 
     print('    Bungalows have been inserted')
 

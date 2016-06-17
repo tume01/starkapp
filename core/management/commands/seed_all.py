@@ -12,10 +12,12 @@ class Command(BaseCommand):
 
         print('    Deleting...')
         cleanHeadquarter()
+        cleanEnvironments()
         cleanBungalow()
         cleanBungalowReservation()
 
         print('\n    Inserting...')
         insertHeadquarter()
+        insertEnvironments()
         insertBungalow()
         insertBungalowReservation()
