@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'User/Layouts/base.html' %}
 
 {% block head_title %}
 Usuario: miembros
@@ -28,17 +28,13 @@ Lista de afiliados
 <div class="content">
   <!-- Simple Table Full -->
     <div class="block block-bordered">
-            <form id="myFormEdit" action="{% url 'affiliate:admin_edit_index' %} " method="post">
+            <form id="myFormEdit" action="{% url 'affiliate:edit_index' %} " method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid2" name="id"/>
             </form>
-            <form id="myFormDelete" action="{% url 'affiliate:admin_delete' %}" method="post">
+            <form id="myFormDelete" action="{% url 'affiliate:delete' %}" method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid1" name="id"/>
-            </form>
-            <form id="myFormMove" action="{% url 'affiliate:admin_move' %} " method="post">
-                {% csrf_token %}  
-                <input type="hidden" id="hid3" name="id"/>
             </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
@@ -70,14 +66,13 @@ Lista de afiliados
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-default editar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Editar Afiliado"><i class="fa fa-user"></i></button>
                                     <button class="btn btn-xs btn-default eliminar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Eliminar Afiliado"><i class="fa fa-user-times"></i></button>
-                                    <button class="btn btn-xs btn-default trasladar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Trasladar Membresía"><i class="fa fa-user-times"></i></button>
                                 </div>
                             </td>    
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-                <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:admin_create_index" %}' method="post" >
+                <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:create_index" %}' method="post" >
                 {% csrf_token %}
                 <div class="row">
                     <div class="form-group" style="display: none;">
@@ -118,12 +113,7 @@ Lista de afiliados
             document.forms["myFormDelete"].submit();    
 
         });    
-        $('.trasladar').click(function (e) {
-            var id = $(this).attr("data-id")          
-            $('#hid3').val(id)
-            document.forms["myFormMove"].submit();    
-
-        });  
+        
     });
     </script>
     <!-- HASTA AQUÍ -->       

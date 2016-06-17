@@ -145,9 +145,15 @@ def suspension_index(request):
 
     membership_service = MembershipService()
 
+    member_service = MembersService()
+
     suspension_service = SuspensionService()
 
-    membershipId = request.POST['id']
+    memberId = request.POST['id']
+
+    member = member_service.getMember(memberId)
+
+    membershipId = member.membership.id
 
     filter_data = {}
 
@@ -163,6 +169,7 @@ def suspension_index(request):
         'id': membershipId,
         'suspensions': suspensions,
         'membership' : membership,
+        'member' : member,
         'show' : show
     }
 
@@ -177,7 +184,15 @@ def suspension_filter(request):
 
     membership_service = MembershipService()
 
-    membershipId = request.POST['membership_id']
+    member_service = MembersService()
+
+    suspension_service = SuspensionService()
+
+    memberId = request.POST['member_id']
+
+    member = member_service.getMember(memberId)
+
+    membershipId = member.membership.id
 
     membership = membership_service.getMembership(membershipId)
 
@@ -219,6 +234,7 @@ def suspension_filter(request):
     context = {
         'id': membershipId,
         'suspensions': suspensions,
+        'member' : member,
         'membership': membership,
         'show' : show
     }
