@@ -191,29 +191,29 @@ def create_reserve(request):
     print("POST CREATE RESERVE")
     insert_data = {}
     print(request.POST)
-    bungalow_id = request.POST['bungalow_id']
+    bungalow_type_id = request.POST['bungalow_type_id']
     # member_id = request.POST['member_id']
 
     # insert_data["arrival_date"] = request.POST['arrival_date']
     # insert_data["departure_date"] = request.POST['departure_date']
-
-    insert_data["status"] = 0
-
-    bungalow = BungalowService.findBungalow(bungalow_id)
-    insert_data["arrival_date"] = request.POST['arrival_date']
-    insert_data["bungalow_number"] = bungalow.number
-    insert_data["bungalow_price"] = bungalow.bungalow.bungalow_type.price
-    insert_data["bungalow_capacity"] = bungalow.bungalow_type.capacity
-    insert_data["bungalow_headquarter_name"] = bungalow.headquarter.name
-
-    member = MembersService().getMember(member_id)
-    insert_data["membership_name"] = member.membership.membership_type.name
-    insert_data["name"] = member.name
-    insert_data["paternalLastName"] = member.paternalLastName
-    insert_data["maternalLastName"] = member.maternalLastName
+    #
+    # insert_data["status"] = 0
+    #
+    # bungalow = BungalowService.findBungalow(bungalow_id)
+    # insert_data["arrival_date"] = request.POST['arrival_date']
+    # insert_data["bungalow_number"] = bungalow.number
+    # insert_data["bungalow_price"] = bungalow.bungalow.bungalow_type.price
+    # insert_data["bungalow_capacity"] = bungalow.bungalow_type.capacity
+    # insert_data["bungalow_headquarter_name"] = bungalow.headquarter.name
+    #
+    # member = MembersService().getMember(member_id)
+    # insert_data["membership_name"] = member.membership.membership_type.name
+    # insert_data["name"] = member.name
+    # insert_data["paternalLastName"] = member.paternalLastName
+    # insert_data["maternalLastName"] = member.maternalLastName
 
     # BungalowReservationService.create(insert_data)
-    return HttpResponseRedirect(reverse('bungalow:index'))
+    return HttpResponseRedirect(reverse('bungalowReservation:index'))
 
 
 @require_http_methods(['GET'])
