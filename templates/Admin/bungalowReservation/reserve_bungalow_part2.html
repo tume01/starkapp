@@ -34,7 +34,7 @@ Creación de bungalows
             </ul>
         </div>
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='{% url "bungalowReservation:create_reserve" %}' method="post">
+            <form class="form-horizontal push-10-t push-10" action='{% url "bungalowReservation:create_reserve" %}' method="POST">
                 {% csrf_token %}
 
                 <div class="row">
@@ -69,7 +69,7 @@ Creación de bungalows
                         <div class="form-group">
                             <label>Fecha de Entrada</label>
                             <div class="input-group">
-                                <input class="form-control" name="arrival_date" disabled value={{reservation.arrival_date}} type="text">
+                                <input class="form-control" name="arrival_date" value={{reservation.arrival_date}} type="text">
                             </div>
                         </div>
                     </div>

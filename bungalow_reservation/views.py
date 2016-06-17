@@ -185,12 +185,14 @@ def create_reserve_index(request):
     return render(request, 'Admin/bungalowReservation/reserve_bungalow_part2.html', context)
 
 
-@require_http_methods(['POST'])
 def create_reserve(request):
-    insert_data = {}
 
+
+    print("POST CREATE RESERVE")
+    insert_data = {}
+    print(request.POST)
     bungalow_id = request.POST['bungalow_id']
-    member_id = request.POST['member_id']
+    # member_id = request.POST['member_id']
 
     # insert_data["arrival_date"] = request.POST['arrival_date']
     # insert_data["departure_date"] = request.POST['departure_date']

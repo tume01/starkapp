@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^create$', views.create_index, name='create_index'),
     url(r'^create/refresh_events$', views.create_refresh_events, name='create_refresh_events'),
     url(r'^create/reserve', views.create_reserve_index, name='create_reserve_index'),
-    url(r'^create/reserve/post', views.create_reserve, name='create_reserve'),
+    url(r'^create/post/reserve$', views.create_reserve, name='create_reserve'),
     url(r'^(?P<bungalow_reservation_id>[0-9]+)/update/post$', views.update_bungalow, name='update'),
     url(r'^(?P<bungalow_reservation_id>[0-9]+)/update$', views.update_index, name='update_index'),
 ]
