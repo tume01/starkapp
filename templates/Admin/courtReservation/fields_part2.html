@@ -1,0 +1,104 @@
+{% extends 'Admin/Layouts/base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Usuarios: Cancha
+{% endblock %}
+
+{% block head_dahsboard %}
+Canchar
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Reserva de Cancha
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Canchas
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Rerserva de canchas
+{% endblock %}
+
+{% block content %}
+<div class="content content-narrow">
+    <!-- Mega Form -->
+    <div class="block block-bordered">
+        <div class="block-header bg-gray-lighter">
+            <ul class="block-options">
+                <li>
+                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo">
+                        <i class="si si-refresh"></i></button>
+                </li>
+            </ul>
+        </div>
+        <div class="block-content">
+            <form class="form-horizontal push-10-t push-10" action='#' method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label>Sede</label>
+                            <select class="form-control" disabled name="headquarter_id" size="1">
+                                <option  selected='selected' value="{{headquarter.name}}"> {{headquarter.name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-lg-offset-1">
+                        <div class="form-group">
+                            <label>Tipo de bungalow</label>
+                            <select class="form-control" disabled name="bungalow_type_id" size="1">
+                                {% if court_type == 0 %}
+                                <option selected='selected' value="{{ court_type }}">Cancha de Fútbol</option>
+                                {% endif %}
+                                {% if court_type == 1 %}
+                                <option selected='selected' value="{{ court_type }}">Cancha de Básquet</option>
+                                {% endif %}
+                                {% if court_type == 2 %}
+                                <option selected='selected' value="{{ court_type }}">Cancha de Voley</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label>Seleccione la cantidad de horas</label>
+                            <select class="form-control" id="bungalow_type_id">
+                                {% for val in max_hours %}
+                                <option value="{{val}}">{{val}} Horas</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-xs-2 col-xs-offset-4">
+                            <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Reservar
+                            </button>
+
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-danger" type=""><i class="fa fa-remove push-5-r"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- END Mega Form -->
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+{% endblock %}

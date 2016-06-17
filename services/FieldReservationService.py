@@ -22,29 +22,35 @@ class FieldReservationService(object):
     def filter(self,filters):
         return self.__field_reservation_repository.filter(filters)
 
-    @classmethod
-    def getDayAvailableHours(cls, courts,courtHeadquarterId, courtTypeId, start,end):
+    def getDayAvailableHours(self, courts,courtHeadquarterId, courtTypeId, start, end):
         startDate = datetime.datetime.fromtimestamp(start)
         endDate = datetime.datetime.fromtimestamp(end)
         num_days = (endDate - startDate).days + 1
-        days = [startDate + datetime.timedelta(days=delta) for delta in range(0,num_days)]
 
-        reservations = this.getReservations()
+        hours = [6,7,8,9,10,11,12,13,14,15,16,17,18]
+
+        days = []
+        for delta in range(0,num_days):
+            for hour in hours:
+                days.append(startDate + datetime.timedelta(days=delta) + datetime.timedelta(hours=hour))
+
+        reservations = self.getReservations()
 
         reservations = reservations.filter(reservation_date=startDate)
 
-        if (headquarter_id != -1):
+        if (courtHeadquarterId != -1):
 
             print("Filter by Headquarter_ID")
             reservations = reservations.filter(headquarter_id=courtHeadquarterId)
 
-        if (court_type_id != -1):
+        if (courtTypeId != -1):
 
             print("Filter by court_type_id")
             reservations = reservations.filter(court_type=courtTypeId)
 
 
         reservations_list= []
+
         for r in reservations:
             hours = r.reservation_duration
             while hours < 0:
@@ -53,14 +59,21 @@ class FieldReservationService(object):
 
         ocurrences = collections.Counter(reservations_list)
 
+
         date = [(day,courts.count() - ocurrences[int(day.strftime("%Y%m%d%H%M%S"))]) for day in days]
 
-        availableDays = [{
-            'title': str(day[1]) + 'Canchas disponibles',
+        url = "create/reserve/?";
+        url += "court_type=" + str(courtTypeId) + "&"
+        url += "headquarter=" + str(courtHeadquarterId) + "&"
+
+        availableHours = [{
+            'title': 'Canchas disponibles' if(day[1] == 0) else "No disponible",
             'start': day[0].strftime("%Y-%m-%dT%H:%M:%S"),
-        } for day in date if (day[1] != 0)]
+            'end': (day[0]+datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%S"),
+            'url': url,
+        } for day in date if (day[1] == 0)]
 
-        print(availableDays)
+        print(availableHours)
 
-        return availableDays
+        return availableHours
 

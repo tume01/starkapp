@@ -1,10 +1,9 @@
 $(document).ready(function() {
     $('#calendar').fullCalendar({
         defaultDate: new Date(),
-        editable: true,
+        editable: false,
         allDayDefault: false,
-        defaultView: "agendaWeek",
-        eventLimit: true, // allow "more" link when too many events
+        defaultView: "agendaWeek", // allow "more" link when too many events
         events: function(start, end, timezone, callback){
             var date = new Date(start);
             console.log(start.toDate().toUTCString());
@@ -14,6 +13,9 @@ $(document).ready(function() {
             var month = date.getMonth();
             var year = date.getFullYear();
             refreshEvents(start, end, callback);
+        },
+        eventClick: function(event) {
+
         }
     });
 });
@@ -44,6 +46,7 @@ function refreshEvents(start, end, callback){
         // handle a successful response
         success : function(data) {
             console.log("AJAX REQUEST", data.events);
+            console.log(data);
             callback(data.events);
 
         },
