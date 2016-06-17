@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from . import views
 
-app_name = 'bungalowReservation'
+app_name = 'bungalowReservations'
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^create/post/reserve$', views.create_reserve, name='create_reserve'),
     url(r'^(?P<bungalow_reservation_id>[0-9]+)/update/post$', views.update_bungalow, name='update'),
     url(r'^(?P<bungalow_reservation_id>[0-9]+)/update$', views.update_index, name='update_index'),
+    #url(r'^aditional/service/bungalow', views.aditionalServiceBungalowIndex, name='aditional_service'),
 ]

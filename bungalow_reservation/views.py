@@ -224,3 +224,8 @@ def update_index(request, bungalow_id):
 @require_http_methods(['POST'])
 def update_bungalow(request, bungalow_id):
     pass
+
+@require_http_methods(['GET'])
+def aditionalServiceBungalowIndex(request):
+
+    return render(request, 'User/bungalowReservation/aditionalServiceBungalowIndex.html')
