@@ -23,14 +23,14 @@ def cleanBungalowReservation():
 
 def insertBungalowReservation():
     br1 = BungalowReservation()
-    br1.arrival_date = datetime.date.today()
-    br1.departure_date = datetime.date.today() + datetime.timedelta(days=7)
+    br1.arrival_date = datetime.date.today() + datetime.timedelta(days=-10)
+    br1.departure_date = datetime.date.today() + datetime.timedelta(days=-1)
     asignRandomBungalow(br1)
     br1.save()
 
     br1 = BungalowReservation()
-    br1.arrival_date = datetime.date.today()
-    br1.departure_date = datetime.date.today() + datetime.timedelta(days=7)
+    br1.arrival_date = datetime.date.today() + datetime.timedelta(days=25)
+    br1.departure_date = datetime.date.today() + datetime.timedelta(days=31)
     asignRandomBungalow(br1)
     br1.save()
 
@@ -46,14 +46,13 @@ def insertBungalowReservation():
 import random
 from bungalow.models import Bungalow
 
-
 def asignRandomBungalow(br1):
     bungalows = Bungalow.objects.all()
     bungalow = random.choice(bungalows)
 
     br1.bungalow_number = bungalow.number
+    br1.bungalow_type_id = bungalow.bungalow_type.id
     br1.bungalow_price = bungalow.bungalow_type.price
     br1.bungalow_capacity = bungalow.bungalow_type.capacity
     br1.bungalow_headquarter_name = bungalow.headquarter.name
-
-    return 1
+    br1.bungalow_headquarter_id = bungalow.headquarter.id

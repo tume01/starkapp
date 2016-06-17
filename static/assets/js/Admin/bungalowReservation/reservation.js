@@ -1,198 +1,68 @@
-// Submit post on submit
-// $('#filters-form').on('submit', function(event){
-//     submitFilters();
-// });
-//
-$('#headquarter_id_1').change(function() {
-    refreshBungalow1();
-});
-//
-$('input[id=arrival_date]').change(function() {
-    refreshBungalow1();
+$(document).ready(function() {
+    $('#calendar').fullCalendar({
+        defaultDate: new Date(),
+        editable: true,
+        allDayDefault: true,
+        defaultView: "month",
+        eventLimit: true, // allow "more" link when too many events
+        events: function(start, end, timezone, callback){
+            var startDate = new Date(start);
+            var endDate = new Date(end);
+            endDate.setDate(endDate.getDate() - 1);
+            var currentDate = new Date()
+            if (startDate < currentDate) startDate = currentDate
+//            Debido al TimeZone
+            startDate.setHours(startDate.getHours() - 5);
+
+            refreshEvents(startDate, endDate, callback);
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+//            TODO: Reserve a Bungalow with current filters
+            var href2 = '{% url "bungalowReservation:index" %}'
+            console.log(href2)
+            console.log(calEvent)
+//            location.href = '{% url "bungalowReservation:index" %}';
+        }
+    });
 });
 
-function refreshBungalow1(){
+function createReservation(){
 
+}
+
+$('#headquarter_id').change(function() {
+    $('#calendar').fullCalendar( 'refetchEvents' );
+});
+
+$('#bungalow_type_id').change(function() {
+    $('#calendar').fullCalendar( 'refetchEvents' );
+});
+
+function refreshEvents(start, end, callback){
+    console.log("Refresh Events");
     var requestData = {
-        'headquarter_id' : $('#headquarter_id_1 option:selected').val(),
-        'arrival_date' : $('#arrival_date').val(),
+        'start' : Math.floor(start.getTime()/1000),
+        'end' : Math.floor(end.getTime()/1000),
+        'headquarter_id' : $('#headquarter_id option:selected').val(),
+        'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
-    console.log("AJAX REQUEST", requestData)
     $.ajax({
-        url : "create/refresh_bungalow", // the endpoint
+        url : "create/refresh_events", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 
         // handle a successful response
         success : function(data) {
-
-    console.log("AJAX REQUEST", requestData)
-            $('#bungalow_1_content').html(data);
-            $('#stay_days_1').prop('disabled', true);
-            $('#reserve_1').prop('disabled', true);
+            console.log("AJAX REQUEST", data.events);
+            callback(data.events);
         },
-
-        // handle a non-successful response
         error : function(xhr,errmsg,err) {
             console.log("ERROR"); // another sanity check
         }
     });
 }
-
-function refreshStay1(requestData){
-    $.ajax({
-        url : "./post", // the endpoint
-        type : "POST", // http method
-        data : requestData, // data sent with the post request
-
-        // handle a successful response
-        success : function(data) {
-            $('#stay1-content').html(data);
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            console.log("ERROR"); // another sanity check
-        }
-    });
-}
-
-function pickHeadquarter2(){
-//    Refresh Bungalow
-    refreshBungalow2();
-
-}
-
-function refreshBungalow2(){
-
-}
-
-function submitFilters() {
-    // event.preventDefault();
-
-    var requestData = getFilters();
-    requestData.csrfmiddlewaretoken = getCookie('csrftoken');
-
-    reloadTable(requestData);
-};
-
-function prevPage() {
-    console.log('PREV Page')
-    event.preventDefault();
-
-    var requestData = getFilters();
-    requestData.page = $('#page').text() - 1;
-    requestData.csrfmiddlewaretoken = getCookie('csrftoken');
-
-    reloadTable(requestData);
-};
-
-function nextPage() {
-    console.log('NEXT Page')
-    event.preventDefault();
-
-    var requestData = getFilters();
-    requestData.page = parseInt($('#page').text(),10) + 1;
-    requestData.csrfmiddlewaretoken = getCookie('csrftoken');
-
-    reloadTable(requestData);
-};
-
-function getFilters() {
-    var filter = {
-//        'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
-        'headquarter_id' : $('#headquarter_id option:selected').val(),
-        'status' : $('#status option:selected').val(),
-    }
-    return filter;
-};
-
-function reloadTable(requestData){
-    $.ajax({
-        url : "post", // the endpoint
-        type : "POST", // http method
-        data : requestData, // data sent with the post request
-
-        // handle a successful response
-        success : function(data) {
-            $('#table-content').html(data);
-
-            // Prevent Default Current Page
-            $( "#current-page" ).click(function(event) {
-                console.log('CURRENT')
-            });
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log("ERROR"); // another sanity check
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-}
-
-function check_in() {
-    console.log($('#reservation_id').text())
-    console.log("CHECK IN")
-
-    $.ajax({
-        url : "check_in", // the endpoint
-        type : "POST", // http method
-        data : {
-            'reservation_id' : $('#reservation_id').text(),
-            'csrfmiddlewaretoken' :  getCookie('csrftoken')
-        }, // data sent with the post request
-
-        // handle a successful response
-        success : function(data) {
-            // $('#table-content').html(data);
-            console.log("SUCCESS"); // another sanity check
-            location.reload();
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log("ERROR"); // another sanity check
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-};
-
-function check_out() {
-    console.log($('#reservation_id').text())
-    console.log("CHECK OUT")
-
-    $.ajax({
-        url : "check_out", // the endpoint
-        type : "POST", // http method
-        data : {
-            'reservation_id' : $('#reservation_id').text(),
-            'csrfmiddlewaretoken' :  getCookie('csrftoken')
-        }, // data sent with the post request
-
-        // handle a successful response
-        success : function(data) {
-            // $('#table-content').html(data);
-            console.log("SUCCESS"); // another sanity check
-            location.reload();
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log("ERROR"); // another sanity check
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-};
-
 
 function getCookie(name) {
     var cookieValue = null;
