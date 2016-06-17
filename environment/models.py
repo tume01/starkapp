@@ -19,7 +19,6 @@ class Environment(models.Model):
     capacity = models.BigIntegerField(null=False, blank=False)
     status = models.IntegerField(choices=status_choices,default=1) #Binario por estado 0->Inactivo 1->Activo  
     court_type  = models.IntegerField(choices=court_choices,default=1)
-    
     headquarter = models.ForeignKey(Headquarters, on_delete=models.CASCADE)
 
 
