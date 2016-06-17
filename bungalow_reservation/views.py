@@ -227,5 +227,11 @@ def update_bungalow(request, bungalow_id):
 
 @require_http_methods(['GET'])
 def aditionalServiceBungalowIndex(request):
+    print(request.user)
 
-    return render(request, 'User/bungalowReservation/aditionalServiceBungalowIndex.html')
+    context = {
+        'bungalows' : BungalowService.getBungalows(),
+        'titulo': 'titulo'
+    }
+    return render(request, 'User/bungalowReservation/aditionalService.html')
+
