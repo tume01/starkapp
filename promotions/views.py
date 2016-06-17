@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.PromotionsService import PromotionsService
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import PromotionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required

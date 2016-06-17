@@ -9,7 +9,7 @@ from services.AffiliateService import AffiliateService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import  AffiliateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required

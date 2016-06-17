@@ -15,7 +15,7 @@ from services.MemberService import MembersService
 from django.contrib.auth.models import User, Group
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import MembershipTypeForm
 from .forms import MembershipForm
 from members import forms as mForms

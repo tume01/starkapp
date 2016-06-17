@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from services.HeadquarterService import HeadquarterService
 from services.UbigeoService import UbigeoService
 
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
