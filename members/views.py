@@ -202,16 +202,16 @@ def member_filter(request):
     filter_member['state'] = 1
 
     if paternalLastName != '':
-        filter_member['paternalLastName'] = paternalLastName
+        filter_member['paternalLastName__icontains'] = paternalLastName
 
     if maternalLastName != '':
-        filter_member['maternalLastName'] = maternalLastName
+        filter_member['maternalLastName__icontains'] = maternalLastName
 
     if document != '':
-        filter_member['document_number'] = document
+        filter_member['document_number__contains'] = document
 
     if name != '':
-        filter_member['name'] = name
+        filter_member['name__icontains'] = name
 
     if identity_document_type != 'Todos':
         filter_member['identity_document_type'] = identity_document_type
