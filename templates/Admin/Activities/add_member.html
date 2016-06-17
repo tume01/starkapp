@@ -51,7 +51,7 @@ Miembros
                                 <label for="activity_type">Miembros</label>
                                 <select class="form-control" id="member" name="member">
                                     {% for member in members%}
-                                        <option value="{{member.id}}">{{member.name}}</option>
+                                        <option value="{{member.id}}">{{member.name}} {{member.paternalLastName}} {{member.maternalLastName}} - {{member.document_number}}</option>
                                     {% endfor%}
                                 </select>
                             </div>
