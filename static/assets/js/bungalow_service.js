@@ -86,6 +86,10 @@ $('#CancelSaveServices').click(function(){
     window.location = '/bungalows';
 });
 
+$('#openmodal').click(function(){
+    $('#myModal').modal('show');
+});
+
 
 /*CODE FOR AJAX***************************************************/
 function getCookie(c_name){
