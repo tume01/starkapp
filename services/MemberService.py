@@ -26,7 +26,7 @@ class MembersService(object):
 
     def getMemberByUser(self, user):
         filter_data = {}
-        filter_data['user'] = user
+        filter_data['document_number'] = user
         return self.__member_repository.filter(filter_data)[0]
 
 

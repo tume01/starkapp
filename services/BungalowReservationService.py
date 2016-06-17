@@ -74,3 +74,9 @@ class BungalowReservationService(object):
                  'start': day[0].isoformat(),
                  'url': url + str(int(day[0].timestamp()))
                  } for day in days if (day[1] != 0)]
+
+    @classmethod
+    def getReservationsByMember(cls, member_id):
+        filter_data = {}
+        filter_data['member_id'] = member_id
+        return cls._repository.filter(filter_data)[0]

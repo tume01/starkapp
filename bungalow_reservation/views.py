@@ -13,6 +13,7 @@ from services.HeadquarterService import HeadquarterService
 from services.MemberService import MembersService
 from services.BungalowService import BungalowService
 
+
 from bungalow_reservation.models import BungalowReservation
 import datetime
 from django.http import JsonResponse
@@ -227,10 +228,11 @@ def update_bungalow(request, bungalow_id):
 
 @require_http_methods(['GET'])
 def aditionalServiceBungalowIndex(request):
-    print(request.user)
+    document_number = request.user
+    member = MembersService.getMemberByUser(document_number)
+    reservationsByMember = BungalowService.getReservationsByMember(member.id)
 
     context = {
-        'bungalows' : BungalowService.getBungalows(),
         'titulo': 'titulo'
     }
     return render(request, 'User/bungalowReservation/aditionalService.html')
