@@ -42,8 +42,7 @@ class EventsService(object):
         event = self.getEvent(event_id)
 
         week_before = date.today() - timedelta(days=7)
-        print(week_before)
-        print(date.today)
+      
         return event.eventregistration_set.filter(member_id=member_id, registered_at__gte=week_before).update(deleted_at=datetime.now())
 
     def getEventRegistrations(self, event_id):
@@ -51,3 +50,4 @@ class EventsService(object):
         event = self.getEvent(event_id)
 
         return event.eventregistration_set.filter(deleted_at=None)
+
