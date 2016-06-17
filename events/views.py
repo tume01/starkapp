@@ -291,3 +291,72 @@ def removeUser(request, event_id, member_id):
         messages.error(request, 'Miembro no puede ser removido con menos de 1 semana de anticipacion')
 
     return HttpResponseRedirect(reverse('events:registrations', args=[event_id]))
+
+def index_UserEvents(request):
+
+    member_service = MembersService()
+
+    user_events = member_service.getUserEvents(request.user)
+
+    context = {
+        'registrations': user_events
+    }
+
+    return render(request, 'User/Events/myEvents.html', context)
+
+def index_UserSignup(request):
+
+    event_service = EventsService()
+    eventstype_service = EventsTypeService()
+
+    events = event_service.getEvents()
+    event_types = eventstype_service.getEventsType()
+    
+    context = {
+        'events': events,
+        'event_types': event_types
+    }
+
+    return render(request, 'User/Events/index.html', context)
+
+def select_userEvent(request, event_id):
+    
+    event_service = EventsService()
+
+    event = event_service.getEvent(event_id)
+
+    context = {
+        'event': event
+    }
+
+    return render(request, 'User/Events/select.html', context)
+
+def userSignup(request, event_id):
+    
+    member_service = MembersService()
+    event_service = EventsService()
+
+    member = member_service.getMemberByUser(request.user)
+
+    if event_service.registerMember(event_id, member):
+            messages.success(request, 'Inscripcion en evento exitosa')
+            return HttpResponseRedirect(reverse('events:userEvents_index'))
+
+    messages.error(request, 'Error al inscribirse en el evento')
+
+    return HttpResponseRedirect(reverse('events:userEvent_select', args=[event_id]))
+
+def userSignout(request, event_id):
+
+    event_service = EventsService()
+    member_service = MembersService()
+
+    member = member_service.getMemberByUser(request.user)
+
+    if event_service.removeUserRegistration(event_id, member.id):
+        messages.success(request, 'Miembro removido de evento correctamente')
+    else:
+        messages.error(request, 'Miembro no puede ser removido con menos de 1 semana de anticipacion')
+
+    return HttpResponseRedirect(reverse('events:userEvents_index'))
+    
