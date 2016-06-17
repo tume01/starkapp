@@ -10,6 +10,7 @@ from ubigeo.models import *
 from fine.models import *
 from suspension.models import *
 from promotions.models import *
+from affiliate.models import *
 
 
 
@@ -40,6 +41,7 @@ class Command(BaseCommand):
         FineType.objects.all().delete()
         Promotion.objects.all().delete()
         Ubigeo.objects.all().delete()
+        Affiliate.objects.all().delete()
         print('    Data has been deleted\n')
 
     def insertLogin(self):
@@ -2127,5 +2129,10 @@ class Command(BaseCommand):
 
         prom3 = Promotion(description='Promocion productos todos', percentage=5, status=1)
         prom3.save()
+
+        aff = Affiliate(member=memb1, identity_document_type=doc1, ubigeo=u2, name='Fabio',
+                        paternalLastName='Olcese', maternalLastName='Undertale', document_number=98765432, phone=3813812,
+                        email='mailm4@mailcito.com', address='The witcher', state=1)
+        aff.save()
 
         print('Data has been inserted\n')
