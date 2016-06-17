@@ -65,13 +65,13 @@ def filter(request):
     type_identity_doc = request.POST['identity_document_type']
 
     if iniDate != '':
-        filter_member_application["initialDate"] = datetime.strptime(iniDate, '%m/%d/%Y')
+        filter_member_application["initialDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
 
     if endDate != '':
-        filter_member_application["finalDate"] = datetime.strptime(endDate, '%m/%d/%Y')
+        filter_member_application["finalDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
 
     if num_doc != '':
-        filter_member_application["document_number"] = num_doc
+        filter_member_application["document_number__contains"] = num_doc
 
     if appStatus != '4':
         filter_member_application["status"] = appStatus
