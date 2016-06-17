@@ -89,8 +89,6 @@ def create_suspension(request):
 
         group = Group.objects.get(name='usuarios_suspendidos')
 
-        current_user.groups.all()[0].user_set.remove(current_user)
-
         group.user_set.add(current_user)
 
         return HttpResponseRedirect(reverse('members:index'))
@@ -281,10 +279,11 @@ def delete_suspension(request):
 
     current_user = member.user
 
-    group = Group.objects.get(name='usuarios')
+    for group in current_user.groups.all():
 
-    current_user.groups.all()[0].user_set.remove(current_user)
+        if group.name == 'usuarios_suspendidos':
 
-    group.user_set.add(current_user)
+            group.user_set.remove(current_user)
+            break
 
     return HttpResponseRedirect(reverse('members:index'))
