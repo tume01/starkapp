@@ -66,6 +66,8 @@ def create_headquarters(request):
         #insert_data['ubigeos'] = form.cleaned_data['ubigeos']
 
         filter_ubigeo = {}
+        filter_ubigeo["department"] = request.POST['department']
+        filter_ubigeo["province"] = request.POST['province']
         filter_ubigeo["district"] = request.POST['district']
         ubigeo = ubigeo_service.filter(filter_ubigeo)
         insert_data['ubigeos'] = ubigeo[0]
@@ -90,11 +92,16 @@ def create_headquarters(request):
 def update_headquarters_index(request, headquarter_id):
 
     headquarter_service = HeadquarterService()
+    ubigeo_service = UbigeoService()
 
     headquarter = headquarter_service.findHeadquarter(headquarter_id)
+    hq_ubigeo = ubigeo_service.getUbigeoById(headquarter.ubigeos.id)
+    ubigeos = ubigeo_service.distinctDepartment()
 
     context = {     
-        'headquarter': headquarter
+        'headquarter': headquarter,
+        'ubigeos': ubigeos,
+        'hq_ubigeo': hq_ubigeo
     }
     
     return render(request, 'Admin/Headquarters/edit_headquarter.html', context)
@@ -113,11 +120,20 @@ def update_headquarters(request, headquarter_id):
     else:
         
         headquarter_service = HeadquarterService()
+        ubigeo_service = UbigeoService()
 
         edit_data = {}
         edit_data["name"] = form.cleaned_data['name']
         edit_data["location"] = form.cleaned_data['location']
         edit_data["description"] = form.cleaned_data['description']
+
+        filter_ubigeo = {}
+        filter_ubigeo["department"] = request.POST['department']
+        filter_ubigeo["province"] = request.POST['province']
+        filter_ubigeo["district"] = request.POST['district']
+        ubigeo = ubigeo_service.filter(filter_ubigeo)
+        edit_data['ubigeos'] = ubigeo[0]
+
         headquarter_service.update(headquarter_id, edit_data)
 
         return HttpResponseRedirect(reverse('headquarters:index'))
