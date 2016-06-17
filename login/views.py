@@ -20,7 +20,7 @@ def login_view(request):
         # Correct password, and the user is marked "active"
         auth.login(request, user)
         # Redirect to a success page.
-        if request.user.groups.all()[0].name == 'usuarios':
+        if request.user.groups.all()[0].name == 'usuarios' or request.user.groups.all()[0].name == 'usuarios_suspendidos':
             return HttpResponseRedirect(reverse('login:iniUser'))
         else:
             return HttpResponseRedirect(reverse('login:iniAdmin'))

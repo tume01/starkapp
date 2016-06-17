@@ -9,6 +9,8 @@ from Adapters.FormValidator import FormValidator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from .forms import SuspensionForms
+from services.MemberService import MembersService
+from django.contrib.auth.models import Group
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
@@ -21,8 +23,17 @@ def create_suspension_index(request):
 
     membership = membership_service.getMembership(membership_id)
 
+    member_service = MembersService()
+
+    filter_member = {}
+
+    filter_member["membership"] = membership
+
+    member = member_service.filter(filter_member)
+
     context = {
         'membership': membership,
+        'member':member[0]
     }
 
     return render(request, 'Admin/Suspension/new_suspension.html', context)
@@ -65,6 +76,20 @@ def create_suspension(request):
         suspension_service = SuspensionService()
 
         suspension_service.create(insert_data)
+
+        member_service = MembersService()
+
+        filter_data = {}
+
+        filter_data['membership_id'] = membershipId
+
+        member = member_service.filter(filter_data)[0]
+
+        current_user = member.user
+
+        group = Group.objects.get(name='usuarios_suspendidos')
+
+        group.user_set.add(current_user)
 
         return HttpResponseRedirect(reverse('members:index'))
 
@@ -135,9 +160,15 @@ def suspension_index(request):
 
     membership_service = MembershipService()
 
+    member_service = MembersService()
+
     suspension_service = SuspensionService()
 
-    membershipId = request.POST['id']
+    memberId = request.POST['id']
+
+    member = member_service.getMember(memberId)
+
+    membershipId = member.membership.id
 
     filter_data = {}
 
@@ -153,6 +184,7 @@ def suspension_index(request):
         'id': membershipId,
         'suspensions': suspensions,
         'membership' : membership,
+        'member' : member,
         'show' : show
     }
 
@@ -167,7 +199,15 @@ def suspension_filter(request):
 
     membership_service = MembershipService()
 
-    membershipId = request.POST['membership_id']
+    member_service = MembersService()
+
+    suspension_service = SuspensionService()
+
+    memberId = request.POST['member_id']
+
+    member = member_service.getMember(memberId)
+
+    membershipId = member.membership.id
 
     membership = membership_service.getMembership(membershipId)
 
@@ -203,6 +243,7 @@ def suspension_filter(request):
     context = {
         'id': membershipId,
         'suspensions': suspensions,
+        'member' : member,
         'membership': membership,
         'show' : show
     }
@@ -223,5 +264,26 @@ def delete_suspension(request):
     suspension_service = SuspensionService()
 
     suspension_service.update(id_edit, edit_data)
+
+    form = SuspensionForms(request.POST)
+
+    member_service = MembersService()
+
+    suspension = suspension_service.getSuspension(id_edit)
+
+    filter_data = {}
+
+    filter_data['membership_id'] = suspension.membership.id
+
+    member = member_service.filter(filter_data)[0]
+
+    current_user = member.user
+
+    for group in current_user.groups.all():
+
+        if group.name == 'usuarios_suspendidos':
+
+            group.user_set.remove(current_user)
+            break
 
     return HttpResponseRedirect(reverse('members:index'))

@@ -12,6 +12,7 @@ from .forms import FineForm
 from .forms import FineTypeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+import json
 
 
 @login_required
@@ -76,7 +77,7 @@ def delete_type(request):
 
     filter_data["fine_type_id"] = id_edit
 
-    filter_data["status"] = 'Pendiente de Pago'
+    filter_data["status"] = 'Por Pagar'
 
     fine_service = FineService()
 
@@ -267,10 +268,6 @@ def filter(request):
 
     member_id = request.POST['member_id']
 
-    member_service = MembersService()
-
-    member = member_service.getMember(member_id)
-
     fine_service = FineService()
 
     fine_type_service = FineTypeService()
@@ -281,21 +278,20 @@ def filter(request):
 
     filter_fines["member_id"] = member_id
 
-    if fineStatus != 'Pendiente de Pago':
+    if fineStatus != '':
         filter_fines["status"] = fineStatus
 
     fines = fine_service.filter(filter_fines)
 
-    for fine in fines:
-        fine.reason = (fine_type_service.getFine(fine.fine_type.id)).reason
-        fine.price = (fine_type_service.getFine(fine.fine_type.id)).price
+    list = []
 
-    context = {
-        'fines': fines,
-        'member' : member,
-    }
+    for fine in fines: #populate list
+        list.append({'observations':fine.observations, 'reason': (fine_type_service.getFine(fine.fine_type.id)).reason, 
+                    'price': (fine_type_service.getFine(fine.fine_type.id)).price, 'status': fine.status, 'id':fine.id})
 
-    return render(request, 'Admin/Fines/index_fine.html', context)
+    recipe_list_json = json.dumps(list) #dump list as JSON
+
+    return HttpResponse(recipe_list_json, 'application/javascript')
 
 
 @login_required
@@ -347,18 +343,17 @@ def user_filter(request):
 
     filter_fines["member_id"] = member.id
 
-    if fineStatus != 'Pendiente de Pago':
+    if fineStatus != '':
         filter_fines["status"] = fineStatus
 
     fines = fine_service.filter(filter_fines)
 
-    for fine in fines:
-        fine.reason = (fine_type_service.getFine(fine.fine_type.id)).reason
-        fine.price = (fine_type_service.getFine(fine.fine_type.id)).price
+    list = []
 
-    context = {
-        'fines': fines,
-        'member': member,
-    }
+    for fine in fines: #populate list
+        list.append({'observations':fine.observations, 'reason': (fine_type_service.getFine(fine.fine_type.id)).reason, 
+                    'price': (fine_type_service.getFine(fine.fine_type.id)).price, 'status': fine.status, 'id':fine.id})
 
-    return render(request, 'User/Fines/index_fines.html', context)
+    recipe_list_json = json.dumps(list) #dump list as JSON
+
+    return HttpResponse(recipe_list_json, 'application/javascript')

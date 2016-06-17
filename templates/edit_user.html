@@ -73,7 +73,10 @@ Lista de tipos de usuario
                     <!-- END Mega Form -->
                 </div>   
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block scripts %}
+
     <script>
     $(document).ready(function () {
         $("#example-select").val({{user.user_type_id}});

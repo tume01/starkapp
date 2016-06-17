@@ -39,18 +39,26 @@ Lista de entradas
                     <tr>
                             <th>Fecha de entrada</th>
                             <th>Fecha de salida</th> 
-                            <th>Persona responsable</th>  
-                            <th>Invitado</th>                                     
-                            <th>Acción</th>                                        
+                            <th>Miembro titular</th>  
+                            <th>Afiliado/Invitado</th>                                     
+                            <th style="text-align:center;">Acción</th>                                        
                         </tr>
                     </thead>
                     <tbody>
                         {% for entry in entries %}                                       
                         <tr>
                             <td class="font-w600">{{entry.initialDate}}</td>
-                            <td class="font-w600" style="text-align:right;">{{entry.finalDate}} </td>
-                            <td class="font-w600" style="text-align:right;">{{entry.member.name}} {{entry.member.paternalLastName}}</td>
-                            <td class="font-w600" style="text-align:right;">{{entry.guest.name}} {{entry.guest.surname}} {{entry.affiliate.name}} {{entry.affiliate.paternalLastName}}</td>
+                            <td class="font-w600">{{entry.finalDate}} </td>
+                            <td class="font-w600">{{entry.member.name}} {{entry.member.paternalLastName}}</td>
+                            <td class="font-w600">
+                            {% if entry.guest %}
+                                INV - {{entry.guest.name}} {{entry.guest.paternalLastName}} 
+                            {% elif entry.affiliate %}
+                                AFI - {{entry.affiliate.name}} {{entry.affiliate.paternalLastName}}
+                            {% else %}
+                                --------
+                            {% endif %}
+                            </td>
                             <td class="text-center">
                                 <div class="btn-group">
                                    
@@ -65,7 +73,10 @@ Lista de entradas
         <!-- END Simple Table Full -->
     </div>
     <!-- END Page Content -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block scripts %}
+
     <script>
     $(document).ready(function () {
         $('.eliminar').click(function (e) {

@@ -1,4 +1,4 @@
-var AffiliateFormValidation = function() {
+var MemberFormValidation = function() {
     // Init Bootstrap Forms Validation, for more examples you can check out https://github.com/jzaefferer/jquery-validation
     var initValidationBootstrap = function(){    
 
@@ -37,19 +37,7 @@ var AffiliateFormValidation = function() {
                 'num_doc': {
                     required: true,   
                     number: true, 
-                    min: 1,
-                    remote: {
-                        url: url,
-                        type: "post",
-                        data: {
-                            num_doc: function() {
-                                return $( "#num_doc" ).val();
-                            }, 'csrfmiddlewaretoken': CSRF_TOKEN, 
-                            id_member: function() {
-                                return $( "#id_member" ).val();
-                            }
-                        }
-                    }                           
+                    min: 1,            
                 },                              
                 'address': {
                     required: true,
@@ -74,6 +62,12 @@ var AffiliateFormValidation = function() {
                 'email': {
                     required: true,
                     email: true
+                },
+                'initialDate': {
+                    required: true
+                },
+                'finalDate':{
+                    required:true
                 }
             },
             messages: {
@@ -92,7 +86,6 @@ var AffiliateFormValidation = function() {
                 'num_doc': {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
-                    remote: 'Este documento ya esta en uso',
                     min: 'Por favor ingrese un documento válido' ,                
                 },              
                 'address': {
@@ -118,7 +111,13 @@ var AffiliateFormValidation = function() {
                 'email': {
                     required:'Por favor ingrese un email',
                     email:'Por favor ingrese un email válido'                
-                }           
+                },
+                'initialDate': {
+                    required: 'Por favor ingrese una fecha inicial'
+                },
+                'finalDate':{
+                    required: 'Por favor ingrese una fech final'
+                }                
             }
         });
     };
@@ -138,4 +137,4 @@ var AffiliateFormValidation = function() {
 }();
 
 // Initialize when page loads
-jQuery(function(){ AffiliateFormValidation.init(); });
+jQuery(function(){ MemberFormValidation.init(); });

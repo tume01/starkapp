@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'User/Layouts/base.html' %}
 
 {% load staticfiles %}
 
@@ -36,7 +36,7 @@ Nuevo afiliado
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:admin_insert" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:insert" %}' method="post" >
                             {% csrf_token %}
                              <div class="row">
                                 <div class="form-group" style="display: none;">

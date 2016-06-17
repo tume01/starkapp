@@ -21,28 +21,32 @@ var ProviderFormValidation = function() {
                 elem.closest('.help-block').remove();
             },
             rules: {
-                'names': {
+                'name': {
                     required: true,
                     maxlength: 200
                 },
-                'surnames': {
+                'paternalLastName': {
                     required: true,
                     maxlength:200
-                },
-                'dni': {
-                    required: true,
-                    number: true, 
-                    min: 1                   
                 },
                 'document_number': {
                     required: true,
                     number: true, 
                     min: 1                   
                 },
-                'document_number_entry': {
+                'document_number_mem': {
                     required: true,
                     number: true, 
-                    min: 1                   
+                    min: 1,
+                    remote: {
+                        url: url,
+                        type: "post",
+                        data: {
+                            document_number: function() {
+                                return $( "#doc" ).val();
+                            }, 'csrfmiddlewaretoken': CSRF_TOKEN,
+                        }
+                    }                          
                 },
                 'initialDate' : {
                     required: true
@@ -52,28 +56,23 @@ var ProviderFormValidation = function() {
                 }
             },
             messages: {
-                'names': {
+                'name': {
                     required: 'Por favor ingrese un nombre',
                     maxlength: 'El nombre debe tener máximo 200 caracteres'
                 },
-                'surnames': {
+                'paternalLastName': {
                     required: 'Por favor ingrese un apellido',
                     maxlength: 'El apellido debe tener máximo 200 caracteres'                    
-                },
-                'dni': {
-                    required: 'Por favor ingrese un número de documento' ,
-                    number: 'Por favor ingrese un documento válido' ,
-                    min: 'Por favor ingrese un documento válido'               
                 },
                 'document_number': {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
                     min: 'Por favor ingrese un documento válido'               
-                },
-                'document_number_entry': {
+                },'document_number_mem': {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
-                    min: 'Por favor ingrese un documento válido'               
+                    min: 'Por favor ingrese un documento válido',
+                    remote: 'Por favor ingrese el número de un miembro o afiliado'               
                 },
                 'initialDate': {
                     required: 'Por favor seleccione una fecha'
