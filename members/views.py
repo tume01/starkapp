@@ -10,7 +10,7 @@ from services.UbigeoService import UbigeoService
 from services.GuestService import GuestService
 from services.SuspensionService import SuspensionService
 from services.AffiliateService import AffiliateService
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import  MemberForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
@@ -199,17 +199,19 @@ def member_filter(request):
 
     identity_document_type = request.POST['identity_document_type']
 
+    filter_member['state'] = 1
+
     if paternalLastName != '':
-        filter_member['paternalLastName'] = paternalLastName
+        filter_member['paternalLastName__icontains'] = paternalLastName
 
     if maternalLastName != '':
-        filter_member['maternalLastName'] = maternalLastName
+        filter_member['maternalLastName__icontains'] = maternalLastName
 
     if document != '':
-        filter_member['document'] = document
+        filter_member['document_number__contains'] = document
 
     if name != '':
-        filter_member['name'] = name
+        filter_member['name__icontains'] = name
 
     if identity_document_type != 'Todos':
         filter_member['identity_document_type'] = identity_document_type
@@ -217,31 +219,19 @@ def member_filter(request):
     members = member_service.filter(filter_member)
 
     if suspended == '1':
-        members = filter(is_member_suspended, members)
-
-        context = {
-            'members': members,
-            'doc_types': doc_types
-        }
-
-        return render(request, 'Admin/Members/index_members.html', context)
+        members = list(filter(is_member_suspended, members))
 
     if suspended == '0':
-        members = filter(is_member_not_suspended, members)
+        members = list(filter(is_member_not_suspended, members))
 
-        context = {
-            'members': members,
-            'doc_types': doc_types
-        }
+    for memberX in members:
 
-        return render(request, 'Admin/Members/index_members.html', context)
+        memberX.address = memberX.identity_document_type.name
 
-    context = {
-        'members': members,
-        'doc_types': doc_types
-    }
+    data = serializers.serialize("json", members)
 
-    return render(request, 'Admin/Members/index_members.html', context)
+    return HttpResponse(data, content_type='application/json')
+
 
 
 def is_member_suspended(member):
@@ -324,9 +314,14 @@ def get_entry(request):
 
     affiliate = affiliate_service.filter(filter_affiliate)
 
-    if(affiliate):   
+    if (affiliate):
+        affiliate2 = affiliate[0]
 
-        affiliate = serializers.serialize("json", (affiliate[0],))
+        affiliate = serializers.serialize("json", (affiliate2, affiliate2.member))
+
+        # member = affiliate2.member
+
+        # member = serializers.serialize("json", (affiliate2))
 
         resp_obj = json.loads(affiliate)
 
@@ -334,13 +329,13 @@ def get_entry(request):
 
         affiliate = json.dumps(resp_obj)
 
-        return  HttpResponse(affiliate, content_type = "application/json")
+        return HttpResponse(affiliate, content_type="application/json")
 
     guest_service = GuestService()
 
     filter_guest = {}
 
-    filter_guest["dni"] = request.POST['document_number']
+    filter_guest["document_number"] = request.POST['document_number']
 
     guest = guest_service.filter(filter_guest)
 

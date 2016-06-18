@@ -39,22 +39,21 @@ Lista de promociones
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
                 <div class="block">
-
                         <div class="block-content">
-                            <form class="form" action='{% url "promotions:filter" %}' method="post" >
+                            <form class="form" id='busqueda' method="post" >
                                 {% csrf_token %}
                                 <div class row>
                                     <div class="row">
-                                        <div class="col-lg-4" >
+                                        <div class="col-lg-5" >
                                             <div class="form-group">
                                             <label class="col-xs-12" for="example-select">Rango de descuento</label>
                                                 <div class="col-md-12">
                                                    <div class="input-group">
                                                         <div class="row">
-                                                            <div class="form-group col-xs-6">
+                                                            <div class="form-group col-xs-4">
                                                                 <input class="form-control" id="example-number1-group2" name="from_num" placeholder="Desde" pattern="[0-9]*"  >
                                                             </div>
-                                                            <div class="form-group col-xs-6">
+                                                            <div class="form-group col-xs-4">
                                                                 <input class="form-control" id="example-number1-group2" name="to_num" placeholder="Hasta" pattern="[0-9]*"  >
                                                             </div>
                                                        </div>
@@ -62,10 +61,6 @@ Lista de promociones
                                                 </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                   <br>
-                                    <div class="row">
                                         <div class="col-lg-5" >
                                             <div class="form-group">
                                             <label class="col-xs-1 " for="example-select">Estado</label>
@@ -78,38 +73,33 @@ Lista de promociones
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-1" >
-
-                                        </div>
                                     </div>
-                                    <br>
+                                   <br>
                                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-4">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                                <button class="btn btn-sm btn-primary" id="button" type="button">Buscar</button>
                             </div>
                         </div>
                     </div>
                 </div>
                 <br>
-                            </form>
+            </form>
                         </div>
                     </div>
-            <table class="table table-bordered table-striped js-dataTable-simple">
+            <table class="table table-bordered table-striped js-dataTable-simple" id='tabla'>
                 <thead>
                     <tr>
-                        <th style="display: none;" class="hidden-xs"#</th>
                             <th>Promocion</th>
                             <th>Descuento</th>                                       
                             <th>Acción</th>                                        
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id='tbodyid'>
                         {% for promotion in promotions %}                                       
                         <tr>
-                            <td style="display: none;" class="hidden-xs">{{promotion.id}}</td>
                             <td class="font-w600">{{promotion.description}}</td>
                             <td class="font-w600" style="text-align:right;">{{promotion.percentage}} %</td>
                             <td class="text-center">
@@ -128,24 +118,86 @@ Lista de promociones
         <!-- END Simple Table Full -->
     </div>
     <!-- END Page Content -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block scripts %}
+
     <script>
-    $(document).ready(function () {
-        $('.editar').click(function (e) {
+    var desc;
+    var id;
+    var percen;
+
+    function editar() {
+       $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid2').val(id)
             document.forms["myFormEdit"].submit();    
 
         });
-        $('.eliminar').click(function (e) {
+    }
+
+    function eliminar() {
+       $('.eliminar').click(function (e) {
            var id = $(this).attr("data-id")          
             $('#hid1').val(id)
             document.forms["myFormDelete"].submit();          
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        editar();
+        eliminar();       
+
+
+
+        $('#button').click(function(){
+        {
+            var frm = $('#busqueda');
+            $.ajax({
+                type:'post',
+                url:'{% url "promotions:filter" %}',
+                data: frm.serialize(),
+                cache:false,
+                success: function(returndata){
+                    $('#tabla').dataTable().fnDestroy();
+                    $("#tbodyid").empty();                  
+                    $.each (returndata, function (key, value) {
+                        desc=returndata[key].fields.description;
+                        percen=returndata[key].fields.percentage;
+                        id=returndata[key].pk;
+                        var html = '<div class="btn-group"><button class="btn btn-xs btn-default editar" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-default eliminar" data-id="'+id+'" type="button" data-toggle="tooltip" title="Eliminar Promoción"><i class="fa fa-times"></i></button></div>'
+                        $("#tbodyid").append('<tr><td class="font-w600">'+desc+'</td><td class="font-w600" style="text-align:right;">'+percen+'&nbsp;%</td><td class="text-center">'+html+'</td></tr>');
+                    });  
+                    $('#tabla').dataTable({
+                            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
+                            pageLength: 10,
+                            "autoWidth": false,
+                            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                            searching: false,
+                            oLanguage: {
+                                sLengthMenu: "",                
+                                sInfoEmpty:"No hay entradas",
+                                sZeroRecords:"No hay datos disponibles",
+                                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
+                            },
+                            dom:
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-6'i><'col-sm-6'p>>"
+                    });   
+
+                    editar();   
+                    eliminar();                 
+                },
+                
+            });
+        }
         });
         
     });
     </script>
     <!-- HASTA AQUÍ -->       
 
-    {% endblock %}
+{% endblock %}
 

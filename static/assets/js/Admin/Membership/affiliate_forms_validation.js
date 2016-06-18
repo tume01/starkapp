@@ -42,7 +42,7 @@ var AffiliateFormValidation = function() {
                         url: url,
                         type: "post",
                         data: {
-                            username: function() {
+                            num_doc: function() {
                                 return $( "#num_doc" ).val();
                             }, 'csrfmiddlewaretoken': CSRF_TOKEN, 
                             id_member: function() {

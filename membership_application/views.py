@@ -12,12 +12,12 @@ from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import MembershipApplicationForm
 from objection import forms as oforms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
-
+from django.core import serializers
 
 #ADMIN
 @login_required
@@ -65,13 +65,13 @@ def filter(request):
     type_identity_doc = request.POST['identity_document_type']
 
     if iniDate != '':
-        filter_member_application["initialDate"] = datetime.strptime(iniDate, '%m/%d/%Y')
+        filter_member_application["initialDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
 
     if endDate != '':
-        filter_member_application["finalDate"] = datetime.strptime(endDate, '%m/%d/%Y')
+        filter_member_application["finalDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
 
     if num_doc != '':
-        filter_member_application["document_number"] = num_doc
+        filter_member_application["document_number__contains"] = num_doc
 
     if appStatus != '4':
         filter_member_application["status"] = appStatus
@@ -81,13 +81,10 @@ def filter(request):
 
     membershipApplications = member_application_service.filter(filter_member_application)
 
-    context = {
-        'membershipApplications' : membershipApplications,
-        'doc_types' : doc_types
-    }
+    data = serializers.serialize("json", membershipApplications)
 
-    return render(request, 'Admin/Membership/index_membership_request.html', context) 
-
+    return HttpResponse(data, content_type='application/json')
+    
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
@@ -355,12 +352,9 @@ def user_filter(request):
 
     membershipApplications = member_application_service.filter(filter_member_application)
 
-    context = {
-        'membershipApplications' : membershipApplications,
-        'doc_types' : doc_types,
-    }
+    data = serializers.serialize("json", membershipApplications)
 
-    return render(request, 'User/Membership/index_membership_request.html', context) 
+    return HttpResponse(data, content_type='application/json')
 
 
 #OBJECIONES
@@ -389,6 +383,8 @@ def create_objection(request):
         insert_data["membership_application_id"] = requestId
 
         insert_data["member_id"] = memberId
+
+        insert_data['date'] = datetime.now()
 
         objection_service = ObjectionsService()
 

@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block head_title %}
-Admin: afiliados
+Usuario: afiliados
 {% endblock %}
 
 {% block head_dahsboard %}
@@ -36,7 +36,7 @@ Nuevo afiliado
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:insert" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:admin_insert" %}' method="post" >
                             {% csrf_token %}
                              <div class="row">
                                 <div class="form-group" style="display: none;">
@@ -168,7 +168,7 @@ Nuevo afiliado
                                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Registrar</button>
                                     </div>
                                     <div class="col-xs-2">
-                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "members:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                        <button class="btn btn-danger" type="submit" name="cancel" formnovalidate="formnovalidate"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
                                     </div>
 
                                 </div>
@@ -232,9 +232,6 @@ var url= "{% url 'affiliate:verify_affiliate' %}"
         
     });
 </script>
-        <!-- Page JS Plugins -->
-<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
 <script src='{% static "assets/js/Admin/Membership/affiliate_forms_validation.js" %}'></script>
 

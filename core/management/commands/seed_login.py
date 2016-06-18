@@ -10,6 +10,7 @@ from ubigeo.models import *
 from fine.models import *
 from suspension.models import *
 from promotions.models import *
+from affiliate.models import *
 
 
 
@@ -20,12 +21,12 @@ class Command(BaseCommand):
         print('\n  Users Seeder is running...\n')
 
         print('    Deleting...')
-        self.cleanDB()
+        self.cleanLogin()
 
         print('    Inserting...')
-        self.insertData()
+        self.insertLogin()
 
-    def cleanDB(self):
+    def cleanLogin(self):
         Suspension.objects.all().delete()
         Member.objects.all().delete()
         Membership_Application.objects.all().delete()
@@ -40,9 +41,10 @@ class Command(BaseCommand):
         FineType.objects.all().delete()
         Promotion.objects.all().delete()
         Ubigeo.objects.all().delete()
+        Affiliate.objects.all().delete()
         print('    Data has been deleted\n')
 
-    def insertData(self):
+    def insertLogin(self):
 
         u = Ubigeo(department='Amazonas', province='Chachapoyas', district='Chachapoyas').save()
         u = Ubigeo(department='Amazonas', province='Chachapoyas', district='Asunción').save()
@@ -1905,22 +1907,23 @@ class Command(BaseCommand):
         u = Ubigeo(department='Ucayali', province='Padre Abad', district='Alexander Von Humboldt').save()
         u = Ubigeo(department='Ucayali', province='Purús', district='Purus').save()
 
-        user2 = User.objects.create_user(username='administrador', password='1111')
-        user3 = User.objects.create_user(username='responsableBungalow', password='1111')
-        user4 = User.objects.create_user(username='responsableProveedor', password='1111')
-        user5 = User.objects.create_user(username='responsableCurso', password='1111')
-        user6 = User.objects.create_user(username='responsableActividad', password='1111')
-        user7 = User.objects.create_user(username='responsableSede', password='1111')
-        user8 = User.objects.create_user(username='responsableEvento', password='1111')
-        user9= User.objects.create_user(username='responsableServicio', password='1111')
-        user10 = User.objects.create_user(username='responsableCancha', password='1111')
-        user11 = User.objects.create_user(username='responsableCajero', password='1111')
-        user12 = User.objects.create_user(username='responsableMembresia', password='1111')
-        user13 = User.objects.create_user(username='responsablePromocion', password='1111')
-        user14 = User.objects.create_user(username='responsableMulta', password='1111')
-        user15 = User.objects.create_user(username='empresa', password='1111')
+        user2 = User.objects.create_user(username='administrador', password='1111', first_name='Administrador')
+        user3 = User.objects.create_user(username='responsableBungalow', password='1111', first_name='Bungalow')
+        user4 = User.objects.create_user(username='responsableProveedor', password='1111', first_name='Proveedor')
+        user5 = User.objects.create_user(username='responsableCurso', password='1111', first_name='Curso')
+        user6 = User.objects.create_user(username='responsableActividad', password='1111', first_name='Actividad')
+        user7 = User.objects.create_user(username='responsableSede', password='1111', first_name='Sede')
+        user8 = User.objects.create_user(username='responsableEvento', password='1111', first_name='Evento')
+        user9= User.objects.create_user(username='responsableServicio', password='1111', first_name='Servicio')
+        user10 = User.objects.create_user(username='responsableCancha', password='1111', first_name='Cancha')
+        user11 = User.objects.create_user(username='responsableCajero', password='1111', first_name='Cajero')
+        user12 = User.objects.create_user(username='responsableMembresia', password='1111', first_name='Mebresía')
+        user13 = User.objects.create_user(username='responsablePromocion', password='1111', first_name='Promoción')
+        user14 = User.objects.create_user(username='responsableMulta', password='1111', first_name='Multa')
+        user15 = User.objects.create_user(username='empresa', password='1111', first_name='Empresa')
 
         usuarios = Group.objects.create(name='usuarios')
+        usuarios_suspendidos = Group.objects.create(name='usuarios_suspendidos')
         admin = Group.objects.create(name='admins')
         bungalows = Group.objects.create(name='bungalows')
         proveedores = Group.objects.create(name='proveedores')
@@ -1935,6 +1938,7 @@ class Command(BaseCommand):
         promocion = Group.objects.create(name='promocion')
         multa = Group.objects.create(name='multa')
         empresa = Group.objects.create(name='empresas')
+
 
         admin.user_set.add(user2)
         bungalows.user_set.add(user3)
@@ -1954,6 +1958,7 @@ class Command(BaseCommand):
         content_type = ContentType.objects.create(app_label='dummy', model='unused')
 
         permission_usuario = Permission.objects.create(codename='permission_usuario', name='Can Do User Things', content_type=content_type)
+        permission_usuario_suspendido = Permission.objects.create(codename='permission_usuario_suspendido', name='Cant Do User Things', content_type=content_type)
         permission_admin = Permission.objects.create(codename='permission_admin', name='Can Do Admin Things', content_type=content_type)
         permission_bungalow = Permission.objects.create(codename='permission_bungalow', name='Can Do Bungalow Things', content_type=content_type)
         permission_proveedor = Permission.objects.create(codename='permission_proveedor', name='Can Do Provider Things', content_type=content_type)
@@ -1969,7 +1974,9 @@ class Command(BaseCommand):
         permission_multa = Permission.objects.create(codename='permission_multa', name='Can Do Fine Things', content_type=content_type)
         permission_empresa = Permission.objects.create(codename='permission_empresa', name='Can Do Business Things', content_type=content_type)
 
-        usuarios.permissions.add(permission_usuario)  
+
+        usuarios.permissions.add(permission_usuario)
+        usuarios_suspendidos.permissions.add(permission_usuario_suspendido)
         bungalows.permissions.add(permission_bungalow)
         proveedores.permissions.add(permission_proveedor)
         cursos.permissions.add(permission_curso)
@@ -2069,7 +2076,7 @@ class Command(BaseCommand):
                                                finalDate=datetime.now() - timedelta(1), status=0)
         mApplication6.save()
 
-        user1 = User.objects.create_user(username=27389283, email='mailm1@mailcito.com', password='1111')
+        user1 = User.objects.create_user(username=27389283, email='mailm1@mailcito.com', password='1111',first_name='Enrique', last_name='Valeriano')
         usuarios.user_set.add(user1)
 
         memb1 = Member(membership=mship1, identity_document_type=doc1, ubigeo=u2, user=user1, name='Enrique',
@@ -2077,7 +2084,7 @@ class Command(BaseCommand):
                        email='mailm1@mailcito.com', address='Av. KyaWeeb', state=1)
         memb1.save()
 
-        user2 = User.objects.create_user(username=21334473, email='mailm2@mailcito.com', password='1111')
+        user2 = User.objects.create_user(username=21334473, email='mailm2@mailcito.com', password='1111', first_name='Jose', last_name='Luis')
         usuarios.user_set.add(user2)
 
         memb2 = Member(membership=mship2, identity_document_type=doc1, ubigeo=u3, user=user2, name='Jose',
@@ -2085,7 +2092,7 @@ class Command(BaseCommand):
                        email='mailm2@mailcito.com', address='Documentos', state=1)
         memb2.save()
 
-        user3 = User.objects.create_user(username=22334563, email='mailm3@mailcito.com', password='1111')
+        user3 = User.objects.create_user(username=22334563, email='mailm3@mailcito.com', password='1111', first_name='Diego', last_name='Coronado')
         usuarios.user_set.add(user3)
 
         memb3 = Member(membership=mship3, identity_document_type=doc1, ubigeo=u4, user=user3, name='Diego',
@@ -2127,5 +2134,10 @@ class Command(BaseCommand):
 
         prom3 = Promotion(description='Promocion productos todos', percentage=5, status=1)
         prom3.save()
+
+        aff = Affiliate(member=memb1, identity_document_type=doc1, ubigeo=u2, name='Fabio',
+                        paternalLastName='Olcese', maternalLastName='Undertale', document_number=98765432, phone=3813812,
+                        email='mailm4@mailcito.com', address='The witcher', state=1)
+        aff.save()
 
         print('Data has been inserted\n')

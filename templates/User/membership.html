@@ -52,9 +52,9 @@ Editar membresía
                                  <div class="row">
                                        <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label class="col-xs-12" for="example-daterange1">Rango de fechas para membresía</label>
+                                                <label class="col-xs-12" for="example-daterange1">Rango de fechas de membresía</label>
                                                 <div class="col-md-8">
-                                                    <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                                    <div class="input-group">
                                                         <input class="form-control" type="text" id="example-daterange1" name="initialDate" value= "{{membership.initialDate}}" placeholder="Desde" readonly>
                                                         <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
                                                         <input class="form-control" type="text" id="example-daterange2" name="finalDate" value= "{{membership.finalDate}}" placeholder="hasta" readonly>
@@ -97,7 +97,9 @@ Editar membresía
                     </div>
                     <!-- END Mega Form -->
                 </div>    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block scripts %}
     <script>
     $(document).ready(function () {
         $("#example-select").val({{membership.membership_type_id}});

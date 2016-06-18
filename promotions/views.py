@@ -5,10 +5,11 @@ from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.PromotionsService import PromotionsService
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import PromotionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.core import serializers
 
 
 @login_required
@@ -53,11 +54,9 @@ def filter(request):
 
     promotions = promotion_service.filter(filter_promotions)
 
-    context = {
-        'promotions': promotions,
-    }
+    data = serializers.serialize("json", promotions)
 
-    return render(request, 'Admin/Promotions/index_promotion.html', context)
+    return HttpResponse(data, content_type='application/json')
 
 
 

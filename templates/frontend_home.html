@@ -118,7 +118,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <a class="h5 text-white" href="frontend_home.html">
+                            <a class="h5 text-white" href='{% url "home" %}'>
                                 <i class="fa fa-circle-o-notch text-primary"></i> <span class="h4 font-w600 sidebar-mini-hide">ne</span>
                             </a>
                         </div>
@@ -128,10 +128,10 @@
                         <div class="side-content">
                             <ul class="nav-main">
                                 <li class="open">
-                                    <a class="nav-submenu"  href='{% url "home" %}'><i class="si si-home"></i><span class="sidebar-mini-hide">Inicio</span></a>                                    
+                                    <a class="nav-submenu"  href=#begin><i class="si si-home"></i><span class="sidebar-mini-hide">Inicio</span></a>                                    
                                 </li>
                                 <li>
-                                    <a href="frontend_features.html"><i class="si si-energy"></i><span class="sidebar-mini-hide">Features</span></a>
+                                    <a href="#bungalows"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                                 </li>
                                 <li>
                                     <a href="frontend_pricing.html"><i class="si si-wallet"></i><span class="sidebar-mini-hide">Pricing</span></a>
@@ -298,12 +298,12 @@
                 <!-- Hero Content -->
                 <div class="bg-image" style="background-image: url('{% static "assets/img/landing/campo.jpg" %}');">
                     <div class="bg-primary-dark-op">
-                        <section class="content content-full content-boxed overflow-hidden">
+                        <section id="begin" class="content content-full content-boxed overflow-hidden">
                             <!-- Section Content -->
                             <div class="push-100-t push-50 text-center">
                                 <h1 class="h2 text-white push-10 visibility-hidden" data-toggle="appear" data-class="animated fadeInDown">Club StarkApp</h1>
                                 <h2 class="h5 text-white-op push-50 visibility-hidden" data-toggle="appear" data-class="animated fadeInDown">El paraiso en la tierra</h2>
-                                <a class="btn btn-rounded btn-noborder btn-lg btn-primary visibility-hidden" data-toggle="appear" data-class="animated bounceIn" data-timeout="800" href="frontend_pricing.html">Purchase Today</a>
+                                <!--<a class="btn btn-rounded btn-noborder btn-lg btn-primary visibility-hidden" data-toggle="appear" data-class="animated bounceIn" data-timeout="800" href="frontend_pricing.html">Purchase Today</a>-->
                             </div>
                             <div class="row visibility-hidden" data-toggle="appear" data-class="animated fadeInUp">
                                 <div class="col-sm-8 col-sm-offset-2">
@@ -315,10 +315,45 @@
                     </div>
                 </div>
                 <!-- END Hero Content -->
+                <div id="bungalows" class=""> <!-- background white: bg-white -->
+                    <section class="content content-boxed overflow-hidden">
+                        <!-- Section Content -->
+                        <div class="row items-push-2x push-30-t nice-copy">
+                            <div class="col-lg-5">
+                                <div class="push-50 animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft"> 
+                                    <h3 class="h5 font-w600 text-uppercase push-5"><i class="si si-home text-flat push-5-r"></i>Bungalows</h3>
+                                    <h4 class="h3 font-w300 push-10">Más comodos que tu hogar</h4>
+                                    <p>El club ofrece el servicio de reservas de bungalows en las distintas sedes. Nuestros bungalows son bastante amplios y cómodos para ofrecerle el descanso que necesita.</p>
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-5 col-lg-offset-2 visible-lg">
+                                <img class="img-responsive animated fadeInRight" data-toggle="appear" data-offset="-250" data-class="animated fadeInRight" src='{% static "assets/img/landing/bungalow.jpg" %}' alt="">
+
+                            </div>
+                        </div>
+                        <div class="row items-push-2x push-30-t nice-copy">
+                            <div class="col-lg-5">
+                                <img class="img-responsive animated fadeInLeft" data-toggle="appear"  data-class="animated fadeInLeft" src='{% static "assets/img/landing/bungalow2.jpg" %}' alt="">
+                                
+                            </div>
+                            <div class="col-lg-5 col-lg-offset2-2 visible-lg">
+                                <div class="push-50 animated fadeInRight" data-toggle="appear" data-offset="-250" data-class="animated fadeInRight"> 
+                                    <h3 class="h5 font-w600 text-uppercase push-5"><i class="si si-home text-flat push-5-r"></i>Bungalows</h3>
+                                    <h4 class="h3 font-w300 push-10">Para todos los gustos</h4>
+                                    <p>Tenemos el bungalow que buscas. Si vienes con tu pareja a disfrutar de una velada romántica o si vienes con toda tu familia a disfrutar de una celebración familiar. Ofrecemos bungalows de distinta capacidad y tipos de acuerdo a tu necesidad.</p>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                        <!-- END Section Content -->
+                    </section>
+                </div>
 
                 <!-- Classic Features #1 -->
                 <div class="bg-white">
-                    <section class="content content-boxed">
+                    <section id="features" class="content content-boxed">
                         <!-- Section Content -->
                         <div class="row items-push-3x push-50-t nice-copy">
                             <div class="col-sm-4">
