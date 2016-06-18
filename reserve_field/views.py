@@ -111,15 +111,16 @@ def court_show(request):
 
 
 @require_http_methods(['POST'])
-@csrf_protect
 def reservate_court(request):
 
     headquarter_service = HeadquarterService()
 
     insert_data = {}
+    return HttpResponse(request)
 
     insert_data['court_name']               = request.POST.get('environment_content')
     headquarter_id                          = request.POST.get('headquarter_id')
+
 
     headquarter                             = headquarter_service.findHeadquarter(headquarter_id)
     insert_data['court_headquarter_name']   = headquarter.name
