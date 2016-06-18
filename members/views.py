@@ -314,9 +314,14 @@ def get_entry(request):
 
     affiliate = affiliate_service.filter(filter_affiliate)
 
-    if(affiliate):   
+    if (affiliate):
+        affiliate2 = affiliate[0]
 
-        affiliate = serializers.serialize("json", (affiliate[0],))
+        affiliate = serializers.serialize("json", (affiliate2, affiliate2.member))
+
+        # member = affiliate2.member
+
+        # member = serializers.serialize("json", (affiliate2))
 
         resp_obj = json.loads(affiliate)
 
@@ -324,7 +329,7 @@ def get_entry(request):
 
         affiliate = json.dumps(resp_obj)
 
-        return  HttpResponse(affiliate, content_type = "application/json")
+        return HttpResponse(affiliate, content_type="application/json")
 
     guest_service = GuestService()
 

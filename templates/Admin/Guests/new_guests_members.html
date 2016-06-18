@@ -181,8 +181,11 @@ var url= "{% url 'entry:verify_member' %}"
                         $('#name').val(returndata[0].fields.name);
                         $('#paternalLastName').val(returndata[0].fields.paternalLastName);
                         $('.bloquear input').prop('readonly', true);
-                        if(tipo==1 || tipo==2){
+                        if(tipo==1){
                             $('#doc').val(returndata[0].fields.document_number);
+                            $('#doc').prop('readonly', true);
+                        }else if(tipo==2){ 
+                        	$('#doc').val(returndata[1].fields.document_number);
                             $('#doc').prop('readonly', true);
                         }
                     }else{
