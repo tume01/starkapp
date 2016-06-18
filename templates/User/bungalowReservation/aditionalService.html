@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'User/Layouts/base.html' %}
 {% load staticfiles %}
 
 {% block head_title %}
@@ -10,7 +10,7 @@ Bungalows
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de Servicios para Bungalows
+Servicios Adicionales
 {% endblock %}
 
 {% block sub_head_dahsboard %}
@@ -18,7 +18,7 @@ Bungalows
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de Servicios para Bungalows
+Servicios Adicionales
 {% endblock %}
 
 {% block content %}
@@ -39,11 +39,11 @@ Lista de Servicios para Bungalows
 
                     <div class="col-lg-3">
                         <div class="form-group">
-                            <label class="col-sm-12 control-label">Tipo de Bungalow</label>
-                            <select class="form-control" id="bungalow_type"  >
+                            <label class="col-sm-12 control-label">Bungalows</label>
+                            <select class="form-control" id="bungalow"  >
                                 <option value="" ></option>
-                                {% for bt in bungalowTypes %}
-                                    <option value="{{bt.id}}" >{{bt.name}}</option>
+                                {% for r in reservations %}
+                                    <option value="{{r.bungalow_id}}" >{{r.bungalow_number}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -103,5 +103,5 @@ Lista de Servicios para Bungalows
 
 
 {% block scripts %}
-    <script src='{% static "assets/js/bungalow_service.js" %}'></script>
+    <script src='{% static "assets/js/User/bungalowReservation/bungalow_reservation.js" %}'></script>
 {% endblock %}

@@ -10,7 +10,7 @@ from services.UbigeoService import UbigeoService
 from services.GuestService import GuestService
 from services.SuspensionService import SuspensionService
 from services.AffiliateService import AffiliateService
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import  MemberForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required

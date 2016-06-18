@@ -1,6 +1,9 @@
 from django.db import models
 import datetime
 
+from bungalow.models import Bungalow
+from members.models import Member
+
 
 class BungalowReservation(models.Model):
     STATUS_CHOICES = (
@@ -10,7 +13,7 @@ class BungalowReservation(models.Model):
         (4, 'Finalizada'),
     )
 
-    # bungalow = models.ForeignKey('bungalow.Bungalow', on_delete=models.CASCADE, null=True)
+    #bungalow = models.ForeignKey('bungalow.Bungalow', on_delete=models.CASCADE, null=True)
     # Changed because persistence issues
     bungalow_number = models.IntegerField()
     bungalow_price = models.FloatField()
@@ -19,12 +22,17 @@ class BungalowReservation(models.Model):
     bungalow_headquarter_id = models.IntegerField(null=True)
     bungalow_headquarter_name = models.CharField(max_length=250)
 
-    # member = models.ForeignKey('members.Member', on_delete=models.CASCADE, null=True)
+    #member = models.ForeignKey(Member, on_delete=models.CASCADE, null=True)
     # Changed because persistence issues
     member_membership_name = models.TextField(max_length=200)
     member_name = models.TextField(max_length=200)
     member_paternalLastName = models.TextField(max_length=200)
     member_maternalLastName = models.TextField(max_length=200)
+
+
+    bungalow_id = models.IntegerField(null=True)
+    member_id = models.IntegerField(null=True)
+
     # member_document_number = models.IntegerField()
     # member_phone = models.IntegerField()
     # TODO: Wait to seeder

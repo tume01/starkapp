@@ -6,17 +6,29 @@ $(document).ready(function() {
         defaultView: "month",
         eventLimit: true, // allow "more" link when too many events
         events: function(start, end, timezone, callback){
-            var date = new Date(start);
-            console.log(start.toDate().toUTCString());
-            console.log("Current: ", date, date.getMonth(), date.getFullYear());
-            date.setDate(date.getDate() + 1);
-            console.log("New: ", date, date.getMonth(), date.getFullYear());
-            var month = date.getMonth();
-            var year = date.getFullYear();
-            refreshEvents(start, end, callback);
+            var startDate = new Date(start);
+            var endDate = new Date(end);
+            endDate.setDate(endDate.getDate() - 1);
+            var currentDate = new Date()
+            if (startDate < currentDate) startDate = currentDate
+//            Debido al TimeZone
+            startDate.setHours(startDate.getHours() - 5);
+
+            refreshEvents(startDate, endDate, callback);
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+//            TODO: Reserve a Bungalow with current filters
+            var href2 = '{% url "bungalowReservation:index" %}'
+            console.log(href2)
+            console.log(calEvent)
+//            location.href = '{% url "bungalowReservation:index" %}';
         }
     });
 });
+
+function createReservation(){
+
+}
 
 $('#headquarter_id').change(function() {
     $('#calendar').fullCalendar( 'refetchEvents' );
@@ -29,8 +41,8 @@ $('#bungalow_type_id').change(function() {
 function refreshEvents(start, end, callback){
     console.log("Refresh Events");
     var requestData = {
-        'start' : start/1000,
-        'end' : end/1000,
+        'start' : Math.floor(start.getTime()/1000),
+        'end' : Math.floor(end.getTime()/1000),
         'headquarter_id' : $('#headquarter_id option:selected').val(),
         'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
@@ -45,7 +57,6 @@ function refreshEvents(start, end, callback){
         success : function(data) {
             console.log("AJAX REQUEST", data.events);
             callback(data.events);
-
         },
         error : function(xhr,errmsg,err) {
             console.log("ERROR"); // another sanity check
