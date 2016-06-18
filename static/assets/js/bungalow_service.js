@@ -35,6 +35,7 @@ $('#bungalow_type').change(function(){
         	for (var i=0; i<list_services.length; i++) array_id.push(list_services[i].id);
         	
         	$('#select2BungalowService').val(array_id).change();
+            console.log('change');
         }
         else{
             //var array_selected = $('#select2BungalowService').val();
