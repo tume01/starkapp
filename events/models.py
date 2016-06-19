@@ -19,6 +19,7 @@ class Event(models.Model):
     price_member =   models.FloatField()
     price_invited =  models.FloatField()
     status      =   models.IntegerField()
+    photo       = models.ImageField(upload_to='events')
     members = models.ManyToManyField(
         Member,
         through="EventRegistration",

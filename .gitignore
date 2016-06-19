@@ -97,6 +97,8 @@ ENV/
 #Ignore sqlite file
 db.sqlite3
 
+uploads/
+
 ################################
-#     DO NOT MODIFY PLEASE     #
+#     DO NOT MODIFY PLEASE 2a~    #
 ################################

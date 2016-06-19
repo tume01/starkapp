@@ -13,6 +13,8 @@ from django.contrib import messages
 from .forms import EventForm
 import datetime
 from services.MemberService import MembersService
+from django.conf import settings
+
 
 @require_http_methods(['GET'])
 def index(request):
@@ -85,7 +87,7 @@ def create_index(request):
 @csrf_protect
 def create_event(request):
 
-    form = EventForm(request.POST)
+    form = EventForm(request.POST, request.FILES)
 
     context = {
         'titulo' : 'titulo'
@@ -141,6 +143,8 @@ def create_event(request):
         insert_data["status"] = 0
 
         insert_data["event_type_id"] = request.POST.get('event_type')
+
+        insert_data["photo"] = request.FILES["photo"]
 
         event_service = EventsService()
 
@@ -314,7 +318,8 @@ def index_UserSignup(request):
     
     context = {
         'events': events,
-        'event_types': event_types
+        'event_types': event_types,
+        'image_url': settings.MEDIA_URL
     }
 
     return render(request, 'User/Events/index.html', context)
@@ -326,7 +331,8 @@ def select_userEvent(request, event_id):
     event = event_service.getEvent(event_id)
 
     context = {
-        'event': event
+        'event': event,
+        'image_url': settings.MEDIA_URL
     }
 
     return render(request, 'User/Events/select.html', context)
