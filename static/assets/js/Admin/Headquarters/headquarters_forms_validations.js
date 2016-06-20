@@ -35,6 +35,18 @@ var ProviderFormValidation = function() {
                     required: true,
                     maxlength: 40,
                     minlength: 4
+                },
+                'department': {
+                    required: true,
+                    notEqualTo: 'Seleccione'
+                },
+                'province': {
+                    required: true,
+                    notEqualTo: 'Seleccione'
+                },
+                'district': {
+                    required: true,
+                    notEqualTo: 'Seleccione'
                 }
             },
             messages: {
@@ -52,13 +64,18 @@ var ProviderFormValidation = function() {
                     maxlength: 'Por favor ingrese maximo 40 caracteres',
                     minlength: 'Por favor ingrese una direccion de al menos 4 caracteres'
                 },
-                /*
-                'val-confirm-password': {
-                    required: 'Please provide a password',
-                    minlength: 'Your password must be at least 5 characters long',
-                    equalTo: 'Please enter the same password as above'
-                },*/
-
+                'department': {
+                    required: 'Por favor seleccione un departamento',
+                    notEqualTo: 'Por favor seleccione un departamento'
+                },
+                'province': {
+                    required: 'Por favor seleccione una provincia',
+                    notEqualTo: 'Por favor seleccione un provincia'
+                },
+                'district': {
+                    required: 'Por favor seleccione un distrito',
+                    notEqualTo: 'Por favor seleccione un distrito'
+                }
             }
         });
     };
