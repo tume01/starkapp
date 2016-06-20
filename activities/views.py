@@ -370,3 +370,15 @@ def user_activities(request):
     }
 
     return render(request, 'User/Activities/user_activities.html', context)
+
+def getUsers(request):
+
+    json_request = json.loads( request.body.decode('utf-8') )
+
+    
+
+    members_service = MembersService()
+
+    #members = members_service.filter({'identity_document_type_id': document_type, 'document_number': document_number})
+
+    return HttpResponse('hola')
