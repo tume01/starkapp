@@ -6,15 +6,15 @@ class GuestFormTest(TestCase):
 
     def test_valid_data(self):
         form= GuestForm({'name':'Walter',
-                         'surname':'Segama',
-                         'dni':77068833,
+                         'paternalLastName':'Segama',
+                         'document_number':77068833,
                         })
         self.assertTrue(form.is_valid())
 
     def test_empty_name(self):
         form = GuestForm({'name': '',
-                          'surname': 'Segama',
-                          'dni': 77068833,
+                          'paternalLastName': 'Segama',
+                          'document_number': 77068833,
                           })
         self.assertFalse(form.is_valid())
 
@@ -24,49 +24,49 @@ class GuestFormTest(TestCase):
             name+='a'
 
         form = GuestForm({'name': name,
-                          'surname': 'Segama',
-                          'dni': 77068833,
+                          'paternalLastName': 'Segama',
+                          'document_number': 77068833,
                           })
 
         self.assertFalse(form.is_valid())
 
-    def test_empty_surname(self):
+    def test_empty_paternalLastName(self):
         form = GuestForm({'name': 'Walter',
-                          'surname': '',
-                          'dni': 77068833,
+                          'paternalLastName': '',
+                          'document_number': 77068833,
                           })
         self.assertFalse(form.is_valid())
 
-    def test_long_surname(self):
-        surname = ''
+    def test_long_paternalLastName(self):
+        paternalLastName = ''
         for i in range(201):
-            surname += 'a'
+            paternalLastName += 'a'
 
         form = GuestForm({'name': 'Walter',
-                          'surname': surname,
-                          'dni': 77068833,
+                          'paternalLastName': paternalLastName,
+                          'document_number': 77068833,
                           })
 
         self.assertFalse(form.is_valid())
 
-    def test_non_numeric_dni(self):
+    def test_non_numeric_document_number(self):
         form = GuestForm({'name': 'Walter',
-                          'surname': 'Segama',
-                          'dni': 'abc',
+                          'paternalLastName': 'Segama',
+                          'document_number': 'abc',
                           })
         self.assertFalse(form.is_valid())
 
-    def test_negative_dni(self):
+    def test_negative_document_number(self):
         form = GuestForm({'name': 'Walter',
-                          'surname': 'Segama',
-                          'dni': -1,
+                          'paternalLastName': 'Segama',
+                          'document_number': -1,
                           })
         self.assertFalse(form.is_valid())
 
-    def test_empty_dni(self):
+    def test_empty_document_number(self):
         form = GuestForm({'name': 'Walter',
-                          'surname': 'Segama',
-                          'dni': '',
+                          'paternalLastName': 'Segama',
+                          'document_number': '',
                           })
         self.assertFalse(form.is_valid())
 
