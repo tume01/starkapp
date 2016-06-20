@@ -12,7 +12,7 @@ from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import MembershipApplicationForm
 from objection import forms as oforms
 from django.contrib.auth.decorators import login_required

@@ -23,14 +23,16 @@
                 <td class="text-center hidden-xs" id="check_out">{{ reservation.check_out }}</td>
                 <td class="text-center">
                     <div class="btn-group">
-                        {% if not reservation.check_in %}
-                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Check-In" onclick="check_in()"><i class="fa fa-sign-in"></i></button>
+                        {% if reservation.status == 0 %}
+                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Aceptar" onclick="accept({{reservation.id}})"><i class="fa fa-check"></i></button>
+                        {%endif%}
+                        {% if reservation.status != 0 and not reservation.check_in %}
+                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Check-In" onclick="check_in({{reservation.id}})"><i class="fa fa-sign-in"></i></button>
                         {%endif%}
                         {% if reservation.check_in and not reservation.check_out %}
-                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Check-Out" onclick="check_out()"><i class="fa fa-sign-out"></i></button>
+                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Check-Out" onclick="check_out({{reservation.id}})"><i class="fa fa-sign-out"></i></button>
                         {%endif%}
-                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Actualizar Reserva" id="btn-edit"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Deshabilitar Reserva"><i class="fa fa-times"></i></button>
+                        <button class="btn btn-xs btn-default" data-toggle="tooltip" title="Cancelar" onclick="cancel({{reservation.id}})"><i class="fa fa-remove"></i></button>
                     </div>
                 </td>    
             </tr>

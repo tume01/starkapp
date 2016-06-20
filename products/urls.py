@@ -4,6 +4,8 @@ from . import views
 app_name = 'products'
 
 urlpatterns = [
+	url(r'^register_in_out/(?P<id>\d+)$', views.register_in_out, name='register_in_out'),
+	url(r'^index_in_out', views.index_in_out, name='index_in_out'),
     url(r'^create/insert', views.create_product, name='insert'),
     url(r'^create', views.create_index, name='create_index'),
     url(r'^edit/(?P<id>\d+)$', views.edit_index, name='edit'),

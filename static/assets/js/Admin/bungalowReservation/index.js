@@ -87,15 +87,14 @@ function reloadTable(requestData){
     });
 }
 
-function check_in() {
-    console.log($('#reservation_id').text())
+function check_in(reservationId) {
     console.log("CHECK IN")
 
     $.ajax({
         url : "check_in", // the endpoint
         type : "POST", // http method
         data : {
-            'reservation_id' : $('#reservation_id').text(),
+            'reservation_id' : reservationId,
             'csrfmiddlewaretoken' :  getCookie('csrftoken')
         }, // data sent with the post request
 
@@ -116,15 +115,99 @@ function check_in() {
     });
 };
 
-function check_out() {
-    console.log($('#reservation_id').text())
+function check_out(reservationId) {
     console.log("CHECK OUT")
 
     $.ajax({
         url : "check_out", // the endpoint
         type : "POST", // http method
         data : {
-            'reservation_id' : $('#reservation_id').text(),
+            'reservation_id' : reservationId,
+            'csrfmiddlewaretoken' :  getCookie('csrftoken')
+        }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+            // $('#table-content').html(data);
+            console.log("SUCCESS"); // another sanity check
+            location.reload();
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log("ERROR"); // another sanity check
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};
+
+function accept(reservationId) {
+    console.log("CHECK OUT")
+
+    $.ajax({
+        url : "accept", // the endpoint
+        type : "POST", // http method
+        data : {
+            'reservation_id' : reservationId,
+            'csrfmiddlewaretoken' :  getCookie('csrftoken')
+        }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+            // $('#table-content').html(data);
+            console.log("SUCCESS"); // another sanity check
+            location.reload();
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log("ERROR"); // another sanity check
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};
+
+
+function cancel(reservationId) {
+    console.log("CANCEL")
+
+    $.ajax({
+        url : "cancel", // the endpoint
+        type : "POST", // http method
+        data : {
+            'reservation_id' : reservationId,
+            'csrfmiddlewaretoken' :  getCookie('csrftoken')
+        }, // data sent with the post request
+
+        // handle a successful response
+        success : function(data) {
+            // $('#table-content').html(data);
+            console.log("SUCCESS"); // another sanity check
+            location.reload();
+        },
+
+        // handle a non-successful response
+        error : function(xhr,errmsg,err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+            console.log("ERROR"); // another sanity check
+            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+        }
+    });
+};
+
+function check_out(reservationId) {
+    console.log("CHECK OUT")
+
+    $.ajax({
+        url : "cancel", // the endpoint
+        type : "POST", // http method
+        data : {
+            'reservation_id' : reservationId,
             'csrfmiddlewaretoken' :  getCookie('csrftoken')
         }, // data sent with the post request
 

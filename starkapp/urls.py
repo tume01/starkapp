@@ -39,12 +39,13 @@ urlpatterns = [
     url(r'^events', include('events.urls')),
     url(r'^login/', include('login.urls')),
     url(r'^ubigeo/', include('ubigeo.urls')),
+    url(r'^bungalow_service/', include('bungalow_service.urls')),
     url(r'^entry/', include('entry.urls')),
     url(r'^guests/', include('guests.urls')),
     url(r'^affiliate/', include('affiliate.urls')),
     url(r'^suspension/', include('suspension.urls')),
     url(r'^$', TemplateView.as_view(template_name="frontend_home.html"), name='home'),
-
+    url(r'^fieldsReservations/',include('reserve_field.urls')),
 ]
 
 if settings.DEBUG:

@@ -5,7 +5,7 @@ from services.MembershipService import MembershipService
 from services.SuspensionService import SuspensionService
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from .forms import SuspensionForms

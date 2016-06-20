@@ -78,6 +78,7 @@ def create_index(request):
         'titulo' : 'titulo',
         'status_choices' : Bungalow.STATUS_CHOICES,
         'bungalowTypes' : BungalowTypeService.getBungalowTypes(),
+        'headquarters' : HeadquarterService().getHeadquarters(),
     }
     a = Bungalow.STATUS_CHOICES
 
@@ -96,13 +97,15 @@ def create_bungalow(request):
     insert_data["location"] = request.POST['location']
     insert_data["status"] = request.POST['status']
 
-    bungalowTypeId = request.POST['bungalow_type_id']
-    insert_data["bungalow_type"] = BungalowTypeService.findBungalowType(bungalowTypeId)
+    bungalowTypeId = int(request.POST['bungalow_type_id'])
+    insert_data["bungalow_type_id"] = bungalowTypeId
+
+    headquarterId = int(request.POST['headquarter_id'])
+    insert_data["headquarter_id"] = headquarterId
 
     BungalowService.create(insert_data)
 
     return HttpResponseRedirect(reverse('bungalow:index'))
-
 
 @require_http_methods(['GET'])
 def update_index(request, bungalow_id):
@@ -113,6 +116,7 @@ def update_index(request, bungalow_id):
         'titulo' : 'titulo',
         'bungalow' : bungalow,
         'bungalowTypes' : BungalowTypeService.getBungalowTypes(),
+        'headquarters' : HeadquarterService().getHeadquarters(),
     }
 
     return render(request, 'Admin/bungalow/update_bungalow.html', context)
