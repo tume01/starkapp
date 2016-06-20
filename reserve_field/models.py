@@ -17,9 +17,8 @@ class FieldReservation(models.Model):
     member_paternalLastName = models.TextField(max_length=200)
     member_maternalLastName = models.TextField(max_length=200)
 
-    reservation_hour        = models.TimeField(null=True)
     reservation_duration    = models.IntegerField()
-    reservation_date        = models.DateField(null=True)
+    reservation_date        = models.DateTimeField(null=True)
     
     status                  = models.IntegerField()
 

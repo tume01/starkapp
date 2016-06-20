@@ -1,4 +1,5 @@
 from repositories import FieldReservationRepository
+from django.utils import timezone
 import datetime, calendar, time,collections
 
 class FieldReservationService(object):
@@ -27,12 +28,14 @@ class FieldReservationService(object):
         endDate = datetime.datetime.fromtimestamp(end)
         num_days = (endDate - startDate).days + 1
 
-        hours = [6,7,8,9,10,11,12,13,14,15,16,17,18]
+        hours = [12,13,14,15,16,17,18,19,20,21,22]
 
         days = []
 
+
         for delta in range(0,num_days):
             for hour in hours:
+                print (startDate + datetime.timedelta(days=delta) +  datetime.timedelta(hours=hour))
                 if(startDate + datetime.timedelta(days=delta) +  datetime.timedelta(hours=hour) > datetime.datetime.today()):
                     days.append(startDate + datetime.timedelta(days=delta) + datetime.timedelta(hours=hour))
 
@@ -72,7 +75,7 @@ class FieldReservationService(object):
             'title': 'Canchas disponibles' if(day[1] == 0) else "No disponible",
             'start': day[0].strftime("%Y-%m-%dT%H:%M:%S"),
             'end': (day[0]+datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%S"),
-            'url': url,
+            'url': url + "date="+ day[0].strftime("%Y-%m-%dT%H:%M:%S"),
         } for day in date if (day[1] == 0)]
 
         print(availableHours)
