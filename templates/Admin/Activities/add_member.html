@@ -23,52 +23,107 @@ Miembros
 {% endblock %}
 
 {% block content %}
-<div class="content content-narrow">
-    <div class="content">
-        {% if messages %}
-            {% for msg in messages %}
-                <div class="alert alert-warning" role="alert">
-                    {{msg.message}}
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
+<div class="content">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-warning" role="alert">
+                {{msg.message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="content">
     <div class="block block-bordered">
-        <div class="block-header">
-            <ul class="block-options">
-            </ul>
-            <h3 class="block-title"></h3>
-        </div>
-
-        <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:insert_member" activity_id %}' method="post">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="col-sm-2">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="block-header">
+                        <h3>Buscar Persona</h3>
+                    </div>
+                    <div class="block-content">
                         <div class="form-group">
-                            <div class="col-sm-12">
-                                <label for="activity_type">Miembros</label>
-                                <select class="form-control" id="member" name="member">
-                                    {% for member in members%}
-                                        <option value="{{member.id}}">{{member.name}} {{member.paternalLastName}} {{member.maternalLastName}} - {{member.document_number}}</option>
-                                    {% endfor%}
-                                </select>
+                            <div class="row items-push text-left">
+                                <div class="col-lg-4">
+                                    <label>Numero Documento</label>
+                                    <input type="text" name="document_number" id="document_number" class="form-control">
+                                </div>
+                                <div class="col-lg-4">
+                                    <label>Tipo Persona</label>
+                                    <select class="form-control">
+                                        <option value="1">Invitado</option>
+                                        <option value="2">Colaborador</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-4">
+                                    <button class="btn btn-primary" id="search">Buscar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-2 col-xs-offset-5">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Anadir Miembro</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content" hidden id="search_results">
+    <div class="block block-bordered">
+        <div class="block-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="block-header">
+                        <h3>Resultados</h3>
+                    </div>
+                    <div class="block-content">
+                        <div class="form-group">
+                            <div class="row items-push text-left">
+                                <div class="col-lg-3">
+                                    <label>Nombres</label>
+                                    <input type="text" name="user_name" id="user_name" class="form-control" disabled="disabled">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Apellido Paterno</label>
+                                    <input type="text" name="user_lastname" id="user_lastname" class="form-control" disabled="disabled">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Apellido Materno</label>
+                                    <input type="text" name="user_secondlastname" id="user_secondlastname" class="form-control" disabled="disabled">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label>Documento</label>
+                                    <input type="text" name="user_document" id="user_document" class="form-control" disabled="disabled">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block-content">
+                        <div class="form-group">
+                            <div class="row items-push text-center">
+                                <div class="col-lg-12">
+                                    <form action='{% url "activities:insert_member" activity_id %}' method="post">
+                                        {% csrf_token %}
+                                        <input type="text" hidden id="member" name="member">
+                                        <button class="btn btn-success" id="add_user">Agregar Persona</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
-
-        <!-- END Block v2 -->
-
-
+    </div>
+</div>
+<div class="content" hidden id="no_results">
+    <div class="block block-bordered">
+        <div class="block-content">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="block-header">
+                        <h3>NO SE ENCONTRO PERSONA</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -118,5 +173,36 @@ Miembros
         <script src='{% static "assets/js/product.js" %}'></script>
         <!-- <script src='{% static "assets/js/pages/base_forms_pickers_more.js" %}'></script> -->
 
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#search').click(function() {
+            $.ajax({
+                type:'post',
+                url:'{% url "members:getMembers" %}',
+                data: {
+                    'document_number' : $('#document_number').val(),
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+                cache:false,
+                success: function(data){
+                    if(data)
+                    {
+                        $('#no_results').hide();
+                        $('#search_results').show();
+                        $('#user_name').val(data.name);
+                        $('#user_lastname').val(data.lastName);
+                        $('#user_secondlastname').val(data.secondLastName);
+                        $('#user_document').val(data.documentNumber);
+                        $('#member').val(data.userId);
+                    }else
+                    {
+                        $('#search_results').hide();
+                        $('#no_results').show();
+                    }
+                }
+            })
+        })
+    })
 </script>
 {% endblock %}
