@@ -95,19 +95,19 @@ function refreshEvents(start, end, callback){
         'start' : Math.floor(start.getTime()/1000),
         'end' : Math.floor(end.getTime()/1000),
         'headquarter_id' : $('#headquarter_id option:selected').val(),
-        'bungalow_type_id' : $('#bungalow_type_id option:selected').val(),
+        'environment_id' : $('#environment_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
     $.ajax({
-        url : "create/refresh_events", // the endpoint
+        url : "create/refresh", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 
         // handle a successful response
         success : function(data) {
             console.log("AJAX REQUEST", data.events);
-            displayEvents(data);
+            callback(data.events);
         },
 
         // handle a non-successful response

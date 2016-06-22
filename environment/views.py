@@ -351,7 +351,21 @@ def insert_reservation(request):
         return HttpResponse("create")
 
 
-#Este recibe como parametro un dict.
+
+@require_http_methods(['POST'])
+def refresh_reservation(request):
+    start             = int(request.POST['start'])
+    end               = int(request.POST['end'])
+    environment_id    = int(request.POST['environment_id'])
+    headquarter_id    = int(request.POST['headquarter_id'])
+
+    availableDays = getMonthAvailableDays(headquarter_id, environment_id, start, end)
+    response = {
+        'events': availableDays
+    }
+    return JsonResponse(response)
+
+
 def getRefreshReservationFilters(request):
 
     filters = {}
@@ -378,73 +392,64 @@ def getRefreshReservationFilters(request):
             filters['environment_id'] = -1  #With this value, the filter will return no values.
 
 
-    if 'month' in request:
-        start_date = datetime.strptime(request['start_date'], "%m/%d/%Y")
+    if 'start_date' in request:
+        filters['start_date__gte'] = start_date
 
     if 'end_date'   in request:
-        end_date   = datetime.strptime(request['end_date'], "%m/%d/%Y")
-
-    filters['start_date__lte'] = end_date
-    filters['end_date__gte']   = start_date
+        filters['end_date__lte']   = end_date
 
     return filters
 
 
-@require_http_methods(['GET'])
-def refresh_reservation(request):
+def getMonthAvailableDays(headquarter_id, environment_id, start, end):
 
-    environment_service = EnvironmentService()
-    headquarter_service = HeadquarterService()
+    startDate = datetime.datetime.fromtimestamp(start)
+    endDate   = datetime.datetime.fromtimestamp(end)
+    num_days  = (endDate - startDate).days + 1
+    days      = [startDate + datetime.timedelta(days=delta) for delta in range(0, num_days)]
 
-    headquarters = headquarter_service.getHeadquarters()
-
-    filters      = getReservationFilters(request)
-    reservations = environment_service.filterReservations(filters)
-
-    paginator = Paginator(reservations, 10)
-
-    page = request.GET.get('page')
-
-    try:
-        reservations = paginator.page(page)
-
-    except PageNotAnInteger:
-        reservations = paginator.page(1)
-
-    except EmptyPage:
-        reservations = paginator.page(paginator.num_pages)
-
-    context = {
-        'reservations' : reservations,
-        'headquarters' : headquarters,
-        'titulo'       : 'titulo'
+    request = {
+        'start_date'     : startDate,
+        'end_date'       : endDate,
+        'headquarter_id' : headquarter_id,
+        'environment_id' : environment_id,
     }
 
-    return render(request, 'Admin/Environments/List_Reservations.html', context)
+    environment_service = EnvironmentService()
+    
 
+    filters      = getRefreshReservationFilters(request)
+    reservations = environment_service.filterReservations(filters)
 
-def getMonthAvailableDays(bungalowTypeId, month, year):
+    env_req ={
+        'headquarter_id' : headquarter_id,
+        'environment_id' : environment_id,
+    }
+    environments = environment_service.filter(env_req).values_list('id', flat=True)
 
-    num_days = calendar.monthrange(year, month)[1]
-    days = [datetime.date(year, month, day) for day in range(1, num_days + 1)]
+    # Get list of reserved environments (day, #reservations)
+    # print([(r.bungalow_id,r.bungalow_headquarter.id) for r in reservations])
 
-    reservations = cls.getReservations()
-    reservations = reservations.filter()
-    i = 0
-    for day in days:
-        
+    reservationList = []
+    for r in reservations:
+        reservationList += r.getReservationDays()
+    ocurrences = collections.Counter(reservationList)
 
+    print(int(startDate.strftime('%Y%m%d')), int(endDate.strftime('%Y%m%d')))
+    print(ocurrences)
+    print(days)
+    # print([(int(day.strftime('%Y%m%d')),environments.count() - ocurrences[int(day.strftime('%Y%m%d'))]) for day in days])
 
+    days = [(day, environments.count() - ocurrences[int(day.strftime('%Y%m%d'))]) for day in days]
 
-    availableDays = [{
-        'title': 'Disponible',
-        'start': day.isoformat()
-    } for day in days]
+    # Compose the url (Worst Approach EVER!)
+    url = "book/create/?";
+    url += "environment_id=" + str(environment_id) + "&"
+    url += "headquarter_id=" + str(headquarter_id) + "&"
+    url += "date="
 
-    print(availableDays)
+    return [{'title': str(day[1]) + ' Ambientes Disponibles',
+             'start': day[0].isoformat(),
+             'url': url + str(int(day[0].timestamp()))
+             } for day in days if (day[1] != 0)]
 
-    return availableDays
-
-Get reservations
-cmp and 
-      

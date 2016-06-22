@@ -26,3 +26,12 @@ class EnvironmentReservation(models.Model):
     start_date   = models.DateTimeField()
     price        = models.DecimalField(max_digits=6, decimal_places=2)
     status       = models.IntegerField()
+
+    def getReservationDays(self):
+        d1 = self.start_date
+        d2 = self.end_date
+
+        dd = [d1 + datetime.timedelta(days=d) for d in range((d2 - d1).days + 1)]
+        reserved = [int(day.strftime('%Y%m%d')) for day in dd]
+
+        return reserved
