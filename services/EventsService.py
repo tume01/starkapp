@@ -1,4 +1,5 @@
 from repositories import EventsRepository
+from datetime import datetime,date,timedelta
 
 class EventsService(object):
 
@@ -20,3 +21,33 @@ class EventsService(object):
 
     def filter(self,filters):
         return self.__event_repository.filter(filters)
+
+    def getEvent(self, id):
+        return self.__event_repository.find(id)
+
+    def registerMember(self, event_id, user):
+
+        event = self.getEvent(event_id)
+
+        assistants = event.eventregistration_set.filter(deleted_at=None).count()
+
+        if event.assistance > assistants:
+
+            if not event.eventregistration_set.filter(member_id=user.id, deleted_at=None):
+                return self.__event_repository.addMember(event, user)
+
+        return None
+
+    def removeUserRegistration(self, event_id, member_id):
+        event = self.getEvent(event_id)
+
+        week_before = date.today() - timedelta(days=7)
+      
+        return event.eventregistration_set.filter(member_id=member_id, registered_at__gte=week_before).update(deleted_at=datetime.now())
+
+    def getEventRegistrations(self, event_id):
+
+        event = self.getEvent(event_id)
+
+        return event.eventregistration_set.filter(deleted_at=None)
+

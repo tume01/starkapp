@@ -12,6 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from .forms import EventForm
 import datetime
+from services.MemberService import MembersService
 
 @require_http_methods(['GET'])
 def index(request):
@@ -117,7 +118,11 @@ def create_event(request):
 
         insert_data["environment_id"] = form.cleaned_data.get('environment') 
 
-        insert_data["user_id"] = form.cleaned_data.get('user') 
+        member_service = MembersService()
+
+        creator = member_service.getMemberByUser(request.user)
+
+        insert_data["creator_id"] = creator.id 
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
@@ -221,3 +226,137 @@ def update_events(request, event_id):
     events_service.update(id_type,insert_data)
 
     return HttpResponseRedirect(reverse('events:index'))
+
+def index_registerUser(request, event_id):
+    
+    events_service = EventsService()
+
+    event = events_service.getEvent(event_id)
+
+    context = {
+        'titulo' : 'titulo',
+        'event' : event,
+    }
+
+    return render(request,'Admin/Events/register_attendant.html',context)
+
+def registerUser(request, event_id):
+
+    filters = {
+        'document_number' : request.POST.get('document_number'),
+        'paternalLastName': request.POST.get('paternalLastName'),
+        'maternalLastName': request.POST.get('maternalLastName'),
+        'name': request.POST.get('name'),
+    }
+
+    member_service = MembersService()
+
+    users = member_service.filter(filters)
+
+    if not users.count():
+        messages.error(request,'Usuario no encontrado')
+    else:
+
+        event_service = EventsService()
+        user = users[0]
+
+        if event_service.registerMember(event_id, user):
+            messages.success(request, 'Usuario anadido al evento')
+            return HttpResponseRedirect(reverse('events:registrations', args=[event_id]))
+
+        messages.error(request, 'Error al anadir Usuario')
+
+    return HttpResponseRedirect(reverse('events:register_index', args=[event_id]))
+
+def registrations(request, event_id):
+
+    event_service = EventsService()
+
+    registrations = event_service.getEventRegistrations(event_id)
+
+    context = {
+        'registrations' : registrations,
+        'event_id' : event_id
+    }
+
+    return render(request, 'Admin/Events/registrations.html', context)
+
+def removeUser(request, event_id, member_id):
+
+    event_service = EventsService()
+
+    if event_service.removeUserRegistration(event_id, member_id):
+        messages.success(request, 'Miembro removido de evento correctamente')
+    else:
+        messages.error(request, 'Miembro no puede ser removido con menos de 1 semana de anticipacion')
+
+    return HttpResponseRedirect(reverse('events:registrations', args=[event_id]))
+
+def index_UserEvents(request):
+
+    member_service = MembersService()
+
+    user_events = member_service.getUserEvents(request.user)
+
+    context = {
+        'registrations': user_events
+    }
+
+    return render(request, 'User/Events/myEvents.html', context)
+
+def index_UserSignup(request):
+
+    event_service = EventsService()
+    eventstype_service = EventsTypeService()
+
+    events = event_service.getEvents()
+    event_types = eventstype_service.getEventsType()
+    
+    context = {
+        'events': events,
+        'event_types': event_types
+    }
+
+    return render(request, 'User/Events/index.html', context)
+
+def select_userEvent(request, event_id):
+    
+    event_service = EventsService()
+
+    event = event_service.getEvent(event_id)
+
+    context = {
+        'event': event
+    }
+
+    return render(request, 'User/Events/select.html', context)
+
+def userSignup(request, event_id):
+    
+    member_service = MembersService()
+    event_service = EventsService()
+
+    member = member_service.getMemberByUser(request.user)
+
+    if event_service.registerMember(event_id, member):
+            messages.success(request, 'Inscripcion en evento exitosa')
+            return HttpResponseRedirect(reverse('events:userEvents_index'))
+
+    messages.error(request, 'Error al inscribirse en el evento')
+
+    return HttpResponseRedirect(reverse('events:userEvent_select', args=[event_id]))
+
+def userSignout(request, event_id):
+
+    event_service = EventsService()
+    member_service = MembersService()
+
+    member = member_service.getMemberByUser(request.user)
+
+    if event_service.removeUserRegistration(event_id, member.id):
+        messages.success(request, 'Miembro removido de evento correctamente')
+    else:
+        messages.error(request, 'Miembro no puede ser removido con menos de 1 semana de anticipacion')
+
+    return HttpResponseRedirect(reverse('events:userEvents_index'))
+    

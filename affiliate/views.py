@@ -10,7 +10,7 @@ from services.AffiliateService import AffiliateService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import  AffiliateForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
@@ -771,6 +771,14 @@ def admin_move_affiliate(request):
     #Create new user
 
     password = get_random_string(length=10)
+
+    email = EmailMessage('Traslado de membresia' ,
+                             'Hola ' + member.name + ',\n\nHemos procesado el traslado de tu membresia a '+
+                             affiliate.name + ' ' + affiliate.paternalLastName + '.', 
+                             to=[member.email])
+
+    email.send()
+
 
     email = EmailMessage('Traslado de membresia' ,
                              'Hola ' + affiliate.name + ',\n\nHemos procesado el traslado de membresia.'+

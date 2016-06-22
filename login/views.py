@@ -14,13 +14,12 @@ def login_view(request):
     
     username = request.POST['username']
     password = request.POST['password']
-    print(username, password)
     user = auth.authenticate(username=username, password=password)
     if user is not None and user.is_active:
         # Correct password, and the user is marked "active"
         auth.login(request, user)
         # Redirect to a success page.
-        if request.user.groups.all()[0].name == 'usuarios':
+        if request.user.groups.all()[0].name == 'usuarios' or request.user.groups.all()[0].name == 'usuarios_suspendidos':
             return HttpResponseRedirect(reverse('login:iniUser'))
         else:
             return HttpResponseRedirect(reverse('login:iniAdmin'))

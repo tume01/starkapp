@@ -5,11 +5,12 @@ from services.MembershipService import MembershipService
 from services.SuspensionService import SuspensionService
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from .forms import SuspensionForms
 from services.MemberService import MembersService
+from django.contrib.auth.models import Group
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
@@ -26,7 +27,7 @@ def create_suspension_index(request):
 
     filter_member = {}
 
-    filter_member["membership"] =membership
+    filter_member["membership"] = membership
 
     member = member_service.filter(filter_member)
 
@@ -75,6 +76,20 @@ def create_suspension(request):
         suspension_service = SuspensionService()
 
         suspension_service.create(insert_data)
+
+        member_service = MembersService()
+
+        filter_data = {}
+
+        filter_data['membership_id'] = membershipId
+
+        member = member_service.filter(filter_data)[0]
+
+        current_user = member.user
+
+        group = Group.objects.get(name='usuarios_suspendidos')
+
+        group.user_set.add(current_user)
 
         return HttpResponseRedirect(reverse('members:index'))
 
@@ -206,17 +221,11 @@ def suspension_filter(request):
 
     filter_suspensions['membership_id'] = membershipId
 
-    if iniDate != '' and endDate != '':
-        filter_suspensions["initialDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
-        filter_suspensions["initialDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
-        filter_suspensions["finalDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
-        filter_suspensions["finalDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
-    else:
-        if iniDate != '':
-            filter_suspensions["initialDate"] = datetime.strptime(iniDate, '%m/%d/%Y')
+    if iniDate != '':
+        filter_suspensions["initialDate"] = datetime.strptime(iniDate, '%m/%d/%Y')
 
-        if endDate != '':
-            filter_suspensions["finalDate"] = datetime.strptime(endDate, '%m/%d/%Y')
+    if endDate != '':
+        filter_suspensions["finalDate"] = datetime.strptime(endDate, '%m/%d/%Y')
 
     if suspStatus != '3':
         filter_suspensions["status"] = suspStatus
@@ -255,5 +264,26 @@ def delete_suspension(request):
     suspension_service = SuspensionService()
 
     suspension_service.update(id_edit, edit_data)
+
+    form = SuspensionForms(request.POST)
+
+    member_service = MembersService()
+
+    suspension = suspension_service.getSuspension(id_edit)
+
+    filter_data = {}
+
+    filter_data['membership_id'] = suspension.membership.id
+
+    member = member_service.filter(filter_data)[0]
+
+    current_user = member.user
+
+    for group in current_user.groups.all():
+
+        if group.name == 'usuarios_suspendidos':
+
+            group.user_set.remove(current_user)
+            break
 
     return HttpResponseRedirect(reverse('members:index'))

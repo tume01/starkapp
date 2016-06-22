@@ -22,29 +22,29 @@ Creación de bungalows
 {% endblock %}
 
 {% block content %}
- <div class="content content-narrow">
+<div class="content content-narrow">
     <!-- Mega Form -->
     <div class="block block-bordered">
         <div class="block-header bg-gray-lighter">
             <ul class="block-options">
                 <li>
-                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo"><i class="si si-refresh"></i></button>
+                    <button type="button" data-toggle="block-option" data-action="refresh_toggle" data-action-mode="demo">
+                        <i class="si si-refresh"></i></button>
                 </li>
             </ul>
         </div>
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='{% url "bungalow:create" %}' method="post" >
-            {% csrf_token %}
+            <form class="form-horizontal push-10-t push-10" action='{% url "bungalow:create" %}' method="post">
+                {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                        <label class="col-xs-12" for="example-select">Sede</label>
+                            <label class="col-xs-12">Seleccione una sede</label>
                             <div class="col-md-6">
-                                <select class="form-control" id="example-select" name="example-select" size="1">
-                                    <option value="0">Sede principal</option>
-                                    <option value="1">Sede #1</option>
-                                    <option value="2">Sede #2</option>
-                                    <option value="3">Sede #3</option>
+                                <select class="form-control" name="headquarter_id" size="1">
+                                    {% for headquarter in headquarters %}
+                                    <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -53,7 +53,7 @@ Creación de bungalows
                         <div class="form-group">
                             <label class="col-xs-12" for="example-text-input">Numero de bungalow</label>
                             <div class="col-sm-9">
-                                <input class="form-control" id="example-text-input" name="number" placeholder="Bungalows ###" type="number" >
+                                <input class="form-control" id="example-text-input" name="number" placeholder="Bungalows ###" type="number">
                                 <div class="help-block">Agregue la numeración</div>
                             </div>
                         </div>
@@ -63,9 +63,9 @@ Creación de bungalows
                     <div class="col-sm-6">
 
                         <div class="form-group">
-                            <label class="col-xs-12" for="example-select">Seleccione el tipo de bungalow</label>
+                            <label class="col-xs-12">Seleccione el tipo de bungalow</label>
                             <div class="col-md-6">
-                                <select class="form-control" id="example-select" name="bungalow_type_id" size="1">
+                                <select class="form-control"name="bungalow_type_id" size="1">
                                     {% for bungalowType in bungalowTypes %}
                                     <option value="{{ bungalowType.id }}">{{ bungalowType.name }}</option>
                                     {% endfor %}
@@ -92,14 +92,15 @@ Creación de bungalows
                             <label class="col-xs-12" for="example-select">Ubicacion</label>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <input class="form-control" id="example-input1-group1" name="location" placeholder="Ubicacion"  type="text">
+                                    <input class="form-control" id="example-input1-group1" name="location" placeholder="Ubicacion" type="text">
                                 </div>
                             </div>
                         </div>
                     </div>
-                                                        <div class="col-lg-6">
+                    <div class="col-lg-6">
                         <div class="form-group">
-                            <label class="col-xs-12" for="example-daterange1">Rango de fechas para mantenimiento/próximamente/detenido</label>
+                            <label class="col-xs-12" for="example-daterange1">Rango de fechas para
+                                mantenimiento/próximamente/detenido</label>
                             <div class="col-md-6">
                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
                                     <input class="form-control" type="text" id="example-daterange1" name="example-daterange1" placeholder="Desde">
@@ -113,27 +114,29 @@ Creación de bungalows
 
                 <div class="row">
                     <div class="col-lg-12">
-                       <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="mega-bio">Observaciones</label>
-                            <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="8" placeholder="Ingrese alguna observación adicional acerca del bungalow"></textarea>
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="mega-bio">Observaciones</label>
+                                <textarea class="form-control input-lg" id="mega-bio" name="mega-bio" rows="8" placeholder="Ingrese alguna observación adicional acerca del bungalow"></textarea>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-xs-2 col-xs-offset-4">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Crear</button>
-                        
+                    <div class="form-group">
+                        <div class="col-xs-2 col-xs-offset-4">
+                            <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Crear
+                            </button>
+
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="btn btn-danger" type=""><i class="fa fa-remove push-5-r"></i> Cancelar
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-xs-2">
-                        <button class="btn btn-danger" type=""><i class="fa fa-remove push-5-r"></i> Cancelar</button>
-                    </div>                                    
-                </div>
             </form>
         </div>
     </div>
     <!-- END Mega Form -->
-</div>    
+</div>
 
 {% endblock %}
 
@@ -141,41 +144,43 @@ Creación de bungalows
 {% block scripts %}
 
 <!-- Page Plugins -->
-                <script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
-                <script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/slick/slick.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/chartjs/Chart.min.js" %}'></script>
 
-                <script>
+<script>
                     jQuery(function () {
                 // Init page helpers (Slick Slider plugin)
                 App.initHelpers('slick');
             });
-        </script> 
 
-        <!-- Page JS Plugins -->
-        <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
-        
-        
-        <script>
+</script>
+
+<!-- Page JS Plugins -->
+<script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/moment.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/dropzonejs/dropzone.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+<script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+
+
+<script>
             jQuery(function () {
                 // Init page helpers (BS Datepicker + BS Datetimepicker + BS Colorpicker + BS Maxlength + Select2 + Masked Input + Range Sliders + Tags Inputs plugins)
                 App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
             });
-        </script>
-        
-        <script src='{% static "assets/js/tablas.js" %}'></script>
+
+</script>
+
+<script src='{% static "assets/js/tablas.js" %}'></script>
 
 
 {% endblock %}

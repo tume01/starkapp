@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import UserForm, UserTypeForm
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required

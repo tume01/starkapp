@@ -1,0 +1,163 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+
+{% block head_title %}
+Admin: productos
+{% endblock %}
+
+{% block head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Registro de Ingresos y Salidas
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Registro de Ingresos y Salidas
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+
+
+<!-- Page Content -->
+<div class="content content-narrow">
+    <!-- Simple Table Full -->
+    <div class="block">
+        <div class="block-header">
+            <h3 class="block-title"></h3>
+        </div>
+        <div class="block-content">
+            <form id="formIndexProduct" class="js-validation-bootstrap form-horizontal push-10-t push-10">
+            {% csrf_token %}
+            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+            <div class="row">
+                <div class="col-lg-4">                                    
+                    <div class="form-group">                                            
+                        <div class="col-xs-12">
+                            <label class="control-label" >Producto</label>
+                            <select class="form-control" name="selectProduct" id="selectProduct" size="1" >
+                                <option></option>
+                                {% for p in products%}
+                                <option value="{{p.id}}">{{p.name}}</option>
+                                {% endfor %}                                                    
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3">
+                    <div class="col-xs-12">
+                        <label class="control-label" >Cantidad</label>
+                        <input class="form-control" name="quantity" id="quantity" placeholder="Ingrese una cantidad" type="text">
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">                                            
+                        <div class="col-xs-12">
+                            <label class="control-label" >Movimiento</label>
+                            <select class="form-control" name="selectMove" id="selectMove" size="1" >
+                                
+                                <option></option>
+                                <option value="0">Ingreso</option>
+                                <option value="1">Salida</option>
+                                                                                   
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+                            <!--
+
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <label class="col-xs-12" for="example-text-input">Rango Stock Actual</label>
+                                    <div class="col-xs-5">
+                                        <input class="form-control" name="f_range_stock_min" id="f_range_stock_min" placeholder="" type="text">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input class="form-control" name="f_range_stock_max" id="f_range_stock_max" placeholder="" type="text">
+                                    </div>
+                                    
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label class="css-input css-checkbox css-checkbox-primary">
+                                    <input type="checkbox" id="f_active" name="f_active"><span></span> Activo
+                                    </label>
+                                </div>
+
+                                <div class="col-lg-3">
+                                    <label class="col-xs-12" for="example-text-input">Rango Precios</label>
+                                    <div class="col-xs-5">
+                                        <input class="form-control" name="f_range_price_min" id="f_range_price_min" placeholder="" type="text">
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                    </div>
+                                    <div class="col-xs-5">
+                                        <input class="form-control" name="f_range_price_max" id="f_range_price_max" placeholder="" type="text">
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-lg-9">
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <div class="col-lg-8 col-lg-offset-4">
+                                            <button class="btn btn-sm btn-primary" type=button id="filterProduct">Buscar</button>
+                                        </div>
+
+                        -->
+
+                        <div class="row">
+                            <div class="col-lg-3 col-lg-offset-9">
+                                <div class="form-group">
+                                    <div class="col-lg-8">
+                                        <!--<button class="btn btn-sm btn-primary" type="submit">Buscar</button>-->
+                                        <button class="btn btn-sm btn-primary" id="RegisterMove" type="button">Registrar</button>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- END Simple Table Full -->
+        </div>     
+
+
+        <!-- HASTA AQUÍ -->       
+        {% endblock %}
+
+{% block scripts %}
+    <script src='{% static "assets/js/product_in_out.js" %}'></script>
+{% endblock %}
