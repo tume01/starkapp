@@ -6,7 +6,12 @@ $( document ).ready(function() {
         minimumResultsForSearch: Infinity
     });
 
+
 	$("#select2BungalowService").select2();
+    $("#select2BungalowServiceAdd").select2({
+        placeholder: 'Seleccione un servicio',
+        minimumResultsForSearch: Infinity
+    });
 
 	console.log( "finish product ready!" );    
 });
@@ -14,7 +19,7 @@ $( document ).ready(function() {
 $('#bungalow').change(function(){
 	console.log( "services aditional on bungalow" );
 
-    data = {};
+    var data = {};
 
     console.log(data);
 
@@ -27,7 +32,16 @@ $('#bungalow').change(function(){
     });
 
     xhr.done(function(data) {
-        //window.location="/bungalow_service";
+        console.log(data);
+        if ($('#bungalow').val() > 0){
+            var array_id_actual = [];
+            for (var i=0; i<data.actual_serv.length; i++) array_id_actual.push(data.actual_serv[i].id);
+            
+            $('#select2BungalowService').val(array_id_actual).change();
+
+            $("#select2BungalowServiceAdd").html('').select2({data: data.all_serv});  
+        }
+        
     });
 
     xhr.fail(function(xhr, status, text){
@@ -36,6 +50,12 @@ $('#bungalow').change(function(){
     });
 
     return xhr;
+
+});
+
+$('#SaveExtraServices').click(function(){
+    console.log("save extra service");
+    console.log($('#select2BungalowServiceAdd').val());
 
 });
 

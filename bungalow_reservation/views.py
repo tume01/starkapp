@@ -251,10 +251,37 @@ def aditionalServiceBungalowIndex(request):
 @require_http_methods(['POST'])
 def filterAditionalServiceBungalow(request, id):
     req = json.loads( request.body.decode('utf-8') )
+    req_list_actual_services = []
+    req_list_all_bungalows = []
+    req_send = {}
 
     bungalow = BungalowService.findBungalow(id)
+    all_services = Bungalow_serviceService.getBungalow_services()
 
-    print((bungalow.bungalow_type).bungalow_services)
 
-    return HttpResponse( json.dumps(req), content_type='application/json')
+    if int(id) >= 0:
+        bungalow_type = BungalowTypeService.findBungalowType(bungalow.bungalow_type.id)
+        services_by_byngalow_type = bungalow_type.bungalow_services.all()
+
+        for s in services_by_byngalow_type:
+            if s is not None:
+                service_data = {}
+                service_data["id"] = s.id
+                service_data["text"] = s.name
+                req_list_actual_services.append(service_data)
+                #print(s.id)
+
+        for s in all_services:
+            if s is not None and s not in services_by_byngalow_type:
+                service_data_2 = {}
+                service_data_2["id"] = s.id
+                service_data_2["text"] = s.name
+                req_list_all_bungalows.append(service_data_2)
+                #print(s.id)
+
+        req_send["actual_serv"] = req_list_actual_services
+        req_send["all_serv"] = req_list_all_bungalows
+
+
+    return HttpResponse( json.dumps(req_send), content_type='application/json')
 

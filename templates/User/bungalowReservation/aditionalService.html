@@ -49,13 +49,23 @@ Servicios Adicionales
                         </div>
                     </div>
 
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
                         <div class="form-group">
                             <label class="col-xs-12 control-label">Servicios de Bungalow Actuales</label>
-                            <select class="form-control" multiple="multiple" id="select2BungalowService" >
+                            <select class="form-control" multiple="multiple" id="select2BungalowService" disabled>
+                                    <option value=""></option>
                                 {% for bs in bungalow_services %}
                                     <option value="{{bs.id}}">{{bs.name}}</option>
                                 {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="col-xs-12 control-label">Servicios por adicionar</label>
+                            <select class="form-control" multiple="multiple" id="select2BungalowServiceAdd" >
+                                <option value=""></option>
+                                
                             </select>
                         </div>
                     </div>
@@ -64,10 +74,10 @@ Servicios Adicionales
                     <div class="form-group">
 
                         <div class="col-xs-2 col-xs-offset-4">
-                            <button class="btn btn-success" type="button" id="SaveServices"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                            <button class="btn btn-success" type="button" id="SaveExtraServices"><i class="fa fa-check push-5-r"></i> Guardar</button>
                         </div> 
                         <div class="col-xs-2">
-                            <button class="btn btn-danger" type="button" id="CancelSaveServices"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
+                            <button class="btn btn-danger" type="button" id="CancelExtraSaveServices"><i class="fa fa-remove push-5-r"></i> Cancelar</button></a>
                         </div>  
                                                                                                   
                     </div>
