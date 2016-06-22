@@ -179,11 +179,31 @@ Lista de solicitudes de membresía
                     <!-- END Simple Table Full -->
                 </div>
                 <!-- END Page Content -->
+                    <div class="modal fade in" tabindex="-1" role="dialog" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Eliminar Solcitud</h4>
+          </div>
+          <div class="modal-body">
+            <p>¿Desea eliminar la solicitud de <label id='nomApe'></label>?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="eliminarSolicitud" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 {% endblock %}
 
 {% block scripts %}
 
     <script>
+
+        var nombre;
+    var apellido;
 
   function editar() {
         $('.editar').click(function (e) {
@@ -195,9 +215,12 @@ Lista de solicitudes de membresía
     }
       function eliminar() {
         $('.eliminar').click(function (e) {
-           var id = $(this).attr("data-id")          
-            $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();          
+            nombre = $(this).parent().parent().prevAll().eq(5).html();
+            apellido = $(this).parent().parent().prevAll().eq(4).html();
+            $('#nomApe').text(nombre + " " + apellido);
+            var id = $(this).attr("data-id")    
+            $('#hid1').val(id)    
+            $('#myModal').modal('show');         
         });      
     }
       function cerrar() {
@@ -209,6 +232,11 @@ Lista de solicitudes de membresía
     }
 
     $(document).ready(function () {
+
+        $('#eliminarSolicitud').click(function (e) {        
+            document.forms["myFormDelete"].submit();    
+        });  
+
         editar();
         eliminar();
         cerrar();
