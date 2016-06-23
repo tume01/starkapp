@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 
@@ -24,8 +25,9 @@ def login_view(request):
         else:
             return HttpResponseRedirect(reverse('login:iniAdmin'))
     else:
+        messages.error(request, 'Nombre de usuario o contraseña inválidos')
         # Show an error page
-    	return HttpResponseRedirect(reverse("login:index"))
+        return render(request, 'login.html')
 
 
 
