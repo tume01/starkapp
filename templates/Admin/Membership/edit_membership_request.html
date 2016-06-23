@@ -82,7 +82,7 @@ Nueva solicitud de membresía
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" value="{{membership_application.document_number}}" pattern="[0-9]*" >
+                                                        <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="{{membership_application.document_number}}" pattern="[0-9]*" >
                                                     </div>
                                                 </div>
                                                 <label class="col-xs-1" for="example-select">Tipo</label>
@@ -161,11 +161,11 @@ Nueva solicitud de membresía
 {% endblock %}
 
 {% block scripts %}
+<script>
+var CSRF_TOKEN = '{{ csrf_token }}';
+var url= "{% url 'membership_application:verify_document_number' %}"
+</script>
 
-
-        <!-- Page JS Plugins -->
-<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
 <script src='{% static "assets/js/Admin/Membership/membership_application_forms_validation.js" %}'></script>
 

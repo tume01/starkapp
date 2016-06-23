@@ -1,0 +1,218 @@
+{% extends 'User/Layouts/base.html' %}
+
+{% block head_title %}
+User: solicitudes de membresías
+{% endblock %}
+
+{% block head_dahsboard %}
+Solicitud de Membresía
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de solicitudes de membresía
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Solicitud de membresía
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de solicitudes de membresía
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+    <!-- Simple Table Full -->
+    <div class="block">
+                        <div class="block-content">
+                            <form id='busqueda' class="form-horizontal push-10-t push-10" method="post" >
+                                {% csrf_token %}  
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-10" for="example-select">Nombres</label>
+                                            <div class="col-md-10">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="firstName" placeholder="Nombres"  type="text" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Apellido paterno</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno"  type="text" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">    
+                                <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Numero de Documento</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" pattern="[0-9]*" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-6 " for="example-select">Documento de Identidad</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="identity_document_type" size="1">
+                                                    <option value="Todos">Todos</option>
+                                                    {% for doc_type in doc_types %}
+                                                        <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                <div class="row">                                    
+                                    <div class="form-group">
+                                        <div class="col-lg-8 col-lg-offset-4">
+                                            <button class="btn btn-sm btn-primary"  id='button' type="button">Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+    <div class="block block-bordered">
+         <form id="myFormObject" action="{% url "membership_application:objection_index" %} " method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid1" name="id"/>
+            </form>     
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <table class="table table-bordered table-striped js-dataTable-simple"  id='tabla'>
+                                 <thead>
+                                    <tr>
+                                        <th>Doc. de Identidad</th>
+                                        <th>Num. de Documento</th>
+                                        <th>Nombres</th>
+                                        <th>Apellido paterno</th>                                       
+                                        <th>Apellido materno</th>                                       
+                                        <th>Fecha Inicio</th>  
+                                        <th>Fecha Fin</th>  
+                                        <th>Comentarios</th> 
+                                        <th>Acciones</th>                                      
+                                    </tr>
+                                </thead>
+                                <tbody id='tbodyid'>
+                                    {% for membershipApp in membershipApplications %}                                       
+                                        <tr>
+                                            <td class="font-w600">{{membershipApp.identity_document_type.name}}</td>
+                                            <td class="font-w600">{{membershipApp.document_number}}</td>
+                                            <td class="font-w600">{{membershipApp.firstName}}</td>
+                                            <td class="font-w600">{{membershipApp.paternalLastName}}</td>
+                                            <td class="font-w600">{{membershipApp.maternalLastName}}</td>
+                                            <td class="font-w600">{{membershipApp.initialDate}}</td>
+                                            <td class="font-w600">{{membershipApp.finalDate}}</td>
+                                            <td class="font-w600">{{membershipApp.comments}}</td>
+                                            <td class="text-center">
+                                               <div class="btn-group">
+                                    <button class="btn btn-xs btn-default objetar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Agregar objeción"><i class="fa fa-pencil"></i></button>
+
+                                </div>
+                                            </td>    
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>
+                <!-- END Page Content -->
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+  function objetar() {
+     $('.objetar').click(function (e) {
+            var id = $(this).attr("data-id")          
+            $('#hid1').val(id)
+            document.forms["myFormObject"].submit();    
+
+        });        
+    }
+
+
+    $(document).ready(function () {
+        objetar();
+
+        $('#button').click(function(){
+        {
+            var frm = $('#busqueda');
+            $.ajax({
+                type:'post',
+                url:'{% url "membership_application:user_filter" %}',
+                data: frm.serialize(),
+                cache:false,
+                success: function(returndata){
+                    $('#tabla').dataTable().fnDestroy();
+                    $("#tbodyid").empty();                  
+                    $.each (returndata, function (key, value) {
+                        doc=returndata[key].fields.identity_document_type;
+                        doc_num=returndata[key].fields.document_number;
+                        name=returndata[key].fields.firstName;
+                        pat=returndata[key].fields.paternalLastName;
+                        mat=returndata[key].fields.maternalLastName;
+                        iniD=returndata[key].fields.initialDate;
+                        endD=returndata[key].fields.finalDate;
+                        comm=returndata[key].fields.comments;
+                        id=returndata[key].pk;
+                        var html =  '<div class="btn-group"><button class="btn btn-xs btn-default objetar" data-id="'+id+'"type="button"  data-toggle="tooltip" title="Agregar objeción"><i class="fa fa-pencil"></i></button></div>'
+                        if(doc==1){
+                            doc='DNI'
+                        }else if(doc==2){
+                            doc='Pasaporte'
+                        }
+                        $("#tbodyid").append('<tr><td class="font-w600">'+doc+'</td><td class="font-w600">'+doc_num+'</td><td class="font-w600">'+name+'</td><td class="font-w600">'+pat+'</td><td class="font-w600">'+mat+'</td><td class="font-w600">'+iniD+'</td><td class="font-w600">'+endD+'</td><td class="font-w600">'+comm+'</td><td class="text-center">'+html+'</td></tr>');
+                        
+                    }); 
+
+                    $('#tabla').dataTable({
+                            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
+                            pageLength: 10,
+                            "autoWidth": false,
+                            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                            searching: false,
+                            oLanguage: {
+                                sLengthMenu: "",                
+                                sInfoEmpty:"No hay entradas",
+                                sZeroRecords:"No hay datos disponibles",
+                                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
+                            },
+                            dom:
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-6'i><'col-sm-6'p>>"
+                    });   
+                    objetar();
+              
+                },
+                
+            });
+        }
+        });
+        
+    });
+       
+    </script>
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}

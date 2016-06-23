@@ -53,7 +53,7 @@ Tipos de multas
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Precio</label>
                                             <div class="col-sm-4">
-                                                <input class="form-control" id="example-number-input" name="price" placeholder="Precio" type="number" step="any" style="text-align:right;">
+                                                <input class="form-control" id="example-number-input" name="price" placeholder="Precio" >
                                             </div>
                                         </div>
                                     </div>
@@ -76,10 +76,6 @@ Tipos de multas
 {% endblock %}
 
 {% block scripts %}
-
-        <!-- Page JS Plugins -->
-<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
 <script src='{% static "assets/js/Admin/Fine/fineType_forms_validation.js" %}'></script>
 

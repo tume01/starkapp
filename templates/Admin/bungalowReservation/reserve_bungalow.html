@@ -1,0 +1,75 @@
+{% extends 'Admin/Layouts/base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: reserva de bungalows
+{% endblock %}
+
+{% block head_dahsboard %}
+Reserva de Bungalows
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista de reservas activas
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Reserva de Bungalows
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de reservas
+{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href='{% static "assets/css/fullcalendar/fullcalendar.min.css" %}'>
+<link rel="stylesheet" href='{% static "assets/css/fullcalendar/fullcalendar.print.css" %}' media='print'>
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-12 control-label">Seleccione un tipo</label>
+                <select class="form-control" id="bungalow_type_id" size="1">
+                    {% for bungalowType in bungalowTypes %}
+                    <option value="{{bungalowType.id}}">{{bungalowType.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-xs-12 control-label">Seleccione una sede</label>
+                <select class="form-control" id="headquarter_id" size="1">
+                    {% for headquarter in headquarters %}
+                    <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div id='calendar'></div>
+
+</div>
+<!-- END Page Content -->
+
+<!-- HASTA AQUÍ -->
+
+{% endblock %}
+
+{% block scripts %}
+<script src='{% static "assets/js/fullcalendar/moment.min.js" %}'></script>
+<script src='{% static "assets/js/fullcalendar/fullcalendar.min.js" %}'></script>
+<script src='{% static "assets/js/fullcalendar/es.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/bungalowReservation/reservation.js" %}'></script>
+{% endblock %}

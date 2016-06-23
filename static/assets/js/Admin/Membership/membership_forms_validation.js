@@ -35,13 +35,6 @@ var MembershipFormValidation = function() {
                 'finalDate':{
                 	required: 'Por favor ingrese una fech final'
                 }
-                /*
-                'val-confirm-password': {
-                    required: 'Please provide a password',
-                    minlength: 'Your password must be at least 5 characters long',
-                    equalTo: 'Please enter the same password as above'
-                },*/
-
             }
         });
     };

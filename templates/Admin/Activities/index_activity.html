@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base_a.html' %}
+{% extends 'Admin/Layouts/base.html' %}
 
 {% load staticfiles %}
 
@@ -118,6 +118,7 @@ Lista de actividades
                                     <div class="btn-group">
                                         <a href="{% url 'activities:select' activity.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Serivicio"><i class="fa fa-pencil"></i></button></a>
                                         <a href="{% url 'activities:delete' activity.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Eliminar Servicio"><i class="fa fa-times"></i></button></a>
+                                        <a href="{% url 'activities:members' activity.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Ver lista miembros"><i class="fa fa-users"></i></button></a>
                                     </div>
                                 </td>
                             </tr>

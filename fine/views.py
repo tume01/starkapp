@@ -7,11 +7,12 @@ from services.FineTypeService import FineTypeService
 from services.MemberService import MembersService
 from services.FineService import FineService
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import FineForm
 from .forms import FineTypeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+import json
 
 
 @login_required
@@ -76,7 +77,7 @@ def delete_type(request):
 
     filter_data["fine_type_id"] = id_edit
 
-    filter_data["status"] = 'Pendiente de Pago'
+    filter_data["status"] = 'Por Pagar'
 
     fine_service = FineService()
 
@@ -267,10 +268,6 @@ def filter(request):
 
     member_id = request.POST['member_id']
 
-    member_service = MembersService()
-
-    member = member_service.getMember(member_id)
-
     fine_service = FineService()
 
     fine_type_service = FineTypeService()
@@ -281,10 +278,38 @@ def filter(request):
 
     filter_fines["member_id"] = member_id
 
-    if fineStatus != 'Pendiente de Pago':
+    if fineStatus != '':
         filter_fines["status"] = fineStatus
 
     fines = fine_service.filter(filter_fines)
+
+    list = []
+
+    for fine in fines: #populate list
+        list.append({'observations':fine.observations, 'reason': (fine_type_service.getFine(fine.fine_type.id)).reason, 
+                    'price': (fine_type_service.getFine(fine.fine_type.id)).price, 'status': fine.status, 'id':fine.id})
+
+    recipe_list_json = json.dumps(list) #dump list as JSON
+
+    return HttpResponse(recipe_list_json, 'application/javascript')
+
+
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
+@require_http_methods(['GET'])
+def user_index(request):
+
+    member_service = MembersService()
+
+    current_user = request.user
+
+    member = member_service.getMemberByUser(current_user)
+
+    fine_service = FineService()
+
+    fine_type_service = FineTypeService()
+
+    fines = fine_service.getFineByUser(member.id)
 
     for fine in fines:
         fine.reason = (fine_type_service.getFine(fine.fine_type.id)).reason
@@ -292,7 +317,43 @@ def filter(request):
 
     context = {
         'fines': fines,
-        'member' : member,
+        'member': member,
     }
 
-    return render(request, 'Admin/Fines/index_fine.html', context)
+    return render(request, 'User/Fines/index_fines.html', context)
+
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
+@require_http_methods(['POST'])
+def user_filter(request):
+
+    member_service = MembersService()
+
+    current_user = request.user
+
+    member = member_service.getMemberByUser(current_user)
+
+    fine_service = FineService()
+
+    fine_type_service = FineTypeService()
+
+    filter_fines = {}
+
+    fineStatus = request.POST['status']
+
+    filter_fines["member_id"] = member.id
+
+    if fineStatus != '':
+        filter_fines["status"] = fineStatus
+
+    fines = fine_service.filter(filter_fines)
+
+    list = []
+
+    for fine in fines: #populate list
+        list.append({'observations':fine.observations, 'reason': (fine_type_service.getFine(fine.fine_type.id)).reason, 
+                    'price': (fine_type_service.getFine(fine.fine_type.id)).price, 'status': fine.status, 'id':fine.id})
+
+    recipe_list_json = json.dumps(list) #dump list as JSON
+
+    return HttpResponse(recipe_list_json, 'application/javascript')

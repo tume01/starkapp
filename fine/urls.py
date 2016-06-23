@@ -12,6 +12,9 @@ urlpatterns = [
     url(r'^type', views.type_index, name='index_type'),
     url(r'^create/insert', views.create, name='insert'),
     url(r'^create', views.create_index, name='create_index'),
+    url(r'^user/filter', views.user_filter, name='user_filter'),
+    url(r'^user', views.user_index, name='user_index'),
     url(r'^index', views.index, name='index'),
     url(r'^filter', views.filter, name='filter'),
+    url(r'^create', views.create_index, name='create_index'),
 ]

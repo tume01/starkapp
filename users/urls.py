@@ -10,9 +10,14 @@ urlpatterns = [
     url(r'^type/edit', views.edit_user_type_index, name='type/edit_index'),
     url(r'^type', views.user_type_index, name='type/index'),
     url(r'^edit/insert', views.edit_user, name='edit'),
+    url(r'^member', views.edit_user_member, name='edit_user_member'),
     url(r'^edit', views.edit_user_index, name='edit_index'),
+    url(r'^verify/member', views.verify_user_member, name='verify_user_member'),
+    url(r'^verify', views.verify_user, name='verify_user'),
     url(r'^create/insert', views.create_user, name='insert'),
     url(r'^create', views.create_user_index, name='create_index'),
+    url(r'^view/edit',views.edit_password, name='password'),
+    url(r'^view',views.show_user, name='show_user'),
+    url(r'^filter', views.user_index_filter, name='filter'),
     url(r'^', views.user_index, name='index'),
-
 ]

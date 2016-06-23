@@ -1,4 +1,7 @@
+
 from django.db import models
+
+from bungalow_service.models import Bungalow_service
 
 class Bungalow(models.Model):
     STATUS_CHOICES = (
@@ -9,9 +12,14 @@ class Bungalow(models.Model):
     )
 
     bungalow_type = models.ForeignKey('bungalow_type.BungalowType', on_delete=models.CASCADE)
+    headquarter = models.ForeignKey('headquarters.Headquarters', on_delete=models.CASCADE)
     status = models.IntegerField(choices=STATUS_CHOICES)
     location = models.CharField(max_length=200)
     number = models.IntegerField()
+
+    deleted_at = models.DateTimeField(null=True)
+
+    bungalow_services = models.ManyToManyField(Bungalow_service)
 
     def getStatusName(self):
         index = self.status - 1

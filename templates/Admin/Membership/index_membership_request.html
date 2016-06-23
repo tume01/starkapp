@@ -29,7 +29,7 @@ Lista de solicitudes de membresía
     <!-- Simple Table Full -->
     <div class="block">
                         <div class="block-content">
-                            <form class="form" action='{% url "membership_application:filter" %}' method="post" >
+                            <form class="form"  id='busqueda'  method="post" >
                                 {% csrf_token %}  
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -49,7 +49,7 @@ Lista de solicitudes de membresía
                                         <label class="col-xs-12" for="example-select">Numero de Documento</label>
                                             <div class="col-md-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Num Documento" pattern="[0-9]*"  >
+                                                    <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Num Documento" pattern="[0-9]*"  size="60">
                                                 </div>
                                             </div>
                                         </div>
@@ -96,7 +96,7 @@ Lista de solicitudes de membresía
                     <div class="col-lg-12">
                         <div class="form-group">
                             <div class="col-lg-8 col-lg-offset-4">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                                <button class="btn btn-sm btn-primary"  id='button' type="button">Buscar</button>
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@ Lista de solicitudes de membresía
 
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
-                            <table class="table table-bordered table-striped js-dataTable-simple">
+                            <table class="table table-bordered table-striped js-dataTable-simple"  id='tabla'>
                                 <thead>
                                     <tr>
                                         <th>Doc. Identidad</th>
@@ -135,7 +135,7 @@ Lista de solicitudes de membresía
                                         <th> Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id='tbodyid'>
                                     {% for membershipApp in membershipApplications %}                                       
                                         <tr>
                                             <td class="font-w600">{{membershipApp.identity_document_type.name}}</td>
@@ -179,28 +179,128 @@ Lista de solicitudes de membresía
                     <!-- END Simple Table Full -->
                 </div>
                 <!-- END Page Content -->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block scripts %}
+
     <script>
-    $(document).ready(function () {
+
+        var nombre;
+    var apellido;
+
+  function editar() {
         $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid2').val(id)
             document.forms["myFormEdit"].submit();    
 
-        });
+        });      
+    }
+
+    function eliminar() {
         $('.eliminar').click(function (e) {
-           var id = $(this).attr("data-id")          
-            $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();          
-        });
+            var id = $(this).attr("data-id")    
+            $('#hid1').val(id)    
+            swal({
+                title: "Eliminar Solicitud",
+                text: "¿Desea eliminar la solicitud de " + $(this).parent().parent().prevAll().eq(5).html()+" " + $(this).parent().parent().prevAll().eq(4).html() + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });            
+        });      
+    }
+
+    function cerrar() {
         $('.cerrar').click(function (e) {
            var id = $(this).attr("data-id")          
             $('#hid3').val(id)
             document.forms["myFormClose"].submit();          
-        });
-        
+        });      
+    }
+
+    $(document).ready(function () {
+
+        editar();
+        eliminar();
+        cerrar();
+
+ $('#button').click(function(){
+        {
+            var frm = $('#busqueda');
+            $.ajax({
+                type:'post',
+                url:'{% url "membership_application:filter" %}',
+                data: frm.serialize(),
+                cache:false,
+                success: function(returndata){
+                    $('#tabla').dataTable().fnDestroy();
+                    $("#tbodyid").empty();                  
+                    $.each (returndata, function (key, value) {
+                        doc=returndata[key].fields.identity_document_type;
+                        doc_num=returndata[key].fields.document_number;
+                        name=returndata[key].fields.firstName;
+                        pat=returndata[key].fields.paternalLastName;
+                        mat=returndata[key].fields.maternalLastName;
+                        iniD=returndata[key].fields.initialDate;
+                        endD=returndata[key].fields.finalDate;
+                        comm=returndata[key].fields.comments;
+                        id=returndata[key].pk;
+                        var html;
+                        if(returndata[key].fields.status==1){
+                            html='<div class="btn-group"><button class="btn btn-xs btn-default editar" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Editar Solicitud"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-default eliminar" data-id="'+id+'" type="button" data-toggle="tooltip" title="Eliminar Solicitud"><i class="fa fa-times"></i></button><button class="btn btn-xs btn-default cerrar" data-id="'+id+'" type="button" data-toggle="tooltip" title="Cerrar Solicitud"><i class="fa fa-chevron-right"></i></button></div>'
+
+                        }else if(returndata[key].fields.status==0){
+                            html='<div class="col-lg-12" ><label class="col-xs-15" for="example-select">Eliminado</label></div>'
+                        }else if(returndata[key].fields.status==2){
+                            html='<div class="col-lg-12" ><label class="col-xs-15" for="example-select">Aprobado</label></div>'
+                        }else if(returndata[key].fields.status==3){
+                            html='<div class="col-lg-12" ><label class="col-xs-15" for="example-select">Desaprobado</label></div>'
+                        }
+     
+                        if(doc==1){
+                            doc='DNI'
+                        }else if(doc==2){
+                            doc='Pasaporte'
+                        }
+                        $("#tbodyid").append('<tr><td class="font-w600">'+doc+'</td><td class="font-w600">'+doc_num+'</td><td class="font-w600">'+name+'</td><td class="font-w600">'+pat+'</td><td class="font-w600">'+mat+'</td><td class="font-w600">'+iniD+'</td><td class="font-w600">'+endD+'</td><td class="font-w600">'+comm+'</td><td class="text-center">'+html+'</td></tr>');
+                        
+                    }); 
+
+                    $('#tabla').dataTable({
+                            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
+                            pageLength: 10,
+                            "autoWidth": false,
+                            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                            searching: false,
+                            oLanguage: {
+                                sLengthMenu: "",                
+                                sInfoEmpty:"No hay entradas",
+                                sZeroRecords:"No hay datos disponibles",
+                                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
+                            },
+                            dom:
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-6'i><'col-sm-6'p>>"
+                    });   
+                    editar();
+                    eliminar();
+                    cerrar();
+
+                },
+                
+            });
+        }
+  });        
     });
     </script>
                 <!-- HASTA AQUÍ -->       
 
-                {% endblock %}
+{% endblock %}

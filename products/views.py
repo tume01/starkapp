@@ -177,40 +177,129 @@ def filter_product(request):
     filter_data = {}
     req = json.loads( request.body.decode('utf-8') )
 
-    #print(req.get("f_selectProductType"))
+    print("nombre= "+req.get("f_name"))
+    print(req.get("f_select2Provider"))
+    print("tipo= "+req.get("f_selectProductType"))
 
-    param = []
-    param.append(req.get("f_name"))
-    #param = [3, 2] #id y stock min
+    product_name = ""
 
-    #if req.get("f_selectProductType") == '' && req.get("f_name") == '' && req.get("f_select2Provider") == null:
-    #    qry = "SELECT * FROM products_product "
-    #else:
-    #    qry = "SELECT * FROM products_product WHERE "
+    qry = "SELECT p.id, p.price, p.actual_stock, p.minimum_stock, p.status, p.description, p.name, p.product_type_id "
+    qry += " FROM products_product p, products_product_provider pxp WHERE p.id = pxp.product_id "
 
-    #   if req.get("f_selectProductType") == '':
-    #       qry += "product_type_id = " + req.get("f_selectProductType")
+
+    if req.get("f_selectProductType") == '0' and req.get("f_name") == '' and req.get("f_select2Provider") == None:
+        print("sin filtro")
+    else:
+        if req.get("f_selectProductType") != '0':
+            qry += " AND p.product_type_id="+req.get("f_selectProductType") + " "
         
+        if req.get("f_select2Provider") != None:
+            i=0
+            for prov_id in req.get("f_select2Provider"):
+                if i == 0:
+                    qry += " AND ( pxp.provider_id="+ prov_id + " "
+                    i += 1
+                else:
+                    qry += " OR pxp.provider_id="+ prov_id + " "
 
-    #print(qry)
-    qry = "SELECT * FROM products_product WHERE id<5"
-    #logging.debug(qry)
+            qry += " ) "
 
+        if req.get("f_name") != '':
+            qry += " AND p.name LIKE %s"
+            product_name = req.get("f_name")
 
+    print("qry= "+qry)
+
+    req_list = []
 
     try:
-        list_products = Product.objects.raw(qry)
-        #print('hola')
+        if product_name != '':
+            list_products = Product.objects.raw(qry, [product_name])
+        else:
+            list_products = Product.objects.raw(qry)
+        
         for p in list_products:
-            print(p.id)
-
-        req_list = serializers.serialize('json', list_products)
+            data_item = {}
+            data_item["id"] = p.id
+            data_item["name"] = p.name
+            data_item["price"] = p.price
+            data_item["actual_stock"] = p.actual_stock
+            data_item["minimum_stock"] = p.minimum_stock
+            data_item["status"] = p.status
+            data_item["description"] = p.description
+            #data_item["id"] = p.id
+            req_list.append(data_item)
 
     except IntegrityError:
         handle_exception()
         list_products = None
 
-    
+    return HttpResponse( json.dumps(req_list), content_type='application/json')
+
+@require_http_methods(['GET'])
+def index_in_out(request):
+
+    product_service = ProductsService()
+    providers_service = ProvidersService()
+    product_types_service = ProductTypesService()
+
+    products = product_service.getProducts()
+    all_providers = providers_service.getActiveProviders()
+    all_product_types = product_types_service.getProductTypes()
+
+    context = {
+        'products' : products,
+        #'all_providers' : all_providers,
+        'all_product_types' : all_product_types,
+        'titulo' : 'titulo'
+    }
+
+    return render(request, 'Admin/Products/index_in_out.html', context) 
+
+@require_http_methods(['POST'])
+def register_in_out(request, id):
+    update_data = {}
+    req = json.loads( request.body.decode('utf-8') )
+    req_send = ""
+
+    product_service = ProductsService()
+
+    q = int(req.get("quantity"))
+
+    p = product_service.find(id)
+
     
 
-    return HttpResponse( json.dumps(req_list), content_type='application/json')
+    if (p.actual_stock >= q and req.get("move") == '1') or req.get("move") == '0':
+        update_data["name"] = p.name
+        update_data["minimum_stock"] = p.minimum_stock
+
+        if req.get("move") == '1': #salida
+            update_data["actual_stock"] = p.actual_stock - q
+        else:
+            update_data["actual_stock"] = p.actual_stock + q
+
+        update_data["description"] = p.description
+        update_data["price"] = p.price
+
+        product_types_service = ProductTypesService()
+        product_type = product_types_service.find(p.product_type.id)
+        update_data["product_type"] = product_type
+
+        providers_service = ProvidersService() 
+        list_providers = []
+
+        for i in p.provider.all():
+            list_providers.append(providers_service.find(i.id))
+
+        update_data["provider"] = list_providers
+
+        
+        pr = product_service.update(id, update_data)
+
+        req_send = "0"
+    else:
+        req_send += str(p.actual_stock)
+
+    return HttpResponse( json.dumps(req_send), content_type='application/json')
+

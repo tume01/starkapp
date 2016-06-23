@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base_a.html' %}
+{% extends 'Admin/Layouts/base.html' %}
 {% load staticfiles %}
 
 {% block head_title %}
@@ -39,13 +39,12 @@ Edición de bungalow
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                        <label class="col-xs-12" for="example-select">Sede</label>
+                            <label class="col-xs-12">Seleccione una sede</label>
                             <div class="col-md-6">
-                                <select class="form-control" id="example-select" name="example-select" size="1">
-                                    <option value="0">Sede principal</option>
-                                    <option value="1">Sede #1</option>
-                                    <option value="2">Sede #2</option>
-                                    <option value="3">Sede #3</option>
+                                <select class="form-control" name="headquarter_id" size="1">
+                                    {% for headquarter in headquarters %}
+                                    <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>

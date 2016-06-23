@@ -61,7 +61,11 @@ INSTALLED_APPS = [
     'identity_document_type',
     'ubigeo',
     'affiliate',
-
+    'bungalow_service',
+    'entry',
+    'guests',
+    'suspension',
+    'reserve_field'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -107,8 +111,12 @@ DATABASES = {
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
         'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),        
+        'PORT': os.environ.get('DB_PORT'),
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'db.sqlite3',
+    # }
 }
 
 
@@ -159,3 +167,9 @@ STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
 
 LOGIN_URL = '/login'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yoqueriaphp@gmail.com'
+EMAIL_HOST_PASSWORD = 'yoqueriaPHP123'
+EMAIL_PORT = 587

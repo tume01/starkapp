@@ -52,7 +52,7 @@ Lista de tipos de membresías
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Invitados</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="example-number-input" name="guests" placeholder="Invitados" value= "{{membershipType.guests}}" pattern="[0-9]*">
+                                                <input class="form-control" id="example-number-input" name="guests" placeholder="Invitados" value= "{{membershipType.guests}}" >
                                             </div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@ Lista de tipos de membresías
                                         <label class="col-xs-12" for="example-select">Precio</label>
                                             <div class="col-md-6">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group2" name="price" placeholder="Precio"  type="number" value= "{{membershipType.price}}" step="any" style="text-align:right;">
+                                                    <input class="form-control" id="example-input1-group2" name="price" placeholder="Precio"  value= "{{membershipType.price}}" >
                                                 </div>
                                             </div>
                                         </div>
@@ -98,11 +98,6 @@ Lista de tipos de membresías
 {% endblock %}
 
 {% block scripts %}
-
-
-        <!-- Page JS Plugins -->
-<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
 
 <script src='{% static "assets/js/Admin/Membership/membershipType_forms_validation.js" %}'></script>
 

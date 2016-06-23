@@ -1,0 +1,228 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: suspensión
+{% endblock %}
+
+{% block head_dahsboard %}
+Suspension
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de suspensiones
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Suspensión
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de suspensiones
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+  <!-- Simple Table Full -->
+    <div class="block">
+                        <div class="row">
+                            <div class="col-lg-4" >
+                                <div class="form-group">
+                                <label class="col-xs-12" for="example-select"> Nombres: {{member.name}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4" >
+                                <div class="form-group">
+                                <label class="col-xs-12" for="example-select"> Apellido Paterno: {{member.paternalLastName}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4" >
+                                <div class="form-group">
+                                <label class="col-xs-12" for="example-select"> Apellidos Materno: {{member.maternalLastName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="block-content">
+                            <form class="form" action='{% url "suspension:filter" %}' method="post" >
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-6" style="display: none;">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" name="member_id" placeholder="ID"  type="number" value= "{{member.id}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-10 control-label" for="initialDate">Rango de fechas</label>
+                                            <div class="col-md-10">
+                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" placeholder="Desde">
+                                                    <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" placeholder="hasta">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                               <br>
+                                <div class="row">
+                                    <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-1 " for="example-select">Estado</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="status" size="1">
+                                                    <option value="3">Todas</option>
+                                                    <option value="0">Susp. terminada</option>
+                                                    <option value="1">Susp. en curso</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-6 " for="example-select">Tipo de Suspension</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="suspension_type" size="1">
+                                                    <option value="Todos">Todos</option>
+                                                    {% for suspension_type in suspension_types %}
+                                                        <option value="{{suspension_type.id}}">{{suspension_type.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <br>
+                                </div>
+                                <br>
+
+
+                                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                            </form>
+                        </div>
+
+    </div>
+    <div class="block block-bordered">
+            <form id="myFormEdit" action="{% url 'suspension:edit_index' %} " method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid2" name="id"/>
+            </form>
+            <form id="myFormDelete" action="{% url 'suspension:delete' %}" method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid1" name="id"/>
+            </form>
+            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+            <div class="block-content">
+
+            <table class="table table-bordered table-striped js-dataTable-simple">
+                <thead>
+                    <tr>
+                        <th>Tipo de Suspension</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Razón</th>
+                        <th>Acciones</th>
+                        <th hidden='true'></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for suspension in suspensions %}
+                        <tr>
+                            <td class="font-w600">{{suspension.suspension_type.name}}</td>
+                            <td class="font-w600">{{suspension.initialDate}}</td>
+                            <td class="font-w600">{{suspension.finalDate}}</td>
+                            <td class="font-w600">{{suspension.reason}}</td>
+                            <td class="text-center">
+                                {% if suspension.status == 0 %}
+                                    <div class="col-lg-12" >
+                                        <label class="col-xs-15 " for="example-select">Suspensión Terminada</label>
+                                    </div>
+                                {% else %}
+                                    <div class="btn-group">
+                                        <button class="btn btn-xs btn-default editar" data-id="{{suspension.id}}" type="button"  data-toggle="tooltip" title="Editar Suspension"><i class="fa fa-user"></i></button>
+                                        <button class="btn btn-xs btn-default eliminar" data-id="{{suspension.id}}" type="button"  data-toggle="tooltip" title="Eliminar Suspension"><i class="fa fa-user-times"></i></button>
+                                    </div>
+                                {% endif %}
+                            </td>
+                              <td hidden='true'></td>
+                                
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <form class="js-validation-bootstrap form-horizontal push-10-t push-10"  action="{% url "suspension:create_index" %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="hid3" name="id"/>
+                <div class="col-lg-6" style="display: none;">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                           <div class="input-group">
+                                <input class="form-control" id="example-input0-group1" name="member_id" placeholder="ID"  type="number" value= "{{member.id}}" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if show %}
+                <div class="form-group">
+                    <div class="col-xs-2 col-xs-offset-5">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Nueva Suspension</button>
+                    </div>
+                </div>
+                {% endif %}
+                </form>
+            </div>
+        </div>
+        <!-- END Simple Table Full -->
+    </div>
+    <!-- END Page Content -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+    $(document).ready(function () {
+        $('.editar').click(function (e) {
+            var id = $(this).attr("data-id")          
+            $('#hid2').val(id)
+            document.forms["myFormEdit"].submit();
+        });     
+        $('.eliminar').click(function (e) {
+            var id = $(this).attr("data-id")          
+            $('#hid1').val(id)
+             swal({
+                title: "Eliminar Suspensión",
+                text: '¿Desea eliminar la suspensión con razón: "' + $(this).parent().parent().prevAll().eq(0).html()+'" ?',
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });           
+        });
+    });
+    </script>
+    <!-- HASTA AQUÍ -->       
+
+    {% endblock %}
