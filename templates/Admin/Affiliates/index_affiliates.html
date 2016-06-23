@@ -100,12 +100,58 @@ Lista de afiliados
         <!-- END Simple Table Full -->
     </div>
     <!-- END Page Content -->
+   <div class="modal fade in" tabindex="-1" role="dialog" id="myModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Eliminar Afiliado</h4>
+          </div>
+          <div class="modal-body">
+            <p>¿Desea eliminar a <label id='nomApe'></label>?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="eliminarAfiliado" class="btn btn-primary">Eliminar</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade in" tabindex="-1" role="dialog" id="myModal2">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Trasladar Membresía</h4>
+          </div>
+          <div class="modal-body">
+            <p>¿Desea trasladar la membresía a <label id='nomApe2'></label>?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" id="trasladarMembresia" class="btn btn-primary">Trasladar</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
 {% endblock %}
 
 {% block scripts %}
 
     <script>
+    var nombre;
+    var apellido;
+
     $(document).ready(function () {
+        $('#eliminarAfiliado').click(function (e) {        
+            document.forms["myFormDelete"].submit();    
+        });
+        $('#trasladarMembresia').click(function (e) {        
+            document.forms["myFormMove"].submit();   
+        }); 
+
         $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid2').val(id)
@@ -113,15 +159,21 @@ Lista de afiliados
 
         });     
         $('.eliminar').click(function (e) {
-            var id = $(this).attr("data-id")          
-            $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();    
+            nombre = $(this).parent().parent().prevAll().eq(4).html();
+            apellido = $(this).parent().parent().prevAll().eq(3).html();
+            $('#nomApe').text(nombre + " " + apellido);
+            var id = $(this).attr("data-id")    
+            $('#hid1').val(id)    
+            $('#myModal').modal('show');   
 
         });    
         $('.trasladar').click(function (e) {
+            nombre = $(this).parent().parent().prevAll().eq(4).html();
+            apellido = $(this).parent().parent().prevAll().eq(3).html();
+            $('#nomApe2').text(nombre + " " + apellido);
             var id = $(this).attr("data-id")          
             $('#hid3').val(id)
-            document.forms["myFormMove"].submit();    
+            $('#myModal2').modal('show');    
 
         });  
     });
