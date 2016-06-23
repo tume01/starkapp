@@ -18,7 +18,13 @@ from django.contrib.auth.models import Group
 @require_http_methods(['POST'])
 def create_suspension_index(request):
 
-    membership_id = request.POST['membership_id']
+    member_service = MembersService()
+
+    memberId = request.POST['member_id']
+
+    member = member_service.getMember(memberId)
+
+    membership_id = member.membership.id
 
     membership_service = MembershipService()
 
@@ -28,18 +34,10 @@ def create_suspension_index(request):
 
     membership = membership_service.getMembership(membership_id)
 
-    member_service = MembersService()
-
-    filter_member = {}
-
-    filter_member["membership"] = membership
-
-    member = member_service.filter(filter_member)
-
     context = {
         'suspension_types' : suspension_types,
         'membership': membership,
-        'member':member[0]
+        'member':member
     }
 
     return render(request, 'Admin/Suspension/new_suspension.html', context)

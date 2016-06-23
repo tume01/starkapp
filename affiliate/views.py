@@ -773,6 +773,14 @@ def admin_move_affiliate(request):
     password = get_random_string(length=10)
 
     email = EmailMessage('Traslado de membresia' ,
+                             'Hola ' + member.name + ',\n\nHemos procesado el traslado de tu membresia a '+
+                             affiliate.name + ' ' + affiliate.paternalLastName + '.', 
+                             to=[member.email])
+
+    email.send()
+
+
+    email = EmailMessage('Traslado de membresia' ,
                              'Hola ' + affiliate.name + ',\n\nHemos procesado el traslado de membresia.'+
                              '\n\n\nPara poder acceder al sistema utiliza los siguientes datos: '+
                              '\nUsuario:    '+ str(affiliate.document_number) +

@@ -185,6 +185,9 @@ Lista de solicitudes de membresía
 
     <script>
 
+        var nombre;
+    var apellido;
+
   function editar() {
         $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
@@ -193,14 +196,29 @@ Lista de solicitudes de membresía
 
         });      
     }
-      function eliminar() {
+
+    function eliminar() {
         $('.eliminar').click(function (e) {
-           var id = $(this).attr("data-id")          
-            $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();          
+            var id = $(this).attr("data-id")    
+            $('#hid1').val(id)    
+            swal({
+                title: "Eliminar Solicitud",
+                text: "¿Desea eliminar la solicitud de " + $(this).parent().parent().prevAll().eq(5).html()+" " + $(this).parent().parent().prevAll().eq(4).html() + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });            
         });      
     }
-      function cerrar() {
+
+    function cerrar() {
         $('.cerrar').click(function (e) {
            var id = $(this).attr("data-id")          
             $('#hid3').val(id)
@@ -209,6 +227,7 @@ Lista de solicitudes de membresía
     }
 
     $(document).ready(function () {
+
         editar();
         eliminar();
         cerrar();

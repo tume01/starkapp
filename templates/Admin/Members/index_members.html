@@ -197,6 +197,7 @@ Lista de miembros
         <!-- END Simple Table Full -->
     </div>
     <!-- END Page Content -->
+
 {% endblock %}
 
 {% block scripts %}
@@ -212,13 +213,26 @@ Lista de miembros
     }
 
     function eliminar() {
-       $('.eliminar').click(function (e) {
-            var id = $(this).attr("data-id")          
-            $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();    
+        $('.eliminar').click(function (e) {
+            var id = $(this).attr("data-id");    
+            $('#hid1').val(id) ;
+           swal({
+                title: "Eliminar Miembro",
+                text: "¿Desea eliminar a " + $(this).parent().parent().prevAll().eq(4).html()+" " + $(this).parent().parent().prevAll().eq(3).html() + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });      
         });  
     }
-
+    
     function membre() {
         $('.membre').click(function (e) {
             var id = $(this).attr("data-id")          
@@ -251,6 +265,10 @@ Lista de miembros
     }
 
     $(document).ready(function () {
+
+        $('#eliminarMiembro').click(function (e) {        
+            document.forms["myFormDelete"].submit();    
+        });  
 
         editar();
         eliminar();  
