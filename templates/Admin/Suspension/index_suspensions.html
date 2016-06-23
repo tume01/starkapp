@@ -1,7 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
 {% block head_title %}
-Admin: suspension
+Admin: suspensión
 {% endblock %}
 
 {% block head_dahsboard %}
@@ -13,7 +13,7 @@ Lista completa de suspensiones
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Suspension
+Suspensión
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
@@ -123,7 +123,7 @@ Lista de suspensiones
                     <tr>
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
-                        <th>Razon</th>
+                        <th>Razón</th>
                         <th>Acciones</th>
                         <th hidden='true'></th>
                     </tr>
@@ -137,7 +137,7 @@ Lista de suspensiones
                             <td class="text-center">
                                 {% if suspension.status == 0 %}
                                     <div class="col-lg-12" >
-                                        <label class="col-xs-15 " for="example-select">Suspension Terminada</label>
+                                        <label class="col-xs-15 " for="example-select">Suspensión Terminada</label>
                                     </div>
                                 {% else %}
                                     <div class="btn-group">
@@ -159,7 +159,7 @@ Lista de suspensiones
                     <div class="form-group">
                         <div class="col-md-6">
                            <div class="input-group">
-                                <input class="form-control" id="example-input0-group1" name="membership_id" placeholder="ID"  type="number" value= "{{membership.id}}" >
+                                <input class="form-control" id="example-input0-group1" name="member_id" placeholder="ID"  type="number" value= "{{member.id}}" >
                             </div>
                         </div>
                     </div>
@@ -188,7 +188,20 @@ Lista de suspensiones
         $('.eliminar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();
+             swal({
+                title: "Eliminar Suspensión",
+                text: '¿Desea eliminar la suspensión con razón: "' + $(this).parent().parent().prevAll().eq(0).html()+'" ?',
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });           
         });
     });
     </script>
