@@ -2,6 +2,13 @@
 {% block content %}
                 <!-- Log In Form -->
                 <div class="bg-white">
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class="alert alert-warning" role="alert">
+                                {{msg.message}}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
                     <section class="content content-boxed">
                         <!-- Section Content -->
                         <div class="row items-push push-50-t push-30">
