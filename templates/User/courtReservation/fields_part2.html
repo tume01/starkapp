@@ -35,13 +35,14 @@ Rerserva de canchas
         </div>
         <div class="block-content">
             <form class="form-horizontal push-10-t push-10" action='{% url "reserve_field:insert" %}' method="post">
+                {% csrf_token %}
 
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="form-group">
                             <label>Sede</label>
-                            <select class="form-control" disabled name="headquarter_id" size="1">
-                                <option  selected='selected' value="{{headquarter.name}}"> {{headquarter.name}}
+                            <select class="form-control"  name="headquarter_id" size="1">
+                                <option  selected='selected' value="{{headquarter.id}}"> {{headquarter.name}}
                                 </option>
                             </select>
                         </div>
@@ -49,7 +50,7 @@ Rerserva de canchas
                     <div class="col-lg-5 col-lg-offset-1">
                         <div class="form-group">
                             <label>Tipo de bungalow</label>
-                            <select class="form-control"  disabled name="bungalow_type_id" size="1">
+                            <select class="form-control"  name="court_type" size="1">
                                 {% if court_type == 0 %}
                                 <option selected='selected' value="{{ court_type }}">Cancha de Fútbol</option>
                                 {% endif %}
@@ -68,10 +69,18 @@ Rerserva de canchas
                     <div class="col-lg-5">
                         <div class="form-group">
                             <label>Seleccione la cantidad de horas</label>
-                            <select class="form-control" id="bungalow_type_id">
+                            <select class="form-control" name="court_duration" size="1">
                                 {% for val in max_hours %}
                                 <option value="{{val}}">{{val}} Horas</option>
                                 {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-lg-offset-1">
+                        <div class="form-group">
+                            <label>Hora de Reserva</label>
+                            <select class="form-control" name="date" size="1">
+                                <option value="{{fullDate}}">{{date}}</option>
                             </select>
                         </div>
                     </div>
