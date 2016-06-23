@@ -140,7 +140,20 @@ Lista de promociones
        $('.eliminar').click(function (e) {
            var id = $(this).attr("data-id")          
             $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();          
+             swal({
+                title: "Eliminar Promoción",
+                text: '¿Desea eliminar la promoción: "' + $(this).parent().parent().prevAll().eq(1).html()+'"' + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });                  
         });
     }
 
@@ -167,7 +180,9 @@ Lista de promociones
                         desc=returndata[key].fields.description;
                         percen=returndata[key].fields.percentage;
                         id=returndata[key].pk;
-                        var html = '<div class="btn-group"><button class="btn btn-xs btn-default editar" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-default eliminar" data-id="'+id+'" type="button" data-toggle="tooltip" title="Eliminar Promoción"><i class="fa fa-times"></i></button></div>'
+                        if(returndata[key].fields.status)
+                            var html = '<div class="btn-group"><button class="btn btn-xs btn-default editar" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-default eliminar" data-id="'+id+'" type="button" data-toggle="tooltip" title="Eliminar Promoción"><i class="fa fa-times"></i></button></div>'
+                        else var html = 'Inactivo'
                         $("#tbodyid").append('<tr><td class="font-w600">'+desc+'</td><td class="font-w600" style="text-align:right;">'+percen+'&nbsp;%</td><td class="text-center">'+html+'</td></tr>');
                     });  
                     $('#tabla').dataTable({
