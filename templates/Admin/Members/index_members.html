@@ -198,31 +198,11 @@ Lista de miembros
     </div>
     <!-- END Page Content -->
 
-    <div class="modal fade in" tabindex="-1" role="dialog" id="myModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Eliminar Miembro</h4>
-          </div>
-          <div class="modal-body">
-            <p>¿Desea eliminar a <label id='nomApe'></label>?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-            <button type="button" id="eliminarMiembro" class="btn btn-primary">Eliminar</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 {% endblock %}
 
 {% block scripts %}
 
     <script>
-
-    var nombre;
-    var apellido;
 
     function editar() {
        $('.editar').click(function (e) {
@@ -233,14 +213,23 @@ Lista de miembros
     }
 
     function eliminar() {
-       $('.eliminar').click(function (e) {
-            nombre = $(this).parent().parent().prevAll().eq(4).html();
-            apellido = $(this).parent().parent().prevAll().eq(3).html();
-            $('#nomApe').text(nombre + " " + apellido);
-            var id = $(this).attr("data-id")    
-            $('#hid1').val(id)    
-            $('#myModal').modal('show');
-     
+        $('.eliminar').click(function (e) {
+            var id = $(this).attr("data-id");    
+            $('#hid1').val(id) ;
+           swal({
+                title: "Eliminar Miembro",
+                text: "¿Desea eliminar a " + $(this).parent().parent().prevAll().eq(4).html()+" " + $(this).parent().parent().prevAll().eq(3).html() + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });      
         });  
     }
     
