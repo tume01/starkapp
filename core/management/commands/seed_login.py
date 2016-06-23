@@ -28,6 +28,7 @@ class Command(BaseCommand):
 
     def cleanLogin(self):
         Suspension.objects.all().delete()
+        SuspensionType.objects.all().delete()
         Member.objects.all().delete()
         Membership_Application.objects.all().delete()
         Membership.objects.all().delete()
@@ -2100,11 +2101,19 @@ class Command(BaseCommand):
                        email='mailm3@mailcito.com', address='Bliizard HQ', state=1)
         memb3.save()
 
-        susp1 = Suspension(membership=mship1, reason='Falta de overwatch', initialDate=datetime.now(),
+        suspType1 = SuspensionType(name='Robo Leve', description='Suspension que se usa en caso haya un robo leve',
+                                   status=1)
+        suspType1.save()
+
+        suspType2 = SuspensionType(name='Robo Moderado', description='Suspension que se usa en caso haya un robo moderado',
+                                   status=1)
+        suspType2.save()
+
+        susp1 = Suspension(suspension_type=suspType1, membership=mship1, reason='Acusaciòn de robo comprobada', initialDate=datetime.now(),
                            finalDate=datetime.now() + timedelta(8), status=1)
         susp1.save()
 
-        susp2 = Suspension(membership=mship2, reason='Falta de TAC', initialDate=datetime.now() - timedelta(5),
+        susp2 = Suspension(suspension_type=suspType2, membership=mship2, reason='Objetos de valor robados', initialDate=datetime.now() - timedelta(5),
                            finalDate=datetime.now() - timedelta(1), status=0)
         susp2.save()
 

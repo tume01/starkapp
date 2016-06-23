@@ -1,7 +1,7 @@
 {% extends 'Admin/Layouts/base.html' %}
 
 {% block head_title %}
-Admin: suspension
+Admin: suspensión
 {% endblock %}
 
 {% block head_dahsboard %}
@@ -13,7 +13,7 @@ Lista completa de suspensiones
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Suspension
+Suspensión
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
@@ -28,6 +28,24 @@ Lista de suspensiones
 <div class="content">
   <!-- Simple Table Full -->
     <div class="block">
+                        <div class="row">
+                            <div class="col-lg-4" >
+                                <div class="form-group">
+                                <label class="col-xs-12" for="example-select"> Nombres: {{member.name}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4" >
+                                <div class="form-group">
+                                <label class="col-xs-12" for="example-select"> Apellido Paterno: {{member.paternalLastName}}</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-4" >
+                                <div class="form-group">
+                                <label class="col-xs-12" for="example-select"> Apellidos Materno: {{member.maternalLastName}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
                         <div class="block-content">
                             <form class="form" action='{% url "suspension:filter" %}' method="post" >
                                 {% csrf_token %}
@@ -70,26 +88,24 @@ Lista de suspensiones
                                             </div>
                                         </div>
                                     </div>
+                                 <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-6 " for="example-select">Tipo de Suspension</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="suspension_type" size="1">
+                                                    <option value="Todos">Todos</option>
+                                                    {% for suspension_type in suspension_types %}
+                                                        <option value="{{suspension_type.id}}">{{suspension_type.name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <br>
                                 </div>
                                 <br>
-                                <div class="row">
-                                    <div class="col-lg-4" >
-                                        <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> Nombres: {{member.name}}</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4" >
-                                        <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> Apellido Paterno: {{member.paternalLastName}}</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4" >
-                                        <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> Apellidos Materno: {{member.maternalLastName}}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
+
+
                                 <div class="row">
 
                     <div class="col-lg-12">
@@ -121,9 +137,10 @@ Lista de suspensiones
             <table class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
+                        <th>Tipo de Suspension</th>
                         <th>Fecha Inicio</th>
                         <th>Fecha Fin</th>
-                        <th>Razon</th>
+                        <th>Razón</th>
                         <th>Acciones</th>
                         <th hidden='true'></th>
                     </tr>
@@ -131,13 +148,14 @@ Lista de suspensiones
                     <tbody>
                         {% for suspension in suspensions %}
                         <tr>
+                            <td class="font-w600">{{suspension.suspension_type.name}}</td>
                             <td class="font-w600">{{suspension.initialDate}}</td>
                             <td class="font-w600">{{suspension.finalDate}}</td>
                             <td class="font-w600">{{suspension.reason}}</td>
                             <td class="text-center">
                                 {% if suspension.status == 0 %}
                                     <div class="col-lg-12" >
-                                        <label class="col-xs-15 " for="example-select">Suspension Terminada</label>
+                                        <label class="col-xs-15 " for="example-select">Suspensión Terminada</label>
                                     </div>
                                 {% else %}
                                     <div class="btn-group">
@@ -159,7 +177,7 @@ Lista de suspensiones
                     <div class="form-group">
                         <div class="col-md-6">
                            <div class="input-group">
-                                <input class="form-control" id="example-input0-group1" name="membership_id" placeholder="ID"  type="number" value= "{{membership.id}}" >
+                                <input class="form-control" id="example-input0-group1" name="member_id" placeholder="ID"  type="number" value= "{{member.id}}" >
                             </div>
                         </div>
                     </div>
@@ -188,7 +206,20 @@ Lista de suspensiones
         $('.eliminar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();
+             swal({
+                title: "Eliminar Suspensión",
+                text: '¿Desea eliminar la suspensión con razón: "' + $(this).parent().parent().prevAll().eq(0).html()+'" ?',
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });           
         });
     });
     </script>

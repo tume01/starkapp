@@ -45,7 +45,7 @@ def affiliate_index(request):
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
-        'id_member' : id_member,
+        'member' : member,
         'affiliates' : affiliates,
     }
 
@@ -101,7 +101,7 @@ def create_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member': id_member,
+            'member': member,
             'affiliates': affiliates,
         }
 
@@ -182,7 +182,7 @@ def create_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member' : id_member,
+            'member' : member,
             'affiliates' : affiliates,
         }
 
@@ -258,7 +258,7 @@ def edit_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member': id_member,
+            'member': member,
             'affiliates': affiliates,
         }
 
@@ -339,7 +339,7 @@ def edit_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member' : id_member,
+            'member' : affiliate.member,
             'affiliates' : affiliates,
         }
 
@@ -363,8 +363,6 @@ def delete_affiliate(request):
 
     affiliate = affiliate_service.getAffiliate(id_edit)
 
-    id_member = affiliate.member.id
-
     filter_affiliate = {}
 
     filter_affiliate["member"] = affiliate.member
@@ -374,7 +372,7 @@ def delete_affiliate(request):
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
-        'id_member' : id_member,
+        'member' : affiliate.member,
         'affiliates' : affiliates,
     }
 
@@ -404,7 +402,7 @@ def admin_affiliate_index(request):
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
-        'id_member' : id_member,
+        'member' : member,
         'affiliates' : affiliates,
     }
 
@@ -460,7 +458,7 @@ def admin_create_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member': id_member,
+            'member': member,
             'affiliates': affiliates,
         }
 
@@ -541,7 +539,7 @@ def admin_create_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member' : id_member,
+            'member' : member,
             'affiliates' : affiliates,
         }
 
@@ -617,7 +615,7 @@ def admin_edit_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member': id_member,
+            'member': member,
             'affiliates': affiliates,
         }
 
@@ -683,6 +681,8 @@ def admin_edit_affiliate(request):
 
         affiliate_service = AffiliateService()
 
+        member_service = MembersService()
+
         affiliate_service.update(id_edit, edit_data)
 
         affiliate = affiliate_service.getAffiliate(id_edit)
@@ -698,7 +698,7 @@ def admin_edit_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member' : id_member,
+            'member' : affiliate.member,
             'affiliates' : affiliates,
         }
 
@@ -733,7 +733,7 @@ def admin_delete_affiliate(request):
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
-        'id_member' : id_member,
+        'member' : affiliate.member,
         'affiliates' : affiliates,
     }
 
