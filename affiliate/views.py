@@ -45,7 +45,7 @@ def affiliate_index(request):
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
-        'id_member' : id_member,
+        'member' : member,
         'affiliates' : affiliates,
     }
 
@@ -404,7 +404,7 @@ def admin_affiliate_index(request):
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
-        'id_member' : id_member,
+        'member' : member,
         'affiliates' : affiliates,
     }
 
