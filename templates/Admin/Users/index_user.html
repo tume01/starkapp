@@ -32,6 +32,57 @@ Lista de usuarios
                 {% csrf_token %}  
                 <input type="hidden" id="hid2" name="id"/>
             </form>
+        <div class="block-content">
+                            <form class="form" action='{% url "users:filter" %}' method="post" >
+                                {% csrf_token %}
+                               <br>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Usuario</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-number1-group2" name="username" placeholder="Usuario" pattern="[0-9]*"  size="60">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-6 " for="example-select">Tipo de Usuario</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="user_type" size="1">
+                                                    <option value="Todos">Todos</option>
+                                                    {% for group in groups %}
+                                                        {% if group.name == "usuarios_suspendidos"%}
+                                                            <option value="{{group.name}}">usuarios suspendidos</option>
+                                                        {% else %}
+                                                            <option value="{{group.name}}">{{group.name}}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <br>
+                                </div>
+                                <br>
+
+
+                                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                            </form>
+                        </div>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
             <table class="table table-bordered table-striped js-dataTable-simple">
@@ -46,9 +97,13 @@ Lista de usuarios
                         {% for user in users %}                                       
                         <tr>
                             <td class="font-w600">{{user.username}}</td>
-                            {% for group in user.groups.all %}     
-                            <td class="font-w600">{{group.name}}</td>
-                             {% endfor %}
+                            {% if user.groups.all.count > 1 %}
+                                <td class="font-w600">usuario suspendido</td>
+                            {% else %}
+                                {% for group in user.groups.all %}
+                                <td class="font-w600">{{group.name}}</td>
+                                {% endfor %}
+                            {% endif %}
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-default editar" data-id="{{user.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-pencil"></i></button>
