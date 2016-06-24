@@ -99,7 +99,7 @@
                             <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Usuario del Club</span></li>
-                        {% if perms.dummy.permission_usuario %} 
+                        {% if not perms.dummy.permission_usuario_suspendido %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
