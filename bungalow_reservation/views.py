@@ -238,8 +238,8 @@ def aditionalServiceBungalowIndex(request):
     print(member.id)
 
     reservationsByMember = bungalow_reservation_service.getReservationsByMember(member.id)
-    print("number reservations")
-    print(reservationsByMember[1])
+    #print("number reservations")
+    #print(reservationsByMember[1])
 
     context = {
         'reservations' : reservationsByMember,
@@ -252,11 +252,13 @@ def aditionalServiceBungalowIndex(request):
 def filterAditionalServiceBungalow(request, id):
     req = json.loads( request.body.decode('utf-8') )
     req_list_actual_services = []
-    req_list_all_bungalows = []
+    req_list_all_services = []
+    req_list_reservation_services = []
     req_send = {}
 
     bungalow = BungalowService.findBungalow(id)
     all_services = Bungalow_serviceService.getBungalow_services()
+    reservations = BungalowReservationService.getReservationsByBungalow(id)
 
 
     if int(id) >= 0:
@@ -276,12 +278,66 @@ def filterAditionalServiceBungalow(request, id):
                 service_data_2 = {}
                 service_data_2["id"] = s.id
                 service_data_2["text"] = s.name
-                req_list_all_bungalows.append(service_data_2)
+                req_list_all_services.append(service_data_2)
                 #print(s.id)
 
+        for r in reservations:
+            if r is not None:
+                for s in r.aditional_services.all():
+                    service_data_3 = {}
+                    service_data_3["id"] = s.id
+                    service_data_3["text"] = s.name
+                    req_list_reservation_services.append(service_data_3)
+
+
         req_send["actual_serv"] = req_list_actual_services
-        req_send["all_serv"] = req_list_all_bungalows
+        req_send["all_serv"] = req_list_all_services
+        req_send["reservation_serv"] = req_list_reservation_services
 
 
     return HttpResponse( json.dumps(req_send), content_type='application/json')
 
+
+@require_http_methods(['POST'])
+def saveAditionalServiceBungalow(request, bungalow_id):
+    req = json.loads( request.body.decode('utf-8') )
+    update_data = {}
+
+    #print(bungalow_id)
+    reservations = BungalowReservationService.getReservationsByBungalow(bungalow_id)
+    #print("reservation")
+
+    for r in reservations:
+        if r is not None:
+            update_data = {}
+            update_data["bungalow_number"] = r.bungalow_number
+            update_data["bungalow_price"] = r.bungalow_price
+            update_data["bungalow_capacity"] = r.bungalow_capacity
+            update_data["bungalow_headquarter_name"] = r.bungalow_headquarter_name
+            update_data["member_membership_name"] = r.member_membership_name
+            update_data["member_name"] = r.member_name
+            update_data["member_paternalLastName"] = r.member_paternalLastName
+            update_data["member_maternalLastName"] = r.member_maternalLastName
+            update_data["arrival_date"] = r.arrival_date
+            update_data["departure_date"] = r.departure_date
+            update_data["check_in"] = r.check_in
+            update_data["check_out"] = r.check_out
+            update_data["status"] = r.status
+            update_data["deleted_at"] = r.deleted_at
+            update_data["payment_document_id"] = r.payment_document_id
+            update_data["bungalow_headquarter_id"] = r.bungalow_headquarter_id
+            update_data["bungalow_type_id"] = r.bungalow_type_id
+            update_data["bungalow_id"] = r.bungalow_id
+            update_data["member_id"] = r.member_id
+
+            list_services = []
+            for i in req.get("services"):
+                list_services.append(Bungalow_serviceService.findBungalow_service(i))
+
+            update_data["aditional_services"] = list_services
+
+            BungalowReservationService.update(r.id, update_data);
+
+            #print(r.id)
+
+    return HttpResponse( json.dumps(req), content_type='application/json')

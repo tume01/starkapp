@@ -3,6 +3,7 @@ import datetime
 
 from bungalow.models import Bungalow
 from members.models import Member
+from bungalow_service.models import Bungalow_service
 
 
 class BungalowReservation(models.Model):
@@ -49,6 +50,8 @@ class BungalowReservation(models.Model):
     status = models.IntegerField(choices=STATUS_CHOICES, default=0)
 
     deleted_at = models.DateTimeField(null=True)
+
+    aditional_services = models.ManyToManyField(Bungalow_service)
 
     def getStatusName(self):
         index = self.status

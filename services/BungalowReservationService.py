@@ -79,4 +79,12 @@ class BungalowReservationService(object):
     def getReservationsByMember(cls, member_id):
         filter_data = {}
         filter_data['member_id'] = member_id
+        filter_data['status'] = 2 #reservation in use
+        return cls._repository.filter(filter_data)
+
+    @classmethod
+    def getReservationsByBungalow(cls, bungalow_id):
+        filter_data = {}
+        filter_data['bungalow_id'] = bungalow_id
+        filter_data['status'] = 2 #reservation in use
         return cls._repository.filter(filter_data)

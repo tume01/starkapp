@@ -35,11 +35,26 @@ $('#bungalow').change(function(){
         console.log(data);
         if ($('#bungalow').val() > 0){
             var array_id_actual = [];
-            for (var i=0; i<data.actual_serv.length; i++) array_id_actual.push(data.actual_serv[i].id);
+            for (var i=0; i<data.actual_serv.length; i++) 
+                array_id_actual.push(data.actual_serv[i].id);
             
             $('#select2BungalowService').val(array_id_actual).change();
 
-            $("#select2BungalowServiceAdd").html('').select2({data: data.all_serv});  
+            $("#select2BungalowServiceAdd").html('').select2({data: data.all_serv}); 
+
+            var array_id_reservation_serv = [];
+            for(var i=0; i<data.reservation_serv.length; i++) 
+                array_id_reservation_serv.push(data.reservation_serv[i].id);
+
+            if(data.reservation_serv.length > 0){
+                $('#select2BungalowServiceAdd').val(array_id_reservation_serv).change();
+                $('#select2BungalowServiceAdd').attr('disabled', 'disabled');
+                console.log("disable");
+            }
+            else{
+                $('#select2BungalowServiceAdd').removeAttr('disabled');
+                console.log("enable");
+            }
         }
         
     });
@@ -55,7 +70,34 @@ $('#bungalow').change(function(){
 
 $('#SaveExtraServices').click(function(){
     console.log("save extra service");
-    console.log($('#select2BungalowServiceAdd').val());
+    var data = {};
+    data.services = $('#select2BungalowServiceAdd').val()
+    console.log(data);
+
+    //$('#modalSaveAddService>p').html('Use this text as modal heading');
+    //$('#modalSaveAddService').show();
+    
+
+    var xhr = $.ajax({
+        type: "POST", 
+        url: "/bungalowReservations/save/aditional/services/"+ $('#bungalow').val(), //url que procesa
+        dataType: "json",
+        data: JSON.stringify(data),
+        contentType: "application/json; charset=utf-8",
+    });
+
+    xhr.done(function(data) {
+        console.log(data);
+        console.log("saved!");
+        
+    });
+
+    xhr.fail(function(xhr, status, text){
+        console.log("Error " + xhr.readyState + " " +text);
+
+    });
+
+    return xhr;
 
 });
 
