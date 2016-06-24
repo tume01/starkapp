@@ -30,4 +30,5 @@ class EventRegistration(models.Model):
     registered_at = models.DateTimeField(null=True)
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    guests = models.IntegerField()
     deleted_at = models.DateTimeField(null=True)
