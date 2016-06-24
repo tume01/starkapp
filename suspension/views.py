@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from .forms import SuspensionForms
 from services.MemberService import MembersService
+from services.SuspensionTypeService import SuspensionTypeService
 from django.contrib.auth.models import Group
 
 @login_required
@@ -27,9 +28,14 @@ def create_suspension_index(request):
 
     membership_service = MembershipService()
 
+    suspension_type_service = SuspensionTypeService()
+
+    suspension_types = suspension_type_service.getSuspensionTypes()
+
     membership = membership_service.getMembership(membership_id)
 
     context = {
+        'suspension_types' : suspension_types,
         'membership': membership,
         'member':member
     }
@@ -43,16 +49,23 @@ def create_suspension(request):
 
     membershipId = request.POST['membership_id']
 
+    suspensionTypeId = request.POST['suspention_type_id']
+
     form = SuspensionForms(request.POST)
 
     if FormValidator.validateForm(form, request):
 
         membership_service = MembershipService()
 
+        suspension_type_service = SuspensionTypeService()
+
+        suspension_types = suspension_type_service.getSuspensionTypes()
+
         membership = membership_service.getMembership(membershipId)
 
         context = {
             'membership': membership,
+            'suspension_types' : suspension_types
         }
 
         return render(request, 'Admin/Suspension/new_suspension.html', context)
@@ -60,6 +73,8 @@ def create_suspension(request):
     else:
 
         insert_data = {}
+
+        insert_data['suspension_type_id'] = suspensionTypeId
 
         insert_data['membership_id'] = membershipId
 
@@ -102,6 +117,10 @@ def edit_suspension_index(request):
 
     suspension_service = SuspensionService()
 
+    suspension_type_service = SuspensionTypeService()
+
+    suspension_types = suspension_type_service.getSuspensionTypes()
+
     suspension = suspension_service.getSuspension(suspension_id)
 
     suspension.initialDate = datetime.strftime(suspension.initialDate, '%m/%d/%Y')
@@ -110,6 +129,7 @@ def edit_suspension_index(request):
 
     context = {
         'suspension' : suspension,
+        'suspension_types' : suspension_types
     }
 
     return render(request, 'Admin/Suspension/edit_suspension.html', context)
@@ -121,7 +141,11 @@ def edit_suspension(request):
 
     suspension_id = request.POST['id_suspension']
 
+    suspension_type_id = request.POST['suspension_type_id']
+
     suspension_service = SuspensionService()
+
+    suspension_type_service = SuspensionTypeService()
 
     suspension = suspension_service.getSuspension(suspension_id)
 
@@ -129,8 +153,11 @@ def edit_suspension(request):
 
     if FormValidator.validateForm(form, request):
 
+        suspension_types = suspension_type_service.getSuspensionTypes()
+
         context = {
             'suspension': suspension,
+            'suspension_types' : suspension_types
         }
 
         return render(request, 'Admin/Suspension/edit_suspension.html', context)
@@ -138,6 +165,8 @@ def edit_suspension(request):
     else:
 
         edit_data = {}
+
+        edit_data['suspension_type_id'] = suspension_type_id
 
         edit_data["reason"] = form.cleaned_data['reason']
 
@@ -164,6 +193,10 @@ def suspension_index(request):
 
     memberId = request.POST['id']
 
+    suspension_type_service = SuspensionTypeService()
+
+    suspension_types = suspension_type_service.getSuspensionTypes()
+
     member = member_service.getMember(memberId)
 
     membershipId = member.membership.id
@@ -183,7 +216,8 @@ def suspension_index(request):
         'suspensions': suspensions,
         'membership' : membership,
         'member' : member,
-        'show' : show
+        'show' : show,
+        'suspension_types' : suspension_types,
     }
 
     return render(request, 'Admin/Suspension/index_suspensions.html', context)
@@ -194,6 +228,10 @@ def suspension_index(request):
 def suspension_filter(request):
 
     suspension_service = SuspensionService()
+
+    suspension_type_service = SuspensionTypeService()
+
+    suspension_types = suspension_type_service.getSuspensionTypes()
 
     membership_service = MembershipService()
 
@@ -217,6 +255,8 @@ def suspension_filter(request):
 
     endDate = request.POST['finalDate']
 
+    suspension_type = request.POST['suspension_type']
+
     filter_suspensions['membership_id'] = membershipId
 
     if iniDate != '':
@@ -227,6 +267,9 @@ def suspension_filter(request):
 
     if suspStatus != '3':
         filter_suspensions["status"] = suspStatus
+
+    if suspension_type != 'Todos':
+        filter_suspensions['suspension_type_id'] = suspension_type
 
     suspensions = suspension_service.filter(filter_suspensions)
 
@@ -243,7 +286,8 @@ def suspension_filter(request):
         'suspensions': suspensions,
         'member' : member,
         'membership': membership,
-        'show' : show
+        'show' : show,
+        'suspension_types' : suspension_types,
     }
 
     return render(request, 'Admin/Suspension/index_suspensions.html', context)

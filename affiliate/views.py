@@ -10,6 +10,7 @@ from services.AffiliateService import AffiliateService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
+from services.SuspensionService import SuspensionService
 from adapters.FormValidator import FormValidator
 from .forms import  AffiliateForm
 from django.contrib.auth.models import User, Group
@@ -17,6 +18,27 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import EmailMessage
 from django.utils.crypto import get_random_string
+
+
+def isMemberSuspended(member):
+
+    suspension_service = SuspensionService()
+
+    filter_suspension = {}
+
+    filter_suspension["membership"] = member.membership
+
+    filter_suspension["status"] = 1
+
+    suspensions = suspension_service.filter(filter_suspension)
+
+    if len(suspensions) != 0:
+
+        return True
+
+    else:
+
+        return False
 
 
 @login_required
@@ -45,8 +67,8 @@ def affiliate_index(request):
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
-        'id_member' : id_member,
-        'affiliates' : affiliates,
+        'member' : member,
+        'affiliates' : affiliates
     }
 
     return render(request, 'User/Affiliates/index_affiliates.html', context)
@@ -101,7 +123,7 @@ def create_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member': id_member,
+            'member': member,
             'affiliates': affiliates,
         }
 
@@ -182,7 +204,7 @@ def create_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member' : id_member,
+            'member' : member,
             'affiliates' : affiliates,
         }
 
@@ -258,7 +280,7 @@ def edit_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member': id_member,
+            'member': member,
             'affiliates': affiliates,
         }
 
@@ -339,7 +361,7 @@ def edit_affiliate(request):
         affiliates = affiliate_service.filter(filter_affiliate)
 
         context = {
-            'id_member' : id_member,
+            'member' : affiliate.member,
             'affiliates' : affiliates,
         }
 
@@ -363,8 +385,6 @@ def delete_affiliate(request):
 
     affiliate = affiliate_service.getAffiliate(id_edit)
 
-    id_member = affiliate.member.id
-
     filter_affiliate = {}
 
     filter_affiliate["member"] = affiliate.member
@@ -374,7 +394,7 @@ def delete_affiliate(request):
     affiliates = affiliate_service.filter(filter_affiliate)
 
     context = {
-        'id_member' : id_member,
+        'member' : affiliate.member,
         'affiliates' : affiliates,
     }
 
@@ -403,9 +423,12 @@ def admin_affiliate_index(request):
 
     affiliates = affiliate_service.filter(filter_affiliate)
 
+    isSuspended = isMemberSuspended(member)
+
     context = {
-        'id_member' : id_member,
+        'member' : member,
         'affiliates' : affiliates,
+        'isSuspended' : isSuspended
     }
 
     return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -459,9 +482,12 @@ def admin_create_affiliate(request):
 
         affiliates = affiliate_service.filter(filter_affiliate)
 
+        isSuspended = isMemberSuspended(member)
+
         context = {
-            'id_member': id_member,
-            'affiliates': affiliates,
+            'member' : member,
+            'affiliates' : affiliates,
+            'isSuspended' : isSuspended
         }
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -540,9 +566,12 @@ def admin_create_affiliate(request):
 
         affiliates = affiliate_service.filter(filter_affiliate)
 
+        isSuspended = isMemberSuspended(member)
+
         context = {
-            'id_member' : id_member,
+            'member' : member,
             'affiliates' : affiliates,
+            'isSuspended' : isSuspended
         }
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -616,9 +645,12 @@ def admin_edit_affiliate(request):
 
         affiliates = affiliate_service.filter(filter_affiliate)
 
+        isSuspended = isMemberSuspended(member)
+
         context = {
-            'id_member': id_member,
-            'affiliates': affiliates,
+            'member' : member,
+            'affiliates' : affiliates,
+            'isSuspended' : isSuspended
         }
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -683,6 +715,8 @@ def admin_edit_affiliate(request):
 
         affiliate_service = AffiliateService()
 
+        member_service = MembersService()
+
         affiliate_service.update(id_edit, edit_data)
 
         affiliate = affiliate_service.getAffiliate(id_edit)
@@ -697,9 +731,12 @@ def admin_edit_affiliate(request):
 
         affiliates = affiliate_service.filter(filter_affiliate)
 
+        isSuspended = isMemberSuspended(member)
+
         context = {
-            'id_member' : id_member,
+            'member' : member,
             'affiliates' : affiliates,
+            'isSuspended' : isSuspended
         }
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -732,9 +769,12 @@ def admin_delete_affiliate(request):
 
     affiliates = affiliate_service.filter(filter_affiliate)
 
+    isSuspended = isMemberSuspended(member)
+
     context = {
-        'id_member' : id_member,
+        'member' : member,
         'affiliates' : affiliates,
+        'isSuspended' : isSuspended
     }
 
     return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -795,13 +835,27 @@ def admin_move_affiliate(request):
 
     group.user_set.add(user)
 
+    #Create new membership
+
+    insert_data_membership = {}
+
+    insert_data_membership["membership_type"] = membership.membership_type
+
+    insert_data_membership["initialDate"] = membership.initialDate
+
+    insert_data_membership["finalDate"] = membership.finalDate
+
+    insert_data_membership["status"] = 1
+
+    newMembership = membership_service.create(insert_data_membership)
+
     #Create new member
 
     insert_data = {}
 
     insert_data["user_id"] = user.id
 
-    insert_data["membership"] = membership
+    insert_data["membership"] = newMembership
 
     insert_data['identity_document_type_id'] = affiliate.identity_document_type.id
 
@@ -829,7 +883,7 @@ def admin_move_affiliate(request):
 
     member_service.create(insert_data)
 
-    #Delete previous member and its affiliates
+    #Delete previous member, membership and its affiliates
 
     filter_data = {}
 
@@ -842,6 +896,8 @@ def admin_move_affiliate(request):
     for aff in affiliates:
     
         affiliate_service.update(aff.id, edit_data)
+
+    membership_service.update(membership.id,edit_data2)
 
     member_service.update(member.id,edit_data)    
     

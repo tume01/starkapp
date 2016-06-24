@@ -26,6 +26,7 @@ Lista de afiliados
 
 <!-- Page Content -->
 <div class="content">
+
   <!-- Simple Table Full -->
     <div class="block block-bordered">
             <form id="myFormEdit" action="{% url 'affiliate:admin_edit_index' %} " method="post">
@@ -40,6 +41,24 @@ Lista de afiliados
                 {% csrf_token %}  
                 <input type="hidden" id="hid3" name="id"/>
             </form>
+             <div class="row">
+                <div class="col-lg-4" >
+                    <div class="form-group">
+                    <label class="col-xs-12" for="example-select"> Nombres: {{member.name}}</label>
+                    </div>
+                </div>
+                <div class="col-lg-4" >
+                    <div class="form-group">
+                    <label class="col-xs-12" for="example-select"> Apellido Paterno: {{member.paternalLastName}}</label>
+                    </div>
+                </div>
+                <div class="col-lg-4" >
+                    <div class="form-group">
+                    <label class="col-xs-12" for="example-select"> Apellidos Materno: {{member.maternalLastName}}</label>
+                    </div>
+                </div>
+            </div>
+            <br>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
 
@@ -70,7 +89,11 @@ Lista de afiliados
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-default editar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Editar Afiliado"><i class="fa fa-user"></i></button>
                                     <button class="btn btn-xs btn-default eliminar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Eliminar Afiliado"><i class="fa fa-user-times"></i></button>
+                                    {% if not isSuspended %} 
                                     <button class="btn btn-xs btn-default trasladar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Trasladar Membresía"><i class="fa fa-user-times"></i></button>
+                                    {%else%} 
+                                    <button class="btn btn-xs btn-default trasladar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Trasladar Membresía" disabled><i class="fa fa-user-times"></i></button>
+                                    {% endif %}
                                 </div>
                             </td>    
                         </tr>
@@ -83,7 +106,7 @@ Lista de afiliados
                     <div class="form-group" style="display: none;">
                             <div class="col-md-12">
                                  <div class="input-group">
-                                      <input class="form-control" id="example-input1-group1" name="id" value="{{id_member}}"  type="text">
+                                      <input class="form-control" id="example-input1-group1" name="id" value="{{member.id}}"  type="text">
                                  </div>
                             </div>
                     </div>
