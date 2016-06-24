@@ -47,8 +47,8 @@ Lista de entradas
                     <tbody>
                         {% for entry in entries %}                                       
                         <tr>
-                            <td class="font-w600">{{entry.initialDate}}</td>
-                            <td class="font-w600">{{entry.finalDate}} </td>
+                            <td class="font-w600">{{entry.initialDate|date:"d-m-Y"}}</td>
+                            <td class="font-w600">{{entry.finalDate|date:"d-m-Y"}} </td>
                             <td class="font-w600">{{entry.member.name}} {{entry.member.paternalLastName}}</td>
                             <td class="font-w600">
                             {% if entry.guest %}
