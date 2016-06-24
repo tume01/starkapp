@@ -12,6 +12,7 @@ from services.SuspensionService import SuspensionService
 from services.AffiliateService import AffiliateService
 from adapters.FormValidator import FormValidator
 from .forms import  MemberForm
+from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
@@ -93,6 +94,16 @@ def delete_member(request):
     edit_data["state"] = 0
 
     member_service = MembersService()
+
+    member = member_service.getMember(id_edit)
+
+    user = member.user
+
+    #The user won't be able to login anymore
+
+    user.is_active = False
+
+    user.save()
 
     member_service.update(id_edit, edit_data)
 
@@ -198,7 +209,13 @@ def member_filter(request):
 
     identity_document_type = request.POST['identity_document_type']
 
-    filter_member['state'] = 1
+    if suspended == '3':
+
+        filter_member['state'] = 0
+
+    elif suspended != '2':
+
+        filter_member['state'] = 1
 
     if paternalLastName != '':
         filter_member['paternalLastName__icontains'] = paternalLastName
@@ -239,7 +256,7 @@ def is_member_suspended(member):
 
     filter_data = {}
 
-    filter_data['membership_id'] = member.id
+    filter_data['membership_id'] = member.membership.id
 
     member_suspensions = suspension_service.filter(filter_data)
 
@@ -251,7 +268,7 @@ def is_member_not_suspended(member):
 
     filter_data = {}
 
-    filter_data['membership_id'] = member.id
+    filter_data['membership_id'] = member.membership.id
 
     member_suspensions = suspension_service.filter(filter_data)
 

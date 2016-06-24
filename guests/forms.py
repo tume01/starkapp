@@ -8,4 +8,12 @@ class GuestForm(forms.Form):
     paternalLastName = forms.CharField(max_length=200, validators=[alphabetic], error_messages={'required': 'El campo Apellidos es requerido', 'max_length': 'El campo Apellidos debe tener una longitud maxima de 200 caracteres'})
     document_number = forms.IntegerField(error_messages={'required': 'El campo DNI es requerido'})
 
+
+    def clean_document_number(self):
+        data = self.cleaned_data['document_number']
+        if (data < 9999999):
+            raise forms.ValidationError("El dni tiene que tener 8 digitos")
+        if (data > 100000000):
+            raise forms.ValidationError("El dni tiene que tener 8 digitos")
+        return data
   

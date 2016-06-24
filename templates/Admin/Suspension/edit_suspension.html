@@ -48,6 +48,24 @@ Editar suspension
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                     <div class="col-lg-5" >
+                                            <div class="form-group">
+                                            <label class="col-xs-6 " for="example-select">Tipo de Suspension</label>
+                                                <div class="col-sm-12">
+                                                    <select class="form-control" id="example-select" name="suspension_type_id" size="1">
+                                                        {% for suspension_type in suspension_types %}
+                                                            {% if doc_type.id == member.identity_document_type.id %}
+                                                                <option selected value="{{suspension_type.id}}">{{suspension_type.name}}</option>
+                                                            {% else %}
+                                                                <option value="{{suspension_type.id}}">{{suspension_type.name}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="comments">Razon</label>
