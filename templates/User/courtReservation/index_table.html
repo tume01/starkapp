@@ -1,0 +1,50 @@
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Cancha</th>
+            <th class="text-center">Sede</th>
+            <th class="text-center">Fecha</th>
+            <th class="text-center">Horas de reserva</th>
+            <th class="text-center">Estado</th>
+        </tr>
+    </thead>
+    <tbody id="table-content">
+        {% for reservation in reservations %}
+            <tr>
+                <td class="text-center" id="reservation_id">{{reservation.court_name}}</td>
+                <td class="text-center">{{ reservation.court_headquarter_name }}</td>
+                <td class="text-center">{{ reservation.reservation_date }}</td>
+                <td class="text-center">{{ reservation.reservation_duration }} Hora(s)</td>
+                <td class="hidden-xs text-center">
+                    {% if reservation.status == 1%}
+                        <span class="label label-warning">Habilitado</span>
+                    {% else %}
+                        <span class="label label-danger">Deshabilitado</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-sm-offset-6 col-sm-6">
+        <div class="dataTables_paginate paging_simple_numbers">
+            <ul class="pagination">
+                {% if reservations.has_previous %}
+                <li class="paginate_button" onclick="prevPage()" id="prev-page"><i class="fa fa-angle-left"></i></li>
+                {% else %}
+                <li class="paginate_button" onclick="return false" id="prev-page"><i class="fa fa-angle-left"></i></li>
+                {% endif %}
+
+                <li class="paginate_button active" id="current-page">Página <strong id=page>{{ reservations.number }}</strong> de <strong>{{reservations.paginator.num_pages}}</strong></li>
+
+                {% if reservations.has_next %}
+                <li class="paginate_button" onclick="nextPage()" id="next-page"><i class="fa fa-angle-right"></i></li>
+                {% else %}
+                <li class="paginate_button" onclick="return false" id="next-page"><i class="fa fa-angle-right"></i></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>

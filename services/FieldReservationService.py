@@ -1,4 +1,6 @@
 from repositories import FieldReservationRepository
+from django.utils import timezone
+import datetime, calendar, time,collections
 
 class FieldReservationService(object):
 
@@ -20,3 +22,67 @@ class FieldReservationService(object):
 
     def filter(self,filters):
         return self.__field_reservation_repository.filter(filters)
+
+    def getDayAvailableHours(self, courts,courtHeadquarterId, courtTypeId, start, end):
+        startDate = datetime.datetime.fromtimestamp(start)
+        endDate = datetime.datetime.fromtimestamp(end)
+        num_days = (endDate - startDate).days + 1
+
+        hours = [12,13,14,15,16,17,18,19,20,21,22]
+
+        days = []
+
+
+        for delta in range(0,num_days):
+            for hour in hours:
+                #print (startDate + datetime.timedelta(days=delta) +  datetime.timedelta(hours=hour))
+                if(startDate + datetime.timedelta(days=delta) +  datetime.timedelta(hours=hour) > datetime.datetime.today()):
+                    days.append(startDate + datetime.timedelta(days=delta) + datetime.timedelta(hours=hour))
+
+        reservations = self.getReservations()
+
+
+        if (courtHeadquarterId != -1):
+
+            print("Filter by Headquarter_ID")
+            reservations = reservations.filter(headquarter_id=courtHeadquarterId)
+
+        if (courtTypeId != -1):
+
+            print("Filter by court_type_id")
+            reservations = reservations.filter(court_type=courtTypeId)
+
+
+        reservations_list= []
+
+        for r in reservations:
+            hours = r.reservation_duration
+            while hours > 0:
+                current_date = r.reservation_date + datetime.timedelta(hours=hours)
+                current_date = datetime.datetime(current_date.year,current_date.month,current_date.day,current_date.hour,current_date.minute,current_date.second)   
+                reservations_list.append(current_date)
+                hours = hours - 1
+        
+        print (reservations_list)
+
+        ocurrences = collections.Counter(reservations_list)
+
+        date = [(day,courts.count() - ocurrences[int(day.strftime("%Y%m%d%H%M%S"))]) for day in days if(ocurrences[datetime.datetime(day.year,day.month,day.day,day.hour,day.minute,day.second)] < 1 )]
+
+        print (ocurrences)
+
+        url = "create/reserve/?";
+        url += "court_type=" + str(courtTypeId) + "&"
+        url += "headquarter=" + str(courtHeadquarterId) + "&"
+
+        availableHours = [{
+            'title': 'Canchas disponibles' if(day[1] == 0) else "No disponible",
+            'start': day[0].strftime("%Y-%m-%dT%H:%M:%S"),
+            'end': (day[0]+datetime.timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%S"),
+            'url': url + "date="+ day[0].strftime("%Y-%m-%dT%H:%M:%S"),
+        } for day in date if (day[1] == 0)]
+
+        #print(availableHours)
+
+        return availableHours
+

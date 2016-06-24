@@ -1,0 +1,82 @@
+{% extends 'User/Layouts/base.html' %}
+
+{% block head_title %}
+User: Actividades Disponibles
+{% endblock %}
+
+{% block head_dahsboard %}
+Registro en Actividad
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de actividades
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Registro Actividad
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de solicitudes de actividades
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    {% if messages %}
+        {% for msg in messages %}
+            <div class="alert alert-warning" role="alert">
+                {{msg.message}}
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="content content-boxed">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-content block-content-full">
+                    {{event.name}} - {{event.event_type.name}}
+                </div>
+                <img src="{{image_url}}{{event.photo}}" class="img-responsive img-event">
+                <div class="block-content">
+                    <div class="row items-push text-center">
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="si si-calendar fa-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Inicio: {{event.start_date|date:"d/m/Y H:i"}}</div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="fa fa-money fa-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Precio Miembro :S/.{{event.price_member}}</div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="fa fa-money fa-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Precio Invitado :S/.{{event.price_invited}}</div>
+                        </div>
+                    </div>
+                    <div class="row items-push text-center">
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="si si-calendar fa-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Fin: {{event.end_date|date:"d/m/Y H:i"}}</div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="si si-users si-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Capacidad: {{event.attendance}} personas</div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="si si-map si-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Lugar: {{event.headquarter.name}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-center">
+                    <form class="" action='{% url "events:signup" event.id %}' method="post">
+                    {% csrf_token %}
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Inscribirse</button>
+                        <a href="{% url 'events:userSignup_index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

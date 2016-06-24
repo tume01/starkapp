@@ -94,7 +94,9 @@ ENV/
 #Ignore Migrations
 */migrations/0*
 
+#Ignore sqlite file
+db.sqlite3
 
 ################################
-#     DO NOT MODIFY PLEASE     #
+#     DO NOT MODIFY PLEASE 2a~    #
 ################################

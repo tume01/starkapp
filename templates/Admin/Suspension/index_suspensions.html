@@ -36,7 +36,7 @@ Lista de suspensiones
                                         <div class="form-group">
                                             <div class="col-md-6">
                                                <div class="input-group">
-                                                    <input class="form-control" name="membership_id" placeholder="ID"  type="number" value= "{{id}}" >
+                                                    <input class="form-control" name="member_id" placeholder="ID"  type="number" value= "{{member.id}}" >
                                                 </div>
                                             </div>
                                         </div>
@@ -73,6 +73,24 @@ Lista de suspensiones
                                 </div>
                                 <br>
                                 <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Nombres: {{member.name}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Apellido Paterno: {{member.paternalLastName}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Apellidos Materno: {{member.maternalLastName}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
 
                     <div class="col-lg-12">
                         <div class="form-group">
@@ -83,8 +101,10 @@ Lista de suspensiones
                     </div>
                 </div>
                 <br>
+
                             </form>
                         </div>
+
     </div>
     <div class="block block-bordered">
             <form id="myFormEdit" action="{% url 'suspension:edit_index' %} " method="post">
@@ -97,26 +117,7 @@ Lista de suspensiones
             </form>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
-                <form  action="{% url "suspension:create_index" %}" method="post">
-                {% csrf_token %}  
-                <input type="hidden" id="hid3" name="id"/>
-                <div class="col-lg-6" style="display: none;">
-                    <div class="form-group">
-                        <div class="col-md-6">
-                           <div class="input-group">
-                                <input class="form-control" id="example-input0-group1" name="membership_id" placeholder="ID"  type="number" value= "{{membership.id}}" >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% if show %}
-                <div class="form-group">
-                    <div class="col-xs-2 col-xs-offset-5">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Nueva Suspension</button>
-                    </div>
-                </div>
-                {% endif %}
-                </form>
+
             <table class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
@@ -124,6 +125,7 @@ Lista de suspensiones
                         <th>Fecha Fin</th>
                         <th>Razon</th>
                         <th>Acciones</th>
+                        <th hidden='true'></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -144,10 +146,32 @@ Lista de suspensiones
                                     </div>
                                 {% endif %}
                             </td>
+                              <td hidden='true'></td>
+                                
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                <form class="js-validation-bootstrap form-horizontal push-10-t push-10"  action="{% url "suspension:create_index" %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" id="hid3" name="id"/>
+                <div class="col-lg-6" style="display: none;">
+                    <div class="form-group">
+                        <div class="col-md-6">
+                           <div class="input-group">
+                                <input class="form-control" id="example-input0-group1" name="membership_id" placeholder="ID"  type="number" value= "{{membership.id}}" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% if show %}
+                <div class="form-group">
+                    <div class="col-xs-2 col-xs-offset-5">
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Nueva Suspension</button>
+                    </div>
+                </div>
+                {% endif %}
+                </form>
             </div>
         </div>
         <!-- END Simple Table Full -->
@@ -171,4 +195,3 @@ Lista de suspensiones
     <!-- HASTA AQUÍ -->       
 
     {% endblock %}
-

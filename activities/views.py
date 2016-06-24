@@ -9,13 +9,14 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from services.ActivityService import ActivityService
 from services.ActivityTypeService import ActivityTypeService
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.http import JsonResponse
 from django.core import serializers
+from django.conf import settings
 
 @require_http_methods(['GET'])
 def index(request):
@@ -80,11 +81,13 @@ def getActivityFilters(request):
 @require_http_methods(['POST'])
 def create_activity(request):
 
-    form = ActivityForm(request.POST)
+    form = ActivityForm(request.POST, request.FILES)
 
     context = {
         'titulo': 'titulo'
     }
+
+    photo = request.FILES['photo']
 
     request = FormValidator.validateForm(form, request)
 
@@ -112,7 +115,8 @@ def create_activity(request):
             'start_date': start_date,
             'end_date': end_date,
             'activity_type': activity_type,
-            'enviroment': enviroment
+            'enviroment': enviroment,
+            'photo': photo
         }
 
         activity_service.create(insert_data)
@@ -300,9 +304,11 @@ def index_signUp(request):
     activity_service = ActivityService()
 
     activities = activity_service.getActivities()
+    image_url = settings.MEDIA_URL
 
     context = {
-        'activities' : activities
+        'activities' : activities,
+        'image_url': image_url
     }
 
     return render(request, 'User/Activities/index.html', context)
@@ -313,9 +319,11 @@ def select_signUp(request, activity_id):
     activity_service = ActivityService()
 
     activity = activity_service.getActivity(activity_id)
+    image_url = settings.MEDIA_URL
 
     context = {
-        'activity' : activity
+        'activity' : activity,
+        'image_url': image_url
     }
 
     return render(request, 'User/Activities/select.html', context)

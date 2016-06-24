@@ -28,6 +28,7 @@
     <link rel="stylesheet" href='{% static "assets/js/plugins/select2/select2.min.css" %}'>
 
     <link rel="stylesheet" id="css-main" href='{% static "assets/css/oneui.css" %}'>
+    <link rel="stylesheet" id="css-main" href='{% static "assets/css/base.css" %}'>
 
 </head>
 <body>
@@ -99,9 +100,13 @@
                             <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Usuario del Club</span></li>
+                        {% if not perms.dummy.permission_usuario_suspendido %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
+                                <li>
+                                    <a href="{% url 'bungalowReservation:aditional_service'%}">Servicios Adicionales</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -128,7 +133,13 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
-                            <ul>                               
+                            <ul>
+                                <li>
+                                    <a href="{% url 'events:userEvents_index' %}">Mis Eventos</a>
+                                </li>  
+                                <li>
+                                    <a href="{% url 'events:userSignup_index' %}">Eventos</a>
+                                </li>                          
                             </ul>
                         </li>
                         <li>
@@ -139,6 +150,9 @@
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Canchas</span></a>
                             <ul>
+                                <li>
+                                    <a href="{% url 'reserve_field:index_admin'%}">Reservar Cancha</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -152,9 +166,12 @@
                                 <li>
                                     <a href='{% url "membership_application:user_index" %}'>Solicitudes de membresía</a> 
                                 </li>
-                                                                <li>
+                                <li>
                                     <a href='{% url "memberships:show" %}'> Ver Membresía</a>
-                                  </li>  
+                                </li>
+                                <li>
+                                    <a href='{% url "affiliate:index" %}'> Ver Afiliados</a>
+                                </li>
                             </ul>
                         </li> 
                          <li>
@@ -173,7 +190,35 @@
                                     <a href='{% url 'fine:user_index' %}'>Ver Multas</a>
                                 </li>
                             </ul>
-                        </li>   
+                        </li>
+                        {% endif %}
+                        {% if perms.dummy.permission_usuario_suspendido %} 
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
+                            <ul>  
+                                <li>
+                                    <a href='{% url "memberships:show" %}'> Ver Membresía</a>
+                                </li>
+                            </ul>
+                        </li> 
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "users:show_user" %}'>Cambiar Contraseña</a>
+                                </li>
+                            </ul>
+                        </li>  
+
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url 'fine:user_index' %}'>Ver Multas</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
 
                     </ul>
                 </div>
@@ -196,7 +241,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header">Perfil</li>
+                        <li class="dropdown-header">{{ user.groups.all.0  }} - {{ user.first_name }} {{ user.last_name }}</li>
                         <li>
                             <a tabindex="-1" href="base_pages_inbox.html">
                                 <i class="si si-envelope-open pull-right"></i>
@@ -383,8 +428,8 @@
         <!--<script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script> -->
         <!-- Page JS Code -->
         <!--<script src="assets/js/pages/base_forms_validation.js"></script>-->
-        <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-        <script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
         
 {% block scripts %}
 {% endblock %}

@@ -15,25 +15,13 @@ class Command(BaseCommand):
 
     def cleanDB(self):
         Headquarters.objects.all().delete()
-        print('    Data has been deleted\n')
+        print('    Headquarters data has been deleted\n')
 
     def insertData(self):
-        at1 = Headquarters(name= 'Sede 1', location='ZONA SUR', description= 'test', status= 1)
-        at1.save()
+        hq1 = Headquarters(name= 'Lima HQ', location='Av. Javier Prado Este 159', description= 'Sede Principal', status= 1, ubigeos_id = 1295)
+        hq1.save()
 
-        at1 = Headquarters(name= 'Sede 2', location='ZONA SUR', description= 'test', status= 1)
-        at1.save()
-
-        at1 = Headquarters(name= 'Sede 3', location='ZONA SUR', description= 'test', status= 1)
-        at1.save()
-
-        at1 = Headquarters(name= 'Sede 4', location='ZONA SUR', description= 'test', status= 1)
-        at1.save()
-
-        at1 = Headquarters(name= 'Sede 5', location='ZONA SUR', description= 'test', status= 1)
-        at1.save()
-
-        at1 = Headquarters(name= 'Sede 6', location='ZONA SUR', description= 'test', status= 1)
-        at1.save()
+        hq2 = Headquarters(name= 'Arequipa Club', location='Calle Yanahuara 143', description= 'Sede Arequipa', status= 1, ubigeos_id=357)
+        hq2.save()
         
         print('    Data has been inserted\n')

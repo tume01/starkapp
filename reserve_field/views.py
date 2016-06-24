@@ -10,151 +10,141 @@ from services.FieldReservationService import FieldReservationService
 from services.MemberService import MembersService
 from django.views.decorators.csrf import csrf_protect
 from django.shortcuts import render_to_response
+from django.http import JsonResponse
+
+import datetime
 
 @require_http_methods(['GET'])
 def index(request):
 
-    environment_service = EnvironmentService()
-    headquarter_service = HeadquarterService()
+    court_reservation_service = FieldReservationService()
 
+    member_service = MembersService()
+    member = member_service.getMemberByUser(request.user)
+
+    member_id = member.id
 
     filters = {
-        'environment_type_id' : 1,
+        'member_id' : member_id
     }
 
-    fields = environment_service.filter(filters)
-    stay_max_hours = {1,2,3}
-
-    hours = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00']
+    reservations = court_reservation_service.filter(filters)
 
     context = {
-        'fields' : fields,
-        'titulo' : 'titulo',
-        'stay_max_hours' : stay_max_hours,
-        'headquarters' : headquarter_service.getHeadquarters(),
-        'hours' :   hours
+        'reservations' : reservations,
     }
 
-    return render(request, 'User/Reservation/fields.html', context)
+    return render(request, 'User/courtReservation/index.html', context)
+
+@require_http_methods(['GET'])
+def create_index_admin(request):
+    context = {
+        'headquarters': HeadquarterService().getHeadquarters(),
+        'titulo': 'titulo'
+    }
+
+    return render(request, 'User/courtReservation/reserve_court.html', context)
 
 @require_http_methods(['POST'])
-@csrf_protect
-def refresh_field(request):
-    arrival_date = request.POST['arrival_date']
+def refresh_events(request):
+
+    start = int(request.POST['start'])
+    end = int(request.POST['end'])
+
     headquarter_id = int(request.POST['headquarter_id'])
 
+    court_type_id  = int(request.POST['court_type_id'])
+
+    environment_type = 1 #default for courts
+
     environment_service = EnvironmentService()
+    
+    courts = environment_service.getEnvironment()
 
-    filters = {
-        'arrival_date' : arrival_date,
-        'headquarters_id' : headquarter_id,
-        'environment_type_id' : 1
-    }
-
-
+    courts = courts.filter(environment_type_id=environment_type)
 
     if (headquarter_id != -1):
+
         print("Filter by Headquarter_ID")
-        headquarter_filter={
-            'headquarters_id' : headquarter_id
-        }
-        fields = environment_service.filter(headquarter_filter)
+        courts = courts.filter(headquarter_id=headquarter_id)
 
-    if (arrival_date != ""):
-        print("Filter if available")
-        fields = environment_service.filter(filters)
+    if (court_type_id != -1):
+
+        print("Filter by court_type_id")
+        courts = courts.filter(court_type=court_type_id)
+
+    court_reservation_services = FieldReservationService()
+
+
+    availableHours = court_reservation_services.getDayAvailableHours(courts,headquarter_id ,court_type_id, start, end)
+
+    response = {
+        'events': availableHours
+    }
+
+    return JsonResponse(response)
+
+
+@require_http_methods(['GET'])
+def court_show(request):
+    headquarter_id  = request.GET.get('headquarter')
+    court_type      = int(request.GET.get('court_type'))
+    fullDate        = request.GET.get('date')
+    date            = request.GET.get('date').split('T')
+
+
+
+    headquarter_service = HeadquarterService()
+    headquarter = headquarter_service.findHeadquarter(headquarter_id)
+
+    print(court_type)
 
     context = {
-        'fields': fields
+        'headquarter' : headquarter,
+        'court_type'  : court_type,
+        'max_hours'   : [1,2],
+        'date'        : date[1],
+        'fullDate'    : fullDate
     }
 
-    return render_to_response('User/Reservation/combo_fields.html', context)
+
+    return render(request,'User/courtReservation/fields_part2.html',context)
+
 
 @require_http_methods(['POST'])
-@csrf_protect
-def refresh_hour(request):
-
-    environment = request.POST['environment_content']
-
-    field_reservation_service   = FieldReservationService()
-
-    filters = {
-        'court_name'  : environment   
-    }
-
-    hours = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00']
-
-    court_date = field_reservation_service.filter(filters)
-
-    for court in court_date:
-        if court.reservation_hour in hours:
-            hours.remove(court.reservation_hour)
-        if (court.reservation_hour + court.reservation_duration - 1) in hours:
-            hours.remove(court.reservation_hour + court.reservation_duration - 1)
-
-    context = {
-        'hours' : hours
-    }
-
-    return render_to_response('User/Reservation/combo_hour.html', context)
-
-@require_http_methods(['POST'])
-@csrf_protect
-def refresh_max_time(request):
-
-    field_reservation_service   = FieldReservationService()
-
-    environment = request.POST['environment_content']
-
-    filters = {
-        'court_name'  : environment
-    }
-
-    current_court = field_reservation_service.filter(filters)
-
-    hours_reservated = []
-
-    for court in current_court:
-        hours_reservated.append(court.reservation_hour)
-
-    start_hour = request.POST['start_hour']
-
-    max_hours = [1,2]
-
-    stay_max_hours = []
-
-    for hour in max_hours:
-        if(hour + start_hour) not in hours_reservated:
-            stay_max_hours.append(hour)
-
-    context = {
-        'stay_max_hours' : stay_max_hours
-    }
-
-    return render_to_response('User/Reservation/combo_hour.html', context)
-
-@require_http_methods(['POST'])
-@csrf_protect
 def reservate_court(request):
 
     headquarter_service = HeadquarterService()
 
     insert_data = {}
 
-    insert_data['court_name']               = request.POST.get('environment_content')
+    fullDate                                = request.POST.get('date').split('T')
+
+    day                                     = fullDate[0].split('-')
+    hour                                    = fullDate[1].split(':')
+
     headquarter_id                          = request.POST.get('headquarter_id')
 
     headquarter                             = headquarter_service.findHeadquarter(headquarter_id)
+    insert_data['headquarter_id']           = headquarter.id
     insert_data['court_headquarter_name']   = headquarter.name
 
+    court_type                              = request.POST.get('court_type')
+    insert_data['court_type']               = court_type
+    if court_type == 0:
+        insert_data['court_name']           = "Cancha de Fútbol"
+    elif court_type == 1:
+        insert_data['court_name']           = "Cancha de Básquet"
+    else : 
+        insert_data['court_name']           = "Cancha de Voley"
 
-    insert_data['reservation_hour']         = request.POST.get('start_hour')
-    insert_data['reservation_duration']     = request.POST.get('stay_content')
-    insert_data['reservation_date']         = request.POST.get('arrival_date')
-
-    member_service                          = MembersService()
-    user                                    = member_service.getMemberByUser(request.user)
+    insert_data['reservation_duration']     = request.POST.get('court_duration')
+    insert_data['reservation_date']         = datetime.datetime(int(day[0]),int(day[1]),int(day[2]),int(hour[0]),int(hour[1]),int(hour[2]))
     
+    member_service                          = MembersService()
+    user                                    = member_service.getMemberByUser(request.user)  
+    
+    insert_data['member_id']                = user.id
     insert_data['member_membership_name']   = user.membership
     insert_data['member_name']              = user.name
     insert_data['member_paternalLastName']  = user.paternalLastName
@@ -170,4 +160,4 @@ def reservate_court(request):
         'success' : 'El evento ha sido registrado de manera correcta'
     }
 
-    return render(request, 'User/Reservation/fields.html', context)
+    return render(request, 'User/courtReservation/index.html', context)

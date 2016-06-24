@@ -15,12 +15,14 @@ from services.MemberService import MembersService
 from django.contrib.auth.models import User, Group
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import MembershipTypeForm
 from .forms import MembershipForm
 from members import forms as mForms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.core.mail import EmailMessage
+from django.utils.crypto import get_random_string
 
 
 @login_required
@@ -234,11 +236,23 @@ def create_membership(request):
 
         #Datos del usuario
 
-        user = User.objects.create_user(username=form2.cleaned_data['num_doc'], email=form2.cleaned_data['email'],   password='1111')
+        password = get_random_string(length=10)
+
+        email = EmailMessage('Bienvenido al club' ,
+                             'Hola ' + form2.cleaned_data['name'] + ',\n\nTe damos la bienvenida al club.'+
+                             '\n\n\nPara poder acceder al sistema utiliza los siguientes datos: '+
+                             '\nUsuario:    '+ str(form2.cleaned_data['num_doc']) +
+                             '\nContraseña: '+ str(password), 
+                             to=[form2.cleaned_data['email']])
+
+        email.send()
+
+        user = User.objects.create_user(username=form2.cleaned_data['num_doc'], email=form2.cleaned_data['email'],   password=password, first_name=form2.cleaned_data['name'], last_name=form2.cleaned_data['paternalLastName'])
 
         group = Group.objects.get(name='usuarios')
 
         group.user_set.add(user)
+        
 
         #Datos del miembro
 
@@ -325,9 +339,13 @@ def membership_edit_index(request):
 
     membership_service = MembershipService()
 
-    membershipId = request.POST['id']
+    memberId = request.POST['id']
 
-    membership = membership_service.getMembership(membershipId)
+    member_service = MembersService()
+
+    member = member_service.getMember(memberId)
+
+    membership = member.membership
 
     membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
 

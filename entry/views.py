@@ -56,22 +56,30 @@ def insert(request):
 
     member_service = MembersService()
 
-    filter_data["document_number"] = request.POST['doc_member']
+    affiliate_service = AffiliateService()
 
-    filter_data["state"] = 1
+    if(type == '2'):
 
-    member = member_service.filter(filter_data)
+        filter_data["document_number"] = request.POST['document_number_mem']
 
-    insert_data["member"] = member[0]
+        affiliate = affiliate_service.filter(filter_data)
+
+        insert_data["member"] = affiliate[0].member
+
+    else:
+
+        filter_data["document_number"] = request.POST['document_number_mem']
+
+        member = member_service.filter(filter_data)
+
+        insert_data["member"] = member[0]
 
     #1 para miembro, 2 para afiliado, 3 para invitado, 0 para nuevo invitado
     if(type == '2'):
 
-        affiliate_service = AffiliateService()
-
         filter_data = {}
 
-        filter_data["document_number"] = request.POST['dni']
+        filter_data["document_number"] = request.POST['document_number']
 
         filter_data["state"] = 1
 
@@ -81,11 +89,11 @@ def insert(request):
 
     elif(type == '3'):
 
-        guest_service = GuestsService()
+        guest_service = GuestService()
 
         filter_data = {}
 
-        filter_data["dni"] = request.POST['dni']
+        filter_data["document_number"] = request.POST['document_number']
 
         guest = guest_service.filter(filter_data)
 
@@ -93,15 +101,13 @@ def insert(request):
 
     elif(type == '0'):
 
-        print("entre aca")
-
         insert_guest = {}
 
-        insert_guest["name"] = request.POST['names']
+        insert_guest["name"] = request.POST['name']
 
-        insert_guest["surname"] = request.POST['surnames']
+        insert_guest["paternalLastName"] = request.POST['paternalLastName']
 
-        insert_guest["dni"] = request.POST['dni']
+        insert_guest["document_number"] = request.POST['document_number']
 
         insert_guest["status"] = 1
 
@@ -120,3 +126,34 @@ def insert(request):
     entry_service.create(insert_data)
 
     return HttpResponseRedirect(reverse('entry:index'))
+
+
+@login_required
+@require_http_methods(['POST'])
+def verify_member(request):
+
+    member_service = MembersService()
+
+    filter_member = {}
+
+    filter_member["document_number"] = request.POST['document_number']
+
+    member = member_service.filter(filter_member)
+
+    if(member):      
+
+        return  HttpResponse("true")
+
+    affiliate_service = AffiliateService()
+
+    filter_affiliate = {}
+
+    filter_affiliate["document_number"] = request.POST['document_number']
+
+    affiliate = affiliate_service.filter(filter_affiliate)
+
+    if(affiliate):   
+
+        return  HttpResponse("true")
+
+    return  HttpResponse("false")

@@ -1,0 +1,78 @@
+{% extends 'Admin/Layouts/base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: reserva de Canchas
+{% endblock %}
+
+{% block head_dahsboard %}
+Reserva de Canchas
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista de reservas activas
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Reserva de Canchas
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de reservas
+{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href='{% static "assets/css/fullcalendar/fullcalendar.min.css" %}'>
+<link rel="stylesheet" href='{% static "assets/css/fullcalendar/fullcalendar.print.css" %}' media='print'>
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+{% if success %}
+    {{success}}
+{% endif %}
+<div class="content">
+
+    <div class="row">
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-sm-12 control-label">Seleccione un tipo</label>
+                <select class="form-control" id="court_type_id" size="1">
+                    <option value="0">Cancha de Fútbol</option>
+                    <option value="1">Cancha de Básquet</option>
+                    <option value="2">Cancha de Voley</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label class="col-xs-12 control-label">Seleccione una sede</label>
+                <select class="form-control" id="headquarter_id" size="1">
+                    {% for headquarter in headquarters %}
+                    <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+    <div id='calendar'></div>
+
+</div>
+<!-- END Page Content -->
+
+<!-- HASTA AQUÍ -->
+
+{% endblock %}
+
+{% block scripts %}
+<script src='{% static "assets/js/fullcalendar/moment.min.js" %}'></script>
+<script src='{% static "assets/js/fullcalendar/fullcalendar.min.js" %}'></script>
+<script src='{% static "assets/js/fullcalendar/es.js" %}'></script>
+
+<script src='{% static "assets/js/Admin/courtReservation/reservation.js" %}'></script>
+{% endblock %}

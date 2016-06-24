@@ -61,10 +61,11 @@ INSTALLED_APPS = [
     'identity_document_type',
     'ubigeo',
     'affiliate',
+    'bungalow_service',
     'entry',
     'guests',
-    'reserve_field',
-    'suspension'
+    'suspension',
+    'reserve_field'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -110,9 +111,12 @@ DATABASES = {
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
         'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),     
-           
+        'PORT': os.environ.get('DB_PORT'),
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': 'db.sqlite3',
+    # }
 }
 
 
@@ -140,7 +144,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Lima'
 
 USE_I18N = True
 
@@ -156,10 +160,20 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "uploads"),
 )
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
+MEDIA_ROOT = os.path.join(BASE_DIR,"uploads")
+
+MEDIA_URL = '/uploads/'
 
 LOGIN_URL = '/login'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'yoqueriaphp@gmail.com'
+EMAIL_HOST_PASSWORD = 'yoqueriaPHP123'
+EMAIL_PORT = 587
+FILE_UPLOAD_PERMISSION = 644

@@ -29,6 +29,9 @@
 
     <link rel="stylesheet" id="css-main" href='{% static "assets/css/oneui.css" %}'>
 
+{% block links %}
+{% endblock %}
+
 </head>
 <body>
  <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
@@ -86,7 +89,7 @@
                             </li>
                         </ul>
                     </div>
-                    <a class="h5 text-white" href="index.html">
+                    <a class="h5 text-white">
                         <i class="fa fa-circle-o-notch text-primary"></i> <span class="h4 font-w600 sidebar-mini-hide">ne</span>
                     </a>
                 </div>
@@ -96,7 +99,7 @@
                 <div class="side-content">
                     <ul class="nav-main">
                         <li>
-                            <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                            <a class="active" href='{% url "login:iniAdmin" %}'><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Administración del Club</span></li>
                         {% if perms.dummy.permission_bungalow %} 
@@ -117,6 +120,9 @@
                                 </li>
                                 <li>
                                     <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "bungalow_service:index" %}'>Servicios por Tipo de Bungalow</a>
                                 </li>
                             </ul>
                         </li>
@@ -147,6 +153,14 @@
                             </ul>
                         </li> 
                         {% endif %}
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Reserva de canchas</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "reserve_field:index_admin" %}'>Ver Reservas de canchas</a>
+                                </li>                                
+                            </ul>
+                        </li>
                         {% if perms.dummy.permission_actividad %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
@@ -173,7 +187,6 @@
                             </ul>
                         </li>
                         {% endif %}
-                        {% if perms.dummy.permission_evento %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
                             <ul>
@@ -191,7 +204,6 @@
                                 </li>                                 
                             </ul>
                         </li>
-                        {% endif %}
                         {% if perms.dummy.permission_servicio %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Servicios</span></a>
@@ -228,6 +240,9 @@
                                 </li>
                                 <li>
                                     <a href='{% url "products:create_index" %}'>Crear productos</a>
+                                </li>
+                                <li>
+                                    <a href='{% url "products:index_in_out" %}'>Registro de Ingresos y Salidas</a>
                                 </li>
                                 <li>
                                     <a href=''>Consultar servicios</a>
@@ -352,7 +367,7 @@
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li class="dropdown-header">Perfil</li>
+                        <li class="dropdown-header">{{ user.groups.all.0  }} - {{ user.first_name }}</li>
                         <li>
                             <a tabindex="-1" href="base_pages_inbox.html">
                                 <i class="si si-envelope-open pull-right"></i>
@@ -400,12 +415,6 @@
                 <!-- Layout API, functionality initialized in App() -> uiLayoutApi() -->
                 <button class="btn btn-default" data-toggle="layout" data-action="sidebar_mini_toggle" type="button">
                     <i class="fa fa-ellipsis-v"></i>
-                </button>
-            </li>
-            <li>
-                <!-- Opens the Apps modal found at the bottom of the page, before including JS code -->
-                <button class="btn btn-default pull-right" data-toggle="modal" data-target="#apps-modal" type="button">
-                    <i class="si si-grid"></i>
                 </button>
             </li>
             <li class="visible-xs">

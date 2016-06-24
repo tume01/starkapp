@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from environment.models import *
+from headquarters.models import *
 import datetime
 
 class Command(BaseCommand):
@@ -19,7 +20,7 @@ def cleanEnvironments():
     print('    Data has been deleted\n')
 
 def insertEnvironments():
-    at1 = Environment(name='Ambiente 1', capacity=100, description='test', status=1, headquarter_id = 1)
+    at1 = Environment(name='Ambiente 1', capacity=100, description='test', status=1, headquarter_id = getFirstHeadquarterId())
     at1.save()
     at1.environmentreservation_set.create(
         start_date = datetime.date.today(),
@@ -40,7 +41,7 @@ def insertEnvironments():
         status     = 0
     )
 
-    at2 = Environment(name='Ambiente 2', capacity=100, description='test', status=1, headquarter_id = 1)
+    at2 = Environment(name='Ambiente 2', capacity=100, description='test', status=1, headquarter_id = getFirstHeadquarterId())
     at2.save()
     at2.environmentreservation_set.create(
         start_date = datetime.date.today(),
@@ -62,3 +63,6 @@ def insertEnvironments():
     )
 
     print('    Data has been inserted\n')
+
+def getFirstHeadquarterId():
+    return Headquarters.objects.first().id
