@@ -153,6 +153,14 @@
                             </ul>
                         </li> 
                         {% endif %}
+                        <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Reserva de canchas</span></a>
+                            <ul>
+                                <li>
+                                    <a href='{% url "reserve_field:index_admin" %}'>Ver Reservas de canchas</a>
+                                </li>                                
+                            </ul>
+                        </li>
                         {% if perms.dummy.permission_actividad %} 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>

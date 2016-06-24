@@ -1,61 +1,37 @@
-// Submit post on submit
-// $('#filters-form').on('submit', function(event){
-//     submitFilters();
-// });
-//
-
 $(document).ready(function() {
-    refreshEvents();
-});
-
-function displayEvents(eventsData){
-
     $('#calendar').fullCalendar({
-        defaultDate: '2016-05-01',
-        editable: true,
-        eventLimit: true, // allow "more" link when too many events
-        customButtons: {
-            prev: {
-                icon: 'left-single-arrow',
-                click: function() {
-                    prevMonth();
-                    $('#calendar').fullCalendar( 'prev' )
-//                        alert('clicked the custom button!');
-                }
-            },
-            next: {
-                icon: 'right-single-arrow',
-                click: function() {
-                    nextMonth();
-                    $('#calendar').fullCalendar( 'next' )
-                }
-            }
+        defaultDate: new Date(),
+        editable: false,
+        allDayDefault: false,
+        defaultView: "agendaWeek", // allow "more" link when too many events
+        events: function(start, end, timezone, callback){
+            var date = new Date(start);
+            console.log(start.toDate().toUTCString());
+            console.log("Current: ", date, date.getMonth(), date.getFullYear());
+            date.setDate(date.getDate() + 1);
+            console.log("New: ", date, date.getMonth(), date.getFullYear());
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            refreshEvents(start, end, callback);
         },
-//        dayClick: function(date, jsEvent, view) {
-//
-//            alert('Clicked on: ' + date.format());
-//
-//            alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-//
-//            alert('Current view: ' + view.name);
-//
-//            // change the day's background color just for fun
-//            $(this).css('background-color', 'red');
-//        },
-        events: eventsData,
     });
-}
-
+});
 
 $('#headquarter_id').change(function() {
-    refreshEvents();
+    $('#calendar').fullCalendar( 'refetchEvents' );
 });
 
+$('#court_type_id').change(function() {
+    $('#calendar').fullCalendar( 'refetchEvents' );
+});
 
-function refreshEvents(){
-
+function refreshEvents(start, end, callback){
+    console.log("Refresh Events");
     var requestData = {
+        'start' : start/1000,
+        'end' : end/1000,
         'headquarter_id' : $('#headquarter_id option:selected').val(),
+        'court_type_id' : $('#court_type_id option:selected').val(),
         'csrfmiddlewaretoken' : getCookie('csrftoken')
     }
 
@@ -66,26 +42,16 @@ function refreshEvents(){
 
         // handle a successful response
         success : function(data) {
-//            console.log("AJAX REQUEST", data.events);
-            displayEvents(data.events);
-        },
+            console.log("AJAX REQUEST", data.events);
+            console.log(data);
+            callback(data.events);
 
-        // handle a non-successful response
+        },
         error : function(xhr,errmsg,err) {
             console.log("ERROR"); // another sanity check
         }
     });
 }
-
-function prevMonth() {
-    console.log('PREV Month')
-    refreshEvents();
-};
-
-function nextMonth() {
-    console.log('NEXT Month')
-    refreshEvents();
-};
 
 function getCookie(name) {
     var cookieValue = null;
