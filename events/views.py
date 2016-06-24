@@ -73,7 +73,7 @@ def create_index(request):
     headquarters = headquearter_service.getHeadquarters()
 
     eventstype = eventstype_service.getEventsType()
-    
+
     context = {
         'titulo' : 'titulo',
         'environments' : environments,
@@ -93,7 +93,7 @@ def create_event(request):
         'titulo' : 'titulo'
     }
 
-    insert_data = {} 
+    insert_data = {}
 
 
     if not form.is_valid():
@@ -116,23 +116,23 @@ def create_event(request):
 
         insert_data["name"] = form.cleaned_data.get('name')
 
-        insert_data["description"] = form.cleaned_data.get('description') 
+        insert_data["description"] = form.cleaned_data.get('description')
 
-        insert_data["environment_id"] = form.cleaned_data.get('environment') 
+        insert_data["environment_id"] = form.cleaned_data.get('environment')
 
         member_service = MembersService()
 
         creator = member_service.getMemberByUser(request.user)
 
-        insert_data["creator_id"] = creator.id 
+        insert_data["creator_id"] = creator.id
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
         insert_data["headquarter_id"] = request.POST.get('headquarter')
-     
+
         insert_data["start_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
 
-        insert_data["end_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")   
+        insert_data["end_date"] = form.cleaned_data.get("start_date","%Y/%m/%d")
 
         insert_data["assistance"] = request.POST.get('assistance')
 
@@ -189,22 +189,22 @@ def update_events(request, event_id):
         insert_data["name"] = request.POST.get('name')
 
     if request.POST.get('description'):
-        insert_data["description"] = request.POST.get('description') 
+        insert_data["description"] = request.POST.get('description')
 
     if request.POST.get('ruc'):
         insert_data["ruc"]  = request.POST.get('ruc')
 
     if request.POST.get('environment'):
 
-        insert_data["environment_id"] = request.POST.get('environment') 
+        insert_data["environment_id"] = request.POST.get('environment')
 
     if request.POST.get('user'):
-        
-        insert_data["user_id"] = request.POST.get('user') 
+
+        insert_data["user_id"] = request.POST.get('user')
 
     if request.POST.get('seat'):
         insert_data["seat"] = request.POST.get('seat')
-         
+
     if request.POST.get("start_date"):
         insert_data["start_date"] = datetime.datetime.strptime(request.POST.get("start_date"),"%m/%d/%Y %H:%M %p").date()
 
@@ -232,7 +232,7 @@ def update_events(request, event_id):
     return HttpResponseRedirect(reverse('events:index'))
 
 def index_registerUser(request, event_id):
-    
+
     events_service = EventsService()
 
     event = events_service.getEvent(event_id)
@@ -315,7 +315,7 @@ def index_UserSignup(request):
 
     events = event_service.getEvents()
     event_types = eventstype_service.getEventsType()
-    
+
     context = {
         'events': events,
         'event_types': event_types,
@@ -325,7 +325,7 @@ def index_UserSignup(request):
     return render(request, 'User/Events/index.html', context)
 
 def select_userEvent(request, event_id):
-    
+
     event_service = EventsService()
 
     event = event_service.getEvent(event_id)
@@ -338,15 +338,15 @@ def select_userEvent(request, event_id):
     return render(request, 'User/Events/select.html', context)
 
 def userSignup(request, event_id):
-    
+
     member_service = MembersService()
     event_service = EventsService()
 
     member = member_service.getMemberByUser(request.user)
 
     if event_service.registerMember(event_id, member):
-            messages.success(request, 'Inscripcion en evento exitosa')
-            return HttpResponseRedirect(reverse('events:userEvents_index'))
+        messages.success(request, 'Inscripcion en evento exitosa')
+        return HttpResponseRedirect(reverse('events:userEvents_index'))
 
     messages.error(request, 'Error al inscribirse en el evento')
 
@@ -365,4 +365,18 @@ def userSignout(request, event_id):
         messages.error(request, 'Miembro no puede ser removido con menos de 1 semana de anticipacion')
 
     return HttpResponseRedirect(reverse('events:userEvents_index'))
-    
+
+def checkoutEvent(request, event_id):
+
+    guests = request.POST.get('guests', 0)
+
+    member_service = MembersService()
+    member = member_service.getMemberByUser(request.user)
+
+    event_service = EventsService()
+
+    event =environment_service.getEvent(event_id)
+
+    checkout_products = payment_service.createCheckoutProducts(products,member)
+
+    return HttpResponseRedirect(reverse('payments:checkout_preview'))
