@@ -2,7 +2,7 @@ from django.test import TestCase
 from .forms import AffiliateForm
 
 # Create your tests here.
-class AffiliateForm(TestCase):
+class AffiliateFormTest(TestCase):
 
     def test_valid_data(self):
         form=AffiliateForm({'name':'Walter',
@@ -157,7 +157,7 @@ class AffiliateForm(TestCase):
         self.assertFalse(form.is_valid())
 
     def test_empty_address(self):
-        form = AffiliateForm({'name': '',
+        form = AffiliateForm({'name': 'Walter',
                               'paternalLastName': 'Segama',
                               'maternalLastName': 'Segama',
                               'num_doc': 77068833,
@@ -171,7 +171,7 @@ class AffiliateForm(TestCase):
         for i in range(201):
             address += 'a'
 
-        form = AffiliateForm({'name': name,
+        form = AffiliateForm({'name': 'Walter',
                               'paternalLastName': 'Segama',
                               'maternalLastName': 'Segama',
                               'num_doc': 77068833,
@@ -180,18 +180,8 @@ class AffiliateForm(TestCase):
                               'email': 'correo@gmail.com'})
         self.assertFalse(form.is_valid())
 
-    def test_numeric_address(self):
-        form = AffiliateForm({'name': 12345,
-                              'paternalLastName': 'Segama',
-                              'maternalLastName': 'Segama',
-                              'num_doc': 77068833,
-                              'phone': 993904208,
-                              'address': 123456,
-                              'email': 'correo@gmail.com'})
-        self.assertFalse(form.is_valid())
-
     def test_empty_email(self):
-        form = AffiliateForm({'name': '',
+        form = AffiliateForm({'name': 'Walter',
                               'paternalLastName': 'Segama',
                               'maternalLastName': 'Segama',
                               'num_doc': 77068833,
@@ -205,7 +195,7 @@ class AffiliateForm(TestCase):
         for i in range(201):
             email += 'a'
 
-        form = AffiliateForm({'name': name,
+        form = AffiliateForm({'name': 'Walter',
                               'paternalLastName': 'Segama',
                               'maternalLastName': 'Segama',
                               'num_doc': 77068833,
@@ -213,14 +203,3 @@ class AffiliateForm(TestCase):
                               'address': 'av.universitaria',
                               'email': email})
         self.assertFalse(form.is_valid())
-
-    def test_numeric_email(self):
-        form = AffiliateForm({'name': 12345,
-                              'paternalLastName': 'Segama',
-                              'maternalLastName': 'Segama',
-                              'num_doc': 77068833,
-                              'phone': 993904208,
-                              'address': 'av.universitaria',
-                              'email': 12345})
-        self.assertFalse(form.is_valid())
-

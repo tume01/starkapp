@@ -10,6 +10,8 @@ from services.EntryService import EntryService
 from services.MemberService import MembersService
 from services.GuestService import GuestService
 from services.AffiliateService import AffiliateService
+from services.IdentityDocumentTypeService import IdentityDocumentTypeService
+from services.PaymentDocumentTypeService import PaymentDocumentTypeService
 from datetime import datetime
 
 @login_required
@@ -22,12 +24,73 @@ def index(request):
 
     entries = entry_service.getEntries()
 
+    #payment_document_types_service = PaymentDocumentTypeService()
+
+    identity_document_type_service = IdentityDocumentTypeService()
+
+    #payment_document_types = payment_document_types_service.getDocumentTypes()
+
+    identity_document_types = identity_document_type_service.getIdentityDocumentTypes()
+
     context = {
         'entries' : entries,
+        #'payment_document_types': payment_document_types,
+        'identity_document_types': identity_document_types,
     }
 
-    return render(request, 'Admin/Guests/index_entries.html', context) 
+    return render(request, 'Admin/Guests/index_entries.html', context)
 
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
+@require_http_methods(['POST'])
+def index_filter(request):
+
+    entry_service = EntryService()
+
+    #payment_document_types_service = PaymentDocumentTypeService()
+
+    identity_document_type_service = IdentityDocumentTypeService()
+
+    #payment_document_types = payment_document_types_service.getDocumentTypes()
+
+    identity_document_types = identity_document_type_service.getIdentityDocumentTypes()
+
+    filter_entries = {}
+
+    iniDate = request.POST['initialDate']
+
+    endDate = request.POST['finalDate']
+
+    numIdentityDoc = request.POST['num_doc']
+
+    identityDocId = request.POST['identity_doc']
+
+    #paymentDocId = request.POST['payment_doc_id']
+
+    if iniDate != '':
+        filter_entries["initialDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
+
+    if endDate != '':
+        filter_entries["finalDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
+
+    entries = entry_service.filter(filter_entries)
+
+    if identityDocId != 'Todos':
+        entries = filter(lambda entry: entry.member.identity_document_type.id == int(identityDocId), entries)
+
+    if numIdentityDoc != '':
+        entries = filter(lambda entry: entry.member.document_number == int(numIdentityDoc),entries)
+
+    #if paymentDocId != 'Todos':
+        #entries = filter(lambda entry: entry.payment_document.id == paymentDocId,entries)
+
+    context = {
+        'entries': entries,
+        #'payment_document_types' : payment_document_types,
+        'identity_document_types' : identity_document_types,
+    }
+
+    return render(request, 'Admin/Guests/index_entries.html', context)
 
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')

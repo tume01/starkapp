@@ -11,7 +11,7 @@ class MemberForm(forms.Form):
     maternalLastName = forms.CharField(max_length=200, validators=[alphabetic], error_messages={'required': 'El campo Apellido materno es requerido', 'max_length': 'El campo Apellido materno debe tener una longitud maxima de 200 caracteres'})
     num_doc = forms.IntegerField( error_messages={'required': 'El campo Numero de Documento es requerido'})
     phone = forms.IntegerField(error_messages={'required': 'El campo Telefono es requerido'})
-    address = forms.CharField(error_messages={'required': 'El campo Direccion es requerido'})
+    address = forms.CharField(max_length=200, error_messages={'required': 'El campo Direccion es requerido', 'max_length': 'El campo Direccion debe tener una longitud maxima de 200 caracteres'})
     email = forms.CharField(max_length=200, error_messages={'required': 'El campo Email es requerido', 'max_length': 'El campo Email debe tener una longitud maxima de 200 caracteres'})
 
     def clean_dni(self):

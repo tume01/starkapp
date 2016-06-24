@@ -12,7 +12,7 @@ from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import MembershipApplicationForm
 from objection import forms as oforms
 from django.contrib.auth.decorators import login_required
@@ -371,8 +371,35 @@ def create_objection(request):
 
     comments = request.POST['comments']
 
+    current_user = request.user
+
     request = FormValidator.validateForm(form, request)
 
+    objection_service = ObjectionsService()
+
+    member_application_service = Membership_ApplicationService()
+
+    member_service = MembersService()
+
+    membership_application = member_application_service.getMembership_Application(requestId)
+
+    member = member_service.getMemberByUser(current_user)
+        
+    filter_data = {}
+
+    filter_data["member"] = member
+
+    filter_data["membership_application"] = membership_application
+
+    objections = objection_service.filter(filter_data)
+
+    if len(objections) == 0:
+
+        objection = ''
+
+    else:
+
+        objection = objections[0].comments
 
     if not request:
 
@@ -386,26 +413,23 @@ def create_objection(request):
 
         insert_data['date'] = datetime.now()
 
-        objection_service = ObjectionsService()
+        if objection == '':
 
-        objection_service.create(insert_data)
+            objection_service.create(insert_data)
+
+        else:
+
+            objection_service.update(objections[0].id, insert_data)
 
         return HttpResponseRedirect(reverse('membership_application:user_index'))
 
     else:
-        member_application_service = Membership_ApplicationService()
-
-        member_service = MembersService()
-
-        membership_application = member_application_service.getMembership_Application(requestId)
-
-        current_user = request.user
-
-        member = member_service.getMemberByUser(current_user)
+        
 
         context = {
             'membership_application': membership_application,
             'member' : member,
+            'objection' : objection
         }
 
         return render(request, 'User/Membership/objections_members.html', context)
@@ -424,13 +448,32 @@ def objection_index(request):
 
     member_service = MembersService()
 
+    objection_service = ObjectionsService()
+
     current_user = request.user
 
     member = member_service.getMemberByUser(current_user)
 
+    filter_data = {}
+
+    filter_data["member"] = member
+
+    filter_data["membership_application"] = membership_application
+
+    objections = objection_service.filter(filter_data)
+
+    if len(objections) == 0:
+
+        objection = ''
+
+    else:
+
+        objection = objections[0].comments
+
     context = {
         'membership_application' : membership_application,
         'member': member,
+        'objection': objection
     }
 
     return render(request, 'User/Membership/objections_members.html', context)

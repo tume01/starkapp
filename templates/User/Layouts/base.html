@@ -103,6 +103,9 @@
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
+                                <li>
+                                    <a href="{% url 'bungalowReservation:aditional_service'%}">Servicios Adicionales</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -118,12 +121,24 @@
                         </li> 
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
-                            <ul>                            
+                            <ul>
+                                <li>
+                                    <a href="{% url 'activities:user_activities' %}">Mis Actividades</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'activities:index_signup' %}">Lista Actividades</a>
+                                </li>                           
                             </ul>
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-calendar-check-o"></i><span class="sidebar-mini-hide">Eventos</span></a>
-                            <ul>                               
+                            <ul>
+                                <li>
+                                    <a href="{% url 'events:userEvents_index' %}">Mis Eventos</a>
+                                </li>  
+                                <li>
+                                    <a href="{% url 'events:userSignup_index' %}">Eventos</a>
+                                </li>                          
                             </ul>
                         </li>
                         <li>
@@ -134,6 +149,9 @@
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Canchas</span></a>
                             <ul>
+                                <li>
+                                    <a href="{% url 'reserve_field:index'%}">Reservar Cancha</a>
+                                </li>
                             </ul>
                         </li>
                         <li>

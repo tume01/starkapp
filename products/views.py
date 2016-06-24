@@ -235,3 +235,71 @@ def filter_product(request):
         list_products = None
 
     return HttpResponse( json.dumps(req_list), content_type='application/json')
+
+@require_http_methods(['GET'])
+def index_in_out(request):
+
+    product_service = ProductsService()
+    providers_service = ProvidersService()
+    product_types_service = ProductTypesService()
+
+    products = product_service.getProducts()
+    all_providers = providers_service.getActiveProviders()
+    all_product_types = product_types_service.getProductTypes()
+
+    context = {
+        'products' : products,
+        #'all_providers' : all_providers,
+        'all_product_types' : all_product_types,
+        'titulo' : 'titulo'
+    }
+
+    return render(request, 'Admin/Products/index_in_out.html', context) 
+
+@require_http_methods(['POST'])
+def register_in_out(request, id):
+    update_data = {}
+    req = json.loads( request.body.decode('utf-8') )
+    req_send = ""
+
+    product_service = ProductsService()
+
+    q = int(req.get("quantity"))
+
+    p = product_service.find(id)
+
+    
+
+    if (p.actual_stock >= q and req.get("move") == '1') or req.get("move") == '0':
+        update_data["name"] = p.name
+        update_data["minimum_stock"] = p.minimum_stock
+
+        if req.get("move") == '1': #salida
+            update_data["actual_stock"] = p.actual_stock - q
+        else:
+            update_data["actual_stock"] = p.actual_stock + q
+
+        update_data["description"] = p.description
+        update_data["price"] = p.price
+
+        product_types_service = ProductTypesService()
+        product_type = product_types_service.find(p.product_type.id)
+        update_data["product_type"] = product_type
+
+        providers_service = ProvidersService() 
+        list_providers = []
+
+        for i in p.provider.all():
+            list_providers.append(providers_service.find(i.id))
+
+        update_data["provider"] = list_providers
+
+        
+        pr = product_service.update(id, update_data)
+
+        req_send = "0"
+    else:
+        req_send += str(p.actual_stock)
+
+    return HttpResponse( json.dumps(req_send), content_type='application/json')
+

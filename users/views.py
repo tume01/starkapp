@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
-from Adapters.FormValidator import FormValidator
+from adapters.FormValidator import FormValidator
 from .forms import UserForm, UserTypeForm
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
@@ -309,11 +309,41 @@ def user_index(request):
 
     users = User.objects.all()
 
+    groups = Group.objects.all()
+
     context = {
         'users' : users,
+        'groups' : groups,
     }
 
-    return render(request, 'Admin/Users/index_user.html', context) 
+    return render(request, 'Admin/Users/index_user.html', context)
+
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
+@require_http_methods(['POST'])
+def user_index_filter(request):
+
+    userType = request.POST['user_type']
+
+    username = request.POST['username']
+
+    users = User.objects.all()
+
+    groups = Group.objects.all()
+
+    if userType != "Todos":
+        users = User.objects.filter(groups__name=userType)
+
+    if username != '':
+        users = User.objects.filter(username = username)
+
+    context = {
+        'users': users,
+        'groups' : groups,
+    }
+
+    return render(request, 'Admin/Users/index_user.html', context)
 
 @login_required
 @require_http_methods(['POST'])

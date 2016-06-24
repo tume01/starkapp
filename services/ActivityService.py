@@ -1,3 +1,4 @@
+from datetime import datetime
 from repositories import ActivityRepository
 
 class ActivityService(object):
@@ -23,3 +24,27 @@ class ActivityService(object):
 
     def getActivity(self, id):
         return self.__activity_repository.find(id)
+
+    def removeMember(self, activity_id, member_id):
+
+        activity = self.getActivity(activity_id)
+
+        return activity.activityregistration_set.filter(member_id=member_id).update(deleted_at=datetime.now())
+
+    def getActivityMembers(self, activity_id):
+
+        activity = self.getActivity(activity_id)
+
+        return activity.activityregistration_set.filter(deleted_at=None)
+
+    def addMember(self, activity_id, member):
+        activity = self.getActivity(activity_id)
+
+        assistants = activity.activityregistration_set.filter(deleted_at=None).count()
+
+        if activity.attendance > assistants:
+
+            if not activity.activityregistration_set.filter(member_id=member.id, deleted_at=None):
+                return self.__activity_repository.addMember(activity, member)
+
+        return None
