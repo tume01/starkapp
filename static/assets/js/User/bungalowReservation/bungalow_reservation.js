@@ -74,10 +74,59 @@ $('#SaveExtraServices').click(function(){
     data.services = $('#select2BungalowServiceAdd').val()
     console.log(data);
 
-    //$('#modalSaveAddService>p').html('Use this text as modal heading');
-    //$('#modalSaveAddService').show();
-    
+    if ($('#bungalow').val() == ""){
+        bootbox.alert("Debe seleccionar algun bungalow en uso.");
+    }
+    else if (data.services == null){
+        bootbox.alert("Debe seleccionar algun servicio adicional.");
+    }
+    else{
+        if($('#select2BungalowServiceAdd').is(':disabled')) {
+            bootbox.alert("Este bungalow ya ha solicitado servicios adicionales.");
+        }
+        else{
+            var string = "Se procedera a registrar los servicios seleccionados.\n";
+            string += "Recuerde que solo puede solicitarlos una vez por bungalow.";
 
+            bootbox.dialog({
+                //title: "Servicios Adicionales",
+                message: string,
+                buttons: {
+                    success: {
+                        className: "btn btn-primary",
+                        label: "Aceptar",
+                        callback: function() {
+                            var xhr = $.ajax({
+                                type: "POST", 
+                                url: "/bungalowReservations/save/aditional/services/"+ $('#bungalow').val(), 
+                                dataType: "json",
+                                data: JSON.stringify(data),
+                                contentType: "application/json; charset=utf-8",
+                            });
+
+                            xhr.done(function(data) {
+                                console.log(data);
+                                console.log("saved!");
+                                window.location = "/bungalowReservations/aditional/service/bungalow";
+                            });
+
+                            xhr.fail(function(xhr, status, text){
+                                console.log("Error " + xhr.readyState + " " +text);
+
+                            });
+
+                            return xhr;
+                        }
+                    },
+                    cancel: {
+                        className: "btn btn-default",
+                        label: "Cancelar"
+                    }
+                }
+            });
+        }
+    }
+    /*
     var xhr = $.ajax({
         type: "POST", 
         url: "/bungalowReservations/save/aditional/services/"+ $('#bungalow').val(), //url que procesa
@@ -98,6 +147,7 @@ $('#SaveExtraServices').click(function(){
     });
 
     return xhr;
+    */
 
 });
 
