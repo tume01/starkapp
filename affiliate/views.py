@@ -6,18 +6,21 @@ from django.core.urlresolvers import reverse
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MemberService import MembersService
 from services.MembershipService import MembershipService
+from services.MembershipTypeService import MembershipTypeService
 from services.AffiliateService import AffiliateService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
 from services.SuspensionService import SuspensionService
 from adapters.FormValidator import FormValidator
+from adapters.DateManager import DateManager
 from .forms import  AffiliateForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import EmailMessage
 from django.utils.crypto import get_random_string
+from datetime import datetime, timedelta
 
 
 def isMemberSuspended(member):
@@ -801,6 +804,8 @@ def admin_move_affiliate(request):
     member_service = MembersService()
 
     membership_service = MembershipService()
+
+    membership_type_service = MembershipTypeService()
     
     affiliate = affiliate_service.getAffiliate(id_edit)
 
@@ -839,11 +844,37 @@ def admin_move_affiliate(request):
 
     insert_data_membership = {}
 
-    insert_data_membership["membership_type"] = membership.membership_type
+    filter_membership_type = {}
 
-    insert_data_membership["initialDate"] = membership.initialDate
+    filter_membership_type["name"] = 'Vitalicio'
 
-    insert_data_membership["finalDate"] = membership.finalDate
+    membership_type = membership_type_service.filter(filter_membership_type)[0]
+
+    if(membership_type.id == membership.membership_type.id):
+        #Miembro vitalicio
+
+        filter_membership_type["name"] = 'Miembro'
+        
+        insert_data_membership["membership_type"] = membership_type_service.filter(filter_membership_type)[0]
+
+        insert_data_membership["initialDate"] = datetime.now()
+
+        final_date = datetime.now()
+
+        months = 10
+
+        final_date = DateManager.add_months(final_date, months)
+
+        insert_data_membership["finalDate"] = final_date
+            
+
+    else:   
+
+        insert_data_membership["membership_type"] = membership.membership_type
+
+        insert_data_membership["initialDate"] = membership.initialDate
+
+        insert_data_membership["finalDate"] = membership.finalDate
 
     insert_data_membership["status"] = 1
 
