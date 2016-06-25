@@ -63,23 +63,46 @@ $('#SaveServices').click(function(){
 
     console.log(data);
 
-    var xhr = $.ajax({
-        type: "POST", 
-        url: "/bungalow_service/saveServicesByBungalowType/"+ $('#bungalow_type').val(), //url que procesa
-        dataType: "json",
-        data: JSON.stringify(data),
-        contentType: "application/json; charset=utf-8",
-    });
+    if($('#bungalow_type').val() == ""){
+        swal({
+            title: "",
+            text: "Seleccione un Tipo de bungalow.",
+            type: "info"
+        });
+    }
+    else{
+        swal({
+                title: "Servicio adicional",
+                text: "Se registraran los servicios elegidos. ¿Desea continuar?",
+                type: "info",
+                showCancelButton: true,
+                //confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Aceptar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+        },
+        function(){
+            var xhr = $.ajax({
+                type: "POST", 
+                url: "/bungalow_service/saveServicesByBungalowType/"+ $('#bungalow_type').val(), //url que procesa
+                dataType: "json",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+            });
 
-    xhr.done(function(data) {
-        window.location="/bungalow_service";
-    });
+            xhr.done(function(data) {
+                window.location="/bungalow_service";
+            });
 
-    xhr.fail(function(xhr, status, text){
-        console.log("Error " + xhr.readyState + " " +text);
+            xhr.fail(function(xhr, status, text){
+                console.log("Error " + xhr.readyState + " " +text);
 
-    });
+            });
 
+            return xhr;
+        });   
+    }
 });
 
 $('#CancelSaveServices').click(function(){

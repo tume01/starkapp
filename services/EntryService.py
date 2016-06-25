@@ -18,3 +18,6 @@ class EntryService(object):
 
     def getEntry(self, id):
         return self.__entry_repository.find(id)
+
+    def filter(self, filters):
+        return self.__entry_repository.filter(filters)

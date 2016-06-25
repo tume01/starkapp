@@ -39,6 +39,3 @@ class MembersService(object):
         member = self.__member_repository.filter({'user': user})[0]
 
         return member.eventregistration_set.filter(deleted_at=None)
-
-
-    

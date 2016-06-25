@@ -45,7 +45,7 @@ Nueva Inscripción
                         {% endif %}
                         <!-- Block v2 -->
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "events:insert" %}' method="post" >{% csrf_token %}
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "events:insert" %}' method="post" enctype="multipart/form-data">{% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
@@ -186,7 +186,14 @@ Nueva Inscripción
                                         </div>
                                     </div>                                    
                                 </div>
-                                
+                                <div class="row">
+                                    <div class="form-group">
+                                        <div class="col-lg-6">
+                                            <label for="image">Imagen:</label>
+                                            <input class="form-control" name="photo" type="file" id="photo">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <div class="col-xs-2">
                                         <button href="" class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>

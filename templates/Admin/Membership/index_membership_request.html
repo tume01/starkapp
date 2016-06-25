@@ -47,7 +47,7 @@ Lista de solicitudes de membresía
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Numero de Documento</label>
-                                            <div class="col-md-12">
+                                            <div class="col-md-9">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Num Documento" pattern="[0-9]*"  size="60">
                                                 </div>
@@ -76,10 +76,10 @@ Lista de solicitudes de membresía
                                     <div class="col-lg-1" >
                                         
                                     </div>
-                                    <div class="col-lg-5" >
+                                    <div class="col-lg-6" >
                                         <div class="form-group">
-                                        <label class="col-xs-6 " for="example-select">Documento de Identidad</label>
-                                            <div class="col-sm-12">
+                                        <label class="col-xs-12 " for="example-select">Documento de Identidad</label>
+                                            <div class="col-md-6">
                                                 <select class="form-control" id="example-select" name="identity_document_type" size="1">
                                                     <option value="Todos">Todos</option>
                                                     {% for doc_type in doc_types %}
@@ -143,8 +143,8 @@ Lista de solicitudes de membresía
                                             <td class="font-w600">{{membershipApp.firstName}}</td>
                                             <td class="font-w600">{{membershipApp.paternalLastName}}</td>
                                             <td class="font-w600">{{membershipApp.maternalLastName}}</td>
-                                            <td class="font-w600">{{membershipApp.initialDate}}</td>
-                                            <td class="font-w600">{{membershipApp.finalDate}}</td>
+                                            <td class="font-w600">{{membershipApp.initialDate|date:"d-m-Y"}}</td>
+                                            <td class="font-w600">{{membershipApp.finalDate|date:"d-m-Y"}}</td>
                                             <td class="font-w600">{{membershipApp.comments}}</td>
                                             <td class="text-center">
                                             {% if membershipApp.status == 1 %}
@@ -185,6 +185,9 @@ Lista de solicitudes de membresía
 
     <script>
 
+        var nombre;
+    var apellido;
+
   function editar() {
         $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
@@ -193,14 +196,29 @@ Lista de solicitudes de membresía
 
         });      
     }
-      function eliminar() {
+
+    function eliminar() {
         $('.eliminar').click(function (e) {
-           var id = $(this).attr("data-id")          
-            $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();          
+            var id = $(this).attr("data-id")    
+            $('#hid1').val(id)    
+            swal({
+                title: "Eliminar Solicitud",
+                text: "¿Desea eliminar la solicitud de " + $(this).parent().parent().prevAll().eq(5).html()+" " + $(this).parent().parent().prevAll().eq(4).html() + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });            
         });      
     }
-      function cerrar() {
+
+    function cerrar() {
         $('.cerrar').click(function (e) {
            var id = $(this).attr("data-id")          
             $('#hid3').val(id)
@@ -209,6 +227,7 @@ Lista de solicitudes de membresía
     }
 
     $(document).ready(function () {
+
         editar();
         eliminar();
         cerrar();

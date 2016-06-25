@@ -4,6 +4,8 @@ from .seed_bungalow_reservation import *
 from .seed_headquarter import *
 from .seed_environments import *
 from .seed_login import Command as LoginSeed
+from .seed_event_type import *
+from .seed_activity_type import *
 
 
 class Command(BaseCommand):
@@ -22,6 +24,8 @@ class Command(BaseCommand):
         cleanEnvironments()
         cleanBungalow()
         cleanBungalowReservation()
+        cleanEventType()
+        cleanActivity()
 
         print('\n    Inserting...')
 
@@ -31,3 +35,5 @@ class Command(BaseCommand):
         insertEnvironments()
         insertBungalow()
         insertBungalowReservation()
+        insertEventType()
+        insertActivity()

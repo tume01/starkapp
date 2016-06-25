@@ -17,28 +17,24 @@ import datetime
 @require_http_methods(['GET'])
 def index(request):
 
-    environment_service = EnvironmentService()
-    headquarter_service = HeadquarterService()
+    court_reservation_service = FieldReservationService()
 
+    member_service = MembersService()
+    member = member_service.getMemberByUser(request.user)
+
+    member_id = member.id
 
     filters = {
-        'environment_type_id' : 7,
+        'member_id' : member_id
     }
 
-    fields = environment_service.filter(filters)
-    stay_max_hours = {1,2,3}
-
-    hours = ['08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00']
+    reservations = court_reservation_service.filter(filters)
 
     context = {
-        'fields' : fields,
-        'titulo' : 'titulo',
-        'stay_max_hours' : stay_max_hours,
-        'headquarters' : headquarter_service.getHeadquarters(),
-        'hours' :   hours
+        'reservations' : reservations,
     }
 
-    return render(request, 'User/Reservation/fields.html', context)
+    return render(request, 'User/courtReservation/index.html', context)
 
 @require_http_methods(['GET'])
 def create_index_admin(request):
@@ -47,7 +43,7 @@ def create_index_admin(request):
         'titulo': 'titulo'
     }
 
-    return render(request, 'Admin/courtReservation/reserve_court.html', context)
+    return render(request, 'User/courtReservation/reserve_court.html', context)
 
 @require_http_methods(['POST'])
 def refresh_events(request):
@@ -93,6 +89,10 @@ def refresh_events(request):
 def court_show(request):
     headquarter_id  = request.GET.get('headquarter')
     court_type      = int(request.GET.get('court_type'))
+    fullDate        = request.GET.get('date')
+    date            = request.GET.get('date').split('T')
+
+
 
     headquarter_service = HeadquarterService()
     headquarter = headquarter_service.findHeadquarter(headquarter_id)
@@ -103,11 +103,12 @@ def court_show(request):
         'headquarter' : headquarter,
         'court_type'  : court_type,
         'max_hours'   : [1,2],
-        'date'        : ''
+        'date'        : date[1],
+        'fullDate'    : fullDate
     }
 
 
-    return render(request,'Admin/courtReservation/fields_part2.html',context)
+    return render(request,'User/courtReservation/fields_part2.html',context)
 
 
 @require_http_methods(['POST'])
@@ -116,23 +117,34 @@ def reservate_court(request):
     headquarter_service = HeadquarterService()
 
     insert_data = {}
-    return HttpResponse(request)
 
-    insert_data['court_name']               = request.POST.get('environment_content')
+    fullDate                                = request.POST.get('date').split('T')
+
+    day                                     = fullDate[0].split('-')
+    hour                                    = fullDate[1].split(':')
+
     headquarter_id                          = request.POST.get('headquarter_id')
 
-
     headquarter                             = headquarter_service.findHeadquarter(headquarter_id)
+    insert_data['headquarter_id']           = headquarter.id
     insert_data['court_headquarter_name']   = headquarter.name
 
+    court_type                              = request.POST.get('court_type')
+    insert_data['court_type']               = court_type
+    if court_type == 0:
+        insert_data['court_name']           = "Cancha de Fútbol"
+    elif court_type == 1:
+        insert_data['court_name']           = "Cancha de Básquet"
+    else : 
+        insert_data['court_name']           = "Cancha de Voley"
 
-    insert_data['reservation_hour']         = request.POST.get('start_hour')
-    insert_data['reservation_duration']     = request.POST.get('stay_content')
-    insert_data['reservation_date']         = datetime.datetime.strptime(request.POST.get('arrival_date'),"%m/%d/%Y").date()
-
-    member_service                          = MembersService()
-    user                                    = member_service.getMemberByUser(request.user)
+    insert_data['reservation_duration']     = request.POST.get('court_duration')
+    insert_data['reservation_date']         = datetime.datetime(int(day[0]),int(day[1]),int(day[2]),int(hour[0]),int(hour[1]),int(hour[2]))
     
+    member_service                          = MembersService()
+    user                                    = member_service.getMemberByUser(request.user)  
+    
+    insert_data['member_id']                = user.id
     insert_data['member_membership_name']   = user.membership
     insert_data['member_name']              = user.name
     insert_data['member_paternalLastName']  = user.paternalLastName
@@ -148,4 +160,4 @@ def reservate_court(request):
         'success' : 'El evento ha sido registrado de manera correcta'
     }
 
-    return render(request, 'User/Reservation/fields.html', context)
+    return render(request, 'User/courtReservation/index.html', context)
