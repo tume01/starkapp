@@ -11,7 +11,7 @@ Afiliado
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Editar mafiliado
+Editar afiliado
 {% endblock %}
 
 {% block sub_head_dahsboard %}
@@ -74,20 +74,20 @@ Editar afiliado
                                     </div>
                                 </div>          
                                 <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-9">
                                                    <div class="input-group">
                                                         <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="{{affiliate.document_number}}" pattern="[0-9]*" >
                                                     </div>
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Tipo</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-xs-12" for="example-select">Tipo</label>
+                                                <div class="col-sm-9">
                                                     <select class="form-control" id="example-select" name="identity_document_type" size="1">
                                                         {% for doc_type in doc_types %}
                                                             {% if doc_type.id == affiliate.identity_document_type.id %}
@@ -99,6 +99,22 @@ Editar afiliado
                                                     </select>
                                                 </div>
                                             </div>                                        
+                                    </div>
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                                <label class="col-xs-12"  for="example-select">Parentesco</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" id="example-select" name="relationship" size="1">
+                                                         {% for relationship in relationships %}
+                                                            {% if relationship.id == affiliate.relationship.id %}
+                                                                <option selected value="{{relationship.id}}">{{relationship.description}}</option>
+                                                            {% else %}
+                                                                <option value="{{relationship.id}}">{{relationship.description}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>                                           
+                                        </div>
                                     </div>
                                 </div>          
                                 <div class="row">
