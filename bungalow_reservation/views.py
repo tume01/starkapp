@@ -59,7 +59,7 @@ def refresh_table(request):
         page = int(request.POST['page'])
 
     reservations = BungalowReservationService.getReservations()
-
+    print([r.bungalow_id for r in reservations])
     if (status != -1):
         print("Filter by Status")
         reservations = reservations.filter(status=status)
@@ -146,8 +146,7 @@ def create_refresh_events(request):
 
     bungalow_type_id = int(request.POST['bungalow_type_id'])
     headquarter_id = int(request.POST['headquarter_id'])
-
-    availableDays = BungalowReservationService.getMonthAvailableDays(headquarter_id, bungalow_type_id, start, end)
+    availableDays = BungalowReservationService.getMonthAvailableDaysBF(headquarter_id, bungalow_type_id, start, end)
     response = {
         'events': availableDays
     }
@@ -157,26 +156,22 @@ def create_refresh_events(request):
 @require_http_methods(['GET'])
 def create_reserve_index(request):
 
-    bungalow_type_id = request.GET.get('bungalow_type_id')
-    headquarter_id = request.GET.get('headquarter_id')
+    bungalow_id = request.GET.get('bungalow_id')
+    bungalow = BungalowService.findBungalow(bungalow_id)
     date = datetime.datetime.fromtimestamp(int(request.GET.get('date')))
 
-    bungalow_type = BungalowTypeService.findBungalowType(bungalow_type_id)
     bungalowTypes = BungalowTypeService.getBungalowTypes()
-    headquarter = HeadquarterService().findHeadquarter(headquarter_id)
     headquarters = HeadquarterService().getHeadquarters()
 
     reservation = BungalowReservation()
-    reservation.bungalow_price = bungalow_type.price
-    reservation.bungalow_capacity = bungalow_type.capacity
-    reservation.bungalow_type_id = bungalow_type.id
-    reservation.bungalow_headquarter_id = headquarter.id
-    reservation.bungalow_headquarter_name = headquarter.name
+    reservation.bungalow_id = bungalow.id
+    reservation.bungalow_price = bungalow.bungalow_type.price
+    reservation.bungalow_capacity = bungalow.bungalow_type.capacity
+    reservation.bungalow_type_id = bungalow.bungalow_type.id
+    reservation.bungalow_headquarter_id = bungalow.headquarter.id
+    reservation.bungalow_headquarter_name = bungalow.headquarter.name
 
     reservation.arrival_date = date
-
-
-
 
     context = {
         'reservation': reservation,
@@ -193,30 +188,37 @@ def create_reserve(request):
 
 
     print("POST CREATE RESERVE")
-    insert_data = {}
     print(request.POST)
-    bungalow_type_id = request.POST['bungalow_type_id']
-    # member_id = request.POST['member_id']
+    insert_data = {}
 
-    # insert_data["arrival_date"] = request.POST['arrival_date']
-    # insert_data["departure_date"] = request.POST['departure_date']
-    #
-    # insert_data["status"] = 0
-    #
-    # bungalow = BungalowService.findBungalow(bungalow_id)
-    # insert_data["arrival_date"] = request.POST['arrival_date']
-    # insert_data["bungalow_number"] = bungalow.number
-    # insert_data["bungalow_price"] = bungalow.bungalow.bungalow_type.price
-    # insert_data["bungalow_capacity"] = bungalow.bungalow_type.capacity
-    # insert_data["bungalow_headquarter_name"] = bungalow.headquarter.name
-    #
-    # member = MembersService().getMember(member_id)
-    # insert_data["membership_name"] = member.membership.membership_type.name
-    # insert_data["name"] = member.name
-    # insert_data["paternalLastName"] = member.paternalLastName
-    # insert_data["maternalLastName"] = member.maternalLastName
 
-    # BungalowReservationService.create(insert_data)
+    bungalow = BungalowService.findBungalow(request.POST['bungalow_id'])
+    member = MembersService().getMemberByUserId(request.user)
+    arrival_date = datetime.datetime.strptime(request.POST['arrival_date'], '%d/%m/%Y')
+    departure_date = arrival_date + datetime.timedelta(days=int(request.POST['duration']))
+
+
+    insert_data["status"] = 0
+
+    insert_data["bungalow_id"] = bungalow.id
+    insert_data["bungalow_number"] = bungalow.number
+    insert_data["bungalow_price"] = bungalow.bungalow_type.price
+    insert_data["bungalow_capacity"] = bungalow.bungalow_type.capacity
+    insert_data["bungalow_type_id"] = bungalow.bungalow_type.id
+
+    insert_data["bungalow_headquarter_id"] = bungalow.headquarter.id
+    insert_data["bungalow_headquarter_name"] = bungalow.headquarter.name
+
+    insert_data["member_id"] = member.id
+    insert_data["member_name"] = member.name
+    insert_data["member_membership_name"] = member.membership.membership_type.name
+    insert_data["member_paternalLastName"] = member.paternalLastName
+    insert_data["member_maternalLastName"] = member.maternalLastName
+
+    insert_data["arrival_date"] = arrival_date
+    insert_data["departure_date"] = departure_date
+
+    BungalowReservationService.create(insert_data)
     return HttpResponseRedirect(reverse('bungalowReservation:index'))
 
 

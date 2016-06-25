@@ -29,6 +29,11 @@ class MembersService(object):
         filter_data['user'] = user
         return self.__member_repository.filter(filter_data)[0]
 
+    def getMemberByUserId(self, userId):
+        filter_data = {}
+        filter_data['user_id'] = userId
+        return self.__member_repository.filter(filter_data)[0]
+
     def getUserEvents(self, user):
 
         member = self.__member_repository.filter({'user': user})[0]
