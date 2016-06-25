@@ -67,5 +67,26 @@ var PromotionFormValidation = function() {
     };
 }();
 
+$(document).ready(function(){
+    $("#bungalow").click(function(){
+        $.ajax({
+            url: $("#bungalow_table").data('url'),
+        }).done(function(data){
+            console.log(data);
+            $("#event_table").html("");
+            $("#bungalow_table").html(data);
+        });
+    });
+    $("#events").click(function(){
+        $.ajax({
+            url: $("#event_table").data('url'),
+        }).done(function(data){
+            console.log(data);
+            $("#event_table").html(data);
+            $("#bungalow_table").html("");
+        });;
+    });
+});
+
 // Initialize when page loads
 jQuery(function(){ PromotionFormValidation.init(); });

@@ -4,6 +4,9 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.PromotionsService import PromotionsService
+from services.MembershipTypeService import MembershipTypeService
+from services.BungalowTypeService import BungalowTypeService
+from services.EventsService import EventsService
 from django.views.decorators.http import require_http_methods
 from adapters.FormValidator import FormValidator
 from .forms import PromotionForm
@@ -19,14 +22,44 @@ def index(request):
 
     promotion_service = PromotionsService()
 
+    membership_type_service = MembershipTypeService()
+
     promotions = promotion_service.getPromotions()
 
     context = {
         'promotions' : promotions,
+        'membership_types': membership_type_service.getMembershipTypes(),
     }
 
     return render(request, 'Admin/Promotions/index_promotion.html', context) 
 
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
+def get_bungalows(request):
+
+    bungalow_type_service = BungalowTypeService()
+
+    bungalow_types = bungalow_type_service.getBungalowTypes()
+
+    response = {
+        'bungalow_types' : bungalow_types
+    }
+
+    return JsonResponse(response)
+
+@login_required
+@permission_required('dummy.permission_admin', login_url='login:ini')
+def get_events(request):
+
+    events_services = EventsService()
+
+    events = events_services.getEvents()
+
+    response = {
+        'events' : events
+    }
+
+    return JsonResponse(response)
 
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')

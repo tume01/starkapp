@@ -4,6 +4,8 @@ from . import views
 app_name = 'promotions'
 
 urlpatterns = [
+	url(r'^getbungalows',views.get_bungalows,name="get_bungalows"),
+	url(r'^getevents',views.get_events,name="get_events"),
     url(r'^create/insert', views.create_promotion, name='insert'),
     url(r'^create', views.create_index, name='create_index'),
     url(r'^edit/insert', views.edit_promotion, name='edit'),
