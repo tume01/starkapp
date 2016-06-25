@@ -11,7 +11,6 @@ urlpatterns = [
     url(r'^delete', views.delete_membership_application, name='delete'),
     url(r'^approve', views.approve_membership_application, name='approve'),
     url(r'^filter', views.filter, name='filter'),
-    url(r'^user/filter', views.user_filter, name='user_filter'),
     url(r'^user', views.user_index, name='user_index'),
 
     url(r'^objection/index', views.objection_index, name='objection_index'),

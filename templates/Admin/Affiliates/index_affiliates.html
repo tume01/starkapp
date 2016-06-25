@@ -130,10 +130,37 @@ Lista de afiliados
 {% block scripts %}
 
     <script>
-    var nombre;
-    var apellido;
+    var insert = {{affiliate_inserted|yesno:"true,false"}}
+    var edit = {{affiliate_edited|yesno:"true,false"}}
+    var deleted = {{affiliate_deleted|yesno:"true,false"}}
+
 
     $(document).ready(function () {
+        if(insert){
+            swal({
+                title: "Afiliado creado",
+                text: "Se ha insertadp el afiliado exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(edit){
+            swal({
+                title: "Afiliado editado",
+                text: "Se ha editado el afiliado exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(deleted){
+            swal({
+                title: "Afiliado eliminado",
+                text: "Se ha eliminado el afiliado exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }
 
         $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
