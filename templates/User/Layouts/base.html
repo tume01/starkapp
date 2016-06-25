@@ -325,7 +325,7 @@
         <div class="content bg-image overflow-hidden" style="background-image: url('{% static "assets/img/photos/photo3@2x.jpg" %}');">
             <div class="push-50-t push-15">
                 <h1 class="h2 text-white animated zoomIn">Dashboard</h1>
-                <h2 class="h5 text-white-op animated zoomIn">Bienvenido Miembro</h2>
+                <h2 class="h5 text-white-op animated zoomIn">Bienvenido {{ user.first_name }} {{ user.last_name }}</h2>
             </div>
         </div>
 

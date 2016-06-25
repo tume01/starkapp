@@ -45,7 +45,18 @@ var ProviderFormValidation = function() {
                                 return $( "#num_doc" ).val();
                             }, 'csrfmiddlewaretoken': CSRF_TOKEN,
                         }
-                    }                           
+                    },
+                    maxlength: {
+                        depends: function (elem) {
+                            if($("#example-select1").val()==1 && ($('#num_doc').val().length == 8)) {
+                                return false;
+                            }else if($("#example-select1").val()==2 && ($('#num_doc').val().length == 12)){
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        }
+                    },                            
                 },
                 'comments': {
                     required: true,
@@ -75,7 +86,8 @@ var ProviderFormValidation = function() {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
                     min: 'Por favor ingrese un documento válido' ,
-                    remote: 'Este documento ya esta en uso'                   
+                    remote: 'Este documento ya esta en uso',
+                    maxlength: 'Por favor ingrese un documento válido'                    
                 },
                 'comments': {
                     required: 'Por favor ingrese un comentario',

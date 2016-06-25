@@ -256,7 +256,7 @@ def create_membership(request):
         group = Group.objects.get(name='usuarios')
 
         group.user_set.add(user)
-        
+    
 
         #Datos del miembro
 

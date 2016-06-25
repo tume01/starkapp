@@ -55,9 +55,9 @@ Editar membresía
                                                 <label class="col-xs-12" for="example-daterange1">Rango de fechas de membresía</label>
                                                 <div class="col-md-8">
                                                     <div class="input-group">
-                                                        <input class="form-control" type="text" id="example-daterange1" name="initialDate" value= "{{membership.initialDate}}" placeholder="Desde" readonly>
+                                                        <input class="form-control" type="text" id="example-daterange1" name="initialDate" value= "{{membership.initialDate|date:"d-m-Y"}}" placeholder="Desde" readonly>
                                                         <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                                        <input class="form-control" type="text" id="example-daterange2" name="finalDate" value= "{{membership.finalDate}}" placeholder="hasta" readonly>
+                                                        <input class="form-control" type="text" id="example-daterange2" name="finalDate" value= "{{membership.finalDate|date:"d-m-Y"}}" placeholder="hasta" readonly>
                                                     </div>
                                                 </div>
                                             </div>
