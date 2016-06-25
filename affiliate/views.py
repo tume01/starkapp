@@ -6,18 +6,22 @@ from django.core.urlresolvers import reverse
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MemberService import MembersService
 from services.MembershipService import MembershipService
+from services.MembershipTypeService import MembershipTypeService
 from services.AffiliateService import AffiliateService
+from services.RelationshipService import RelationshipService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
 from services.SuspensionService import SuspensionService
 from adapters.FormValidator import FormValidator
+from adapters.DateManager import DateManager
 from .forms import  AffiliateForm
 from django.contrib.auth.models import User, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import EmailMessage
 from django.utils.crypto import get_random_string
+from datetime import datetime, timedelta
 
 
 def isMemberSuspended(member):
@@ -89,10 +93,15 @@ def create_index(request):
 
     ubigeo = ubigeo_service.distinctDepartment()
 
+    relationships_service = RelationshipService()
+
+    relationships = relationships_service.getRelationships()
+
     context = {
         'id_member': id_member,
         'ubigeo': ubigeo,
-        'doc_types': doc_types
+        'doc_types': doc_types,
+        'relationships': relationships
     }
 
     return render(request, 'User/Affiliates/new_affiliate.html', context)
@@ -135,6 +144,10 @@ def create_affiliate(request):
 
     identity_doc_type = request.POST['identity_document_type']
 
+    relationshipID = request.POST['relationship']
+
+    relationships_service = RelationshipService()
+
     if FormValidator.validateForm(form, request):
 
         identity_document_type_service = IdentityDocumentTypeService()
@@ -143,10 +156,13 @@ def create_affiliate(request):
 
         ubigeo = ubigeo_service.distinctDepartment()
 
+        relationships = relationships_service.getRelationships()
+
         context = {
             'id_member': id_member,
             'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'doc_types': doc_types,
+            'relationships': relationships
         }
 
         return render(request, 'User/Affiliates/new_affiliate.html', context)
@@ -174,6 +190,8 @@ def create_affiliate(request):
         create_data["member_id"] = id_member
 
         create_data["state"] = 1
+
+        create_data['relationship'] = relationships_service.getRelationship(relationshipID)
 
         filter_ubigeo = {}
 
@@ -227,6 +245,10 @@ def edit_affiliate_index(request):
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+    relationships_service = RelationshipService()
+
+    relationships = relationships_service.getRelationships()
+
     ubigeo_service = UbigeoService()
 
     departments = ubigeo_service.distinctDepartment()
@@ -249,6 +271,7 @@ def edit_affiliate_index(request):
         'provinces' : provinces,
         'districts' : districts,
         'doc_types': doc_types,
+        'relationships' : relationships
     }
 
     return render(request, 'User/Affiliates/edit_affiliate.html', context)
@@ -293,6 +316,10 @@ def edit_affiliate(request):
 
     identity_doc_type = request.POST['identity_document_type']
 
+    relationshipID = request.POST['relationship']
+
+    relationships_service = RelationshipService()
+
     if FormValidator.validateForm(form, request):
 
         affiliate_service = AffiliateService()
@@ -305,10 +332,13 @@ def edit_affiliate(request):
 
         ubigeo = ubigeo_service.getAllUbigeo()
 
+        relationships = relationships_service.getRelationships()
+
         context = {
             'affiliate': affiliate,
             'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'doc_types': doc_types,
+            'relationships' : relationships
         }
 
         return render(request, 'User/Affiliates/edit_affiliatehtml', context)
@@ -318,6 +348,8 @@ def edit_affiliate(request):
         edit_data = {}
 
         edit_data["identity_document_type_id"] = identity_doc_type
+
+        edit_data['relationship'] = relationships_service.getRelationship(relationshipID)
 
         edit_data["name"] = form.cleaned_data['name']
 
@@ -450,12 +482,17 @@ def admin_create_index(request):
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+    relationships_service = RelationshipService()
+
+    relationships = relationships_service.getRelationships()
+
     ubigeo = ubigeo_service.distinctDepartment()
 
     context = {
         'id_member': id_member,
         'ubigeo': ubigeo,
-        'doc_types': doc_types
+        'doc_types': doc_types,
+        'relationships' : relationships
     }
 
     return render(request, 'Admin/Affiliates/new_affiliate.html', context)
@@ -501,18 +538,25 @@ def admin_create_affiliate(request):
 
     identity_doc_type = request.POST['identity_document_type']
 
+    relationshipID = request.POST['relationship']
+
+    relationships_service = RelationshipService()
+
     if FormValidator.validateForm(form, request):
 
         identity_document_type_service = IdentityDocumentTypeService()
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+        relationships = relationships_service.getRelationships()
+
         ubigeo = ubigeo_service.distinctDepartment()
 
         context = {
             'id_member': id_member,
             'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'doc_types': doc_types,
+            'relationships' : relationships
         }
 
         return render(request, 'Admin/Affiliates/new_affiliate.html', context)
@@ -522,6 +566,10 @@ def admin_create_affiliate(request):
         create_data = {}
 
         create_data["identity_document_type_id"] = identity_doc_type
+
+        relationship=relationships_service.getRelationship(relationshipID)
+
+        create_data["relationship"] = relationship
 
         create_data["name"] = form.cleaned_data['name']
 
@@ -596,6 +644,10 @@ def admin_edit_affiliate_index(request):
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+    relationships_service = RelationshipService()
+
+    relationships = relationships_service.getRelationships()
+
     ubigeo_service = UbigeoService()
 
     departments = ubigeo_service.distinctDepartment()
@@ -618,6 +670,7 @@ def admin_edit_affiliate_index(request):
         'provinces' : provinces,
         'districts' : districts,
         'doc_types': doc_types,
+        'relationships' : relationships
     }
 
     return render(request, 'Admin/Affiliates/edit_affiliate.html', context)
@@ -665,6 +718,10 @@ def admin_edit_affiliate(request):
 
     identity_doc_type = request.POST['identity_document_type']
 
+    relationshipID = request.POST['relationship']
+
+    relationships_service = RelationshipService()
+
     if FormValidator.validateForm(form, request):
 
         affiliate_service = AffiliateService()
@@ -677,10 +734,13 @@ def admin_edit_affiliate(request):
 
         ubigeo = ubigeo_service.getAllUbigeo()
 
+        relationships = relationships_service.getRelationships()
+
         context = {
             'affiliate': affiliate,
             'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'doc_types': doc_types,
+            'relationships': relationships
         }
 
         return render(request, 'Adminr/Affiliates/edit_affiliatehtml', context)
@@ -690,6 +750,8 @@ def admin_edit_affiliate(request):
         edit_data = {}
 
         edit_data["identity_document_type_id"] = identity_doc_type
+
+        edit_data['relationship'] = relationships_service.getRelationship(relationshipID)
 
         edit_data["name"] = form.cleaned_data['name']
 
@@ -725,11 +787,11 @@ def admin_edit_affiliate(request):
 
         affiliate = affiliate_service.getAffiliate(id_edit)
 
-        id_member = affiliate.member.id
+        member = affiliate.member
 
         filter_affiliate = {}
 
-        filter_affiliate["member"] = affiliate.member
+        filter_affiliate["member"] = member
 
         filter_affiliate["state"] = 1
 
@@ -764,17 +826,17 @@ def admin_delete_affiliate(request):
 
     affiliate = affiliate_service.getAffiliate(id_edit)
 
-    id_member = affiliate.member.id
+    member = affiliate.member
 
     filter_affiliate = {}
 
-    filter_affiliate["member"] = affiliate.member
+    filter_affiliate["member"] = member
 
     filter_affiliate["state"] = 1
 
     affiliates = affiliate_service.filter(filter_affiliate)
 
-    isSuspended = isMemberSuspended(member)
+    isSuspended = isMemberSuspended(affiliate.member)
 
     context = {
         'member' : member,
@@ -807,6 +869,8 @@ def admin_move_affiliate(request):
     member_service = MembersService()
 
     membership_service = MembershipService()
+
+    membership_type_service = MembershipTypeService()
     
     affiliate = affiliate_service.getAffiliate(id_edit)
 
@@ -845,11 +909,37 @@ def admin_move_affiliate(request):
 
     insert_data_membership = {}
 
-    insert_data_membership["membership_type"] = membership.membership_type
+    filter_membership_type = {}
 
-    insert_data_membership["initialDate"] = membership.initialDate
+    filter_membership_type["name"] = 'Vitalicio'
 
-    insert_data_membership["finalDate"] = membership.finalDate
+    membership_type = membership_type_service.filter(filter_membership_type)[0]
+
+    if(membership_type.id == membership.membership_type.id):
+        #Miembro vitalicio
+
+        filter_membership_type["name"] = 'Miembro'
+        
+        insert_data_membership["membership_type"] = membership_type_service.filter(filter_membership_type)[0]
+
+        insert_data_membership["initialDate"] = datetime.now()
+
+        final_date = datetime.now()
+
+        months = 10
+
+        final_date = DateManager.add_months(final_date, months)
+
+        insert_data_membership["finalDate"] = final_date
+            
+
+    else:   
+
+        insert_data_membership["membership_type"] = membership.membership_type
+
+        insert_data_membership["initialDate"] = membership.initialDate
+
+        insert_data_membership["finalDate"] = membership.finalDate
 
     insert_data_membership["status"] = 1
 

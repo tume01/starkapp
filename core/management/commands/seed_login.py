@@ -2144,9 +2144,22 @@ class Command(BaseCommand):
         prom3 = Promotion(description='Promocion productos todos', percentage=5, status=1)
         prom3.save()
 
+        relationship_1 = Relationship(description='Cónyuge')
+        relationship_1.save()
+
+        relationship_2 = Relationship(description='Padre')
+        relationship_2.save()
+
+        relationship_3 = Relationship(description='Madre')
+        relationship_3.save()
+
+        relationship_4 = Relationship(description='Hijo/a')
+        relationship_4.save()
+
+
         aff = Affiliate(member=memb1, identity_document_type=doc1, ubigeo=u2, name='Fabio',
                         paternalLastName='Olcese', maternalLastName='Undertale', document_number=98765432, phone=3813812,
-                        email='mailm4@mailcito.com', address='The witcher', state=1)
+                        email='mailm4@mailcito.com', address='The witcher', state=1,relationship=relationship_4)
         aff.save()
 
         print('Data has been inserted\n')

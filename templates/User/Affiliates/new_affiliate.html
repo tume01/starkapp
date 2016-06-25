@@ -58,39 +58,51 @@ Nuevo afiliado
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Apellido paterno</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-xs-12" for="example-number-input">Apellido paterno</label>
+                                            <div class="col-sm-9">
                                                 <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="" type="text">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Apellido materno</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-xs-12" for="example-number-input">Apellido materno</label>
+                                            <div class="col-sm-9">
                                                 <input class="form-control" id="example-input3-group1" name="maternalLastName" placeholder="Apellido materno" value="" type="text">
                                             </div>
                                         </div>
                                     </div>
                                 </div>          
                                 <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
-                                                <div class="col-lg-8">
+                                                <div class="col-lg-12">
                                                    <div class="input-group">
                                                         <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="" pattern="[0-9]*" >
                                                     </div>
                                                 </div>
                                         </div>                                           
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
-                                                <label class="col-xs-6"  for="example-select">Tipo</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-xs-12"  for="example-select">Tipo</label>
+                                                <div class="col-sm-9">
                                                     <select class="form-control" id="example-select" name="identity_document_type" size="1">
                                                          {% for doc_type in doc_types %}
                                                             <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                                <label class="col-xs-12"  for="example-select">Parentesco</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" id="example-select" name="relationship" size="1">
+                                                         {% for relationship in relationships %}
+                                                            <option value="{{relationship.id}}">{{relationship.description}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>                                           
