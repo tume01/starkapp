@@ -90,7 +90,7 @@ $('#SaveExtraServices').click(function(){
 
             swal({
                 title: "Agregar Servicio Adicional",
-                text: string,
+                text: "holi",
                 type: "info",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",
