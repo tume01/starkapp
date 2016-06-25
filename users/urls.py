@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^create', views.create_user_index, name='create_index'),
     url(r'^view/edit',views.edit_password, name='password'),
     url(r'^view',views.show_user, name='show_user'),
-    url(r'^', views.user_index, name='index'),    
+    url(r'^filter', views.user_index_filter, name='filter'),
+    url(r'^', views.user_index, name='index'),
 ]

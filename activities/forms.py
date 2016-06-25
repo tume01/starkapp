@@ -8,3 +8,4 @@ class ActivityForm(forms.Form):
     start_date = forms.DateTimeField(error_messages={'required': 'El campo fecha inicio es requerido'}, input_formats=['%d/%m/%Y %H:%M'])
     activity_type = forms.IntegerField()
     environments = forms.IntegerField()
+    photo = forms.ImageField()

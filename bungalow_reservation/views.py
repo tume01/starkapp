@@ -143,6 +143,7 @@ def create_index(request):
 def create_refresh_events(request):
     start = int(request.POST['start'])
     end = int(request.POST['end'])
+
     bungalow_type_id = int(request.POST['bungalow_type_id'])
     headquarter_id = int(request.POST['headquarter_id'])
 

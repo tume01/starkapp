@@ -45,11 +45,11 @@ def create_guest(request):
 
         insert_data = {}
 
-        insert_data["names"] = form.cleaned_data['names']
+        insert_data["name"] = form.cleaned_data['name']
 
-        insert_data["surnames"] = form.cleaned_data['surnames']
+        insert_data["paternalLastName"] = form.cleaned_data['paternalLastName']
 
-        insert_data["dni"] = form.cleaned_data['dni']
+        insert_data["document_number"] = form.cleaned_data['document_number']
 
         insert_data["status"] = 1
 
@@ -90,11 +90,11 @@ def edit_guest(request):
 
         insert_data = {}
 
-        insert_data["names"] = form.cleaned_data['names']
+        insert_data["name"] = form.cleaned_data['name']
 
-        insert_data["surnames"] = form.cleaned_data['surnames']
+        insert_data["paternalLastName"] = form.cleaned_data['paternalLastName']
 
-        insert_data["dni"] = form.cleaned_data['dni']
+        insert_data["document_number"] = form.cleaned_data['document_number']
 
         guest_service = GuestService()
 

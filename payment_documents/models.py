@@ -12,3 +12,22 @@ class Payment_Document(models.Model):
     amount = models.FloatField()
     igv = models.FloatField()
     realAmount = models.FloatField()
+
+class Ticket(models.Model):
+    products = models.TextField()
+    subtotal = models.FloatField()
+    discounts = models.FloatField()
+    igv_amount = models.FloatField()
+    total = models.FloatField()
+    created_at = models.DateTimeField()
+
+class Invoice(models.Model):
+    products = models.TextField()
+    subtotal = models.FloatField()
+    discounts = models.FloatField()
+    igv_amount = models.FloatField()
+    total = models.FloatField()
+    created_at = models.DateTimeField()
+    name = models.TextField()
+    address = models.TextField()
+    ruc = models.IntegerField()

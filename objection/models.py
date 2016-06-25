@@ -6,4 +6,5 @@ from members import models as z
 class Objection(x.Model):
     membership_application = x.ForeignKey(y.Membership_Application, on_delete=x.CASCADE)
     member = x.ForeignKey(z.Member, on_delete=x.CASCADE)
+    date = x.DateField()
     comments=x.TextField(max_length=200)

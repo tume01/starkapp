@@ -75,7 +75,7 @@ Editar usuario
                                 <div class="col-lg-6">
                         <div class="form-group">
                             <label class="col-xs-12" for="example-select">Seleccione un tipo</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <select class="form-control" id="example-select" name="user_type" size="1">
                                      {% for group in groups %}       
                                     <option value="{{group.id}}">{{group.name}}</option>
@@ -106,8 +106,6 @@ Editar usuario
 
 {% block scripts %}
 
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script>
 
     var CSRF_TOKEN = '{{ csrf_token }}';
@@ -119,10 +117,7 @@ Editar usuario
         
     });
     
-</script> 
-        <!-- Page JS Plugins -->
-<script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
-<script src='{% static "assets/js/plugins/jquery-tags-input/jquery.tagsinput.min.js" %}'></script>
+</script>
 
 <script src='{% static "assets/js/Admin/User/user_forms_validation.js" %}'></script>
 

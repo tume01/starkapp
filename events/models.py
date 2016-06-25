@@ -19,6 +19,7 @@ class Event(models.Model):
     price_member =   models.FloatField()
     price_invited =  models.FloatField()
     status      =   models.IntegerField()
+    photo       = models.ImageField(upload_to='events')
     members = models.ManyToManyField(
         Member,
         through="EventRegistration",
@@ -29,4 +30,5 @@ class EventRegistration(models.Model):
     registered_at = models.DateTimeField(null=True)
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    guests = models.IntegerField()
     deleted_at = models.DateTimeField(null=True)

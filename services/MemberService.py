@@ -24,16 +24,13 @@ class MembersService(object):
     def filter(self, filters):
         return self.__member_repository.filter(filters)
 
-    #def getMemberByUser(self, user):
-    #    filter_data = {}
-    #    filter_data['document_number'] = user
-    #    return self.__member_repository.filter(filter_data)[0]
+    def getMemberByUser(self, user):
+        filter_data = {}
+        filter_data['user'] = user
+        return self.__member_repository.filter(filter_data)[0]
 
     def getUserEvents(self, user):
 
         member = self.__member_repository.filter({'user': user})[0]
 
         return member.eventregistration_set.filter(deleted_at=None)
-
-
-    
