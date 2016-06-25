@@ -2110,11 +2110,11 @@ class Command(BaseCommand):
         suspType2.save()
 
         susp1 = Suspension(suspension_type=suspType1, membership=mship1, reason='Acusaciòn de robo comprobada', initialDate=datetime.now(),
-                           finalDate=datetime.now() + timedelta(8), status=1)
+                           finalDate=datetime.now() + timedelta(8),responsable='Administrador', status=1)
         susp1.save()
 
         susp2 = Suspension(suspension_type=suspType2, membership=mship2, reason='Objetos de valor robados', initialDate=datetime.now() - timedelta(5),
-                           finalDate=datetime.now() - timedelta(1), status=0)
+                           finalDate=datetime.now() - timedelta(1),responsable='Administrador', status=0)
         susp2.save()
 
         ftype1 = FineType(reason='Destruccion de silla', price=300, status=1)

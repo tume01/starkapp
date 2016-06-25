@@ -86,6 +86,10 @@ def create_suspension(request):
 
         insert_data['status'] = 1
 
+        admin_user = request.user
+
+        insert_data['responsable'] = admin_user.first_name
+
         suspension_service = SuspensionService()
 
         suspension_service.create(insert_data)
@@ -227,8 +231,6 @@ def suspension_index(request):
 @require_http_methods(['POST'])
 def suspension_filter(request):
 
-    suspension_service = SuspensionService()
-
     suspension_type_service = SuspensionTypeService()
 
     suspension_types = suspension_type_service.getSuspensionTypes()
@@ -260,10 +262,10 @@ def suspension_filter(request):
     filter_suspensions['membership_id'] = membershipId
 
     if iniDate != '':
-        filter_suspensions["initialDate"] = datetime.strptime(iniDate, '%m/%d/%Y')
+        filter_suspensions["initialDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
 
     if endDate != '':
-        filter_suspensions["finalDate"] = datetime.strptime(endDate, '%m/%d/%Y')
+        filter_suspensions["finalDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
 
     if suspStatus != '3':
         filter_suspensions["status"] = suspStatus

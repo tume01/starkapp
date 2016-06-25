@@ -13,5 +13,6 @@ class Suspension(models.Model):
     reason = models.CharField(max_length=200)
     initialDate = models.DateField()
     finalDate = models.DateField()
+    responsable = models.CharField(max_length=200)
     status = models.IntegerField()
 

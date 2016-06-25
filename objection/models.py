@@ -8,3 +8,4 @@ class Objection(x.Model):
     member = x.ForeignKey(z.Member, on_delete=x.CASCADE)
     date = x.DateField()
     comments=x.TextField(max_length=200)
+    status=x.IntegerField()
