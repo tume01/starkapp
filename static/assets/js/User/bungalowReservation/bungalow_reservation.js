@@ -88,6 +88,22 @@ $('#SaveExtraServices').click(function(){
             var string = "Se procedera a registrar los servicios seleccionados.\n";
             string += "Recuerde que solo puede solicitarlos una vez por bungalow.";
 
+            swal({
+                title: "Agregar Servicio Adicional",
+                text: string,
+                type: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                console.log("saved");     
+            }); 
+
+            /*
             bootbox.dialog({
                 //title: "Servicios Adicionales",
                 message: string,
@@ -124,8 +140,12 @@ $('#SaveExtraServices').click(function(){
                     }
                 }
             });
+            */
         }
     }
+
+
+
     /*
     var xhr = $.ajax({
         type: "POST", 
