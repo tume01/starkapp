@@ -91,10 +91,14 @@ Lista de solicitudes de membresía
                         </div>
                     </div>
     <div class="block block-bordered">
-         <form id="myFormObject" action="{% url "membership_application:objection_index" %} " method="post">
-                {% csrf_token %}  
+            <form id="myFormObject" action="{% url 'membership_application:objection_index' %} " method="post">
+                {% csrf_token %}
+                <input type="hidden" id="hid2" name="id"/>
+            </form>
+            <form id="myFormDelete" action="{% url 'membership_application:objection_delete' %}" method="post">
+                {% csrf_token %}
                 <input type="hidden" id="hid1" name="id"/>
-            </form>     
+            </form>
                         <div class="block-content">
                             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
                             <table class="table table-bordered table-striped js-dataTable-simple"  id='tabla'>
@@ -125,7 +129,7 @@ Lista de solicitudes de membresía
                                             <td class="text-center">
                                                <div class="btn-group">
                                     <button class="btn btn-xs btn-default objetar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Agregar objeción"><i class="fa fa-pencil"></i></button>
-
+                                    <button class="btn btn-xs btn-default eliminar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Eliminar objeción"><i class="fa fa-user-times"></i></button>
                                 </div>
                                             </td>    
                                         </tr>
@@ -145,10 +149,15 @@ Lista de solicitudes de membresía
   function objetar() {
      $('.objetar').click(function (e) {
             var id = $(this).attr("data-id")          
-            $('#hid1').val(id)
+            $('#hid2').val(id)
             document.forms["myFormObject"].submit();    
 
-        });        
+        });
+     $('.eliminar').click(function (e) {
+            var id = $(this).attr("data-id")
+            $('#hid1').val(id)
+            document.forms["myFormDelete"].submit();
+       });
     }
 
 
