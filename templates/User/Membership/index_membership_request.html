@@ -27,69 +27,7 @@ Lista de solicitudes de membresía
 <!-- Page Content -->
 <div class="content">
     <!-- Simple Table Full -->
-    <div class="block">
-                        <div class="block-content">
-                            <form id='busqueda' class="form-horizontal push-10-t push-10" method="post" >
-                                {% csrf_token %}  
-                                <div class="row">
-                                    <div class="col-lg-4" >
-                                        <div class="form-group">
-                                        <label class="col-xs-10" for="example-select">Nombres</label>
-                                            <div class="col-md-10">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="firstName" placeholder="Nombres"  type="text" >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4" >
-                                        <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Apellido paterno</label>
-                                            <div class="col-md-12">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno"  type="text" >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">    
-                                <div class="col-lg-4" >
-                                        <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Numero de Documento</label>
-                                            <div class="col-md-12">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Doc" pattern="[0-9]*" >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-5" >
-                                        <div class="form-group">
-                                        <label class="col-xs-6 " for="example-select">Documento de Identidad</label>
-                                            <div class="col-sm-12">
-                                                <select class="form-control" id="example-select" name="identity_document_type" size="1">
-                                                    <option value="Todos">Todos</option>
-                                                    {% for doc_type in doc_types %}
-                                                        <option value="{{doc_type.id}}">{{doc_type.name}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                <div class="row">                                    
-                                    <div class="form-group">
-                                        <div class="col-lg-8 col-lg-offset-4">
-                                            <button class="btn btn-sm btn-primary"  id='button' type="button">Buscar</button>
-                                        </div>
-                                    </div>
-                                </div>
 
-                            </form>
-                        </div>
-                    </div>
     <div class="block block-bordered">
             <form id="myFormObject" action="{% url 'membership_application:objection_index' %} " method="post">
                 {% csrf_token %}
