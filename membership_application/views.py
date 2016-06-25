@@ -413,6 +413,8 @@ def create_objection(request):
 
         insert_data['date'] = datetime.now()
 
+        insert_data["status"] = 1
+
         if objection == '':
 
             objection_service.create(insert_data)
@@ -458,6 +460,8 @@ def objection_index(request):
 
     filter_data["member"] = member
 
+    filter_data["status"] = 1
+
     filter_data["membership_application"] = membership_application
 
     objections = objection_service.filter(filter_data)
@@ -478,7 +482,48 @@ def objection_index(request):
 
     return render(request, 'User/Membership/objections_members.html', context)
 
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:ini')
+@require_http_methods(['POST'])
+def delete_objection(request):
 
+    current_user = request.user
+
+    member_application_service = Membership_ApplicationService()
+
+    member_service = MembersService()
+
+    objection_service = ObjectionsService()
+
+    requestId = request.POST['id']
+
+    membership_application = member_application_service.getMembership_Application(requestId)
+
+    member = member_service.getMemberByUser(current_user)
+
+    edit_data = {}
+
+    filter_data = {}
+
+    filter_data["member"] = member
+
+    filter_data["membership_application"] = membership_application
+
+    objections = objection_service.filter(filter_data)
+
+    if len(objections) == 0:
+
+        return HttpResponseRedirect(reverse('membership_application:user_index'))
+
+    else:
+
+        id = objections[0].id
+
+        edit_data['status'] = 0
+
+        objection_service.update(id, edit_data)
+
+        return HttpResponseRedirect(reverse('membership_application:user_index'))
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')

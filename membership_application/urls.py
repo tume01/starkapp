@@ -16,6 +16,7 @@ urlpatterns = [
 
     url(r'^objection/index', views.objection_index, name='objection_index'),
     url(r'^objection/insert', views.create_objection, name='objection_insert'),
+    url(r'^objection/delete', views.delete_objection, name='objection_delete'),
 
     url(r'^verify', views.verify_document_number, name='verify_document_number'),
 
