@@ -435,8 +435,8 @@ def create_objection(request):
         return render(request, 'User/Membership/objections_members.html', context)
 
 
-#@login_required
-#@permission_required('dummy.permission_user', login_url='login:ini')
+@login_required
+@permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def objection_index(request):
 

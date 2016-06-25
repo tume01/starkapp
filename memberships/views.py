@@ -190,14 +190,18 @@ def membership_accept(request):
 
     application_id = request.POST['id']
 
-    insert_data = {}
-
     objection_service = ObjectionsService()
 
     objections = objection_service.getObjectionByApplicationId(application_id)
 
+    member_application_service = Membership_ApplicationService()
+
+    membership_application =  member_application_service.getMembership_Application(application_id)
+
+
     context = {
         'objections' : objections,
+        'membership_application' : membership_application,
         'id' : application_id,
     }
 
