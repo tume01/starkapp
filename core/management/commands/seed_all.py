@@ -5,22 +5,28 @@ from .seed_headquarter import *
 from .seed_environments import *
 from .seed_login import Command as LoginSeed
 
+
 class Command(BaseCommand):
+    args = '<var ...>'
     help = 'This command will seed the all database'
 
     def handle(self, *args, **options):
         print('\n  Full Seeder is running...\n')
 
         print('    Deleting...')
-        login = LoginSeed() 
-        login.cleanLogin()
+
+        login = LoginSeed()
+        if len(args) == 0:
+            login.cleanLogin()
         cleanHeadquarter()
         cleanEnvironments()
         cleanBungalow()
         cleanBungalowReservation()
 
         print('\n    Inserting...')
-        login.insertLogin()
+
+        if len(args) == 0:
+            login.insertLogin()
         insertHeadquarter()
         insertEnvironments()
         insertBungalow()
