@@ -25,8 +25,12 @@ Lista de objeciones
 <!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
 
 <!-- Page Content -->
+
 <div class="content">
-                               <div class="block-content">
+                                  
+    <!-- Simple Table Full -->
+    <div class="block block-bordered">
+         <div class="block block-content">
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
@@ -45,8 +49,7 @@ Lista de objeciones
                                     </div>
                                 </div>
                         </div>
-    <!-- Simple Table Full -->
-    <div class="block block-bordered">
+
          <form id="myFormDelete" action="{% url "membership_application:approve" %} " method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid1" value="{{id}}" name="id"/>

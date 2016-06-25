@@ -206,6 +206,7 @@ def create_affiliate(request):
         context = {
             'member' : member,
             'affiliates' : affiliates,
+            'affiliate_inserted':True
         }
 
         return render(request, 'User/Affiliates/index_affiliates.html', context)
@@ -363,6 +364,7 @@ def edit_affiliate(request):
         context = {
             'member' : affiliate.member,
             'affiliates' : affiliates,
+            'affiliate_edited':True
         }
 
         return render(request, 'User/Affiliates/index_affiliates.html', context)
@@ -396,6 +398,7 @@ def delete_affiliate(request):
     context = {
         'member' : affiliate.member,
         'affiliates' : affiliates,
+        'affiliate_deleted':True
     }
 
     return render(request, 'User/Affiliates/index_affiliates.html', context)
@@ -571,7 +574,8 @@ def admin_create_affiliate(request):
         context = {
             'member' : member,
             'affiliates' : affiliates,
-            'isSuspended' : isSuspended
+            'isSuspended' : isSuspended,
+            'affiliate_inserted':True
         }
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -736,7 +740,8 @@ def admin_edit_affiliate(request):
         context = {
             'member' : member,
             'affiliates' : affiliates,
-            'isSuspended' : isSuspended
+            'isSuspended' : isSuspended,
+            'affiliate_edited':True
         }
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -774,7 +779,8 @@ def admin_delete_affiliate(request):
     context = {
         'member' : member,
         'affiliates' : affiliates,
-        'isSuspended' : isSuspended
+        'isSuspended' : isSuspended,
+        'affiliate_deleted':True
     }
 
     return render(request, 'Admin/Affiliates/index_affiliates.html', context)

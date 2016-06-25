@@ -303,58 +303,57 @@ def user_index(request):
 
     identity_document_type_service = IdentityDocumentTypeService()
 
+    member_service = MembersService()
+
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
     membershipApplications = member_application_service.getMembership_Applications()
+
+    objection_service = ObjectionsService()
+
+    current_user = request.user
+
+    member = member_service.getMemberByUser(current_user)
+
+    filter_data = {}
+
+    filter_data["member"] = member
+
+    filter_data["status"] = 1
+
+    for membership_application in membershipApplications:
+
+        filter_data["membership_application"] = membership_application
+
+        objections = objection_service.filter(filter_data)
+
+        if len(objections) == 0:
+
+            membership_application.objection = False
+
+        else:
+
+            membership_application.objection = True
 
     context = {
         'membershipApplications' : membershipApplications,
         'doc_types' : doc_types,
     }
 
+    if request.session.has_key('objection_inserted'):
+
+        context.update({'objection_inserted':request.session.get('objection_inserted')})
+
+        del request.session['objection_inserted']
+
+    elif request.session.has_key('objection_deleted'):
+
+        context.update({'objection_deleted':request.session.get('objection_deleted')})
+
+        del request.session['objection_deleted']
+
     return render(request, 'User/Membership/index_membership_request.html', context) 
 
-
-@login_required
-@permission_required('dummy.permission_usuario', login_url='login:ini')
-@require_http_methods(['POST'])
-def user_filter(request):
-
-    member_application_service = Membership_ApplicationService()
-
-    identity_document_type_service = IdentityDocumentTypeService()
-
-    doc_types = identity_document_type_service.getIdentityDocumentTypes()
-
-    filter_member_application = {}
-
-    filter_member_application["status"] = 1 
-
-    paternalLastName = request.POST['paternalLastName']
-
-    firstName = request.POST['firstName']
-
-    num_doc = request.POST['num_doc']
-
-    type_identity_doc = request.POST['identity_document_type']
-
-    if paternalLastName != '':
-        filter_member_application["paternalLastName"] = paternalLastName
-
-    if firstName != '':
-        filter_member_application["firstName"] = firstName
-
-    if num_doc != '':
-        filter_member_application["document_number"] = num_doc
-
-    if type_identity_doc != 'Todos':
-        filter_member_application["identity_document_type"] = type_identity_doc
-
-    membershipApplications = member_application_service.filter(filter_member_application)
-
-    data = serializers.serialize("json", membershipApplications)
-
-    return HttpResponse(data, content_type='application/json')
 
 
 #OBJECIONES
@@ -373,7 +372,7 @@ def create_objection(request):
 
     current_user = request.user
 
-    request = FormValidator.validateForm(form, request)
+    request2 = FormValidator.validateForm(form, request)
 
     objection_service = ObjectionsService()
 
@@ -401,7 +400,7 @@ def create_objection(request):
 
         objection = objections[0].comments
 
-    if not request:
+    if not request2:
 
         insert_data = {}
 
@@ -423,6 +422,8 @@ def create_objection(request):
 
             objection_service.update(objections[0].id, insert_data)
 
+        request.session['objection_inserted'] = "True"
+
         return HttpResponseRedirect(reverse('membership_application:user_index'))
 
     else:
@@ -438,7 +439,7 @@ def create_objection(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:ini')
 @require_http_methods(['POST'])
 def objection_index(request):
 
@@ -523,7 +524,10 @@ def delete_objection(request):
 
         objection_service.update(id, edit_data)
 
+        request.session['objection_deleted'] = "True"
+
         return HttpResponseRedirect(reverse('membership_application:user_index'))
+
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
