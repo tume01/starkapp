@@ -65,9 +65,10 @@ Lista de afiliados
                             <th>Nombres</th>
                             <th>Apellido paterno</th>
                             <th>Apellido materno</th>
+                            <th>Parentesco</th>
                             <th>Teléfono</th>
                             <th>Correo</th>                                
-                            <th>Acciónes</th>                                        
+                            <th>Acciones</th>                                        
                         </tr>
                     </thead>
                     <tbody>
@@ -78,6 +79,7 @@ Lista de afiliados
                             <td class="font-w600">{{affiliate.name}}</td>
                             <td class="font-w600">{{affiliate.paternalLastName}}</td>
                             <td class="font-w600">{{affiliate.maternalLastName}}</td>
+                            <td class="font-w600">{{affiliate.relationship.description}}</td>
                             <td class="font-w600">{{affiliate.phone}}</td>
                             <td class="font-w600">{{affiliate.email}}</td>
                             <td class="text-center">

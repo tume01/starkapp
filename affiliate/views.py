@@ -8,6 +8,7 @@ from services.MemberService import MembersService
 from services.MembershipService import MembershipService
 from services.MembershipTypeService import MembershipTypeService
 from services.AffiliateService import AffiliateService
+from services.RelationshipService import RelationshipService
 from django.views.decorators.http import require_http_methods
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
@@ -92,10 +93,15 @@ def create_index(request):
 
     ubigeo = ubigeo_service.distinctDepartment()
 
+    relationships_service = RelationshipService()
+
+    relationships = relationships_service.getRelationships()
+
     context = {
         'id_member': id_member,
         'ubigeo': ubigeo,
-        'doc_types': doc_types
+        'doc_types': doc_types,
+        'relationships': relationships
     }
 
     return render(request, 'User/Affiliates/new_affiliate.html', context)
@@ -138,6 +144,10 @@ def create_affiliate(request):
 
     identity_doc_type = request.POST['identity_document_type']
 
+    relationshipID = request.POST['relationship']
+
+    relationships_service = RelationshipService()
+
     if FormValidator.validateForm(form, request):
 
         identity_document_type_service = IdentityDocumentTypeService()
@@ -146,10 +156,13 @@ def create_affiliate(request):
 
         ubigeo = ubigeo_service.distinctDepartment()
 
+        relationships = relationships_service.getRelationships()
+
         context = {
             'id_member': id_member,
             'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'doc_types': doc_types,
+            'relationships': relationships
         }
 
         return render(request, 'User/Affiliates/new_affiliate.html', context)
@@ -177,6 +190,8 @@ def create_affiliate(request):
         create_data["member_id"] = id_member
 
         create_data["state"] = 1
+
+        create_data['relationship'] = relationships_service.getRelationship(relationshipID)
 
         filter_ubigeo = {}
 
@@ -229,6 +244,10 @@ def edit_affiliate_index(request):
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+    relationships_service = RelationshipService()
+
+    relationships = relationships_service.getRelationships()
+
     ubigeo_service = UbigeoService()
 
     departments = ubigeo_service.distinctDepartment()
@@ -251,6 +270,7 @@ def edit_affiliate_index(request):
         'provinces' : provinces,
         'districts' : districts,
         'doc_types': doc_types,
+        'relationships' : relationships
     }
 
     return render(request, 'User/Affiliates/edit_affiliate.html', context)
@@ -295,6 +315,10 @@ def edit_affiliate(request):
 
     identity_doc_type = request.POST['identity_document_type']
 
+    relationshipID = request.POST['relationship']
+
+    relationships_service = RelationshipService()
+
     if FormValidator.validateForm(form, request):
 
         affiliate_service = AffiliateService()
@@ -307,10 +331,13 @@ def edit_affiliate(request):
 
         ubigeo = ubigeo_service.getAllUbigeo()
 
+        relationships = relationships_service.getRelationships()
+
         context = {
             'affiliate': affiliate,
             'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'doc_types': doc_types,
+            'relationships' : relationships
         }
 
         return render(request, 'User/Affiliates/edit_affiliatehtml', context)
@@ -320,6 +347,8 @@ def edit_affiliate(request):
         edit_data = {}
 
         edit_data["identity_document_type_id"] = identity_doc_type
+
+        edit_data['relationship'] = relationships_service.getRelationship(relationshipID)
 
         edit_data["name"] = form.cleaned_data['name']
 
@@ -450,12 +479,17 @@ def admin_create_index(request):
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+    relationships_service = RelationshipService()
+
+    relationships = relationships_service.getRelationships()
+
     ubigeo = ubigeo_service.distinctDepartment()
 
     context = {
         'id_member': id_member,
         'ubigeo': ubigeo,
-        'doc_types': doc_types
+        'doc_types': doc_types,
+        'relationships' : relationships
     }
 
     return render(request, 'Admin/Affiliates/new_affiliate.html', context)
@@ -501,18 +535,25 @@ def admin_create_affiliate(request):
 
     identity_doc_type = request.POST['identity_document_type']
 
+    relationshipID = request.POST['relationship']
+
+    relationships_service = RelationshipService()
+
     if FormValidator.validateForm(form, request):
 
         identity_document_type_service = IdentityDocumentTypeService()
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+        relationships = relationships_service.getRelationships()
+
         ubigeo = ubigeo_service.distinctDepartment()
 
         context = {
             'id_member': id_member,
             'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'doc_types': doc_types,
+            'relationships' : relationships
         }
 
         return render(request, 'Admin/Affiliates/new_affiliate.html', context)
@@ -522,6 +563,10 @@ def admin_create_affiliate(request):
         create_data = {}
 
         create_data["identity_document_type_id"] = identity_doc_type
+
+        relationship=relationships_service.getRelationship(relationshipID)
+
+        create_data["relationship"] = relationship
 
         create_data["name"] = form.cleaned_data['name']
 
@@ -595,6 +640,10 @@ def admin_edit_affiliate_index(request):
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+    relationships_service = RelationshipService()
+
+    relationships = relationships_service.getRelationships()
+
     ubigeo_service = UbigeoService()
 
     departments = ubigeo_service.distinctDepartment()
@@ -617,6 +666,7 @@ def admin_edit_affiliate_index(request):
         'provinces' : provinces,
         'districts' : districts,
         'doc_types': doc_types,
+        'relationships' : relationships
     }
 
     return render(request, 'Admin/Affiliates/edit_affiliate.html', context)
@@ -664,6 +714,10 @@ def admin_edit_affiliate(request):
 
     identity_doc_type = request.POST['identity_document_type']
 
+    relationshipID = request.POST['relationship']
+
+    relationships_service = RelationshipService()
+
     if FormValidator.validateForm(form, request):
 
         affiliate_service = AffiliateService()
@@ -676,10 +730,13 @@ def admin_edit_affiliate(request):
 
         ubigeo = ubigeo_service.getAllUbigeo()
 
+        relationships = relationships_service.getRelationships()
+
         context = {
             'affiliate': affiliate,
             'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'doc_types': doc_types,
+            'relationships': relationships
         }
 
         return render(request, 'Adminr/Affiliates/edit_affiliatehtml', context)
@@ -689,6 +746,8 @@ def admin_edit_affiliate(request):
         edit_data = {}
 
         edit_data["identity_document_type_id"] = identity_doc_type
+
+        edit_data['relationship'] = relationships_service.getRelationship(relationshipID)
 
         edit_data["name"] = form.cleaned_data['name']
 
@@ -724,11 +783,11 @@ def admin_edit_affiliate(request):
 
         affiliate = affiliate_service.getAffiliate(id_edit)
 
-        id_member = affiliate.member.id
+        member = affiliate.member
 
         filter_affiliate = {}
 
-        filter_affiliate["member"] = affiliate.member
+        filter_affiliate["member"] = member
 
         filter_affiliate["state"] = 1
 
@@ -762,17 +821,17 @@ def admin_delete_affiliate(request):
 
     affiliate = affiliate_service.getAffiliate(id_edit)
 
-    id_member = affiliate.member.id
+    member = affiliate.member
 
     filter_affiliate = {}
 
-    filter_affiliate["member"] = affiliate.member
+    filter_affiliate["member"] = member
 
     filter_affiliate["state"] = 1
 
     affiliates = affiliate_service.filter(filter_affiliate)
 
-    isSuspended = isMemberSuspended(member)
+    isSuspended = isMemberSuspended(affiliate.member)
 
     context = {
         'member' : member,
