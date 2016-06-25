@@ -58,9 +58,11 @@ Editar usuario
                                             </div>
                                         </div>
                                     </div>
+                                </div>    
+                                <div class="row">
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Contraseña</label>
+                                        <label class="col-xs-12" for="example-select">Contraseña anterior</label>
                                             <div class="col-md-6">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input2-group1" name="password" placeholder="Contraseña"  type="text" >
@@ -68,7 +70,19 @@ Editar usuario
                                             </div>
                                         </div>
                                     </div>
-                                </div>     
+                                </div> 
+                                <div class="row">
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Nueva contraseña</label>
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input2-group1" name="newPassword" placeholder="Contraseña"  type="text" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
 								<div class="row">
                                     
                                 <div class="col-lg-6" style="display:none;">
@@ -98,7 +112,36 @@ Editar usuario
 {% block scripts %}
 
     <script>
+    var password_changed = {{password_changed|yesno:"true,false"}}
+    var wrong_password = {{wrong_password|yesno:"true,false"}}
+
     $(document).ready(function () {
+        if(password_changed){
+            swal({
+                title: "Cambio de contraseña",
+                text: "Se ha procesado el cambio de contraseña exitosamente",
+                type: "info",
+                showCancelButton: false,
+                confirmButtonText: "Aceptar",
+                closeOnConfirm: true
+            },
+            function(){                  
+            }); 
+        }else if(wrong_password){
+            swal({
+                title: "Contraseña inválida",
+                text: "La contraseña anterior introducida es incorrecta.",
+                type: "error",
+                showCancelButton: false,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Aceptar",
+                closeOnConfirm: true
+            },
+            function(){                  
+            }); 
+        }
+
         $("#example-select").val({{user.type}});
         
     });
