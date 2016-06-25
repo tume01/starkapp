@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
 from adapters.FormValidator import FormValidator
 from .forms import UserForm, UserTypeForm
+from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
@@ -217,28 +218,45 @@ def edit_password(request):
     id_edit = request.POST['id']
 
     if FormValidator.validateForm(form,request):
-        
-        user = User.objects.get(id=id_edit)
 
+        user = request.user
         group = user.groups.all()[0].id
-
         context = {
-            'user' : user,
-            'group' : group
+            'user':user,
+            'group':group
         }
         return render(request, 'User/user.html', context)
 	
     else:
-		
-        user = User.objects.get(id=id_edit)
-        
-        user.set_password(form.cleaned_data['password'])
-        user.save()
 
-        user2 = auth.authenticate(username=user.username, password=form.cleaned_data['password'])
-        auth.login(request,user2)
+        user = auth.authenticate(username=request.POST['name'], password=form.cleaned_data['password'])
+		
+        if user is not None and user.is_active:
         
-        return HttpResponseRedirect(reverse('users:show_user'))
+            user.set_password(request.POST['newPassword'])
+            user.save()
+
+            user2 = auth.authenticate(username=user.username, password=request.POST['newPassword'])
+            auth.login(request,user2)
+
+            group = user2.groups.all()[0].id
+            context = {
+                'user':user2,
+                'group':group,
+                'password_changed':True
+            }
+            return render(request, 'User/user.html', context)
+
+        else:
+            user2 = request.user
+            group = user2.groups.all()[0].id
+            context = {
+                'user':user2,
+                'group':group,
+                'wrong_password':True
+            }
+        
+            return render(request, 'User/user.html', context)
 		
 @login_required
 @permission_required('dummy.permission_usuario', login_url='login:iniUser')
@@ -250,7 +268,7 @@ def show_user(request):
 	'user':user,
         'group':group
     }
-    return render(request, 'User/user.html',context)
+    return render(request, 'User/user.html', context)
 		
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:iniAdmin')
@@ -425,3 +443,4 @@ def verify_user_member(request):
             return  HttpResponse("false")
 
         return  HttpResponse("true")
+
