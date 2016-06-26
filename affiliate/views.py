@@ -678,7 +678,7 @@ def admin_create_affiliate(request):
 
         create_data["nationality"] = form.cleaned_data['nationality']
 
-        create_data["maritallStatus"] = form.cleaned_data['maritalStatus']
+        create_data["maritalStatus"] = form.cleaned_data['maritalStatus']
 
         create_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
 
@@ -840,7 +840,7 @@ def admin_edit_affiliate(request):
             'relationships': relationships
         }
 
-        return render(request, 'Adminr/Affiliates/edit_affiliatehtml', context)
+        return render(request, 'Admin/Affiliates/edit_affiliate.html', context)
 
     else:
 
@@ -889,7 +889,7 @@ def admin_edit_affiliate(request):
 
         edit_data["nationality"] = form.cleaned_data['nationality']
 
-        edit_data["maritallStatus"] = form.cleaned_data['maritalStatus']
+        edit_data["maritalStatus"] = form.cleaned_data['maritalStatus']
 
         edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
 
@@ -1111,7 +1111,7 @@ def admin_move_affiliate(request):
 
     insert_data["nationality"] = affiliate.nationality
 
-    insert_data["maritallStatus"] = affiliate.maritalStatus
+    insert_data["maritalStatus"] = affiliate.maritalStatus
 
     insert_data["cellphoneNumber"] = affiliate.cellphoneNumber
 
