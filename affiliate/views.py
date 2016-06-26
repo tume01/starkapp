@@ -409,7 +409,7 @@ def edit_affiliate(request):
 
         edit_data["ubigeo"] = ubi[0]
 
-        if request.FILES['photo']:
+        if 'photo' in request.FILES:
             edit_data["photo"] = request.FILES['photo']
 
         edit_data["gender"] = request.POST['gender']
@@ -876,7 +876,7 @@ def admin_edit_affiliate(request):
 
         edit_data["ubigeo"] = ubi[0]
 
-        if request.FILES['photo']:
+        if 'photo' in request.FILES:
             edit_data["photo"] = request.FILES['photo']
 
         edit_data["gender"] = request.POST['gender']
