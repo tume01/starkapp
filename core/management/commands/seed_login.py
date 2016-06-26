@@ -43,6 +43,7 @@ class Command(BaseCommand):
         Promotion.objects.all().delete()
         Ubigeo.objects.all().delete()
         Affiliate.objects.all().delete()
+        Relationship.objects.all().delete()
         print('    Data has been deleted\n')
 
     def insertLogin(self):
