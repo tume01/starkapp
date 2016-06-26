@@ -303,7 +303,7 @@ Editar miembro
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="department" name="addressDepartment" size="1">
+                                                    <select class="form-control" id="department" name="department" size="1">
                                                             <option value="">Seleccione</option>
                                                             {% for u in departments%}
                                                                 {% if u.department == member.ubigeo.department %}
@@ -320,7 +320,7 @@ Editar miembro
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="province" name="addressProvince" size="1">
+                                                    <select class="form-control" id="province" name="province" size="1">
                                                             {% for u in provinces%}
                                                                 {% if u.province == member.ubigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
@@ -336,7 +336,7 @@ Editar miembro
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="district" name="addressDistrict" size="1">
+                                                    <select class="form-control" id="district" name="district" size="1">
                                                        {% for u in districts%}
                                                             {% if u.district == member.ubigeo.district %}
                                                                 <option selected value="{{u.district}}">{{u.district}}</option>

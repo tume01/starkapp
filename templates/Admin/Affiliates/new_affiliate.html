@@ -380,6 +380,50 @@ var url= "{% url 'affiliate:verify_affiliate' %}"
             });
         }
         });
+
+        $('#birthDepartment').change(function(){
+        var birthDepartment = $('#birthDepartment :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:provincias" %}',
+                data:{department:birthDepartment, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#birthProvince').empty();
+                    $('#birthProvince').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $('#birthDistrict').empty();
+                    $('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        $('#birthProvince').append($('<option>', {
+                            text : item.province
+                        }));
+                    });
+                }
+            });
+        }
+        });
+
+        $('#birthProvince').change(function(){
+        var birthProvince = $('#birthProvince :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:distritos" %}',
+                data:{province:birthProvince, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#birthDistrict').empty();
+                    $('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        $('#birthDistrict').append($('<option>', {
+                            text : item.district
+                        }));
+                    });
+                }
+            });
+        }
+        });
         
     });
 </script>
