@@ -342,7 +342,7 @@ def create_membership(request):
 
         spouseName = request.POST['sfirstName']
 
-        if spouseName != '':
+        if spouseName != 'None':
 
             insert_affiliate = {}
 
