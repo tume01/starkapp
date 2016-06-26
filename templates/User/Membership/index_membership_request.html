@@ -69,6 +69,7 @@ Lista de solicitudes de membresía
                                                 {% if not membershipApp.objection %}
                                     <button class="btn btn-xs btn-default objetar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Agregar objeción"><i class="fa fa-pencil"></i></button>
                                     {% else %}
+                                    <button class="btn btn-xs btn-default objetar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Editar objeción"><i class="fa fa-pencil"></i></button>
                                     <button class="btn btn-xs btn-default eliminar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Eliminar objeción"><i class="fa fa-user-times"></i></button>
                                     {% endif %}
                                 </div>
