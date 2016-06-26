@@ -442,45 +442,47 @@ def edit_membership_application(request):
 
         insert_data["phone"] = form.cleaned_data['phone']
 
-        insert_data["sidentity_document_type_id"] = sidentity_document_id
+        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['sparentLastName'] != '':
 
-        insert_data["sfirstName"] = form.cleaned_data['sfirstName']
+            insert_data["sidentity_document_type_id"] = sidentity_document_id
 
-        insert_data["spaternalLastName"] = form.cleaned_data['spaternalLastName']
+            insert_data["sfirstName"] = form.cleaned_data['sfirstName']
 
-        insert_data["smaternalLastName"] = form.cleaned_data['smaternalLastName']
+            insert_data["spaternalLastName"] = form.cleaned_data['spaternalLastName']
 
-        insert_data["sdocument_number"] = form.cleaned_data['snum_doc']
+            insert_data["smaternalLastName"] = form.cleaned_data['smaternalLastName']
 
-        insert_data["sgender"] = request.POST['sgender']
+            insert_data["sdocument_number"] = form.cleaned_data['snum_doc']
 
-        insert_data["sspecialization"] = form.cleaned_data['sspecialization']
+            insert_data["sgender"] = request.POST['sgender']
 
-        insert_data["snationality"] = form.cleaned_data['snationality']
+            insert_data["sspecialization"] = form.cleaned_data['sspecialization']
 
-        insert_data["sbirthDate"] = request.POST['sbirthDate']
+            insert_data["snationality"] = form.cleaned_data['snationality']
 
-        insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
+            insert_data["sbirthDate"] = request.POST['sbirthDate']
 
-        filter_ubigeo["department"] = request.POST['sbirthDepartment']
+            insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
 
-        filter_ubigeo["province"] = request.POST['sbirthProvince']
+            filter_ubigeo["department"] = request.POST['sbirthDepartment']
 
-        filter_ubigeo["district"] = request.POST['sbirthDistrict']
+            filter_ubigeo["province"] = request.POST['sbirthProvince']
 
-        ubi = ubigeo_service.filter(filter_ubigeo)
+            filter_ubigeo["district"] = request.POST['sbirthDistrict']
 
-        insert_data["sbirthUbigeo"] = ubi[0]
+            ubi = ubigeo_service.filter(filter_ubigeo)
 
-        insert_data["sphoto"] = request.FILES['sphoto']
+            insert_data["sbirthUbigeo"] = ubi[0]
 
-        insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
+            insert_data["sphoto"] = request.FILES['sphoto']
+    
+            insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
 
-        insert_data["sworkPlaceJob"] = form.cleaned_data['sworkPlaceJob']
+            insert_data["sworkPlaceJob"] = form.cleaned_data['sworkPlaceJob']
 
-        insert_data["sworkPlacePhone"] = request.POST['sworkPlacePhone']
+            insert_data["sworkPlacePhone"] = request.POST['sworkPlacePhone']
 
-        insert_data["semail"] = form.cleaned_data['semail']
+            insert_data["semail"] = form.cleaned_data['semail']
 
         member_application_service = Membership_ApplicationService()
 
