@@ -211,6 +211,8 @@ def create_affiliate(request):
 
         else:
 
+            affiliate_service = AffiliateService()
+
             member_service = MembersService()
 
             member = member_service.getMember(id_member)
@@ -735,6 +737,8 @@ def admin_create_affiliate(request):
             create_data["photo"] = request.FILES['photo']
 
         else:
+
+            affiliate_service = AffiliateService()
 
             member_service = MembersService()
 
