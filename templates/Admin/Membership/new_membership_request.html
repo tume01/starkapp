@@ -38,7 +38,7 @@ Nueva solicitud de membresía
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:insert" %}' method="post" >
+                            <form class=" form-horizontal push-10-t push-10" action='{% url "membership_application:insert" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-4" >
@@ -59,10 +59,8 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Género</label>
                                             <div class="col-sm-8">
-                                                <form action="">
                                                   <input type="radio" name="gender" value="0"> Masculino<br>
                                                   <input type="radio" name="gender" value="1"> Femenino<br>
-                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -325,10 +323,8 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Género</label>
                                             <div class="col-sm-8">
-                                                <form action="">
                                                   <input type="radio" name="sgender" value="0"> Masculino<br>
                                                   <input type="radio" name="sgender" value="1"> Femenino<br>
-                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -618,7 +614,7 @@ var url= "{% url 'membership_application:verify_document_number' %}"
             $.ajax({
                 type:'post',
                 url:'{% url "ubigeo:provincias" %}',
-                data:{department:department, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                data:{department:birthDepartment, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 cache:false,
                 success: function(returndata){
                     $('#birthProvince').empty();
@@ -641,7 +637,7 @@ var url= "{% url 'membership_application:verify_document_number' %}"
             $.ajax({
                 type:'post',
                 url:'{% url "ubigeo:distritos" %}',
-                data:{province:province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                data:{province:birthProvince, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 cache:false,
                 success: function(returndata){
                     $('#birthDistrict').empty();
@@ -662,7 +658,7 @@ var url= "{% url 'membership_application:verify_document_number' %}"
             $.ajax({
                 type:'post',
                 url:'{% url "ubigeo:provincias" %}',
-                data:{department:department, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                data:{department:sbirthDepartment, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 cache:false,
                 success: function(returndata){
                     $('#sbirthProvince').empty();
@@ -685,7 +681,7 @@ var url= "{% url 'membership_application:verify_document_number' %}"
             $.ajax({
                 type:'post',
                 url:'{% url "ubigeo:distritos" %}',
-                data:{province:province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                data:{province:sbirthProvince, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                 cache:false,
                 success: function(returndata){
                     $('#sbirthDistrict').empty();
@@ -704,8 +700,6 @@ var url= "{% url 'membership_application:verify_document_number' %}"
 </script>
 
 
-
-<script src='{% static "assets/js/Admin/Membership/membership_application_forms_validation.js" %}'></script>
 
 
 
