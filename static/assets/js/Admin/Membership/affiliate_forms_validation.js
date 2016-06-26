@@ -103,6 +103,8 @@ var AffiliateFormValidation = function() {
                 },
                 'workPlacePhone':{
                     required:true,
+                    number: true, 
+                    minlength:7
                 },
                 'maritalStatus':{
                     required:true,
@@ -110,6 +112,8 @@ var AffiliateFormValidation = function() {
                 },
                 'cellphoneNumber':{
                     required:true,
+                    number: true, 
+                    minlength:9
                 },                
                 'specialization':{
                     required:true,
@@ -132,7 +136,7 @@ var AffiliateFormValidation = function() {
                     required:true
                 },
                 'photo':{
-                    required:false
+                    required:true
                 }
             },
             messages: {
@@ -212,14 +216,18 @@ var AffiliateFormValidation = function() {
                     maxlength:'El puesto de trabajo debe tener máximo 200 caracteres'
                 },
                 'workPlacePhone':{
-                    required:'Por favor ingrese el teléfono del lugar de trabajo'
+                    required:'Por favor ingrese el teléfono del lugar de trabajo',
+                    number: 'Por favor ingrese un número válido',
+                    minlength:'El telefono deber tener más de 6 dígitos'
                 },
                 'maritalStatus':{
                     required:'Por favor ingrese un estado civil',
                     maxlength:'El estado civil debe tener máximo 200 caracteres'  
                 },
                 'cellphoneNumber':{
-                    required:'Por favor ingrese un número celular'
+                    required:'Por favor ingrese un número celular',
+                    number: 'Por favor ingrese un número válido',
+                    minlength:'El número deber tener 9 digitos'
                 },
                 'photo':{
                     required: 'Por favor inrese una foto'
