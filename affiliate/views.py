@@ -297,6 +297,8 @@ def edit_affiliate_index(request):
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
     context = {
         'affiliate' : affiliate,
         'departments' : departments,
@@ -365,6 +367,8 @@ def edit_affiliate(request):
         ubigeo = ubigeo_service.getAllUbigeo()
 
         relationships = relationships_service.getRelationships()
+
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
 
         context = {
             'affiliate': affiliate,
@@ -761,6 +765,8 @@ def admin_edit_affiliate_index(request):
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
     context = {
         'affiliate' : affiliate,
         'departments' : departments,
@@ -829,15 +835,33 @@ def admin_edit_affiliate(request):
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo_service = UbigeoService()
+
+        departments = ubigeo_service.distinctDepartment()
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = affiliate.ubigeo.department
+
+        provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["province"] = affiliate.ubigeo.province
+
+        districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
         relationships = relationships_service.getRelationships()
 
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
         context = {
-            'affiliate': affiliate,
-            'ubigeo': ubigeo,
+            'affiliate' : affiliate,
+            'departments' : departments,
+            'provinces' : provinces,
+            'districts' : districts,
             'doc_types': doc_types,
-            'relationships': relationships
+            'relationships' : relationships
         }
 
         return render(request, 'Admin/Affiliates/edit_affiliate.html', context)
