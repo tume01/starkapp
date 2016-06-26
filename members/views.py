@@ -16,6 +16,7 @@ from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
+from datetime import datetime
 import json
 
 
@@ -70,6 +71,8 @@ def edit_member_index(request):
     filter_ubigeo["province"] = member.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+    member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
 
     context = {
         'member' : member,
@@ -152,6 +155,8 @@ def edit_member(request):
 
         districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+        member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
+
         context = {
             'member' : member,
             'departments' : departments,
@@ -194,7 +199,7 @@ def edit_member(request):
 
         edit_data["ubigeo"] = ubi[0]
 
-        if request.FILES['photo']:
+        if 'photo' in request.FILES:
             edit_data["photo"] = request.FILES['photo']
 
         edit_data["gender"] = request.POST['gender']
@@ -207,7 +212,7 @@ def edit_member(request):
 
         edit_data["nationality"] = form.cleaned_data['nationality']
 
-        edit_data["martialStatus"] = form.cleaned_data['maritalStatus']
+        edit_data["maritalStatus"] = form.cleaned_data['maritalStatus']
 
         edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
 

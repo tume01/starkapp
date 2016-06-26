@@ -136,10 +136,6 @@ def edit_index(request):
 
     membership_application = member_application_service.getMembership_Application(membershipId)
 
-    membership_application.initialDate = datetime.strftime(membership_application.initialDate, '%m/%d/%Y')
-
-    membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%m/%d/%Y')
-
     ubigeo_service = UbigeoService()
 
     departments = ubigeo_service.distinctDepartment()
@@ -150,11 +146,19 @@ def edit_index(request):
 
     provinces = ubigeo_service.distinctProvince(filter_ubigeo)
 
+    filter_ubigeo["department"] = membership_application.birthUbigeo.department
+
+    provinces2 = ubigeo_service.distinctProvince(filter_ubigeo)
+
     filter_ubigeo = {}
 
     filter_ubigeo["province"] = membership_application.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+    filter_ubigeo["province"] = membership_application.birthUbigeo.province
+
+    districts2 = ubigeo_service.distinctDistrict(filter_ubigeo)
 
     context = {
         'types' : types,
@@ -162,8 +166,24 @@ def edit_index(request):
         'departments': departments,
         'provinces': provinces,
         'districts': districts,
+        'provincesBirth': provinces2,
+        'districtsBirth': districts2,
         'membership_application' : membership_application,
     }
+
+    if(membership_application.sbirthUbigeo):
+
+        filter_ubigeo["department"] = membership_application.sbirthUbigeo.department
+
+        provinces3 = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["province"] = membership_application.sbirthUbigeo.province
+
+        districts3 = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+        context.update({'provincesSpouse': provinces3, 'districtsSpouse': districts3,})
 
     return render(request, 'Admin/Membership/edit_membership_request.html', context)
 
@@ -415,7 +435,7 @@ def edit_membership_application(request):
 
         insert_data["status"] = 1
 
-        if request.FILES['photo']:
+        if 'photo' in request.FILES:
             insert_data["photo"] = request.FILES['photo']
 
         insert_data["gender"] = request.POST['gender']
@@ -442,7 +462,7 @@ def edit_membership_application(request):
 
         insert_data["phone"] = form.cleaned_data['phone']
 
-        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['sparentLastName'] != '':
+        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '':
 
             insert_data["sidentity_document_type_id"] = sidentity_document_id
 
@@ -460,7 +480,7 @@ def edit_membership_application(request):
 
             insert_data["snationality"] = form.cleaned_data['snationality']
 
-            insert_data["sbirthDate"] = request.POST['sbirthDate']
+            insert_data["sbirthDate"] = form.cleaned_data['sbirthDate']
 
             insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
 
@@ -474,7 +494,9 @@ def edit_membership_application(request):
 
             insert_data["sbirthUbigeo"] = ubi[0]
 
-            insert_data["sphoto"] = request.FILES['sphoto']
+            if 'sphoto' in request.FILES:
+
+                insert_data["sphoto"] = request.FILES['sphoto']
     
             insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
 
@@ -486,7 +508,7 @@ def edit_membership_application(request):
 
         member_application_service = Membership_ApplicationService()
 
-        member_application_service.create(insert_data)
+        member_application_service.update(id_application, insert_data)
 
         return HttpResponseRedirect(reverse('membership_application:index'))
 

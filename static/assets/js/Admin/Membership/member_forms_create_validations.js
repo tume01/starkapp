@@ -68,7 +68,56 @@ var MemberFormValidation = function() {
                 },
                 'finalDate':{
                     required:true
+                },
+                'gender':{
+                    required:true
+                },
+                'nationality':{
+                    required:true,
+                    maxlength:20
+                },
+                'workPlace':{
+                    required:true,
+                    maxlength:200
+                },
+                'workPlaceJob':{
+                    required:true,
+                    maxlength:200   
+                },
+                'workPlacePhone':{
+                    required:true,
+                },
+                'maritalStatus':{
+                    required:true,
+                    maxlength:20  
+                },
+                'cellphoneNumber':{
+                    required:true,
+                },                
+                'specialization':{
+                    required:true,
+                    maxlength:200  
+                },
+                'birthDate' : {
+                    required: true
+                },
+                'birthPlace': {
+                    required: true,
+                    maxlength:200
+                },                                                                
+                'birthDepartment':{
+                    required:true
+                },
+                'birthProvince':{
+                    required:true
+                },
+                'birthDistrict':{
+                    required:true
+                },
+                'photo':{
+                    required:true
                 }
+
             },
             messages: {
                 'name': {
@@ -117,7 +166,53 @@ var MemberFormValidation = function() {
                 },
                 'finalDate':{
                     required: 'Por favor ingrese una fech final'
+                },
+                'birthDepartment':{
+                    required:'Por favor ingrese un departamento'
+                },
+                'birthProvince':{
+                    required:'Por favor ingrese una provincia'
+                },
+                'birthDistrict':{
+                    required:'Por favor ingrese un distrito'
+                },
+                'specialization':{
+                    required:'Por favor ingrese una especialización',
+                    maxlength:'La especialización debe tener máximo 200 caracteres'  
+                },
+                'birthDate' : {
+                    required: 'Por favor ingrese la fecha de nacimiento'
+                },
+                'birthPlace': {
+                    required: 'Por favor ingrese un lugar de nacimiento',
+                    maxlength:'El lugar de nacimiento debe tener máximo 200 caracteres'
+                },
+                'nationality':{
+                    required:'Por favor ingrese una nacionalidad',
+                    maxlength:'La nacionalidad debe tener máximo 20 caracteres'
+                },
+                'workPlace':{
+                    required:'Por favor ingrese su centro de trabajo',
+                    maxlength:'El centro de trabajo debe tener máximo 200 caracteres'
+                },
+                'workPlaceJob':{
+                    required:'Por favor ingrese su puesto de trabajo',
+                    maxlength:'El puesto de trabajo debe tener máximo 200 caracteres'
+                },
+                'workPlacePhone':{
+                    required:'Por favor ingrese el teléfono del lugar de trabajo'
+                },
+                'maritalStatus':{
+                    required:'Por favor ingrese un estado civil',
+                    maxlength:'El estado civil debe tener máximo 200 caracteres'  
+                },
+                'cellphoneNumber':{
+                    required:'Por favor ingrese un número celular'
+                },
+                'photo':{
+                    required: 'Por favor inrese una foto'
                 }                
+            }                
             }
         });
     };
