@@ -66,7 +66,7 @@ class BungalowReservationService(object):
                         pass
                     pass
                 if (flag):
-                    aBungDay.append((day.strftime('%Y%m%d'), bungalow.id))
+                    aBungDay.append((day.strftime('%Y%m%d'), bungalow.id, bungalow.number))
                 pass
             bungalowDay.append(aBungDay)
             pass
@@ -83,7 +83,7 @@ class BungalowReservationService(object):
         for n in range(len(bungalowDay)):
             day = bungalowDay[n]
             for bday in day:
-                element = {'title': 'Bungalow ' + str(bday[1]),
+                element = {'title': 'Bungalow ' + str(bday[2]),
                            'start': days[n].isoformat(),
                            'url': url.format(str(bday[1]), str(int(days[n].timestamp())))
                            }

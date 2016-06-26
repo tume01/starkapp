@@ -47,7 +47,6 @@ def index(request):
 
     return render(request, 'Admin/bungalowReservation/index.html', context)
 
-
 @require_http_methods(['POST'])
 def refresh_table(request):
     # bungalow_type_id = int(request.POST['bungalow_type_id'])
@@ -79,7 +78,6 @@ def refresh_table(request):
 
     return render_to_response('Admin/bungalowReservation/index_table.html', context)
 
-
 @require_http_methods(['POST'])
 def check_in(request):
     reservation_id = request.POST['reservation_id']
@@ -91,7 +89,6 @@ def check_in(request):
     BungalowReservationService.update(reservation_id, insert_data)
 
     return HttpResponse("Success")
-
 
 @require_http_methods(['POST'])
 def check_out(request):
@@ -105,7 +102,6 @@ def check_out(request):
 
     return HttpResponse("Success")
 
-
 @require_http_methods(['POST'])
 def accept(request):
     reservation_id = request.POST['reservation_id']
@@ -117,7 +113,6 @@ def accept(request):
 
     return HttpResponse("Success")
 
-
 @require_http_methods(['POST'])
 def cancel(request):
     reservation_id = request.POST['reservation_id']
@@ -128,16 +123,6 @@ def cancel(request):
     BungalowReservationService.update(reservation_id, insert_data)
 
     return HttpResponse("Success")
-
-
-@require_http_methods(['GET'])
-def create_index(request):
-    context = {
-        'headquarters': HeadquarterService().getHeadquarters(),
-        'bungalowTypes': BungalowTypeService().getBungalowTypes(),
-        'titulo': 'titulo'
-    }
-    return render(request, 'Admin/bungalowReservation/reserve_bungalow.html', context)
 
 @require_http_methods(['POST'])
 def create_refresh_events(request):
@@ -153,8 +138,19 @@ def create_refresh_events(request):
     return JsonResponse(response)
 
 
+# Admin
+
 @require_http_methods(['GET'])
-def create_reserve_index(request):
+def admin_create_index(request):
+    context = {
+        'headquarters': HeadquarterService().getHeadquarters(),
+        'bungalowTypes': BungalowTypeService().getBungalowTypes(),
+        'titulo': 'titulo'
+    }
+    return render(request, 'Admin/bungalowReservation/reserve_bungalow.html', context)
+
+@require_http_methods(['GET'])
+def admin_create_reserve_index(request):
 
     bungalow_id = request.GET.get('bungalow_id')
     bungalow = BungalowService.findBungalow(bungalow_id)
@@ -183,21 +179,76 @@ def create_reserve_index(request):
 
     return render(request, 'Admin/bungalowReservation/reserve_bungalow_part2.html', context)
 
-
-def create_reserve(request):
-
-
-    print("POST CREATE RESERVE")
-    print(request.POST)
-    insert_data = {}
-
-
+@require_http_methods(['POST'])
+def admin_create_reserve(request):
     bungalow = BungalowService.findBungalow(request.POST['bungalow_id'])
     member = MembersService().getMemberByUserId(request.user)
     arrival_date = datetime.datetime.strptime(request.POST['arrival_date'], '%d/%m/%Y')
     departure_date = arrival_date + datetime.timedelta(days=int(request.POST['duration']))
 
+    create_new_reservation(bungalow, member, arrival_date, departure_date)
 
+    return HttpResponseRedirect(reverse('bungalowReservation:index'))
+
+
+# User
+
+@require_http_methods(['GET'])
+def user_create_index(request):
+    context = {
+        'headquarters': HeadquarterService().getHeadquarters(),
+        'bungalowTypes': BungalowTypeService().getBungalowTypes(),
+        'titulo': 'titulo'
+    }
+    return render(request, 'User/bungalowReservation/reserve_bungalow.html', context)
+
+@require_http_methods(['GET'])
+def user_create_reserve_index(request):
+
+    bungalow_id = request.GET.get('bungalow_id')
+    bungalow = BungalowService.findBungalow(bungalow_id)
+    date = datetime.datetime.fromtimestamp(int(request.GET.get('date')))
+
+    bungalowTypes = BungalowTypeService.getBungalowTypes()
+    headquarters = HeadquarterService().getHeadquarters()
+
+    reservation = BungalowReservation()
+    reservation.bungalow_id = bungalow.id
+    reservation.bungalow_price = bungalow.bungalow_type.price
+    reservation.bungalow_capacity = bungalow.bungalow_type.capacity
+    reservation.bungalow_type_id = bungalow.bungalow_type.id
+    reservation.bungalow_headquarter_id = bungalow.headquarter.id
+    reservation.bungalow_headquarter_name = bungalow.headquarter.name
+
+    reservation.arrival_date = date
+
+    context = {
+        'reservation': reservation,
+        'bungalowTypes': bungalowTypes,
+        'headquarters': headquarters,
+        'durationOptions': [1,2,3,4],
+        'titulo': 'titulo'
+    }
+
+    return render(request, 'User/bungalowReservation/reserve_bungalow_part2.html', context)
+
+@require_http_methods(['POST'])
+def user_create_reserve(request):
+    bungalow = BungalowService.findBungalow(request.POST['bungalow_id'])
+    member = MembersService().getMemberByUserId(request.user)
+    arrival_date = datetime.datetime.strptime(request.POST['arrival_date'], '%d/%m/%Y')
+    departure_date = arrival_date + datetime.timedelta(days=int(request.POST['duration']))
+
+    create_new_reservation(bungalow, member, arrival_date, departure_date)
+
+    return HttpResponseRedirect(reverse('bungalowReservation:index'))
+
+
+
+# Helpers
+def create_new_reservation(bungalow, member, arrival_date, departure_date):
+
+    insert_data = {}
     insert_data["status"] = 0
 
     insert_data["bungalow_id"] = bungalow.id
@@ -219,18 +270,19 @@ def create_reserve(request):
     insert_data["departure_date"] = departure_date
 
     BungalowReservationService.create(insert_data)
-    return HttpResponseRedirect(reverse('bungalowReservation:index'))
 
+# Unimplemented
 
 @require_http_methods(['GET'])
 def update_index(request, bungalow_id):
     pass
 
-
 @require_http_methods(['POST'])
 def update_bungalow(request, bungalow_id):
     pass
 
+
+# IDK
 @require_http_methods(['GET'])
 def aditionalServiceBungalowIndex(request):
     members_service = MembersService()
@@ -299,7 +351,6 @@ def filterAditionalServiceBungalow(request, id):
 
 
     return HttpResponse( json.dumps(req_send), content_type='application/json')
-
 
 @require_http_methods(['POST'])
 def saveAditionalServiceBungalow(request, bungalow_id):

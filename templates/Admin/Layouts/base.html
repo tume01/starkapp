@@ -9,7 +9,7 @@
     <title>YoQúeríaPHP -{% block head_title %}{% endblock %}</title>
 
     <meta name="description" content="YoQúeríaPHP - Admin">
-    <meta name="author" content="Javier" >
+    <meta name="author" content="YoQueríaPHP" >
     <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
 
@@ -116,6 +116,9 @@
                                 </li>
                                 <li>
                                     <a href='{% url "bungalowReservation:index" %}'>Editar disponibilidad de Bungalows</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'bungalowReservation:admin_create_index'%}">Reservar Bungalow</a>
                                 </li>
                                 <li>
                                     <a href="Make_Sorteo.html">Sorteo de bungalows</a>

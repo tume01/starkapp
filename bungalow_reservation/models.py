@@ -5,7 +5,6 @@ from bungalow.models import Bungalow
 from members.models import Member
 from bungalow_service.models import Bungalow_service
 
-
 class BungalowReservation(models.Model):
     STATUS_CHOICES = (
         (0, 'Pendiente'),
