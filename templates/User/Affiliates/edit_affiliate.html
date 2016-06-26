@@ -50,7 +50,7 @@ Editar afiliado
                                     <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Género</label>
                                         <div class="col-sm-8">
-                                            % if affiliate.gender == 0 %}
+                                             {% if affiliate.gender == 0 %}
                                                 <input type="radio" name="gender" checked value="0"> Masculino<br>
                                                 <input type="radio" name="gender" value="1"> Femenino<br>
                                             {% else %}
