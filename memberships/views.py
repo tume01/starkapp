@@ -224,8 +224,7 @@ def create_membership(request):
     membershipApplicationId = request.POST['id']
 
     if (not FormValidator.validateForm(form,request)
-        and not FormValidator.validateForm(form2,request)
-        and not FormValidator.validateForm(form3, request)):
+        and not FormValidator.validateForm(form2,request)):
 
         #Datos del membresia
 
@@ -303,7 +302,7 @@ def create_membership(request):
 
         insert_data["ubigeo"] = ubi[0]
 
-        insert_data["photo"] = request.FILES['photo']
+        #insert_data["photo"] = request.FILES['photo']
 
         insert_data["gender"] = request.POST['gender']
 
@@ -385,7 +384,7 @@ def create_membership(request):
 
             insert_affiliate["birthUbigeo"] = ubi[0]
 
-            insert_affiliate["photo"] = request.FILES['sphoto']
+            #insert_affiliate["photo"] = request.FILES['sphoto']
 
             insert_affiliate["workPlace"] = form.cleaned_data['sworkPlace']
 
