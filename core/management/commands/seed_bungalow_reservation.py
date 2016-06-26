@@ -11,11 +11,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         print('\n  Bungalow Seeder is running...\n')
 
-        print('    Deleting...')
-        cleanBungalowReservation()
+        #print('    Deleting...')
+        #cleanBungalowReservation()
 
-        print('    Inserting...')
-        insertBungalowReservation()
+        #print('    Inserting...')
+        #insertBungalowReservation()
 
 
 def cleanBungalowReservation():
