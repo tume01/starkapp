@@ -225,7 +225,6 @@ var MembershipRequestFormValidation = function() {
                     required: 'Por favor inrese una foto'
                 }                
             }
-            }
         });
     };
 
