@@ -48,7 +48,7 @@ Nueva solicitud de membresía
                                 </div>
                                 <br>
                                 <div class="row">
-                                    <img src="{{image_url}}{{membership_application.photo}}" class="img-responsive img-event-preview">
+                                    <img src="{{ MEDIA_URL }}{{membership_application.photo}}" class="img-responsive img-event-preview">
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="photo">Foto</label>
@@ -365,7 +365,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <img src="{{image_url}}{{membership_application.sphoto}}" class="img-responsive img-event-preview">
+                                            <img src="{{ MEDIA_URL }}{{membership_application.sphoto}}" class="img-responsive img-event-preview">
                                             <label class="col-xs-12" for="photo">Foto*</label>
                                             <input type="file" name="sphoto" class="form-control, col-xs-12" id="photo">
                                         </div>

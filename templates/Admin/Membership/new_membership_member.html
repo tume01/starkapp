@@ -39,7 +39,7 @@ Nueva membresía
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "memberships:insert" %}' method="post" >
                             {% csrf_token %}
                             <div class="row">
-                                <img src="{{image_url}}{{membership_application.photo}}" name="photo" class="img-responsive img-event-preview">
+                                <img src="{{ MEDIA_URL }}{{membership_application.photo}}" name="photo" class="img-responsive img-event-preview">
                                 <div class="col-lg-4">
                                     <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Género</label>
