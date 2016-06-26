@@ -1111,7 +1111,7 @@ def admin_move_affiliate(request):
 
     insert_data["nationality"] = affiliate.nationality
 
-    insert_data["maritallStatus"] = affiliate.maritalStatus
+    insert_data["maritalStatus"] = affiliate.maritalStatus
 
     insert_data["cellphoneNumber"] = affiliate.cellphoneNumber
 
