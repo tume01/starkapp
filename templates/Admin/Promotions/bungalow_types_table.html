@@ -1,0 +1,11 @@
+<label class="col-xs-12" for="seat">Elegir Tipo de bungalow</label>
+<div class="col-md-6">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-building"></i></span>
+        <select class="form-control" id="example-select" name="bungalow_type" size="1">
+        {% for type in bungalow_types %}
+            <option value="{{type.id}}">{{type.name}}</option>
+        {% endfor %}
+        </select>
+    </div>
+</div>

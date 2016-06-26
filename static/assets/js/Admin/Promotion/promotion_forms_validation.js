@@ -69,22 +69,24 @@ var PromotionFormValidation = function() {
 
 $(document).ready(function(){
     $("#bungalow").click(function(){
+        var route = $("#bungalow_table").data('url');
+        console.log(route);
         $.ajax({
-            url: $("#bungalow_table").data('url'),
+            url: route,
         }).done(function(data){
-            console.log(data);
             $("#event_table").html("");
             $("#bungalow_table").html(data);
         });
     });
     $("#events").click(function(){
+        var route = $("#event_table").data('url');
+        console.log(route);
         $.ajax({
-            url: $("#event_table").data('url'),
+            url: route,
         }).done(function(data){
-            console.log(data);
-            $("#event_table").html(data);
             $("#bungalow_table").html("");
-        });;
+            $("#event_table").html(data);
+        });
     });
 });
 

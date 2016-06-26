@@ -1,0 +1,11 @@
+<label class="col-xs-12" for="seat">Elegir Evento</label>
+<div class="col-md-6">
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-building"></i></span>
+        <select class="form-control" id="example-select" name="event_type" size="1">
+        {% for event_type in event_types %}
+            <option value="{{event_type.id}}">{{event_type.name}}</option>
+        {% endfor %}
+        </select>
+    </div>
+</div>

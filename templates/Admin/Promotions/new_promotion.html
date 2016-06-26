@@ -85,9 +85,9 @@ Lista de promociones
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input"> Seleccione campo</label>
                                             <div class="col-md-6">
-                                                <input type="radio" name="promotion" id="membership" data-value="membership"> Solo membresía<br>
-                                                <input type="radio" name="promotion" id="bungalow" data-value="bungalow" checked> Bungalow y Membresía<br>
-                                                <input type="radio" name="promotion" id="events" data-value="event" checked> Eventos y Membresía<br>
+                                                <input type="radio" name="promotion" id="membership" value="membership"> Solo membresía<br>
+                                                <input type="radio" name="promotion" id="bungalow" value="bungalow"> Bungalow y Membresía<br>
+                                                <input type="radio" name="promotion" id="events" value="event"> Eventos y Membresía<br>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +97,7 @@ Lista de promociones
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <select class="form-control" id="example-select" name="headquarter" size="1">
+                                                    <select class="form-control" id="example-select" name="membership_type" size="1">
                                                     {% for membership in membership_types %}
                                                         <option value="{{membership.id}}">{{membership.name}}</option>
                                                     {% endfor %}
@@ -108,36 +108,12 @@ Lista de promociones
                                     </div>
                                 </div>      
                                 <div class="row">
-                                    {% if bungalow_types %}
                                     <div id="bungalow_table" data-url="{% url 'promotions:get_bungalows' %}">
-                                        <label class="col-xs-12" for="seat">Elegir Tipo de bungalow</label>
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                <select class="form-control" id="example-select" name="headquarter" size="1">
-                                                    {% for type in bungalow_types %}
-                                                        <option value="{{type.id}}">{{type.name}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
+                                    
                                     </div>
-                                    {% endif %}
-                                    {% if events %}
                                     <div id="event_table" data-url="{% url 'promotions:get_events' %}">
-                                        <label class="col-xs-12" for="seat">Elegir Evento</label>
-                                        <div class="col-md-6">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                <select class="form-control" id="example-select" name="headquarter" size="1">
-                                                    {% for event in events %}
-                                                        <option value="{{event.id}}">{{event.name}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                            </div>
-                                        </div>
+                                    
                                     </div>
-                                    {% endif %}
                                 </div>                     
                                 <div class="form-group">                    
                                     <div class="col-xs-2 col-xs-offset-4">

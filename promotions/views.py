@@ -1,19 +1,23 @@
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from services.PromotionsService import PromotionsService
 from services.MembershipTypeService import MembershipTypeService
 from services.BungalowTypeService import BungalowTypeService
-from services.EventsService import EventsService
+from services.EventsTypeService import EventsTypeService
+from services.EventPromotionService import EventPromotionService
+from services.BungalowPromotionService import BungalowPromotionService
+from services.MembershipPromotionService import MembershipPromotionService
 from django.views.decorators.http import require_http_methods
 from adapters.FormValidator import FormValidator
 from .forms import PromotionForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
-
+import json
+import datetime
 
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')
@@ -22,13 +26,10 @@ def index(request):
 
     promotion_service = PromotionsService()
 
-    membership_type_service = MembershipTypeService()
-
     promotions = promotion_service.getPromotions()
 
     context = {
         'promotions' : promotions,
-        'membership_types': membership_type_service.getMembershipTypes(),
     }
 
     return render(request, 'Admin/Promotions/index_promotion.html', context) 
@@ -41,25 +42,25 @@ def get_bungalows(request):
 
     bungalow_types = bungalow_type_service.getBungalowTypes()
 
-    response = {
+    context = {
         'bungalow_types' : bungalow_types
     }
 
-    return JsonResponse(response)
+    return render_to_response('Admin/Promotions/bungalow_types_table.html',context)
 
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')
 def get_events(request):
 
-    events_services = EventsService()
+    event_types_services = EventsTypeService()
 
-    events = events_services.getEvents()
+    event_types = event_types_services.getEventsType()
 
-    response = {
-        'events' : events
+    context = {
+        'event_types' : event_types
     }
 
-    return JsonResponse(response)
+    return render_to_response('Admin/Promotions/event_types_table.html',context)
 
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')
@@ -98,8 +99,12 @@ def filter(request):
 @require_http_methods(['GET'])
 def create_index(request):
 
+    membership_type_service = MembershipTypeService()
+    membership_types = membership_type_service.getMembershipTypes()
+
     context = {
-        'titulo' : 'titulo'
+        'titulo' : 'titulo',
+        'membership_types' : membership_types,
     }
 
     return render(request, 'Admin/Promotions/new_promotion.html', context)
@@ -147,33 +152,50 @@ def delete_promotion(request):
 @require_http_methods(['POST'])
 def create_promotion(request):
 
-    form = PromotionForm(request.POST)
+    insert_data = {}
 
-    request = FormValidator.validateForm(form, request)
+    insert_data["description"] = request.POST.get('description')
 
-    if not request:
+    insert_data["percentage"] = request.POST.get('percentage')
 
-        insert_data = {}
+    insert_data["status"] = 1
 
-        insert_data["description"] = form.cleaned_data['description']
+    promotion_service = PromotionsService()
 
-        insert_data["percentage"] = form.cleaned_data['percentage']
+    promotion = promotion_service.create(insert_data)
 
-        insert_data["status"] = 1
+    insert_promotion_relation = {}
 
-        promotion_service = PromotionsService()
+    insert_promotion_relation["startDate"] = datetime.datetime.strptime(request.POST.get("start_date"),"%m/%d/%Y %H:%M %p").date()
 
-        promotion_service.create(insert_data)
+    insert_promotion_relation["endDate"] = datetime.datetime.strptime(request.POST.get("end_date"),"%m/%d/%Y %H:%M %p").date()
 
-        return HttpResponseRedirect(reverse('promotions:index'))
+    insert_promotion_relation["percentage"] = request.POST.get("percentage")
 
+    insert_promotion_relation["promotion_id"] = promotion.id
+
+    insert_promotion_relation["membership_type_id"] = request.POST.get('membership_type')
+    
+    promotion_selected = request.POST.get('promotion')
+
+    if promotion_selected == "membership" :
+        membership_promotion_service = MembershipPromotionService()
+        membership_promotion_service.create(insert_promotion_relation)
+        #servicio solo membership
+
+    elif promotion_selected == "bungalow":
+        insert_promotion_relation["bungalow_type_id"] = request.POST.get('bungalow_type')
+        bungalow_promotion_service = BungalowPromotionService()
+        bungalow_promotion_service.create(insert_promotion_relation)
+
+        #servicio para bungalow
     else:
-        context = {
-            'titulo' : 'titulo'
-        }
+        insert_promotion_relation["event_type_id"] = request.POST.get('event_type')
+        event_promotion_service = EventPromotionService()
+        event_promotion_service.create(insert_promotion_relation)
+        #servicio para eventos
 
-        return render(request, 'Admin/Promotions/new_promotion.html', context)
-
+    return HttpResponseRedirect(reverse('promotions:index'))
 
 
 @login_required

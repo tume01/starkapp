@@ -30,7 +30,7 @@ class MembershipPromotion(models.Model):
     deleted_at = models.DateTimeField(null=True)
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
-    percentage = models.DateTimeField()
+    percentage = models.FloatField()
 
 class BungalowReservationPromotion(models.Model):
     membership_type = models.ForeignKey(MembershipType, on_delete=models.CASCADE)
@@ -39,7 +39,7 @@ class BungalowReservationPromotion(models.Model):
     deleted_at = models.DateTimeField(null=True)
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
-    percentage = models.DateTimeField()
+    percentage = models.FloatField()
 
 class EventPromotion(models.Model):
     membership_type = models.ForeignKey(MembershipType, on_delete=models.CASCADE)
@@ -48,4 +48,4 @@ class EventPromotion(models.Model):
     deleted_at = models.DateTimeField(null=True)
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
-    percentage = models.DateTimeField()
+    percentage = models.FloatField()
