@@ -144,7 +144,7 @@ function check_out(reservationId) {
 };
 
 function accept(reservationId) {
-    console.log("ACCEPT")
+    console.log("CHECK OUT")
 
     $.ajax({
         url : "accept", // the endpoint
