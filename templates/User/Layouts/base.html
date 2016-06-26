@@ -31,6 +31,8 @@
     <link rel="stylesheet" id="css-main" href='{% static "assets/css/base.css" %}'>
     <link rel="stylesheet" href='{% static "assets/js/plugins/sweetalert/sweetalert.css" %}'>
 
+{% block links %}
+{% endblock %}
 </head>
 <body>
  <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
@@ -105,6 +107,9 @@
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
+                                <li>
+                                    <a href="{% url 'bungalowReservation:user_create_index'%}">Reservar Bungalow</a>
+                                </li>
                                 <li>
                                     <a href="{% url 'bungalowReservation:aditional_service'%}">Servicios Adicionales</a>
                                 </li>
@@ -433,14 +438,13 @@
         <!--<script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script> -->
         <!-- Page JS Code -->
         <!--<script src="assets/js/pages/base_forms_validation.js"></script>-->
-
-        <script src="assets/js/plugins/jquery-validation/jquery.validate.min.js"></script>
-        <script src="assets/js/plugins/jquery-validation/additional-methods.min.js"></script>
         
         <script src='{% static "assets/js/plugins/sweetalert/sweetalert.min.js" %}'></script>
 
         <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
+
+        <script src='{% static "assets/js/plugins/sweetalert/sweetalert.min.js" %}'></script>
 
 
 {% block scripts %}

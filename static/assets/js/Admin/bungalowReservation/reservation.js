@@ -15,13 +15,6 @@ $(document).ready(function() {
             startDate.setHours(startDate.getHours() - 5);
 
             refreshEvents(startDate, endDate, callback);
-        },
-        eventClick: function(calEvent, jsEvent, view) {
-//            TODO: Reserve a Bungalow with current filters
-            var href2 = '{% url "bungalowReservation:index" %}'
-            console.log(href2)
-            console.log(calEvent)
-//            location.href = '{% url "bungalowReservation:index" %}';
         }
     });
 });
