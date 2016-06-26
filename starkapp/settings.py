@@ -176,3 +176,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'yoqueriaphp@gmail.com'
 EMAIL_HOST_PASSWORD = 'yoqueriaPHP123'
 EMAIL_PORT = 587
+FILE_UPLOAD_PERMISSION = 644
