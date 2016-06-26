@@ -7,7 +7,7 @@ Admin: usuario
 {% endblock %}
 
 {% block head_dahsboard %}
-Usuario
+Usuarios
 {% endblock %}
 
 {% block function_head_dahsboard %}
@@ -15,7 +15,7 @@ Nuevo usuario
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Usuario
+Usuarios
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
@@ -68,7 +68,9 @@ Nuevo usuario
                             <div class="col-sm-10">
                                 <select class="form-control" id="example-select" name="user_type" size="1">
                                      {% for group in groups %}       
-                                    <option value="{{group.id}}">{{group.name}}</option>
+                                        {% if group.name != "usuarios" and group.name != "usuarios_suspendidos" %}
+                                            <option value="{{group.id}}">{{group.name}}</option>
+                                        {% endif %}
                                      {% endfor %}
                                 </select>
                             </div>

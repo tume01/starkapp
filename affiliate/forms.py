@@ -14,6 +14,16 @@ class AffiliateForm(forms.Form):
     address = forms.CharField(max_length=200, error_messages={'required': 'El campo Direccion es requerido', 'max_length': 'El campo Direccion debe tener una longitud maxima de 200 caracteres'})
     email = forms.CharField(max_length=200, error_messages={'required': 'El campo Email es requerido', 'max_length': 'El campo Email debe tener una longitud maxima de 200 caracteres'})
 
+    workPlace = forms.CharField(required=False, max_length=200, error_messages={'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
+    workPlaceJob = forms.CharField(required=False, max_length=200, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
+    workPlacePhone = forms.IntegerField(required=False)
+    nationality = forms.CharField(max_length=20, error_messages={'required': 'El campo Nacionalidad es requerido', 'max_length': 'El campo Nacionalidad no debe superar los 20 caracteres'})
+    maritalStatus = forms.CharField(required=False, max_length=20, error_messages={'max_length': 'El campo Estado civil no debe superar los 20 caracteres'})
+    cellphoneNumber = forms.IntegerField(required=False)
+    specialization = forms.CharField(max_length=200, error_messages={'max_length': 'El campo Especialización no debe superar los 200 caracteres'})
+    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'})
+    birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
+
     def clean_dni(self):
         data = self.cleaned_data['num_doc']
         if (data < 9999999):

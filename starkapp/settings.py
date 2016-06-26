@@ -93,6 +93,7 @@ TEMPLATES = [
                 'django.template.context_processors.csrf',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -160,11 +161,14 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "uploads"),
 )
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"media")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"uploads")
+
+MEDIA_URL = '/uploads/'
 
 LOGIN_URL = '/login'
 
@@ -173,3 +177,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'yoqueriaphp@gmail.com'
 EMAIL_HOST_PASSWORD = 'yoqueriaPHP123'
 EMAIL_PORT = 587
+FILE_UPLOAD_PERMISSION = 644
+
+#Format
+DATE_INPUT_FORMATS = ('%d-%m-%Y')

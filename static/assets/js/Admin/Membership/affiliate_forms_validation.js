@@ -37,7 +37,6 @@ var AffiliateFormValidation = function() {
                 'num_doc': {
                     required: true,   
                     number: true, 
-                    min: 1,
                     remote: {
                         url: url,
                         type: "post",
@@ -49,7 +48,19 @@ var AffiliateFormValidation = function() {
                                 return $( "#id_member" ).val();
                             }
                         }
-                    }                           
+                    },
+                    maxlength: {
+                        depends: function (elem) {
+                            if($("#example-select").val()==1 && ($('#num_doc').val().length == 8)) {
+                                return false;
+                            }else if($("#example-select").val()==2 && ($('#num_doc').val().length == 12)){
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        }
+                    }, 
+                    min: 1,                        
                 },                              
                 'address': {
                     required: true,
@@ -74,6 +85,54 @@ var AffiliateFormValidation = function() {
                 'email': {
                     required: true,
                     email: true
+                },                
+                'gender':{
+                    required:true
+                },
+                'nationality':{
+                    required:true,
+                    maxlength:20
+                },
+                'workPlace':{
+                    required:true,
+                    maxlength:200
+                },
+                'workPlaceJob':{
+                    required:true,
+                    maxlength:200   
+                },
+                'workPlacePhone':{
+                    required:true,
+                },
+                'maritalStatus':{
+                    required:true,
+                    maxlength:20  
+                },
+                'cellphoneNumber':{
+                    required:true,
+                },                
+                'specialization':{
+                    required:true,
+                    maxlength:200  
+                },
+                'birthDate' : {
+                    required: true
+                },
+                'birthPlace': {
+                    required: true,
+                    maxlength:200
+                },                                                                
+                'birthDepartment':{
+                    required:true
+                },
+                'birthProvince':{
+                    required:true
+                },
+                'birthDistrict':{
+                    required:true
+                },
+                'photo':{
+                    required:false
                 }
             },
             messages: {
@@ -93,7 +152,8 @@ var AffiliateFormValidation = function() {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
                     remote: 'Este documento ya esta en uso',
-                    min: 'Por favor ingrese un documento válido' ,                
+                    min: 'Por favor ingrese un documento válido' ,    
+                    maxlength: 'Por favor ingrese un documento válido'             
                 },              
                 'address': {
                     required: 'Por favor ingrese una dirección',
@@ -118,7 +178,54 @@ var AffiliateFormValidation = function() {
                 'email': {
                     required:'Por favor ingrese un email',
                     email:'Por favor ingrese un email válido'                
-                }           
+                },
+                'birthDepartment':{
+                    required:'Por favor ingrese un departamento'
+                },
+                'birthProvince':{
+                    required:'Por favor ingrese una provincia'
+                },
+                'birthDistrict':{
+                    required:'Por favor ingrese un distrito'
+                },
+                'specialization':{
+                    required:'Por favor ingrese una especialización',
+                    maxlength:'La especialización debe tener máximo 200 caracteres'  
+                },
+                'birthDate' : {
+                    required: 'Por favor ingrese la fecha de nacimiento'
+                },
+                'birthPlace': {
+                    required: 'Por favor ingrese un lugar de nacimiento',
+                    maxlength:'El lugar de nacimiento debe tener máximo 200 caracteres'
+                },
+                'nationality':{
+                    required:'Por favor ingrese una nacionalidad',
+                    maxlength:'La nacionalidad debe tener máximo 20 caracteres'
+                },
+                'workPlace':{
+                    required:'Por favor ingrese su centro de trabajo',
+                    maxlength:'El centro de trabajo debe tener máximo 200 caracteres'
+                },
+                'workPlaceJob':{
+                    required:'Por favor ingrese su puesto de trabajo',
+                    maxlength:'El puesto de trabajo debe tener máximo 200 caracteres'
+                },
+                'workPlacePhone':{
+                    required:'Por favor ingrese el teléfono del lugar de trabajo'
+                },
+                'maritalStatus':{
+                    required:'Por favor ingrese un estado civil',
+                    maxlength:'El estado civil debe tener máximo 200 caracteres'  
+                },
+                'cellphoneNumber':{
+                    required:'Por favor ingrese un número celular'
+                },
+                'photo':{
+                    required: 'Por favor inrese una foto'
+                }                
+            }
+
             }
         });
     };

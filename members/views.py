@@ -16,6 +16,7 @@ from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
+from datetime import datetime
 import json
 
 
@@ -70,6 +71,8 @@ def edit_member_index(request):
     filter_ubigeo["province"] = member.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+    member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
 
     context = {
         'member' : member,
@@ -136,12 +139,30 @@ def edit_member(request):
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo_service = UbigeoService()
+
+        departments = ubigeo_service.distinctDepartment()
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = member.ubigeo.department
+
+        provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["province"] = member.ubigeo.province
+
+        districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+        member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
 
         context = {
-            'member': member,
-            'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'member' : member,
+            'departments' : departments,
+            'provinces' : provinces,
+            'districts' : districts,
+            'doc_types': doc_types,
         }
 
         return render(request, 'Admin/Members/edit_member.html', context)
@@ -177,6 +198,39 @@ def edit_member(request):
         ubi = ubigeo_service.filter(filter_ubigeo)
 
         edit_data["ubigeo"] = ubi[0]
+
+        if 'photo' in request.FILES:
+            edit_data["photo"] = request.FILES['photo']
+
+        edit_data["gender"] = request.POST['gender']
+
+        edit_data["workPlace"] = form.cleaned_data['workPlace']
+
+        edit_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        edit_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        edit_data["nationality"] = form.cleaned_data['nationality']
+
+        edit_data["maritalStatus"] = form.cleaned_data['maritalStatus']
+
+        edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        edit_data["specialization"] = form.cleaned_data['specialization']
+
+        edit_data["birthDate"] = form.cleaned_data['birthDate']
+
+        edit_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        edit_data["birthUbigeo"] = ubi[0]
 
         member_service = MembersService()
 

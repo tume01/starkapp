@@ -120,25 +120,17 @@ Editar usuario
             swal({
                 title: "Cambio de contraseña",
                 text: "Se ha procesado el cambio de contraseña exitosamente",
-                type: "info",
-                showCancelButton: false,
-                confirmButtonText: "Aceptar",
-                closeOnConfirm: true
-            },
-            function(){                  
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
             }); 
         }else if(wrong_password){
             swal({
                 title: "Contraseña inválida",
                 text: "La contraseña anterior introducida es incorrecta.",
                 type: "error",
-                showCancelButton: false,
-                confirmButtonClass: "btn-danger",
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Aceptar",
-                closeOnConfirm: true
-            },
-            function(){                  
+                showConfirmButton: false,
+                timer: 2000
             }); 
         }
 

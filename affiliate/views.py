@@ -205,6 +205,38 @@ def create_affiliate(request):
 
         create_data["ubigeo"] = ubi[0]
 
+        create_data["photo"] = request.FILES['photo']
+
+        create_data["gender"] = request.POST['gender']
+
+        create_data["workPlace"] = form.cleaned_data['workPlace']
+
+        create_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        create_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        create_data["nationality"] = form.cleaned_data['nationality']
+
+        create_data["maritalStatus"] = form.cleaned_data['maritalStatus']
+
+        create_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        create_data["specialization"] = form.cleaned_data['specialization']
+
+        create_data["birthDate"] = form.cleaned_data['birthDate']
+
+        create_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        create_data["birthUbigeo"] = ubi[0]
+
         affiliate_service = AffiliateService()
 
         affiliate_service.create(create_data)
@@ -224,6 +256,7 @@ def create_affiliate(request):
         context = {
             'member' : member,
             'affiliates' : affiliates,
+            'affiliate_inserted':True
         }
 
         return render(request, 'User/Affiliates/index_affiliates.html', context)
@@ -263,6 +296,8 @@ def edit_affiliate_index(request):
     filter_ubigeo["province"] = affiliate.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
 
     context = {
         'affiliate' : affiliate,
@@ -333,6 +368,8 @@ def edit_affiliate(request):
 
         relationships = relationships_service.getRelationships()
 
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
         context = {
             'affiliate': affiliate,
             'ubigeo': ubigeo,
@@ -376,6 +413,39 @@ def edit_affiliate(request):
 
         edit_data["ubigeo"] = ubi[0]
 
+        if 'photo' in request.FILES:
+            edit_data["photo"] = request.FILES['photo']
+
+        edit_data["gender"] = request.POST['gender']
+
+        edit_data["workPlace"] = form.cleaned_data['workPlace']
+
+        edit_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        edit_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        edit_data["nationality"] = form.cleaned_data['nationality']
+
+        edit_data["maritalStatus"] = form.cleaned_data['maritalStatus']
+
+        edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        edit_data["specialization"] = form.cleaned_data['specialization']
+
+        edit_data["birthDate"] = form.cleaned_data['birthDate']
+
+        edit_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        edit_data["birthUbigeo"] = ubi[0]
+
         affiliate_service = AffiliateService()
 
         affiliate_service.update(id_edit, edit_data)
@@ -395,6 +465,7 @@ def edit_affiliate(request):
         context = {
             'member' : affiliate.member,
             'affiliates' : affiliates,
+            'affiliate_edited':True
         }
 
         return render(request, 'User/Affiliates/index_affiliates.html', context)
@@ -428,6 +499,7 @@ def delete_affiliate(request):
     context = {
         'member' : affiliate.member,
         'affiliates' : affiliates,
+        'affiliate_deleted':True
     }
 
     return render(request, 'User/Affiliates/index_affiliates.html', context)
@@ -598,6 +670,38 @@ def admin_create_affiliate(request):
 
         create_data["ubigeo"] = ubi[0]
 
+        create_data["photo"] = request.FILES['photo']
+
+        create_data["gender"] = request.POST['gender']
+
+        create_data["workPlace"] = form.cleaned_data['workPlace']
+
+        create_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        create_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        create_data["nationality"] = form.cleaned_data['nationality']
+
+        create_data["maritalStatus"] = form.cleaned_data['maritalStatus']
+
+        create_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        create_data["specialization"] = form.cleaned_data['specialization']
+
+        create_data["birthDate"] = form.cleaned_data['birthDate']
+
+        create_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        create_data["birthUbigeo"] = ubi[0]
+
         affiliate_service = AffiliateService()
 
         affiliate_service.create(create_data)
@@ -619,7 +723,8 @@ def admin_create_affiliate(request):
         context = {
             'member' : member,
             'affiliates' : affiliates,
-            'isSuspended' : isSuspended
+            'isSuspended' : isSuspended,
+            'affiliate_inserted':True
         }
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -659,6 +764,8 @@ def admin_edit_affiliate_index(request):
     filter_ubigeo["province"] = affiliate.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
 
     context = {
         'affiliate' : affiliate,
@@ -728,18 +835,36 @@ def admin_edit_affiliate(request):
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo_service = UbigeoService()
+
+        departments = ubigeo_service.distinctDepartment()
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = affiliate.ubigeo.department
+
+        provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["province"] = affiliate.ubigeo.province
+
+        districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
         relationships = relationships_service.getRelationships()
 
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
         context = {
-            'affiliate': affiliate,
-            'ubigeo': ubigeo,
+            'affiliate' : affiliate,
+            'departments' : departments,
+            'provinces' : provinces,
+            'districts' : districts,
             'doc_types': doc_types,
-            'relationships': relationships
+            'relationships' : relationships
         }
 
-        return render(request, 'Adminr/Affiliates/edit_affiliatehtml', context)
+        return render(request, 'Admin/Affiliates/edit_affiliate.html', context)
 
     else:
 
@@ -775,6 +900,39 @@ def admin_edit_affiliate(request):
 
         edit_data["ubigeo"] = ubi[0]
 
+        if 'photo' in request.FILES:
+            edit_data["photo"] = request.FILES['photo']
+
+        edit_data["gender"] = request.POST['gender']
+
+        edit_data["workPlace"] = form.cleaned_data['workPlace']
+
+        edit_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        edit_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        edit_data["nationality"] = form.cleaned_data['nationality']
+
+        edit_data["maritalStatus"] = form.cleaned_data['maritalStatus']
+
+        edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        edit_data["specialization"] = form.cleaned_data['specialization']
+
+        edit_data["birthDate"] = form.cleaned_data['birthDate']
+
+        edit_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        edit_data["birthUbigeo"] = ubi[0]
+
         affiliate_service = AffiliateService()
 
         member_service = MembersService()
@@ -798,7 +956,8 @@ def admin_edit_affiliate(request):
         context = {
             'member' : member,
             'affiliates' : affiliates,
-            'isSuspended' : isSuspended
+            'isSuspended' : isSuspended,
+            'affiliate_edited':True
         }
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -836,7 +995,8 @@ def admin_delete_affiliate(request):
     context = {
         'member' : member,
         'affiliates' : affiliates,
-        'isSuspended' : isSuspended
+        'isSuspended' : isSuspended,
+        'affiliate_deleted':True
     }
 
     return render(request, 'Admin/Affiliates/index_affiliates.html', context)
@@ -962,6 +1122,34 @@ def admin_move_affiliate(request):
     insert_data["address"] = affiliate.address
 
     insert_data["email"] = affiliate.email
+
+    insert_data["photo"] = affiliate.photo
+
+    insert_data["gender"] = affiliate.gender
+
+    insert_data["workPlace"] = affiliate.workPlace
+
+    insert_data["workPlaceJob"] = affiliate.workPlaceJob
+
+    insert_data["workPlacePhone"] = affiliate.workPlacePhone
+
+    insert_data["nationality"] = affiliate.nationality
+
+    insert_data["maritalStatus"] = affiliate.maritalStatus
+
+    insert_data["cellphoneNumber"] = affiliate.cellphoneNumber
+
+    insert_data["specialization"] = affiliate.specialization
+
+    insert_data["birthDate"] = affiliate.birthDate
+
+    insert_data["birthPlace"] = affiliate.birthPlace
+
+    ubigeo_service = UbigeoService()
+
+    ubi = ubigeo_service.getUbigeoById(affiliate.birthUbigeo.id)
+
+    insert_data["birthUbigeo"] = ubi
 
     insert_data["state"] = 1
 

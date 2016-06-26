@@ -1,4 +1,4 @@
-var ProviderFormValidation = function() {
+var MembershipRequestFormValidation = function() {
     // Init Bootstrap Forms Validation, for more examples you can check out https://github.com/jzaefferer/jquery-validation
     var initValidationBootstrap = function(){
         jQuery('.js-validation-bootstrap').validate({
@@ -41,11 +41,65 @@ var ProviderFormValidation = function() {
                         url: url,
                         type: "post",
                         data: {
-                            username: function() {
+                            name: function() {
                                 return $( "#num_doc" ).val();
                             }, 'csrfmiddlewaretoken': CSRF_TOKEN,
                         }
-                    }                           
+                    },
+                    maxlength: {
+                        depends: function (elem) {
+                            if($("#example-select1").val()==1 && ($('#num_doc').val().length == 8)) {
+                                return false;
+                            }else if($("#example-select1").val()==2 && ($('#num_doc').val().length == 12)){
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        }
+                    },                            
+                },
+                'gender':{
+                    required:true
+                },
+                'nationality':{
+                    required:true,
+                    maxlength:20
+                },
+                'workPlace':{
+                    required:true,
+                    maxlength:200
+                },
+                'workPlaceJob':{
+                    required:true,
+                    maxlength:200   
+                },
+                'workPlacePhone':{
+                    required:true,
+                },
+                'maritalStatus':{
+                    required:true,
+                    maxlength:20  
+                },
+                'cellphoneNumber':{
+                    required:true,
+                },
+                'phone':{
+                    required:true,
+                },
+                'specialization':{
+                    required:true,
+                    maxlength:200  
+                },
+                'birthDate' : {
+                    required: true
+                },
+                'birthPlace': {
+                    required: true,
+                    maxlength:200
+                },
+                'email': {
+                    required: true,
+                    maxlength:200
                 },
                 'comments': {
                     required: true,
@@ -56,6 +110,21 @@ var ProviderFormValidation = function() {
                 },
                 'finalDate': {
                     required: true
+                },
+                'address:':{
+                    required:true                    
+                },
+                'birthDepartment':{
+                    required:true
+                },
+                'birthProvince':{
+                    required:true
+                },
+                'birthDistrict':{
+                    required:true
+                },
+                'photo':{
+                    required:true
                 }
             },
             messages: {
@@ -75,7 +144,8 @@ var ProviderFormValidation = function() {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
                     min: 'Por favor ingrese un documento válido' ,
-                    remote: 'Este documento ya esta en uso'                   
+                    remote: 'Este documento ya esta en uso',
+                    maxlength: 'Por favor ingrese un documento válido'                    
                 },
                 'comments': {
                     required: 'Por favor ingrese un comentario',
@@ -86,7 +156,63 @@ var ProviderFormValidation = function() {
                 },
                 'finalDate': {
                     required: 'Por favor ingrese una dirección'
-                }
+                },
+                'nationality':{
+                    required:'Por favor ingrese una nacionalidad',
+                    maxlength:'La nacionalidad debe tener máximo 20 caracteres'
+                },
+                'workPlace':{
+                    required:'Por favor ingrese su centro de trabajo',
+                    maxlength:'El centro de trabajo debe tener máximo 200 caracteres'
+                },
+                'workPlaceJob':{
+                    required:'Por favor ingrese su puesto de trabajo',
+                    maxlength:'El puesto de trabajo debe tener máximo 200 caracteres'
+                },
+                'workPlacePhone':{
+                    required:'Por favor ingrese el teléfono del lugar de trabajo'
+                },
+                'maritalStatus':{
+                    required:'Por favor ingrese un estado civil',
+                    maxlength:'El estado civil debe tener máximo 200 caracteres'  
+                },
+                'cellphoneNumber':{
+                    required:'Por favor ingrese un número celular'
+                },
+                'phone':{
+                    required:'Por favor ingrese un teléfono'
+                },
+                'specialization':{
+                    required:'Por favor ingrese una especialización',
+                    maxlength:'La especialización debe tener máximo 200 caracteres'  
+                },
+                'birthDate' : {
+                    required: 'Por favor ingrese la fecha de nacimiento'
+                },
+                'birthPlace': {
+                    required: 'Por favor ingrese un lugar de nacimiento',
+                    maxlength:'El lugar de nacimiento debe tener máximo 200 caracteres'
+                },
+                'email': {
+                    required: 'Por favor ingrese un mail',
+                    maxlength:'El mail debe tener máxmo 200 caracteres'
+                },
+                'address':{
+                    required:'Por favor ingrese una dirección'
+                },
+                'birthDepartment':{
+                    required:'Por favor ingrese un departamento'
+                },
+                'birthProvince':{
+                    required:'Por favor ingrese una provincia'
+                },
+                'birthDistrict':{
+                    required:'Por favor ingrese un distrito'
+                },
+                'photo':{
+                    required: 'Por favor inrese una foto'
+                }                
+            }
             }
         });
     };
@@ -105,4 +231,4 @@ var ProviderFormValidation = function() {
 }();
 
 // Initialize when page loads
-jQuery(function(){ ProviderFormValidation.init(); });
+jQuery(function(){ MembershipRequestFormValidation.init(); });
