@@ -200,7 +200,7 @@ Editar afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Teléfono de Oficina*</label>
-                                            <div class="col-md-10">
+                                            <input class="col-md-10">
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" value="{{affiliate.workPlacePhone}}" type="text">
                                             </div>
                                         </div>
@@ -237,7 +237,7 @@ Editar afiliado
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthProvince" name="birthProvince" size="1">
-                                                            {% for u in provinces%}
+                                                            {% for u in birthprovinces%}
                                                                 {% if u.province == affiliate.birthUbigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
@@ -253,7 +253,7 @@ Editar afiliado
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthDistrict" name="birthDistrict" size="1">
-                                                       {% for u in districts%}
+                                                       {% for u in birthdistricts%}
                                                             {% if u.district == affiliate.birthUbigeo.district %}
                                                                 <option selected value="{{u.district}}">{{u.district}}</option>
                                                             {% else %}

@@ -331,7 +331,7 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Género*</label>
                                             <div class="col-sm-8">
-                                                  <input type="radio" name="sgender" value="0"> Masculino<br>
+                                                  <input type="radio" checked name="sgender" value="0"> Masculino<br>
                                                   <input type="radio" name="sgender" value="1"> Femenino<br>
                                             </div>
                                         </div>
@@ -371,7 +371,7 @@ Nueva solicitud de membresía
                                         <label class="col-xs-8" for="example-select">Doc. de Identificacion*</label>
                                             <div class="col-lg-12">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="num_doc" name="snum_doc" placeholder="Doc" pattern="[0-9]*" >
+                                                        <input class="form-control" id="snum_doc" name="snum_doc" placeholder="Doc" pattern="[0-9]*" >
                                                     </div>
                                             </div>
                                         </div>
@@ -568,7 +568,7 @@ Nueva solicitud de membresía
         <!-- Page JS Plugins -->
 <script>
 var CSRF_TOKEN = '{{ csrf_token }}';
-var url= "{% url 'membership_application:verify_document_number' %}"
+var url= "{% url "membership_application:verify_document_number" %}"
 
  $(document).ready(function () {
         $('#department').change(function(){
