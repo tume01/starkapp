@@ -19,6 +19,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 #ADMIN
 @login_required
@@ -111,8 +112,6 @@ def create_index(request):
         'doc_types': doc_types,
         'titulo' : 'titulo'
     }
-
-    print(types)
 
     return render(request, 'Admin/Membership/new_membership_request.html', context)
 
@@ -274,7 +273,32 @@ def create_membership_application(request):
 
         insert_data["status"] = 1
 
-        insert_data["photo"] = request.FILES['photo']
+        if 'photo' in request.FILES:
+
+            insert_data["photo"] = request.FILES['photo']
+
+        else:
+
+            membership_type_service = MembershipTypeService()
+
+            identity_doc_type_service = IdentityDocumentTypeService()
+
+            types = membership_type_service.getMembershipTypes()
+
+            doc_types = identity_doc_type_service.getIdentityDocumentTypes()
+
+            ubigeo = ubigeo_service.distinctDepartment()
+
+            context = {
+                'types' : types,
+                'doc_types' : doc_types,
+                'ubigeo' : ubigeo,
+                'titulo': 'titulo'
+            }
+
+            messages.error(request, 'Debe ingresar una foto')
+
+            return render(request, 'Admin/Membership/new_membership_request.html', context)
 
         insert_data["gender"] = request.POST['gender']
 
@@ -332,7 +356,9 @@ def create_membership_application(request):
 
             insert_data["sbirthUbigeo"] = ubi[0]
 
-            insert_data["sphoto"] = request.FILES['sphoto']
+            if 'sphoto' in request.FILES:
+
+                insert_data["sphoto"] = request.FILES['sphoto']
 
             insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
 
@@ -438,7 +464,7 @@ def edit_membership_application(request):
         insert_data["status"] = 1
 
         if 'photo' in request.FILES:
-            print('LUL')
+            
             insert_data["photo"] = request.FILES['photo']
 
         insert_data["gender"] = request.POST['gender']
