@@ -153,7 +153,7 @@ Editar afiliado
                                         <label class="col-xs-12" for="example-number-input">Especialidad*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
-                                                   {% if affiliate.specialization != None %}
+                                                   {% if affiliate.specialization%}
                                                     <input class="form-control" id="example-input1-group1" name="specialization" value="{{affiliate.specialization}}"  type="text">
                                                     {% else %}
                                                     <input class="form-control" id="example-input1-group1" name="specialization" value=''  type="text">
@@ -188,7 +188,7 @@ Editar afiliado
                                         <label class="col-xs-12" for="example-number-input">Centro de Trabajo*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
-                                                   {% if affiliate.workPlace != None %}
+                                                   {% if affiliate.workPlace%}
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" value="{{affiliate.workPlace}}"  type="text">
                                                     {% else %}
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" value=''  type="text">
@@ -201,7 +201,7 @@ Editar afiliado
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Puesto de Trabajo*</label>
                                             <div class="col-md-10">
-                                                {% if affiliate.workPlaceJob != None %}
+                                                {% if affiliate.workPlaceJob%}
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" value="{{affiliate.workPlaceJob}}" type="text">
                                                 {% else %}
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" value='' type="text">
@@ -213,7 +213,7 @@ Editar afiliado
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Teléfono de Oficina*</label>
                                             <div class="col-md-10">
-                                                {% if affiliate.workPlacePhone != None %}
+                                                {% if affiliate.workPlacePhone %}
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" value="{{affiliate.workPlacePhone}}" pattern="[0-9]*">
                                                 {% else %}
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" value=''>
@@ -359,7 +359,7 @@ Editar afiliado
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Telefono Celular*</label>
                                             <div class="col-md-10">
-                                                {% if affiliate.cellphoneNumber != None %}
+                                                {% if affiliate.cellphoneNumber%}
                                                 <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="{{affiliate.cellphoneNumber}}" pattern="[0-9]*">
                                                 {% else %}
                                                 <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="" type="text">
