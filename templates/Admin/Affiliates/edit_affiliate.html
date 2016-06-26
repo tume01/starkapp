@@ -345,9 +345,34 @@ Editar afiliado
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-number-input">Estado Civil</label>
                                             <div class="col-md-10">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="maritalStatus" value="{{affiliate.maritalStatus}}"  type="text">
-                                                </div>
+                                               <select class="form-control" id="example-input1-group1" name="maritalStatus" size="1">       
+                                                        {% if affiliate.maritalStatus == "Casado/a" %}
+                                                            <option selected value="Casado/a">Casado/a</option>
+                                                            <option value="Soltero/a">Soltero/a</option>
+                                                            <option value="Divorciado/a">Divorciado/a</option>
+                                                            <option value="Viudo/a">Viudo/a</option>
+                                                        {% else %}
+                                                            {% if affiliate.maritalStatus == "Soltero/a" %}
+                                                                <option value="Casado/a">Casado/a</option>
+                                                                <option selected value="Soltero/a">Soltero/a</option>
+                                                                <option value="Divorciado/a">Divorciado/a</option>
+                                                                <option value="Viudo/a">Viudo/a</option>
+                                                            {% else %}
+                                                                {% if affiliate.maritalStatus == "Divorciado/a" %}
+                                                                    <option value="Casado/a">Casado/a</option>
+                                                                    <option value="Soltero/a">Soltero/a</option>
+                                                                    <option selected value="Divorciado/a">Divorciado/a</option>
+                                                                    <option value="Viudo/a">Viudo/a</option>
+                                                                {% else %}
+                                                                    <option value="Casado/a">Casado/a</option>
+                                                                    <option value="Soltero/a">Soltero/a</option>
+                                                                    <option value="Divorciado/a">Divorciado/a</option>
+                                                                    <option selected value="Viudo/a">Viudo/a</option> 
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                        
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
