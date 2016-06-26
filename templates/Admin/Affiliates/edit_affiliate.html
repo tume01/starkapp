@@ -39,6 +39,13 @@ Editar afiliado
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:admin_edit" %}' enctype="multipart/form-data" method="post" >
                             {% csrf_token %}
                                 <div class="row">
+                                    <div class="col-lg-8" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">(*) Campos no necesarios.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                 <img src="{{image_url}}{{affiliate.photo}}" class="img-responsive img-event-preview">
                                 <div class="col-sm-3">
                                     <div class="form-group">
@@ -143,7 +150,7 @@ Editar afiliado
                                 <div class="row">
                                     <div class="col-lg-3" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-number-input">Especialidad</label>
+                                        <label class="col-xs-12" for="example-number-input">Especialidad*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="specialization" value="{{affiliate.specialization}}"  type="text">
@@ -174,7 +181,7 @@ Editar afiliado
                                 <div class="row">
                                     <div class="col-lg-3" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-number-input">Centro de Trabajo</label>
+                                        <label class="col-xs-12" for="example-number-input">Centro de Trabajo*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" value="{{affiliate.workPlace}}"  type="text">
@@ -184,7 +191,7 @@ Editar afiliado
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Puesto de Trabajo</label>
+                                            <label class="col-xs-12" for="example-number-input">Puesto de Trabajo*</label>
                                             <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" value="{{affiliate.workPlaceJob}}" type="text">
                                             </div>
@@ -192,7 +199,7 @@ Editar afiliado
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Teléfono de Oficina</label>
+                                            <label class="col-xs-12" for="example-number-input">Teléfono de Oficina*</label>
                                             <div class="col-md-10">
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" value="{{affiliate.workPlacePhone}}" type="text">
                                             </div>
@@ -334,7 +341,7 @@ Editar afiliado
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Telefono Celular</label>
+                                            <label class="col-xs-12" for="example-number-input">Telefono Celular*</label>
                                             <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="{{affiliate.cellphoneNumber}}" type="text">
                                             </div>

@@ -39,6 +39,13 @@ Nuevo afiliado
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:admin_insert" %}' method="post" enctype="multipart/form-data">
 
                             {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-8" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">(*) Campos no necesarios.</label>
+                                        </div>
+                                    </div>
+                                </div>
                              <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group">
@@ -130,7 +137,7 @@ Nuevo afiliado
                                  <div class="row">
                                     <div class="col-lg-3" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-number-input">Especialidad</label>
+                                        <label class="col-xs-12" for="example-number-input">Especialidad*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="specialization" placeholder="Especialidad"  type="text">
@@ -161,7 +168,7 @@ Nuevo afiliado
                                 <div class="row">
                                     <div class="col-lg-3" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Centro de Trabajo</label>
+                                        <label class="col-xs-8" for="example-number-input">Centro de Trabajo*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" placeholder="Lugar donde Trabaja"  type="text">
@@ -171,7 +178,7 @@ Nuevo afiliado
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Puesto de Trabajo</label>
+                                            <label class="col-xs-8" for="example-number-input">Puesto de Trabajo*</label>
                                             <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" placeholder="Puesto" type="text">
                                             </div>
@@ -179,7 +186,7 @@ Nuevo afiliado
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Teléfono de Oficina</label>
+                                            <label class="col-xs-8" for="example-number-input">Teléfono de Oficina*</label>
                                             <div class="col-md-10">
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" placeholder="Telefono" type="text">
                                             </div>
@@ -285,7 +292,7 @@ Nuevo afiliado
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Telefono Celular</label>
+                                            <label class="col-xs-12" for="example-number-input">Telefono Celular*</label>
                                             <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="cellphoneNumber" placeholder="Telefono Celular" type="text">
                                             </div>
