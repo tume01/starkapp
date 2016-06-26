@@ -207,7 +207,7 @@ def edit_member(request):
 
         edit_data["nationality"] = form.cleaned_data['nationality']
 
-        edit_data["martialStatus"] = form.cleaned_data['maritalStatus']
+        edit_data["maritalStatus"] = form.cleaned_data['maritalStatus']
 
         edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
 
