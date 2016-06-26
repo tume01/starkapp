@@ -32,10 +32,26 @@ class MemberForm(forms.Form):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
         return data
 
+    def clean_workPlacePhone(self):
+        data = self.cleaned_data['workPlacePhone']
+        if (data < 999999):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        if (data > 10000000):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        return data
+
     def clean_phone(self):
         data = self.cleaned_data['phone']
-        if (data < 0):
-            raise forms.ValidationError("El Telefono no puede ser negativo")
         if (data < 999999):
-            raise forms.ValidationError("El Telefono tiene que ser como minimo 7 digitos")
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        if (data > 10000000):
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        return data
+
+    def clean_cellphoneNumber(self):
+        data = self.cleaned_data['cellphoneNumber']
+        if (data < 99999999):
+            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
+        if (data > 1000000000):
+            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
         return data
