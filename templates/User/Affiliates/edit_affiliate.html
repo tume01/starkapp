@@ -46,8 +46,8 @@ Editar afiliado
                                     </div>
                                 </div>
                             <div class="row">
-                                <img src="{{image_url}}{{affiliate.photo}}" class="img-responsive img-event-preview">
                                 <div class="col-sm-3">
+                                    <img src="{{ MEDIA_URL }}{{affiliate.photo}}" height="200" width="200" class="img-event-preview">
                                     <div class="form-group">
                                         <label class="col-xs-12" for="photo">Foto</label>
                                         <input type="file" name="photo" class="form-control, col-xs-12" id="photo">
@@ -165,7 +165,7 @@ Editar afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Nacionalidad</label>
-                                            <div class="col-mc-10">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="nationality" value="{{affiliate.nationality}}" type="text">
                                             </div>
                                         </div>
@@ -182,13 +182,13 @@ Editar afiliado
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                 <div class="row">
                                     <div class="col-lg-3" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-number-input">Centro de Trabajo*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
-                                                    {% if affiliate.workPlace%}
+                                                   {% if affiliate.workPlace%}
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" value="{{affiliate.workPlace}}"  type="text">
                                                     {% else %}
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" value=''  type="text">
@@ -199,21 +199,21 @@ Editar afiliado
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Puesto de Trabajo*</label>
+                                            <div class="col-md-10">
                                                 {% if affiliate.workPlaceJob%}
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" value="{{affiliate.workPlaceJob}}" type="text">
                                                 {% else %}
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" value='' type="text">
                                                 {% endif %}
-                                            <div class="col-md-10">
-                                                <input class="form-control" id="example-input2-group1" name="workPlaceJob" value="{{affiliate.workPlaceJob}}" type="text">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Teléfono de Oficina*</label>
-                                            <input class="col-md-10">
-                                              {% if affiliate.workPlacePhone %}
+                                            <div class="col-md-10">
+                                                {% if affiliate.workPlacePhone %}
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" value="{{affiliate.workPlacePhone}}" pattern="[0-9]*">
                                                 {% else %}
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" value=''>
@@ -226,7 +226,7 @@ Editar afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Lugar de Nacimiento</label>
-                                            <div class="col-mc-10">
+                                            <div class="col-sm-8">
                                                 <input class="form-control" id="example-input1-group2" name="birthPlace" value="{{affiliate.birthPlace}}" type="text">
                                             </div>
                                         </div>
@@ -285,7 +285,7 @@ Editar afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Direccion</label>
-                                            <div class="col-md-10">
+                                            <div class="col-sm-8">
                                                 <input class="form-control" id="example-input1-group2" name="address" placeholder="address" value="{{affiliate.address}}" type="text">
                                             </div>
                                         </div>
