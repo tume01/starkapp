@@ -16,6 +16,7 @@ from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
+from datetime import datetime
 import json
 
 
@@ -70,6 +71,8 @@ def edit_member_index(request):
     filter_ubigeo["province"] = member.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+    member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
 
     context = {
         'member' : member,
@@ -151,6 +154,8 @@ def edit_member(request):
         filter_ubigeo["province"] = member.ubigeo.province
 
         districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+        member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
 
         context = {
             'member' : member,

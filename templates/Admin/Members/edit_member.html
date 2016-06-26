@@ -50,7 +50,6 @@ Editar miembro
                                     <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Género</label>
                                         <div class="col-sm-8">
-                                            <form action="">
                                                 {% if member.gender == 0 %}
                                                     <input type="radio" name="gender" checked value="0"> Masculino<br>
                                                     <input type="radio" name="gender" value="1"> Femenino<br>
@@ -58,7 +57,6 @@ Editar miembro
                                                     <input type="radio" name="gender" value="0"> Masculino<br>
                                                     <input type="radio" name="gender" checked value="1"> Femenino<br>
                                                 {% endif %}
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -216,7 +214,7 @@ Editar miembro
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
                                             <div class="col-sm-12">
-                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                                <div class="input-daterange input-group"  data-date-format="dd/mm/yyyy">
                                                     <input class="form-control" type="text" id="example-daterange1" name="birthDate"  value="{{member.birthDate}}">
                                                 </div>
                                             </div>
@@ -249,7 +247,7 @@ Editar miembro
                                                     <select class="form-control" id="birthDepartment" name="birthDepartment" size="1">
                                                             <option value="">Seleccione</option>
                                                             {% for u in departments%}
-                                                                {% if u.department == member_application.birthUbigeo.department %}
+                                                                {% if u.department == member.birthUbigeo.department %}
                                                                 <option selected value="{{u.department}}">{{u.department}}</option>
                                                                 {% else %}
                                                                 <option value="{{u.department}}">{{u.department}}</option>
@@ -265,7 +263,7 @@ Editar miembro
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthProvince" name="birthProvince" size="1">
                                                             {% for u in provinces%}
-                                                                {% if u.province == member_application.birthUbigeo.province %}
+                                                                {% if u.province == member.birthUbigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
                                                                     <option value="{{u.province}}">{{u.province}}</option>
@@ -308,7 +306,7 @@ Editar miembro
                                                     <select class="form-control" id="department" name="addressDepartment" size="1">
                                                             <option value="">Seleccione</option>
                                                             {% for u in departments%}
-                                                                {% if u.department == member_application.ubigeo.department %}
+                                                                {% if u.department == member.ubigeo.department %}
                                                                 <option selected value="{{u.department}}">{{u.department}}</option>
                                                                 {% else %}
                                                                 <option value="{{u.department}}">{{u.department}}</option>
@@ -324,7 +322,7 @@ Editar miembro
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="province" name="addressProvince" size="1">
                                                             {% for u in provinces%}
-                                                                {% if u.province == member_application.ubigeo.province %}
+                                                                {% if u.province == member.ubigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
                                                                     <option value="{{u.province}}">{{u.province}}</option>

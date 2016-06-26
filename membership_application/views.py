@@ -140,6 +140,8 @@ def edit_index(request):
 
     membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%m/%d/%Y')
 
+    membership_application.birthDate = datetime.strftime(membership_application.birthDate, '%m/%d/%Y')
+
     ubigeo_service = UbigeoService()
 
     departments = ubigeo_service.distinctDepartment()
