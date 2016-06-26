@@ -44,15 +44,15 @@ Nueva membresía
                                     <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Género</label>
                                         <div class="col-sm-8">
-                                            <form action="">
-                                                % if membership_application.gender == 0 %}
+
+                                                {% if membership_application.gender == 0 %}
                                                     <input type="radio" readonly=readonly name="gender" checked value="0"> Masculino<br>
                                                     <input type="radio" readonly=readonly name="gender" value="1"> Femenino<br>
                                                 {% else %}
                                                     <input type="radio" readonly=readonly name="gender" value="0"> Masculino<br>
                                                     <input type="radio" readonly=readonly name="gender" checked value="1"> Femenino<br>
                                                 {% endif %}
-                                            </form>
+
                                         </div>
                                     </div>
                                 </div>
@@ -365,15 +365,13 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Género</label>
                                             <div class="col-sm-8">
-                                                <form action="">
-                                                  % if membership_application.sgender == 0 %}
+                                                  {% if membership_application.sgender == 0 %}
                                                         <input type="radio" readonly="readonly" name="sgender" checked value="0"> Masculino<br>
                                                         <input type="radio" readonly="readonly" name="sgender" value="1"> Femenino<br>
                                                     {% else %}
                                                         <input type="radio" readonly="readonly" name="sgender" value="0"> Masculino<br>
                                                         <input type="radio" readonly="readonly" name="sgender" checked value="1"> Femenino<br>
                                                     {% endif %}
-                                                </form>
                                             </div>
                                         </div>
                                     </div>

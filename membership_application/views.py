@@ -294,7 +294,7 @@ def create_membership_application(request):
 
         insert_data["snationality"] = form.cleaned_data['snationality']
 
-        insert_data["sbirthDate"] = request.POST['sbirthDate']
+        insert_data["sbirthDate"] = form.cleaned_data['sbirthDate']
 
         insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
 
