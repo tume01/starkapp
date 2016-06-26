@@ -29,7 +29,7 @@ Checkout
             {% endif %}
             {% csrf_token %}
             <div class="block-content">
-                <p style="font-size: 18px"><strong>DETALLE DE COMPRA</strong></p>
+                <p style="font-size: 18px"><strong>DETALLE DEL PAGO</strong></p>
                 <div class="block block-bordered">
                     <div class="block-content">
                         <div class="row">
@@ -40,39 +40,41 @@ Checkout
                                             <th style="width: 10%">Cantidad</th>
                                             <th style="width: 50%">Producto</th>
                                             <th style="width: 20%">Precio Unitario (S/.)</th>
-                                            <th style="width: 20%">Valor de Venta</th>
+                                            <th style="width: 20%">Precio Total (S/.)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="text-right">2</td>
-                                            <td>Bungalows Seccion 120</td>
-                                            <td class="text-right">100.00</td>
-                                            <td class="text-right">200.00</td>
-                                        </tr>
+                                        {% for product in products %}
+                                            <tr>
+                                                <td class="text-right">{{product.quantity}}</td>
+                                                <td>{{product.description}}</td>
+                                                <td class="text-right">{{product.unit_price}}</td>
+                                                <td class="text-right">{{product.total}}</td>
+                                            </tr>
+                                        {% endfor %}
                                         <tr class="text-right">
                                             <td class="invisible"></td>
                                             <td class="invisible"></td>
                                             <td><strong>Subtotal</strong></td>
-                                            <td>145.00</td>
+                                            <td>{{subtotal}}</td>
                                         </tr>
                                         <tr class="text-right">
                                             <td class="invisible"></td>
                                             <td class="invisible"></td>
                                             <td><strong>Descuentos</strong></td>
-                                            <td>145.00</td>
+                                            <td>{{discount}}</td>
                                         </tr>
                                         <tr class="text-right">
                                             <td class="invisible"></td>
                                             <td class="invisible"></td>
                                             <td><strong>IGV 18%</strong></td>
-                                            <td>55.00</td>
+                                            <td>{{igv_total}}</td>
                                         </tr>
                                         <tr class="text-right">
                                             <td class="invisible"></td>
                                             <td class="invisible"></td>
                                             <td><strong>Total a pagar (S/.)</strong></td>
-                                            <td>200.00</td>
+                                            <td>{{total}}</td>
                                         </tr>
                                     </tbody>
                                 </table>                           
@@ -81,6 +83,7 @@ Checkout
                     </div>
                 </div>
             </div>
+            {% if total %}
             <div class="block-content">
                 <p style="font-size: 18px"><strong>COMPROBANTE DE PAGO</strong></p>
                 <div class="block block-bordered">
@@ -197,6 +200,7 @@ Checkout
                     </div>
                 </div>
             </div>
+            {% endif %}
         </form>
     </div>
 </div>

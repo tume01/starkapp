@@ -22,6 +22,28 @@ class PaymentService(object):
         '5': EventsService.get
     }
 
+    finish_products = {
+        '1': FineService.get,
+        '2': MembershipService.get,
+        #'3': registerEvent,
+        '4': BungalowReservationService.findReservation,
+        '5': EventsService.get
+    }
+
+    @classmethod
+    def registerEvent(cls, member, events):
+        event_service = EventsService()
+        guests = cls.getCartProducts(5, member)
+        for event in events:
+            print('eventos')
+            guest_amount = 0
+            for guest in guests:
+                if guest.product_id == event.product_id:
+                    guest_amount += guest.quantity
+            guests.update(status=1)  
+            event_service.registerMember(event.product_id, member, guest_amount)
+        return True
+
     @classmethod
     def create(cls, insert_data):
         return cls.__paymentDocument_repository.create(insert_data)
@@ -69,6 +91,8 @@ class PaymentService(object):
 
         if cls.__ticket_repository.create(insert_data):
 
+            if products.first().product_type == 3:
+                cls.registerEvent(member, products)
             return products.update(status=1)
 
         return False
@@ -85,6 +109,12 @@ class PaymentService(object):
     @classmethod
     def createEventProduct(cls, member, guests, event):
 
+        assistants = event.eventregistration_set.filter(deleted_at=None).count()
+
+        if not event.assistance > assistants:
+            return None
+
+        
         if guests:
             insert_data = {
                 'description': 'Ticket Invitado Evento:' + event.name,
@@ -163,7 +193,8 @@ class PaymentService(object):
     @classmethod
     def getCartProducts(cls, product_type, member):
 
-        filters = {'member': member}
+        filters = {'member': member, 'status': 0}
+
         if product_type:
             filters['product_type'] = product_type
 
@@ -173,13 +204,16 @@ class PaymentService(object):
     def payProducts(cls, payment_document_type, product_type, member, ruc, addres, social_reson):
 
         filters = {'status': 0}
-
         if product_type:
             filters['product_type'] = product_type
+            if product_type == '3':
+                guests = cls.getCartProducts(5, member)
 
         products = member.cartproduct_set.filter(**filters)
-
+        finish_products = member.cartproduct_set.filter(**filters)
         if payment_document_type == 'ticket':
             return cls.payTicket(products, member)
-
+ 
         return cls.payInvoice(products, member, ruc, addres, social_reson)
+            
+        
