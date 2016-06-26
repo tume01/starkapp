@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand
 from bungalow_reservation.models import BungalowReservation
+from bungalow_service.models import Bungalow_service
 from members.models import Member
 import datetime
 
@@ -29,6 +30,7 @@ def insertBungalowReservation():
     asignRandomBungalow(br1)
     asignRandomMember(br1)
     br1.save()
+
 
     br1 = BungalowReservation()
     br1.arrival_date = datetime.date.today() + datetime.timedelta(days=25)
