@@ -20,3 +20,6 @@ class MembershipTypeService(object):
 
     def getType(self, id):
         return self.__membership_type_repository.find(id)
+
+    def filter(self, filters):
+        return self.__membership_type_repository.filter(filters)

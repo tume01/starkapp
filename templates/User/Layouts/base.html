@@ -22,6 +22,8 @@
     <link rel="stylesheet" href='{% static "assets/js/plugins/slick/slick.min.css" %}'>
     <link rel="stylesheet" href='{% static "assets/js/plugins/slick/slick-theme.min.css" %}'>
     <link rel="stylesheet" href='{% static "assets/js/plugins/datatables/jquery.dataTables.min.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/js/plugins/sweetalert/sweetalert.css" %}'>
+    
 
     <!-- Bootstrap and OneUI CSS framework -->
     <link rel="stylesheet" href='{% static "assets/css/bootstrap.min.css" %}'>
@@ -323,7 +325,7 @@
         <div class="content bg-image overflow-hidden" style="background-image: url('{% static "assets/img/photos/photo3@2x.jpg" %}');">
             <div class="push-50-t push-15">
                 <h1 class="h2 text-white animated zoomIn">Dashboard</h1>
-                <h2 class="h5 text-white-op animated zoomIn">Bienvenido Miembro</h2>
+                <h2 class="h5 text-white-op animated zoomIn">Bienvenido {{ user.first_name }} {{ user.last_name }}</h2>
             </div>
         </div>
 
@@ -404,6 +406,7 @@
         <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/sweetalert/sweetalert.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>

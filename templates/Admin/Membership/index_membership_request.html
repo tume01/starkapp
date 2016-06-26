@@ -143,8 +143,8 @@ Lista de solicitudes de membresía
                                             <td class="font-w600">{{membershipApp.firstName}}</td>
                                             <td class="font-w600">{{membershipApp.paternalLastName}}</td>
                                             <td class="font-w600">{{membershipApp.maternalLastName}}</td>
-                                            <td class="font-w600">{{membershipApp.initialDate}}</td>
-                                            <td class="font-w600">{{membershipApp.finalDate}}</td>
+                                            <td class="font-w600">{{membershipApp.initialDate|date:"d-m-Y"}}</td>
+                                            <td class="font-w600">{{membershipApp.finalDate|date:"d-m-Y"}}</td>
                                             <td class="font-w600">{{membershipApp.comments}}</td>
                                             <td class="text-center">
                                             {% if membershipApp.status == 1 %}

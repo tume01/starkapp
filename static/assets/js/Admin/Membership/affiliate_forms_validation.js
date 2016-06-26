@@ -37,7 +37,6 @@ var AffiliateFormValidation = function() {
                 'num_doc': {
                     required: true,   
                     number: true, 
-                    min: 1,
                     remote: {
                         url: url,
                         type: "post",
@@ -49,7 +48,19 @@ var AffiliateFormValidation = function() {
                                 return $( "#id_member" ).val();
                             }
                         }
-                    }                           
+                    },
+                    maxlength: {
+                        depends: function (elem) {
+                            if($("#example-select").val()==1 && ($('#num_doc').val().length == 8)) {
+                                return false;
+                            }else if($("#example-select").val()==2 && ($('#num_doc').val().length == 12)){
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        }
+                    }, 
+                    min: 1,                        
                 },                              
                 'address': {
                     required: true,
@@ -93,7 +104,8 @@ var AffiliateFormValidation = function() {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
                     remote: 'Este documento ya esta en uso',
-                    min: 'Por favor ingrese un documento válido' ,                
+                    min: 'Por favor ingrese un documento válido' ,    
+                    maxlength: 'Por favor ingrese un documento válido'             
                 },              
                 'address': {
                     required: 'Por favor ingrese una dirección',
