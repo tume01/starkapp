@@ -205,6 +205,38 @@ def create_affiliate(request):
 
         create_data["ubigeo"] = ubi[0]
 
+        create_data["photo"] = request.FILES['photo']
+
+        create_data["gender"] = request.POST['gender']
+
+        create_data["workPlace"] = form.cleaned_data['workPlace']
+
+        create_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        create_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        create_data["nationality"] = form.cleaned_data['nationality']
+
+        create_data["martialStatus"] = form.cleaned_data['maritalStatus']
+
+        create_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        create_data["specialization"] = form.cleaned_data['specialization']
+
+        create_data["birthDate"] = form.cleaned_data['birthDate']
+
+        create_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        create_data["birthUbigeo"] = ubi[0]
+
         affiliate_service = AffiliateService()
 
         affiliate_service.create(create_data)
@@ -376,6 +408,39 @@ def edit_affiliate(request):
         ubi = ubigeo_service.filter(filter_ubigeo)
 
         edit_data["ubigeo"] = ubi[0]
+
+        if request.FILES['photo']:
+            edit_data["photo"] = request.FILES['photo']
+
+        edit_data["gender"] = request.POST['gender']
+
+        edit_data["workPlace"] = form.cleaned_data['workPlace']
+
+        edit_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        edit_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        edit_data["nationality"] = form.cleaned_data['nationality']
+
+        edit_data["martialStatus"] = form.cleaned_data['maritalStatus']
+
+        edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        edit_data["specialization"] = form.cleaned_data['specialization']
+
+        edit_data["birthDate"] = form.cleaned_data['birthDate']
+
+        edit_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        edit_data["birthUbigeo"] = ubi[0]
 
         affiliate_service = AffiliateService()
 
@@ -601,6 +666,38 @@ def admin_create_affiliate(request):
 
         create_data["ubigeo"] = ubi[0]
 
+        create_data["photo"] = request.FILES['photo']
+
+        create_data["gender"] = request.POST['gender']
+
+        create_data["workPlace"] = form.cleaned_data['workPlace']
+
+        create_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        create_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        create_data["nationality"] = form.cleaned_data['nationality']
+
+        create_data["martialStatus"] = form.cleaned_data['maritalStatus']
+
+        create_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        create_data["specialization"] = form.cleaned_data['specialization']
+
+        create_data["birthDate"] = form.cleaned_data['birthDate']
+
+        create_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        create_data["birthUbigeo"] = ubi[0]
+
         affiliate_service = AffiliateService()
 
         affiliate_service.create(create_data)
@@ -778,6 +875,39 @@ def admin_edit_affiliate(request):
         ubi = ubigeo_service.filter(filter_ubigeo)
 
         edit_data["ubigeo"] = ubi[0]
+
+        if request.FILES['photo']:
+            edit_data["photo"] = request.FILES['photo']
+
+        edit_data["gender"] = request.POST['gender']
+
+        edit_data["workPlace"] = form.cleaned_data['workPlace']
+
+        edit_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        edit_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        edit_data["nationality"] = form.cleaned_data['nationality']
+
+        edit_data["martialStatus"] = form.cleaned_data['maritalStatus']
+
+        edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        edit_data["specialization"] = form.cleaned_data['specialization']
+
+        edit_data["birthDate"] = form.cleaned_data['birthDate']
+
+        edit_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        edit_data["birthUbigeo"] = ubi[0]
 
         affiliate_service = AffiliateService()
 
@@ -968,6 +1098,34 @@ def admin_move_affiliate(request):
     insert_data["address"] = affiliate.address
 
     insert_data["email"] = affiliate.email
+
+    insert_data["photo"] = affiliate.photo
+
+    insert_data["gender"] = affiliate.gender
+
+    insert_data["workPlace"] = affiliate.workPlace
+
+    insert_data["workPlaceJob"] = affiliate.workPlaceJob
+
+    insert_data["workPlacePhone"] = affiliate.workPlacePhone
+
+    insert_data["nationality"] = affiliate.nationality
+
+    insert_data["martialStatus"] = affiliate.maritalStatus
+
+    insert_data["cellphoneNumber"] = affiliate.cellphoneNumber
+
+    insert_data["specialization"] = affiliate.specialization
+
+    insert_data["birthDate"] = affiliate.birthDate
+
+    insert_data["birthPlace"] = affiliate.birthPlace
+
+    ubigeo_service = UbigeoService()
+
+    ubi = ubigeo_service.getUbigeoById(affiliate.birthUbigeo.id)
+
+    insert_data["birthUbigeo"] = ubi
 
     insert_data["state"] = 1
 
