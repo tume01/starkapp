@@ -127,7 +127,7 @@ var MemberFormValidation = function() {
                     required:true
                 },
                 'photo':{
-                    required:true
+                    required:false
                 }
             },
             messages: {
