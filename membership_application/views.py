@@ -278,7 +278,7 @@ def create_membership_application(request):
 
         insert_data["phone"] = form.cleaned_data['phone']
 
-        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['sparentLastName'] != '':
+        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '':
 
             insert_data["sidentity_document_type_id"] = sidentity_document_id
 

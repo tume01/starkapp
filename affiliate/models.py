@@ -32,6 +32,5 @@ class Affiliate(models.Model):
     workPlace = models.TextField(max_length=200, blank=True, null=True)
     workPlaceJob = models.TextField(max_length=200, blank=True, null=True)
     workPlacePhone = models.IntegerField(blank=True, null=True)
-    birthUbigeo = models.ForeignKey(y.Ubigeo, related_name='affiliate_birth_ubigeo', on_delete=models.CASCADE)
     maritalStatus = models.TextField(max_length=20)
-    cellphoneNumber = models.IntegerField()
+    cellphoneNumber = models.IntegerField(blank=True, null=True)

@@ -19,8 +19,8 @@ class MemberForm(forms.Form):
     nationality = forms.CharField(max_length=20, error_messages={'required': 'El campo Nacionalidad es requerido', 'max_length': 'El campo Nacionalidad no debe superar los 20 caracteres'})
     maritalStatus = forms.CharField(max_length=20, error_messages={'required': 'El campo Estado civil es requerido', 'max_length': 'El campo Estado civil no debe superar los 20 caracteres'})
     cellphoneNumber = forms.IntegerField(error_messages={'required': 'El campo Teléfono Celular es requerido'})
-    specialization = forms.CharField(max_length=200, required=False, error_messages={'max_length': 'El campo Especialización no debe superar los 200 caracteres'})
-    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'})
+    specialization = forms.CharField(max_length=200, error_messages={'max_length': 'El campo Especialización no debe superar los 200 caracteres'})
+    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'}, input_formats=['%d/%m/%Y'])
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
 
 
