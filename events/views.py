@@ -14,7 +14,7 @@ from .forms import EventForm
 import datetime
 from services.MemberService import MembersService
 from django.conf import settings
-
+from services.PaymentService import PaymentService
 
 @require_http_methods(['GET'])
 def index(request):
@@ -377,6 +377,6 @@ def checkoutEvent(request, event_id):
 
     event =environment_service.getEvent(event_id)
 
-    checkout_products = payment_service.createCheckoutProducts(products,member)
+    PaymentService.createEventProduct(member, guests, event)
 
-    return HttpResponseRedirect(reverse('payments:checkout_preview'))
+    return HttpResponseRedirect(reverse('checkout:index') + '?product_type=' + 3)

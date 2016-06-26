@@ -51,3 +51,6 @@ class EventsService(object):
 
         return event.eventregistration_set.filter(deleted_at=None)
 
+    @classmethod
+    def get(cls, id):
+        return self.__event_repository.find(id)
