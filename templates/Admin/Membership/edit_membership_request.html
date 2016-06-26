@@ -58,7 +58,6 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Género</label>
                                             <div class="col-sm-8">
-                                                <form action="">
                                                     {% if membership_application.gender == 0 %}
                                                         <input type="radio" name="gender" checked value="0"> Masculino<br>
                                                         <input type="radio" name="gender" value="1"> Femenino<br>
@@ -67,7 +66,6 @@ Nueva solicitud de membresía
                                                         <input type="radio" name="gender" value="0"> Masculino<br>
                                                         <input type="radio" name="gender" checked value="1"> Femenino<br>
                                                     {% endif %}
-                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -212,7 +210,7 @@ Nueva solicitud de membresía
                                             <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
                                             <div class="col-sm-12">
                                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="birthDate"  value="{{membership_application.birthDate}}">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="birthDate"  value="{{membership_application.birthDate|date:"d/m/Y"}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -243,11 +241,11 @@ Nueva solicitud de membresía
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthDepartment" name="birthDepartment" size="1">
                                                             <option value="">Seleccione</option>
-                                                            {% for u in departments%}
-                                                                {% if u.department == member_application.birthUbigeo.department %}
-                                                                <option selected value="{{u.department}}">{{u.department}}</option>
+                                                            {% for x in departments%}
+                                                                {% if u.department == membership_application.birthUbigeo.department %}
+                                                                <option selected value="{{x.department}}">{{x.department}}</option>
                                                                 {% else %}
-                                                                <option value="{{u.department}}">{{u.department}}</option>
+                                                                <option value="{{x.department}}">{{x.department}}</option>
                                                                 {% endif %}
                                                             {% endfor %}
                                                     </select>
@@ -259,11 +257,11 @@ Nueva solicitud de membresía
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthProvince" name="birthProvince" size="1">
-                                                            {% for u in provinces%}
-                                                                {% if u.province == member_application.birthUbigeo.province %}
-                                                                    <option selected value="{{u.province}}">{{u.province}}</option>
+                                                            {% for x in provinces%}
+                                                                {% if x.province == membership_application.birthUbigeo.province %}
+                                                                    <option selected value="{{x.province}}">{{x.province}}</option>
                                                                 {% else %}
-                                                                    <option value="{{u.province}}">{{u.province}}</option>
+                                                                    <option value="{{x.province}}">{{x.province}}</option>
                                                                 {% endif %}
                                                             {% endfor %}
                                                     </select>
@@ -275,11 +273,11 @@ Nueva solicitud de membresía
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthDistrict" name="birthDistrict" size="1">
-                                                       {% for u in districts%}
-                                                            {% if u.district == membership_application.birthUbigeo.district %}
-                                                                <option selected value="{{u.district}}">{{u.district}}</option>
+                                                       {% for x in districts%}
+                                                            {% if x.district == membership_application.birthUbigeo.district %}
+                                                                <option selected value="{{x.district}}">{{x.district}}</option>
                                                             {% else %}
-                                                                <option value="{{u.district}}">{{u.district}}</option>
+                                                                <option value="{{x.district}}">{{x.district}}</option>
                                                             {% endif %}
                                                         {% endfor %}
                                                     </select>
@@ -303,7 +301,7 @@ Nueva solicitud de membresía
                                                     <select class="form-control" id="department" name="addressDepartment" size="1">
                                                             <option value="">Seleccione</option>
                                                             {% for u in departments%}
-                                                                {% if u.department == member_application.ubigeo.department %}
+                                                                {% if u.department == membership_application.ubigeo.department %}
                                                                 <option selected value="{{u.department}}">{{u.department}}</option>
                                                                 {% else %}
                                                                 <option value="{{u.department}}">{{u.department}}</option>
@@ -319,7 +317,7 @@ Nueva solicitud de membresía
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="province" name="addressProvince" size="1">
                                                             {% for u in provinces%}
-                                                                {% if u.province == member_application.ubigeo.province %}
+                                                                {% if u.province == membership_application.ubigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
                                                                     <option value="{{u.province}}">{{u.province}}</option>
@@ -367,8 +365,6 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Género</label>
                                             <div class="col-sm-8">
-                                                <form action="">
-
                                                    {% if membership_application.sgender == 0 %}
                                                         <input type="radio" name="sgender" checked value="0"> Masculino<br>
                                                         <input type="radio" name="sgender" value="1"> Femenino<br>
@@ -381,7 +377,6 @@ Nueva solicitud de membresía
                                                             <input type="radio" name="sgender" value="1"> Femenino<br>
                                                         {% endif %}
                                                     {% endif %}
-                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -468,7 +463,7 @@ Nueva solicitud de membresía
                                             <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
                                             <div class="col-sm-12">
                                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="sbirthDate" value="{{membership_application.sbirthDate}}">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="sbirthDate" value="{{membership_application.sbirthDate|date:"d/m/Y"}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -527,7 +522,7 @@ Nueva solicitud de membresía
                                                     <select class="form-control" id="sbirthDepartment" name="sbirthDepartment" size="1">
                                                             <option value="">Seleccione</option>
                                                             {% for u in departments%}
-                                                                {% if u.department == member_application.sbirthUbigeo.department %}
+                                                                {% if u.department == membership_application.sbirthUbigeo.department %}
                                                                 <option selected value="{{u.department}}">{{u.department}}</option>
                                                                 {% else %}
                                                                 <option value="{{u.department}}">{{u.department}}</option>
@@ -543,7 +538,7 @@ Nueva solicitud de membresía
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthProvince" name="sbirthProvince" size="1">
                                                             {% for u in provinces%}
-                                                                {% if u.province == member_application.sbirthUbigeo.province %}
+                                                                {% if u.province == membership_application.sbirthUbigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
                                                                     <option value="{{u.province}}">{{u.province}}</option>
@@ -596,10 +591,10 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-daterange1">Rango de fechas para objeciones</label>
                                             <div class="col-md-8">
-                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" value="{{membership_application.initialDate}}">
+                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" value="{{membership_application.initialDate|date:"d/m/Y"}}">
                                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" value="{{membership_application.finalDate}}">
+                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" value="{{membership_application.finalDate|date:"d/m/Y"}}">
                                                 </div>
                                             </div>
                                         </div>
