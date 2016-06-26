@@ -13,9 +13,10 @@ class MembershipApplicationForm(forms.Form):
     paternalLastName = forms.CharField(max_length=20, validators=[alphabetic], error_messages={'required': 'El campo Apellido paterno es requerido', 'max_length': 'El campo Apellido paterno debe tener una longitud maxima de 20 caracteres'})
     maternalLastName = forms.CharField(max_length=20, validators=[alphabetic], error_messages={'required': 'El campo Apellido materno es requerido', 'max_length': 'El campo Apellido materno debe tener una longitud maxima de 20 caracteres'})
     num_doc = forms.IntegerField(error_messages={'required': 'El campo Numero de Documento es requerido'})
+    initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'}, input_formats=['%d/%m/%Y'])
+    finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'}, input_formats=['%d/%m/%Y'])
     comments = forms.CharField(max_length=200, error_messages={'required': 'El campo Comentarios es requerido', 'max_length': 'El campo Comentarios debe tener una longitud maxima de 200 caracteres'})
-    initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'}, input_formats=['%m/%d/%Y'])
-    finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'}, input_formats=['%m/%d/%Y'])
+
     address = forms.CharField(max_length=200, error_messages={'required': 'El campo Direccion es requerido', 'max_length': 'El campo Direccion no debe superar los 200 caracteres'})
     workPlace= forms.CharField(max_length=200, error_messages={'required': 'El campo Centro de trabajo es requerido', 'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
     workPlaceJob= forms.CharField(max_length=200, error_messages={'required': 'El campo Puesto de trabajo es requerido', 'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
@@ -24,13 +25,15 @@ class MembershipApplicationForm(forms.Form):
     maritalStatus = forms.CharField(max_length=20, error_messages={'required': 'El campo Estado civil es requerido', 'max_length': 'El campo Estado civil no debe superar los 20 caracteres'})
     cellphoneNumber = forms.IntegerField(error_messages={'required': 'El campo Teléfono Celular es requerido'})
     specialization = forms.CharField(max_length=200, error_messages={'required': 'El campo Especialización es requerido', 'max_length': 'El campo Especialización no debe superar los 200 caracteres'})
-    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'}, input_formats=['%m/%d/%Y'])
+
+    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'}, input_formats=['%d/%m/%Y'])
+
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
     email = forms.CharField(max_length=200, error_messages={'required': 'El campo Correo es requerido', 'max_length': 'El campo Correo no debe superar los 200 caracteres'})
     phone = forms.IntegerField(error_messages={'required': 'El campo Numero de telefono es requerido'})
 
-    snum_doc = forms.IntegerField(required=False)
-    sbirthDate = forms.DateField(required=False, input_formats=['%m/%d/%Y'])
+    snum_doc = forms.IntegerField( required=False)
+    sbirthDate = forms.DateField( required=False, input_formats=['%d/%m/%Y'])
     sfirstName = forms.CharField(max_length=20, required=False, validators=[alphabetic], error_messages={'max_length': 'El campo Nombres debe tener una longitud maxima de 20 caracteres'})
     spaternalLastName = forms.CharField(max_length=20,required=False, validators=[alphabetic], error_messages={'max_length': 'El campo Apellido paterno debe tener una longitud maxima de 20 caracteres'})
     smaternalLastName = forms.CharField(max_length=20, required=False, validators=[alphabetic], error_messages={'max_length': 'El campo Apellido materno debe tener una longitud maxima de 20 caracteres'})

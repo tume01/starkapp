@@ -211,7 +211,7 @@ Nueva membresía
                                             <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
                                             <div class="col-sm-12">
                                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="birthDate"  readonly="readonly" value="{{membership_application.birthDate}}">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="birthDate"  readonly="readonly" value="{{membership_application.birthDate|date:"d/m/Y"}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -241,14 +241,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" readonly="readonly" id="birthDepartment" name="birthDepartment" size="1">
-                                                            <option value="">Seleccione</option>
-                                                            {% for u in departments%}
-                                                                {% if u.department == member_application.birthUbigeo.department %}
-                                                                <option selected value="{{u.department}}">{{u.department}}</option>
-                                                                {% else %}
-                                                                <option value="{{u.department}}">{{u.department}}</option>
-                                                                {% endif %}
-                                                            {% endfor %}
+                                                        <option selected value="{{membership_application.birthUbigeo.department}}">{{membership_application.birthUbigeo.department}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -258,13 +251,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" readonly="readonly" id="birthProvince" name="birthProvince" size="1">
-                                                            {% for u in provinces%}
-                                                                {% if u.province == member_application.birthUbigeo.province %}
-                                                                    <option selected value="{{u.province}}">{{u.province}}</option>
-                                                                {% else %}
-                                                                    <option value="{{u.province}}">{{u.province}}</option>
-                                                                {% endif %}
-                                                            {% endfor %}
+                                                        <option selected value="{{membership_application.birthUbigeo.province}}">{{membership_application.birthUbigeo.province}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -274,13 +261,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" readonly="readonly" id="birthDistrict" name="birthDistrict" size="1">
-                                                       {% for u in districts%}
-                                                            {% if u.district == membership_application.birthUbigeo.district %}
-                                                                <option selected value="{{u.district}}">{{u.district}}</option>
-                                                            {% else %}
-                                                                <option value="{{u.district}}">{{u.district}}</option>
-                                                            {% endif %}
-                                                        {% endfor %}
+                                                        <option selected value="{{membership_application.birthUbigeo.district}}">{{membership_application.birthUbigeo.district}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -292,7 +273,7 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input2">Direccion</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input1-group2" readonly=readonly  value="{{membership_application.address}}" placeholder="Direccion" type="text">
+                                                <input class="form-control" id="example-input1-group2" readonly=readonly  value="{{membership_application.address}}" placeholder="Direccion" name='address' type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -301,14 +282,8 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" readonly="readonly" id="department" name="department" size="1">
-                                                            <option value="">Seleccione</option>
-                                                            {% for u in departments%}
-                                                                {% if u.department == member_application.ubigeo.department %}
-                                                                <option selected value="{{u.department}}">{{u.department}}</option>
-                                                                {% else %}
-                                                                <option value="{{u.department}}">{{u.department}}</option>
-                                                                {% endif %}
-                                                            {% endfor %}
+                                                        <option value="{{membership_application.ubigeo.department}}">{{membership_application.ubigeo.department }}</option>
+                                                              
                                                     </select>
                                                 </div>
                                             </div>
@@ -318,13 +293,8 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" readonly="readonly" id="province" name="province" size="1">
-                                                            {% for u in provinces%}
-                                                                {% if u.province == member_application.ubigeo.province %}
-                                                                    <option selected value="{{u.province}}">{{u.province}}</option>
-                                                                {% else %}
-                                                                    <option value="{{u.province}}">{{u.province}}</option>
-                                                                {% endif %}
-                                                            {% endfor %}
+                                                        <option selected value="{{membership_application.ubigeo.province}}">{{membership_application.ubigeo.province}}</option>
+
                                                     </select>
                                                 </div>
                                             </div>
@@ -334,13 +304,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" readonly="readonly" id="district" name="district" size="1">
-                                                       {% for u in districts%}
-                                                            {% if u.district == membership_application.ubigeo.district %}
-                                                                <option selected value="{{u.district}}">{{u.district}}</option>
-                                                            {% else %}
-                                                                <option value="{{u.district}}">{{u.district}}</option>
-                                                            {% endif %}
-                                                        {% endfor %}
+                                                        <option selected value="{{membership_application.ubigeo.district}}">{{membership_application.ubigeo.district}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -410,7 +374,7 @@ Nueva membresía
                                         <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
                                             <div class="col-lg-12">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="num_doc" name="snum_doc" readonly="readonly" value="{{membership_application.sidentity_number}}" pattern="[0-9]*" >
+                                                        <input class="form-control" id="num_doc" name="snum_doc" readonly="readonly" value="{{membership_application.sdocument_number}}" >
                                                     </div>
                                             </div>
                                         </div>
@@ -458,7 +422,7 @@ Nueva membresía
                                             <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
                                             <div class="col-sm-12">
                                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                                    <input class="form-control" type="text" readonly="readonly" id="example-daterange1" name="sbirthDate" value="{{membership_application.sbirthDate}}">
+                                                    <input class="form-control" type="text" readonly="readonly" id="example-daterange1" name="sbirthDate" value="{{membership_application.sbirthDate|date:"d/m/Y"}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -488,7 +452,7 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Puesto de Trabajo</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input2-group1" name="sworkPlaceJob" value="{{membership_application.sworkPlaceJob}}" type="text">
+                                                <input class="form-control" id="example-input2-group1" readonly="readonly" name="sworkPlaceJob" value="{{membership_application.sworkPlaceJob}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -496,7 +460,7 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Teléfono de Oficina</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input3-group1" name="sworkPlacePhone" value="{{membership_application.sworkPlacePhone}}" type="text">
+                                                <input class="form-control" id="example-input3-group1" readonly="readonly" name="sworkPlacePhone" value="{{membership_application.sworkPlacePhone}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -515,14 +479,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthDepartment" readonly="readonly" name="sbirthDepartment" size="1">
-                                                            <option value="">Seleccione</option>
-                                                            {% for u in departments%}
-                                                                {% if u.department == member_application.sbirthUbigeo.department %}
-                                                                <option selected value="{{u.department}}">{{u.department}}</option>
-                                                                {% else %}
-                                                                <option value="{{u.department}}">{{u.department}}</option>
-                                                                {% endif %}
-                                                            {% endfor %}
+                                                            <option selected value="{{membership_application.sbirthUbigeo.department}}">{{membership_application.sbirthUbigeo.department}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -532,13 +489,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthProvince" readonly="readonly" name="sbirthProvince" size="1">
-                                                            {% for u in provinces%}
-                                                                {% if u.province == member_application.sbirthUbigeo.province %}
-                                                                    <option selected value="{{u.province}}">{{u.province}}</option>
-                                                                {% else %}
-                                                                    <option value="{{u.province}}">{{u.province}}</option>
-                                                                {% endif %}
-                                                            {% endfor %}
+                                                        <option selected value="{{membership_application.sbirthUbigeo.province}}">{{membership_application.sbirthUbigeo.province}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -548,13 +499,7 @@ Nueva membresía
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthDistrict" readonly="readonly" name="sbirthDistrict" size="1">
-                                                       {% for u in districts%}
-                                                            {% if u.district == membership_application.sbirthUbigeo.district %}
-                                                                <option selected value="{{u.district}}">{{u.district}}</option>
-                                                            {% else %}
-                                                                <option value="{{u.district}}">{{u.district}}</option>
-                                                            {% endif %}
-                                                        {% endfor %}
+                                                        <option selected value="{{membership_application.sbirthUbigeo.district}}">{{membership_application.sbirthUbigeo.district}}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -566,7 +511,7 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-daterange1">Duración de la membresía</label>
                                             <div class="col-md-10">
-                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
                                                     <input class="form-control" type="text" id="example-daterange1" name="initialDate" placeholder="Desde">
                                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
                                                     <input class="form-control" type="text" id="example-daterange2" name="finalDate" placeholder="hasta">
@@ -598,49 +543,8 @@ Nueva membresía
 <script>
 
     $(document).ready(function () {
-        $('#department').change(function(){
-        var department = $('#department :selected').text();
-        {
-            $.ajax({
-                type:'post',
-                url:'{% url "ubigeo:provincias" %}',
-                data:{department:department, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                cache:false,
-                success: function(returndata){ 
-                    $('#province').empty();
-                    $('#province').append($('<option>', { text : 'Seleccione', value : ''}));
-                    $('#district').empty();
-                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
-                    $.each(returndata, function(i, item) {
-                        $('#province').append($('<option>', { 
-                            text : item.province 
-                        }));
-                    });
-                }
-            });
-        }
-        });
 
-        $('#province').change(function(){
-        var province = $('#province :selected').text();
-        {
-            $.ajax({
-                type:'post',
-                url:'{% url "ubigeo:distritos" %}',
-                data:{province:province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
-                cache:false,
-                success: function(returndata){ 
-                    $('#district').empty();
-                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
-                    $.each(returndata, function(i, item) {
-                        $('#district').append($('<option>', { 
-                            text : item.district 
-                        }));
-                    });
-                }
-            });
-        }
-        });
+
         
     });
 </script>

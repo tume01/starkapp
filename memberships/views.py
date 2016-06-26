@@ -224,8 +224,7 @@ def create_membership(request):
     membershipApplicationId = request.POST['id']
 
     if (not FormValidator.validateForm(form,request)
-        and not FormValidator.validateForm(form2,request)
-        and not FormValidator.validateForm(form3, request)):
+        and not FormValidator.validateForm(form2,request)):
 
         #Datos del membresia
 
@@ -303,7 +302,7 @@ def create_membership(request):
 
         insert_data["ubigeo"] = ubi[0]
 
-        insert_data["photo"] = request.FILES['photo']
+        #insert_data["photo"] = request.FILES['photo']
 
         insert_data["gender"] = request.POST['gender']
 
@@ -315,7 +314,7 @@ def create_membership(request):
 
         insert_data["nationality"] = form2.cleaned_data['nationality']
 
-        insert_data["martialStatus"] = form2.cleaned_data['maritalStatus']
+        insert_data["maritalStatus"] = form2.cleaned_data['maritalStatus']
 
         insert_data["cellphoneNumber"] = form2.cleaned_data['cellphoneNumber']
 
@@ -341,9 +340,9 @@ def create_membership(request):
 
         #En caso se halla registrado un conyuge se agrega como afiliado
 
-        spouseName = form3.cleaned_data['sfirstName']
+        spouseName = request.POST['sfirstName']
 
-        if spouseName != '':
+        if spouseName != 'None':
 
             insert_affiliate = {}
 
@@ -351,13 +350,13 @@ def create_membership(request):
 
             insert_affiliate["name"] = spouseName
 
-            insert_affiliate["identity_document_type_id"] = request.POST['sidentity_document_id']
+            insert_affiliate["identity_document_type_id"] = request.POST['sidentity_document_type']
 
-            insert_affiliate["paternalLastName"] = form.cleaned_data['spaternalLastName']
+            insert_affiliate["paternalLastName"] = request.POST['spaternalLastName']
 
-            insert_affiliate["maternalLastName"] = form.cleaned_data['smaternalLastName']
+            insert_affiliate["maternalLastName"] =  request.POST['smaternalLastName']
 
-            insert_affiliate["document_number"] = form.cleaned_data['snum_doc']
+            insert_affiliate["document_number"] =  request.POST['snum_doc']
 
             insert_affiliate["phone"] = form2.cleaned_data['phone']
 
@@ -365,13 +364,13 @@ def create_membership(request):
 
             insert_affiliate["gender"] = request.POST['sgender']
 
-            insert_affiliate["specialization"] = form.cleaned_data['sspecialization']
+            insert_affiliate["specialization"] = request.POST['sspecialization']
 
-            insert_affiliate["nationality"] = form.cleaned_data['snationality']
+            insert_affiliate["nationality"] =  request.POST['snationality']
 
-            insert_affiliate["birthDate"] = request.POST['sbirthDate']
+            insert_affiliate["birthDate"] = datetime.strptime(request.POST['sbirthDate'], '%d/%m/%Y')
 
-            insert_affiliate["birthPlace"] = form.cleaned_data['sbirthPlace']
+            insert_affiliate["birthPlace"] =  request.POST['sbirthPlace']
 
             insert_affiliate['maritalStatus'] = 'casado'
 
@@ -383,17 +382,17 @@ def create_membership(request):
 
             ubi = ubigeo_service.filter(filter_ubigeo)
 
-            insert_affiliate["birthUbigeo"] = ubi[0]
+            insert_affiliate["ubigeo"] = ubi[0]
 
-            insert_affiliate["photo"] = request.FILES['sphoto']
+            #insert_affiliate["photo"] = request.FILES['sphoto']
 
-            insert_affiliate["workPlace"] = form.cleaned_data['sworkPlace']
+            insert_affiliate["workPlace"] =  request.POST['sworkPlace']
 
-            insert_affiliate["workPlaceJob"] = form.cleaned_data['sworkPlaceJob']
+            insert_affiliate["workPlaceJob"] =  request.POST['sworkPlaceJob']
 
             insert_affiliate["workPlacePhone"] = request.POST['sworkPlacePhone']
 
-            insert_affiliate["email"] = form.cleaned_data['semail']
+            insert_affiliate["email"] =  request.POST['semail']
 
             insert_affiliate["state"] = 1
 
