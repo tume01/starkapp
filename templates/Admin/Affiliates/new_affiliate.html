@@ -49,10 +49,8 @@ Nuevo afiliado
                                     <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Género</label>
                                         <div class="col-sm-8">
-                                            <form action="">
-                                              <input type="radio" name="gender" value="0"> Masculino<br>
+                                              <input type="radio" checked name="gender" value="0"> Masculino<br>
                                               <input type="radio" name="gender" value="1"> Femenino<br>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -68,7 +66,7 @@ Nuevo afiliado
                                     <div class="col-lg-3" >                                        
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-number-input">Nombres</label>
-                                            <div class="col-md-12">
+                                            <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombres"  value=""  type="text">
                                                 </div>
@@ -78,7 +76,7 @@ Nuevo afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Apellido paterno</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="" type="text">
                                             </div>
                                         </div>
@@ -86,7 +84,7 @@ Nuevo afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Apellido materno</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input3-group1" name="maternalLastName" placeholder="Apellido materno" value="" type="text">
                                             </div>
                                         </div>
@@ -96,7 +94,7 @@ Nuevo afiliado
                                     <div class="col-lg-3" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
-                                                <div class="col-lg-12">
+                                                <div class="col-md-10">
                                                    <div class="input-group">
                                                         <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="" pattern="[0-9]*" >
                                                     </div>
@@ -106,7 +104,7 @@ Nuevo afiliado
                                     <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-12"  for="example-select">Tipo</label>
-                                                <div class="col-sm-9">
+                                                <div class="col-md-10">
                                                     <select class="form-control" id="example-select" name="identity_document_type" size="1">
                                                          {% for doc_type in doc_types %}
                                                             <option value="{{doc_type.id}}">{{doc_type.name}}</option>
@@ -118,7 +116,7 @@ Nuevo afiliado
                                     <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-12"  for="example-select">Parentesco</label>
-                                                <div class="col-sm-9">
+                                                <div class="col-md-10">
                                                     <select class="form-control" id="example-select" name="relationship" size="1">
                                                          {% for relationship in relationships %}
                                                             <option value="{{relationship.id}}">{{relationship.description}}</option>
@@ -129,73 +127,74 @@ Nuevo afiliado
                                     </div>
                                 </div>
                                  <div class="row">
-                                    <div class="col-lg-4" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Especialidad</label>
-                                            <div class="col-sm-12">
+                                        <label class="col-xs-12" for="example-number-input">Especialidad</label>
+                                            <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="specialization" placeholder="Especialidad"  type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-4">
+                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Nacionalidad</label>
-                                            <div class="col-sm-8">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="nationality" placeholder="nacionalidad" type="text">
                                             </div>
                                         </div>
-                                </div>
-                                <div class="col-lg-6">
+                                    </div>
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
-                                            <div class="col-sm-12">
+                                            <div class="col-md-10">
                                                 <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
                                                     <input class="form-control" type="text" id="example-daterange1" name="birthDate" placeholder="Fecha de Nacimiento">
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                 </div>
+
                                 <div class="row">
-                                    <div class="col-lg-4" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Centro de Trabajo</label>
-                                            <div class="col-sm-12">
+                                            <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" placeholder="Lugar donde Trabaja"  type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Puesto de Trabajo</label>
-                                            <div class="col-sm-8">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" placeholder="Puesto" type="text">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Teléfono de Oficina</label>
-                                            <div class="col-sm-8">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" placeholder="Telefono" type="text">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-xs-12" for="example-number-input2">Lugar de Nacimiento</label>
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input1-group2" name="birthPlace" placeholder="Lugar de Nacimiento" type="text">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
@@ -208,7 +207,7 @@ Nuevo afiliado
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
@@ -218,7 +217,7 @@ Nuevo afiliado
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
@@ -230,15 +229,15 @@ Nuevo afiliado
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Direccion</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input1-group2" name="address" placeholder="Direccion" value="" type="text">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
@@ -251,7 +250,7 @@ Nuevo afiliado
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
@@ -261,7 +260,7 @@ Nuevo afiliado
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
@@ -273,20 +272,20 @@ Nuevo afiliado
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-lg-4" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Estado Civil</label>
-                                            <div class="col-sm-12">
+                                        <label class="col-xs-12" for="example-number-input">Estado Civil</label>
+                                            <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="maritalStatus" placeholder="Estado Civil"  type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Telefono Celular</label>
-                                            <div class="col-sm-8">
+                                            <label class="col-xs-12" for="example-number-input">Telefono Celular</label>
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="cellphoneNumber" placeholder="Telefono Celular" type="text">
                                             </div>
                                         </div>
@@ -296,7 +295,7 @@ Nuevo afiliado
                                     <div class="col-lg-3" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Teléfono</label>
-                                            <div class="col-md-12">
+                                            <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-number1-group2" name="phone" placeholder="Teléfono" pattern="[0-9]*" >
                                                 </div>
@@ -306,7 +305,7 @@ Nuevo afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Correo</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input1-group3" name="email" placeholder="Correo" type="text">
                                             </div>
                                         </div>

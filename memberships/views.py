@@ -314,7 +314,7 @@ def create_membership(request):
 
         insert_data["nationality"] = form2.cleaned_data['nationality']
 
-        insert_data["martialStatus"] = form2.cleaned_data['maritalStatus']
+        insert_data["maritalStatus"] = form2.cleaned_data['maritalStatus']
 
         insert_data["cellphoneNumber"] = form2.cleaned_data['cellphoneNumber']
 
