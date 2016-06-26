@@ -36,7 +36,7 @@ Nueva solicitud de membresía
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:edit" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                                 <div class="row">
                                       <input type="hidden" class="form-control" id="example-input1-group1" name="id" value="{{membership_application.id}}"  type="text">
