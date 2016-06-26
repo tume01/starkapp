@@ -36,7 +36,7 @@ Editar miembro
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "members:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "members:edit" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="row">
                                 <img src="{{image_url}}{{member.photo}}" class="img-responsive img-event-preview">

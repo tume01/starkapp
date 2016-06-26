@@ -36,7 +36,7 @@ Nuevo afiliado
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:admin_insert" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:admin_insert" %}' enctype="multipart/form-data" method="post" >
                             {% csrf_token %}
                              <div class="row">
                                 <div class="col-sm-3">
