@@ -219,7 +219,6 @@ def create_membership(request):
 
     form = MembershipForm(request.POST)
     form2 = mForms.MemberForm(request.POST)
-    form3 = apForms.MembershipApplicationForm(request.POST)
 
     membershipApplicationId = request.POST['id']
 
@@ -374,6 +373,16 @@ def create_membership(request):
 
             insert_affiliate['maritalStatus'] = 'casado'
 
+            filter_ubigeo["department"] = request.POST['department']
+
+            filter_ubigeo["province"] = request.POST['province']
+
+            filter_ubigeo["district"] = request.POST['district']
+
+            ubi = ubigeo_service.filter(filter_ubigeo)
+
+            insert_affiliate["ubigeo"] = ubi[0]
+
             filter_ubigeo["department"] = request.POST['sbirthDepartment']
 
             filter_ubigeo["province"] = request.POST['sbirthProvince']
@@ -382,7 +391,7 @@ def create_membership(request):
 
             ubi = ubigeo_service.filter(filter_ubigeo)
 
-            insert_affiliate["ubigeo"] = ubi[0]
+            insert_affiliate["birthUbigeo"] = ubi[0]
 
             #insert_affiliate["photo"] = request.FILES['sphoto']
 
