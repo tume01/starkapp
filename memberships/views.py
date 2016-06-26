@@ -301,7 +301,7 @@ def create_membership(request):
 
         insert_data["ubigeo"] = ubi[0]
 
-        #insert_data["photo"] = request.FILES['photo']
+        insert_data["photo"] = request.POST['photo']
 
         insert_data["gender"] = request.POST['gender']
 
@@ -393,7 +393,7 @@ def create_membership(request):
 
             insert_affiliate["birthUbigeo"] = ubi[0]
 
-            #insert_affiliate["photo"] = request.FILES['sphoto']
+            insert_affiliate["photo"] = request.POST['sphoto']
 
             insert_affiliate["workPlace"] =  request.POST['sworkPlace']
 

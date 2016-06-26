@@ -39,8 +39,8 @@ Editar miembro
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "members:edit" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="row">
-                                <img src="{{image_url}}{{member.photo}}" class="img-responsive img-event-preview">
                                 <div class="col-sm-3">
+                                    <img src="{{ MEDIA_URL }}{{member.photo}}" height="200" width="200" class="img-event-preview">
                                     <div class="form-group">
                                         <label class="col-xs-12" for="photo">Foto</label>
                                         <input type="file" name="photo" class="form-control, col-xs-12" id="photo">
