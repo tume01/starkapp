@@ -205,7 +205,30 @@ def create_affiliate(request):
 
         create_data["ubigeo"] = ubi[0]
 
-        create_data["photo"] = request.FILES['photo']
+        if 'photo' in request.FILES:
+
+            create_data["photo"] = request.FILES['photo']
+
+        else:
+
+            member_service = MembersService()
+
+            member = member_service.getMember(id_member)
+
+            filter_affiliate = {}
+
+            filter_affiliate["member"] = member
+
+            filter_affiliate["state"] = 1
+
+            affiliates = affiliate_service.filter(filter_affiliate)
+
+            context = {
+                'member' : member,
+                'affiliates' : affiliates
+            }
+
+            return render(request, 'User/Affiliates/index_affiliates.html', context)
 
         create_data["gender"] = request.POST['gender']
 
@@ -450,6 +473,7 @@ def edit_affiliate(request):
         edit_data["ubigeo"] = ubi[0]
 
         if 'photo' in request.FILES:
+            
             edit_data["photo"] = request.FILES['photo']
 
         edit_data["gender"] = request.POST['gender']
@@ -706,7 +730,33 @@ def admin_create_affiliate(request):
 
         create_data["ubigeo"] = ubi[0]
 
-        create_data["photo"] = request.FILES['photo']
+        if 'photo' in request.FILES:
+
+            create_data["photo"] = request.FILES['photo']
+
+        else:
+
+            member_service = MembersService()
+
+            member = member_service.getMember(id_member)
+
+            filter_affiliate = {}
+
+            filter_affiliate["member"] = member
+
+            filter_affiliate["state"] = 1
+
+            affiliates = affiliate_service.filter(filter_affiliate)
+
+            isSuspended = isMemberSuspended(member)
+
+            context = {
+                'member' : member,
+                'affiliates' : affiliates,
+                'isSuspended' : isSuspended
+            }
+
+            return render(request, 'Admin/Affiliates/index_affiliates.html', context)
 
         create_data["gender"] = request.POST['gender']
 
