@@ -122,6 +122,9 @@ var MembershipRequestFormValidation = function() {
                 },
                 'birthDistrict':{
                     required:true
+                },
+                'photo':{
+                    required:true
                 }
             },
             messages: {
@@ -205,7 +208,11 @@ var MembershipRequestFormValidation = function() {
                 },
                 'birthDistrict':{
                     required:'Por favor ingrese un distrito'
-                }
+                },
+                'photo':{
+                    required: 'Por favor inrese una foto'
+                }                
+            }
             }
         });
     };

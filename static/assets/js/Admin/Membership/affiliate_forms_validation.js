@@ -130,6 +130,9 @@ var AffiliateFormValidation = function() {
                 },
                 'birthDistrict':{
                     required:true
+                },
+                'photo':{
+                    required:true
                 }
             },
             messages: {
@@ -217,7 +220,12 @@ var AffiliateFormValidation = function() {
                 },
                 'cellphoneNumber':{
                     required:'Por favor ingrese un número celular'
-                }           
+                },
+                'photo':{
+                    required: 'Por favor inrese una foto'
+                }                
+            }
+
             }
         });
     };
