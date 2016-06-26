@@ -18,3 +18,6 @@ class RelationshipService(object):
 
 	def getRelationship(self, id):
 		return self.__relationship_repository.find(id)
+
+	def filter(self, filters):
+		return self.__relationship_repository.filter(filters)

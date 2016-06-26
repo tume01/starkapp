@@ -94,15 +94,20 @@ def create_index(request):
 
     membership_type_service = MembershipTypeService()
 
+    ubigeo_service = UbigeoService()
+
     identity_document_type_service = IdentityDocumentTypeService()
 
     types = membership_type_service.getMembershipTypes()
 
     doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
+    ubigeo = ubigeo_service.distinctDepartment()
+
     context = {
 
         'types' : types,
+        'ubigeo' : ubigeo,
         'doc_types': doc_types,
         'titulo' : 'titulo'
     }
@@ -135,9 +140,28 @@ def edit_index(request):
 
     membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%m/%d/%Y')
 
+    ubigeo_service = UbigeoService()
+
+    departments = ubigeo_service.distinctDepartment()
+
+    filter_ubigeo = {}
+
+    filter_ubigeo["department"] = membership_application.ubigeo.department
+
+    provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+    filter_ubigeo = {}
+
+    filter_ubigeo["province"] = membership_application.ubigeo.province
+
+    districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
     context = {
         'types' : types,
         'doc_types' : doc_types,
+        'departments': departments,
+        'provinces': provinces,
+        'districts': districts,
         'membership_application' : membership_application,
     }
 
@@ -168,15 +192,19 @@ def delete_membership_application(request):
 @require_http_methods(['POST'])
 def create_membership_application(request):
 
+    ubigeo_service = UbigeoService()
+
     membership_id = request.POST['membership_type']
 
     identity_document_id = request.POST['identity_document_type']
 
+    sidentity_document_id = request.POST['sidentity_document_type']
+
     form = MembershipApplicationForm(request.POST)
 
-    request = FormValidator.validateForm(form, request)
+    request2 = FormValidator.validateForm(form, request)
 
-    if not request:
+    if not request2:
 
         insert_data = {}
 
@@ -198,7 +226,97 @@ def create_membership_application(request):
 
         insert_data["finalDate"] = form.cleaned_data['finalDate']
 
+        insert_data['address'] = form.cleaned_data['address']
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = request.POST['addressDepartment']
+
+        filter_ubigeo["province"] = request.POST['addressProvince']
+
+        filter_ubigeo["district"] = request.POST['addressDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["ubigeo"] = ubi[0]
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["birthUbigeo"] = ubi[0]
+
         insert_data["status"] = 1
+
+        insert_data["photo"] = request.FILES['photo']
+
+        insert_data["gender"] = request.POST['gender']
+
+        insert_data["workPlace"] = form.cleaned_data['workPlace']
+
+        insert_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        insert_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        insert_data["nationality"] = form.cleaned_data['nationality']
+
+        insert_data["martialStatus"] = form.cleaned_data['maritalStatus']
+
+        insert_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        insert_data["specialization"] = form.cleaned_data['specialization']
+
+        insert_data["birthDate"] = form.cleaned_data['birthDate']
+
+        insert_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        insert_data["email"] = form.cleaned_data['email']
+
+        insert_data["phone"] = form.cleaned_data['phone']
+
+        insert_data["sidentity_document_type_id"] = sidentity_document_id
+
+        insert_data["sfirstName"] = form.cleaned_data['sfirstName']
+
+        insert_data["spaternalLastName"] = form.cleaned_data['spaternalLastName']
+
+        insert_data["smaternalLastName"] = form.cleaned_data['smaternalLastName']
+
+        insert_data["sdocument_number"] = form.cleaned_data['snum_doc']
+
+        insert_data["sgender"] = request.POST['sgender']
+
+        insert_data["sspecialization"] = form.cleaned_data['sspecialization']
+
+        insert_data["snationality"] = form.cleaned_data['snationality']
+
+        insert_data["sbirthDate"] = form.cleaned_data['sbirthDate']
+
+        insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
+
+        filter_ubigeo["department"] = request.POST['sbirthDepartment']
+
+        filter_ubigeo["province"] = request.POST['sbirthProvince']
+
+        filter_ubigeo["district"] = request.POST['sbirthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["sbirthUbigeo"] = ubi[0]
+
+        insert_data["sphoto"] = request.FILES['sphoto']
+
+        insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
+
+        insert_data["sworkPlaceJob"] = form.cleaned_data['sworkPlaceJob']
+
+        insert_data["sworkPlacePhone"] = request.POST['sworkPlacePhone']
+
+        insert_data["semail"] = form.cleaned_data['semail']
 
         member_application_service = Membership_ApplicationService()
 
@@ -215,13 +333,16 @@ def create_membership_application(request):
 
         doc_types = identity_doc_type_service.getIdentityDocumentTypes()
 
+        ubigeo = ubigeo_service.distinctDepartment()
+
         context = {
             'types' : types,
             'doc_types' : doc_types,
+            'ubigeo' : ubigeo,
             'titulo': 'titulo'
         }
 
-        return render(request, 'Admin/Membership/new_membership_request.html', context)
+        return render(request2, 'Admin/Membership/new_membership_request.html', context)
 
 
 
@@ -229,6 +350,10 @@ def create_membership_application(request):
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_membership_application(request):
+
+    sidentity_document_id = request.POST['sidentity_document_type']
+
+    ubigeo_service = UbigeoService()
 
     form = MembershipApplicationForm(request.POST)
 
@@ -238,9 +363,9 @@ def edit_membership_application(request):
 
     identity_document_id = request.POST['identity_document_type']
 
-    request = FormValidator.validateForm(form, request)    
+    request2 = FormValidator.validateForm(form, request)
 
-    if not request:
+    if not request2:
 
         insert_data = {}
 
@@ -262,9 +387,102 @@ def edit_membership_application(request):
 
         insert_data["finalDate"] = form.cleaned_data['finalDate']
 
+        insert_data['address'] = form.cleaned_data['address']
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = request.POST['addressDepartment']
+
+        filter_ubigeo["province"] = request.POST['addressProvince']
+
+        filter_ubigeo["district"] = request.POST['addressDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["ubigeo"] = ubi[0]
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["birthUbigeo"] = ubi[0]
+
+        insert_data["status"] = 1
+
+        if request.FILES['photo']:
+            insert_data["photo"] = request.FILES['photo']
+
+        insert_data["gender"] = request.POST['gender']
+
+        insert_data["workPlace"] = form.cleaned_data['workPlace']
+
+        insert_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        insert_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        insert_data["nationality"] = form.cleaned_data['nationality']
+
+        insert_data["martialStatus"] = form.cleaned_data['maritalStatus']
+
+        insert_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        insert_data["specialization"] = form.cleaned_data['specialization']
+
+        insert_data["birthDate"] = form.cleaned_data['birthDate']
+
+        insert_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        insert_data["email"] = form.cleaned_data['email']
+
+        insert_data["phone"] = form.cleaned_data['phone']
+
+        insert_data["sidentity_document_type_id"] = sidentity_document_id
+
+        insert_data["sfirstName"] = form.cleaned_data['sfirstName']
+
+        insert_data["spaternalLastName"] = form.cleaned_data['spaternalLastName']
+
+        insert_data["smaternalLastName"] = form.cleaned_data['smaternalLastName']
+
+        insert_data["sdocument_number"] = form.cleaned_data['snum_doc']
+
+        insert_data["sgender"] = request.POST['sgender']
+
+        insert_data["sspecialization"] = form.cleaned_data['sspecialization']
+
+        insert_data["snationality"] = form.cleaned_data['snationality']
+
+        insert_data["sbirthDate"] = request.POST['sbirthDate']
+
+        insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
+
+        filter_ubigeo["department"] = request.POST['sbirthDepartment']
+
+        filter_ubigeo["province"] = request.POST['sbirthProvince']
+
+        filter_ubigeo["district"] = request.POST['sbirthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["sbirthUbigeo"] = ubi[0]
+
+        insert_data["sphoto"] = request.FILES['sphoto']
+
+        insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
+
+        insert_data["sworkPlaceJob"] = form.cleaned_data['sworkPlaceJob']
+
+        insert_data["sworkPlacePhone"] = request.POST['sworkPlacePhone']
+
+        insert_data["semail"] = form.cleaned_data['semail']
+
         member_application_service = Membership_ApplicationService()
 
-        member_application_service.update(id_application, insert_data)
+        member_application_service.create(insert_data)
 
         return HttpResponseRedirect(reverse('membership_application:index'))
 
@@ -285,13 +503,32 @@ def edit_membership_application(request):
 
         membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%m/%d/%Y')
 
+        ubigeo_service = UbigeoService()
+
+        departments = ubigeo_service.distinctDepartment()
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = membership_application.ubigeo.department
+
+        provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["province"] = membership_application.ubigeo.province
+
+        districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
         context = {
             'types': types,
             'doc_types': doc_types,
+            'departments': departments,
+            'provinces': provinces,
+            'districts': districts,
             'membership_application': membership_application,
         }
 
-        return render(request, 'Admin/Membership/edit_membership_request.html', context)
+        return render(request2, 'Admin/Membership/edit_membership_request.html', context)
 
 
 #USUARIO

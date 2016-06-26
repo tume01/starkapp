@@ -41,7 +41,7 @@ var ProviderFormValidation = function() {
                         url: url,
                         type: "post",
                         data: {
-                            username: function() {
+                            name: function() {
                                 return $( "#num_doc" ).val();
                             }, 'csrfmiddlewaretoken': CSRF_TOKEN,
                         }

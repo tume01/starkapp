@@ -12,12 +12,15 @@ from services.SuspensionService import SuspensionService
 from services.ObjectionService import ObjectionsService
 from services.UbigeoService import UbigeoService
 from services.MemberService import MembersService
+from services.RelationshipService import RelationshipService
+from services.AffiliateService import AffiliateService
 from django.contrib.auth.models import User, Group
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
 from adapters.FormValidator import FormValidator
 from .forms import MembershipTypeForm
 from .forms import MembershipForm
+from membership_application import forms as apForms
 from members import forms as mForms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
@@ -216,11 +219,13 @@ def create_membership(request):
 
     form = MembershipForm(request.POST)
     form2 = mForms.MemberForm(request.POST)
+    form3 = apForms.MembershipApplicationForm(request.POST)
 
     membershipApplicationId = request.POST['id']
 
     if (not FormValidator.validateForm(form,request)
-        and not FormValidator.validateForm(form2,request)):
+        and not FormValidator.validateForm(form2,request)
+        and not FormValidator.validateForm(form3, request)):
 
         #Datos del membresia
 
@@ -298,9 +303,113 @@ def create_membership(request):
 
         insert_data["ubigeo"] = ubi[0]
 
+        insert_data["photo"] = request.FILES['photo']
+
+        insert_data["gender"] = request.POST['gender']
+
+        insert_data["workPlace"] = form2.cleaned_data['workPlace']
+
+        insert_data["workPlaceJob"] = form2.cleaned_data['workPlaceJob']
+
+        insert_data["workPlacePhone"] = form2.cleaned_data['workPlacePhone']
+
+        insert_data["nationality"] = form2.cleaned_data['nationality']
+
+        insert_data["martialStatus"] = form2.cleaned_data['maritalStatus']
+
+        insert_data["cellphoneNumber"] = form2.cleaned_data['cellphoneNumber']
+
+        insert_data["specialization"] = form2.cleaned_data['specialization']
+
+        insert_data["birthDate"] = form2.cleaned_data['birthDate']
+
+        insert_data["birthPlace"] = form2.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["birthUbigeo"] = ubi[0]
+
         member_service = MembersService()
 
-        member_service.create(insert_data)
+        newmember = member_service.create(insert_data)
+
+        #En caso se halla registrado un conyuge se agrega como afiliado
+
+        spouseName = form3.cleaned_data['sfirstName']
+
+        if spouseName != '':
+
+            insert_affiliate = {}
+
+            insert_affiliate["member"] = newmember
+
+            insert_affiliate["name"] = spouseName
+
+            insert_affiliate["identity_document_type_id"] = request.POST['sidentity_document_id']
+
+            insert_affiliate["paternalLastName"] = form.cleaned_data['spaternalLastName']
+
+            insert_affiliate["maternalLastName"] = form.cleaned_data['smaternalLastName']
+
+            insert_affiliate["document_number"] = form.cleaned_data['snum_doc']
+
+            insert_affiliate["phone"] = form2.cleaned_data['phone']
+
+            insert_affiliate["address"] = form2.cleaned_data['address']
+
+            insert_affiliate["gender"] = request.POST['sgender']
+
+            insert_affiliate["specialization"] = form.cleaned_data['sspecialization']
+
+            insert_affiliate["nationality"] = form.cleaned_data['snationality']
+
+            insert_affiliate["birthDate"] = request.POST['sbirthDate']
+
+            insert_affiliate["birthPlace"] = form.cleaned_data['sbirthPlace']
+
+            insert_affiliate['maritalStatus'] = 'casado'
+
+            filter_ubigeo["department"] = request.POST['sbirthDepartment']
+
+            filter_ubigeo["province"] = request.POST['sbirthProvince']
+
+            filter_ubigeo["district"] = request.POST['sbirthDistrict']
+
+            ubi = ubigeo_service.filter(filter_ubigeo)
+
+            insert_affiliate["birthUbigeo"] = ubi[0]
+
+            insert_affiliate["photo"] = request.FILES['sphoto']
+
+            insert_affiliate["workPlace"] = form.cleaned_data['sworkPlace']
+
+            insert_affiliate["workPlaceJob"] = form.cleaned_data['sworkPlaceJob']
+
+            insert_affiliate["workPlacePhone"] = request.POST['sworkPlacePhone']
+
+            insert_affiliate["email"] = form.cleaned_data['semail']
+
+            insert_affiliate["state"] = 1
+
+            relationship_service = RelationshipService()
+
+            filter_relationship = {}
+
+            filter_relationship['description'] = 'Cónyuge'
+
+            relationships = relationship_service.filter(filter_relationship)
+
+            insert_affiliate['relationship'] = relationships[0]
+
+            affiliate_service = AffiliateService()
+
+            affiliate_service.create(insert_affiliate)
 
         #Elimino solicitud (se pone como aceptada)
 

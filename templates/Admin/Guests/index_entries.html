@@ -158,7 +158,20 @@ Lista de entradas
 {% block scripts %}
 
     <script>
+
+    var insert = {{entry_inserted|yesno:"true,false"}}
+
     $(document).ready(function () {
+
+          if(insert){
+            swal({
+                title: "Ingreso registrado",
+                text: "Se ha registrado el ingreso exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }
         $('.eliminar').click(function (e) {
            var id = $(this).attr("data-id")          
             $('#hid1').val(id)
