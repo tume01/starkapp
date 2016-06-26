@@ -153,7 +153,11 @@ Editar afiliado
                                         <label class="col-xs-12" for="example-number-input">Especialidad*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
+                                                   {% if affiliate.specialization != None %}
                                                     <input class="form-control" id="example-input1-group1" name="specialization" value="{{affiliate.specialization}}"  type="text">
+                                                    {% else %}
+                                                    <input class="form-control" id="example-input1-group1" name="specialization" value=''  type="text">
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -184,7 +188,11 @@ Editar afiliado
                                         <label class="col-xs-12" for="example-number-input">Centro de Trabajo*</label>
                                             <div class="col-md-10">
                                                <div class="input-group">
+                                                   {% if affiliate.workPlace != None %}
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" value="{{affiliate.workPlace}}"  type="text">
+                                                    {% else %}
+                                                    <input class="form-control" id="example-input1-group1" name="workPlace" value=''  type="text">
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>
@@ -193,7 +201,11 @@ Editar afiliado
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Puesto de Trabajo*</label>
                                             <div class="col-md-10">
+                                                {% if affiliate.workPlaceJob != None %}
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" value="{{affiliate.workPlaceJob}}" type="text">
+                                                {% else %}
+                                                <input class="form-control" id="example-input2-group1" name="workPlaceJob" value='' type="text">
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -201,7 +213,11 @@ Editar afiliado
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Teléfono de Oficina*</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" id="example-input3-group1" name="workPlacePhone" value="{{affiliate.workPlacePhone}}" type="text">
+                                                {% if affiliate.workPlacePhone != None %}
+                                                <input class="form-control" id="example-input3-group1" name="workPlacePhone" value="{{affiliate.workPlacePhone}}" pattern="[0-9]*">
+                                                {% else %}
+                                                <input class="form-control" id="example-input3-group1" name="workPlacePhone" value=''>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -237,7 +253,7 @@ Editar afiliado
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthProvince" name="birthProvince" size="1">
-                                                            {% for u in provinces%}
+                                                            {% for u in birthprovinces%}
                                                                 {% if u.province == affiliate.birthUbigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
@@ -253,7 +269,7 @@ Editar afiliado
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthDistrict" name="birthDistrict" size="1">
-                                                       {% for u in districts%}
+                                                       {% for u in birthdistricts%}
                                                             {% if u.district == affiliate.birthUbigeo.district %}
                                                                 <option selected value="{{u.district}}">{{u.district}}</option>
                                                             {% else %}
@@ -343,7 +359,11 @@ Editar afiliado
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Telefono Celular*</label>
                                             <div class="col-md-10">
-                                                <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="{{affiliate.cellphoneNumber}}" type="text">
+                                                {% if affiliate.cellphoneNumber != None %}
+                                                <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="{{affiliate.cellphoneNumber}}" pattern="[0-9]*">
+                                                {% else %}
+                                                <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="" type="text">
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
