@@ -93,6 +93,7 @@ TEMPLATES = [
                 'django.template.context_processors.csrf',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -177,3 +178,6 @@ EMAIL_HOST_USER = 'yoqueriaphp@gmail.com'
 EMAIL_HOST_PASSWORD = 'yoqueriaPHP123'
 EMAIL_PORT = 587
 FILE_UPLOAD_PERMISSION = 644
+
+#Format
+DATE_INPUT_FORMATS = ('%d-%m-%Y')

@@ -14,14 +14,14 @@ class AffiliateForm(forms.Form):
     address = forms.CharField(max_length=200, error_messages={'required': 'El campo Direccion es requerido', 'max_length': 'El campo Direccion debe tener una longitud maxima de 200 caracteres'})
     email = forms.CharField(max_length=200, error_messages={'required': 'El campo Email es requerido', 'max_length': 'El campo Email debe tener una longitud maxima de 200 caracteres'})
 
-    workPlace = forms.CharField(max_length=200, error_messages={'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
-    workPlaceJob = forms.CharField(max_length=200, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
-    workPlacePhone = forms.IntegerField()
+    workPlace = forms.CharField(required=False, max_length=200, error_messages={'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
+    workPlaceJob = forms.CharField(required=False, max_length=200, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
+    workPlacePhone = forms.IntegerField(required=False)
     nationality = forms.CharField(max_length=20, error_messages={'required': 'El campo Nacionalidad es requerido', 'max_length': 'El campo Nacionalidad no debe superar los 20 caracteres'})
-    maritalStatus = forms.CharField(max_length=20, error_messages={'required': 'El campo Estado civil es requerido', 'max_length': 'El campo Estado civil no debe superar los 20 caracteres'})
-    cellphoneNumber = forms.IntegerField(error_messages={'required': 'El campo Teléfono Celular es requerido'})
+    maritalStatus = forms.CharField(required=False, max_length=20, error_messages={'max_length': 'El campo Estado civil no debe superar los 20 caracteres'})
+    cellphoneNumber = forms.IntegerField(required=False)
     specialization = forms.CharField(max_length=200, error_messages={'max_length': 'El campo Especialización no debe superar los 200 caracteres'})
-    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'}, input_formats=['%d/%m/%Y'])
+    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'})
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
 
     def clean_dni(self):
@@ -32,10 +32,26 @@ class AffiliateForm(forms.Form):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
         return data
 
+    def clean_workPlacePhone(self):
+        data = self.cleaned_data['workPlacePhone']
+        if (data < 999999):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        if (data > 10000000):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        return data
+
     def clean_phone(self):
         data = self.cleaned_data['phone']
-        if (data < 0):
-            raise forms.ValidationError("El Telefono no puede ser negativo")
         if (data < 999999):
-            raise forms.ValidationError("El Telefono tiene que ser como minimo 7 digitos")
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        if (data > 10000000):
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        return data
+
+    def clean_cellphoneNumber(self):
+        data = self.cleaned_data['cellphoneNumber']
+        if (data < 99999999):
+            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
+        if (data > 1000000000):
+            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
         return data

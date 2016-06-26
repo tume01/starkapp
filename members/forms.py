@@ -20,7 +20,7 @@ class MemberForm(forms.Form):
     maritalStatus = forms.CharField(max_length=20, error_messages={'required': 'El campo Estado civil es requerido', 'max_length': 'El campo Estado civil no debe superar los 20 caracteres'})
     cellphoneNumber = forms.IntegerField(error_messages={'required': 'El campo Teléfono Celular es requerido'})
     specialization = forms.CharField(max_length=200, error_messages={'max_length': 'El campo Especialización no debe superar los 200 caracteres'})
-    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'}, input_formats=['%d/%m/%Y'])
+    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'},input_formats=['%d/%m/%Y'])
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
 
 
@@ -32,10 +32,26 @@ class MemberForm(forms.Form):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
         return data
 
+    def clean_workPlacePhone(self):
+        data = self.cleaned_data['workPlacePhone']
+        if (data < 999999):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        if (data > 10000000):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        return data
+
     def clean_phone(self):
         data = self.cleaned_data['phone']
-        if (data < 0):
-            raise forms.ValidationError("El Telefono no puede ser negativo")
         if (data < 999999):
-            raise forms.ValidationError("El Telefono tiene que ser como minimo 7 digitos")
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        if (data > 10000000):
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        return data
+
+    def clean_cellphoneNumber(self):
+        data = self.cleaned_data['cellphoneNumber']
+        if (data < 99999999):
+            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
+        if (data > 1000000000):
+            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
         return data

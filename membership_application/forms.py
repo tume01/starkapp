@@ -43,6 +43,7 @@ class MembershipApplicationForm(forms.Form):
     sworkPlace = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
     sworkPlaceJob = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
     semail = forms.CharField(max_length=200, required=False,error_messages={'max_length': 'El campo Correo no debe superar los 200 caracteres'})
+    sphoto = forms.ImageField(required=False)
 
     def clean_dni(self):
         data = self.cleaned_data['num_doc']
@@ -75,6 +76,30 @@ class MembershipApplicationForm(forms.Form):
                                         existingAffiliate.member.paternalLastName + " "+
                                         existingAffiliate.member.maternalLastName)
         
+        return data
+
+    def clean_workPlacePhone(self):
+        data = self.cleaned_data['workPlacePhone']
+        if (data < 999999):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        if (data > 10000000):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        return data
+
+    def clean_phone(self):
+        data = self.cleaned_data['phone']
+        if (data < 999999):
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        if (data > 10000000):
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        return data
+
+    def clean_cellphoneNumber(self):
+        data = self.cleaned_data['cellphoneNumber']
+        if (data < 99999999):
+            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
+        if (data > 1000000000):
+            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
         return data
 
     def clean_finalDate(self):

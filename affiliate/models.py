@@ -27,6 +27,7 @@ class Affiliate(models.Model):
     nationality = models.TextField(max_length=20)
     birthDate = models.DateField()
     birthPlace = models.TextField(max_length=200)
+    birthUbigeo = models.ForeignKey(y.Ubigeo, related_name='affiliate_birth_ubigeo', on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='affiliate')
     specialization = models.TextField(max_length=200, blank=True, null=True)
     workPlace = models.TextField(max_length=200, blank=True, null=True)

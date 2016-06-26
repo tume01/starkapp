@@ -98,6 +98,8 @@ var MemberFormValidation = function() {
                 },
                 'workPlacePhone':{
                     required:true,
+                    number: true, 
+                    minlength:7
                 },
                 'maritalStatus':{
                     required:true,
@@ -105,6 +107,8 @@ var MemberFormValidation = function() {
                 },
                 'cellphoneNumber':{
                     required:true,
+                    number: true, 
+                    minlength:9
                 },                
                 'specialization':{
                     required:true,
@@ -165,7 +169,7 @@ var MemberFormValidation = function() {
                 'phone': {
                     required: 'Por favor ingrese un teléfono',   
                     number: 'Por favor ingrese un número válido' ,
-                    minlength:'El telefono deber tener más de 6 digitos',
+                    minlength:'El telefono deber tener más de 6 dígitos',
                     min: 'Por favor ingrese un telefono válido'                  
                 },
                 
@@ -212,14 +216,18 @@ var MemberFormValidation = function() {
                     maxlength:'El puesto de trabajo debe tener máximo 200 caracteres'
                 },
                 'workPlacePhone':{
-                    required:'Por favor ingrese el teléfono del lugar de trabajo'
+                    required:'Por favor ingrese el teléfono del lugar de trabajo',
+                    number: 'Por favor ingrese un número válido',
+                    minlength:'El telefono deber tener más de 6 dígitos'
                 },
                 'maritalStatus':{
                     required:'Por favor ingrese un estado civil',
                     maxlength:'El estado civil debe tener máximo 200 caracteres'  
                 },
                 'cellphoneNumber':{
-                    required:'Por favor ingrese un número celular'
+                    required:'Por favor ingrese un número celular',
+                    number: 'Por favor ingrese un número válido',
+                    minlength:'El número deber tener 9 dígitos'
                 },
                 'photo':{
                     required: 'Por favor inrese una foto'

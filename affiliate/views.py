@@ -297,6 +297,8 @@ def edit_affiliate_index(request):
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
     context = {
         'affiliate' : affiliate,
         'departments' : departments,
@@ -366,6 +368,8 @@ def edit_affiliate(request):
 
         relationships = relationships_service.getRelationships()
 
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
         context = {
             'affiliate': affiliate,
             'ubigeo': ubigeo,
@@ -409,7 +413,7 @@ def edit_affiliate(request):
 
         edit_data["ubigeo"] = ubi[0]
 
-        if request.FILES['photo']:
+        if 'photo' in request.FILES:
             edit_data["photo"] = request.FILES['photo']
 
         edit_data["gender"] = request.POST['gender']
@@ -678,7 +682,7 @@ def admin_create_affiliate(request):
 
         create_data["nationality"] = form.cleaned_data['nationality']
 
-        create_data["maritallStatus"] = form.cleaned_data['maritalStatus']
+        create_data["maritalStatus"] = form.cleaned_data['maritalStatus']
 
         create_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
 
@@ -761,6 +765,8 @@ def admin_edit_affiliate_index(request):
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
     context = {
         'affiliate' : affiliate,
         'departments' : departments,
@@ -829,18 +835,36 @@ def admin_edit_affiliate(request):
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo_service = UbigeoService()
+
+        departments = ubigeo_service.distinctDepartment()
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = affiliate.ubigeo.department
+
+        provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["province"] = affiliate.ubigeo.province
+
+        districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
         relationships = relationships_service.getRelationships()
 
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+
         context = {
-            'affiliate': affiliate,
-            'ubigeo': ubigeo,
+            'affiliate' : affiliate,
+            'departments' : departments,
+            'provinces' : provinces,
+            'districts' : districts,
             'doc_types': doc_types,
-            'relationships': relationships
+            'relationships' : relationships
         }
 
-        return render(request, 'Adminr/Affiliates/edit_affiliatehtml', context)
+        return render(request, 'Admin/Affiliates/edit_affiliate.html', context)
 
     else:
 
@@ -876,7 +900,7 @@ def admin_edit_affiliate(request):
 
         edit_data["ubigeo"] = ubi[0]
 
-        if request.FILES['photo']:
+        if 'photo' in request.FILES:
             edit_data["photo"] = request.FILES['photo']
 
         edit_data["gender"] = request.POST['gender']
@@ -889,7 +913,7 @@ def admin_edit_affiliate(request):
 
         edit_data["nationality"] = form.cleaned_data['nationality']
 
-        edit_data["maritallStatus"] = form.cleaned_data['maritalStatus']
+        edit_data["maritalStatus"] = form.cleaned_data['maritalStatus']
 
         edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
 
@@ -1111,7 +1135,7 @@ def admin_move_affiliate(request):
 
     insert_data["nationality"] = affiliate.nationality
 
-    insert_data["maritallStatus"] = affiliate.maritalStatus
+    insert_data["maritalStatus"] = affiliate.maritalStatus
 
     insert_data["cellphoneNumber"] = affiliate.cellphoneNumber
 

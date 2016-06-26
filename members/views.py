@@ -16,6 +16,7 @@ from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
+from datetime import datetime
 import json
 
 
@@ -65,17 +66,30 @@ def edit_member_index(request):
 
     provinces = ubigeo_service.distinctProvince(filter_ubigeo)
 
+    filter_ubigeo["department"] = member.birthUbigeo.department
+
+    provinces2 = ubigeo_service.distinctProvince(filter_ubigeo)
+
     filter_ubigeo = {}
 
     filter_ubigeo["province"] = member.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    filter_ubigeo["province"] = member.birthUbigeo.province
+
+    districts2 = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+
+    member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
+
     context = {
         'member' : member,
         'departments' : departments,
         'provinces' : provinces,
         'districts' : districts,
+        'provincesBirth': provinces2,
+        'districtsBirth': districts2,
         'doc_types': doc_types,
     }
 
@@ -152,6 +166,8 @@ def edit_member(request):
 
         districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+        member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
+
         context = {
             'member' : member,
             'departments' : departments,
@@ -194,7 +210,7 @@ def edit_member(request):
 
         edit_data["ubigeo"] = ubi[0]
 
-        if request.FILES['photo']:
+        if 'photo' in request.FILES:
             edit_data["photo"] = request.FILES['photo']
 
         edit_data["gender"] = request.POST['gender']
@@ -223,9 +239,9 @@ def edit_member(request):
 
         filter_ubigeo["district"] = request.POST['birthDistrict']
 
-        ubi = ubigeo_service.filter(filter_ubigeo)
+        ubi = ubigeo_service.filter(filter_ubigeo).first()
 
-        edit_data["birthUbigeo"] = ubi[0]
+        edit_data["birthUbigeo"] = ubi
 
         member_service = MembersService()
 
