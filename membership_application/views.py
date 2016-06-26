@@ -173,6 +173,8 @@ def edit_index(request):
 
     if(membership_application.sbirthUbigeo):
 
+        filter_ubigeo = {}
+
         filter_ubigeo["department"] = membership_application.sbirthUbigeo.department
 
         provinces3 = ubigeo_service.distinctProvince(filter_ubigeo)
@@ -436,6 +438,7 @@ def edit_membership_application(request):
         insert_data["status"] = 1
 
         if 'photo' in request.FILES:
+            print('LUL')
             insert_data["photo"] = request.FILES['photo']
 
         insert_data["gender"] = request.POST['gender']

@@ -36,7 +36,7 @@ Nueva solicitud de membresía
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:edit" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                                 <div class="row">
                                       <input type="hidden" class="form-control" id="example-input1-group1" name="id" value="{{membership_application.id}}"  type="text">
@@ -48,8 +48,8 @@ Nueva solicitud de membresía
                                 </div>
                                 <br>
                                 <div class="row">
-                                    <img src="{{ MEDIA_URL }}{{membership_application.photo}}" class="img-responsive img-event-preview">
                                     <div class="col-sm-3">
+                                        <img src="{{ MEDIA_URL }}{{membership_application.photo}}" height="200" width="200" class="img-event-preview">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="photo">Foto</label>
                                             <input type="file" name="photo" class="form-control, col-xs-12" id="photo">
@@ -364,8 +364,10 @@ Nueva solicitud de membresía
                                 <br>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <img src="{{ MEDIA_URL }}{{membership_application.sphoto}}" class="img-responsive img-event-preview">
+                                         {% if membership_application.sphoto  %} 
+                                         <img src="{{ MEDIA_URL }}{{membership_application.sphoto}}"  height="200" width="200" class="iimg-event-preview">
+                                          {% endif %}
+                                        <div class="form-group">                                           
                                             <label class="col-xs-12" for="photo">Foto*</label>
                                             <input type="file" name="sphoto" class="form-control, col-xs-12" id="photo">
                                         </div>

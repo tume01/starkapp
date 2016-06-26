@@ -39,8 +39,8 @@ Editar miembro
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "members:edit" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="row">
-                                <img src="{{image_url}}{{member.photo}}" class="img-responsive img-event-preview">
                                 <div class="col-sm-3">
+                                    <img src="{{ MEDIA_URL }}{{member.photo}}" height="200" width="200" class="img-event-preview">
                                     <div class="form-group">
                                         <label class="col-xs-12" for="photo">Foto</label>
                                         <input type="file" name="photo" class="form-control, col-xs-12" id="photo">
@@ -262,7 +262,7 @@ Editar miembro
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthProvince" name="birthProvince" size="1">
-                                                            {% for u in provinces%}
+                                                            {% for u in provincesBirth%}
                                                                 {% if u.province == member.birthUbigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
@@ -278,7 +278,7 @@ Editar miembro
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthDistrict" name="birthDistrict" size="1">
-                                                       {% for u in districts%}
+                                                       {% for u in districtsBirth%}
                                                             {% if u.district == member.birthUbigeo.district %}
                                                                 <option selected value="{{u.district}}">{{u.district}}</option>
                                                             {% else %}
