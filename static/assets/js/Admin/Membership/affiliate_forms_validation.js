@@ -132,7 +132,7 @@ var AffiliateFormValidation = function() {
                     required:true
                 },
                 'photo':{
-                    required:false
+                    required:true
                 }
             },
             messages: {
