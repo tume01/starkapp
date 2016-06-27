@@ -14,9 +14,6 @@ $(document).ready(function() {
             var year = date.getFullYear();
             refreshEvents(start, end, callback);
         },
-        eventClick: function(event) {
-
-        }
     });
 });
 

@@ -38,6 +38,7 @@ var MemberFormValidation = function() {
                     required: true,   
                     number: true, 
                     min: 1,
+                    minlength: 8,
                     remote: {
                         url: url,
                         type: "post",
@@ -115,7 +116,8 @@ var MemberFormValidation = function() {
                     maxlength:200  
                 },
                 'birthDate' : {
-                    required: true
+                    required: true,
+                    domain: true
                 },
                 'birthPlace': {
                     required: true,
@@ -169,8 +171,8 @@ var MemberFormValidation = function() {
                 'phone': {
                     required: 'Por favor ingrese un teléfono',   
                     number: 'Por favor ingrese un número válido' ,
-                    minlength:'El telefono deber tener más de 6 dígitos',
-                    min: 'Por favor ingrese un telefono válido'                  
+                    minlength:'El teléfono deber tener más de 6 dígitos',
+                    min: 'Por favor ingrese un teléfono válido'                  
                 },
                 
                 'email': {
@@ -181,7 +183,7 @@ var MemberFormValidation = function() {
                     required: 'Por favor ingrese una fecha inicial'
                 },
                 'finalDate':{
-                    required: 'Por favor ingrese una fech final'
+                    required: 'Por favor ingrese una fecha final'
                 },
                 'birthDepartment':{
                     required:'Por favor ingrese un departamento'
@@ -218,7 +220,7 @@ var MemberFormValidation = function() {
                 'workPlacePhone':{
                     required:'Por favor ingrese el teléfono del lugar de trabajo',
                     number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener más de 6 dígitos'
+                    minlength:'El teléfono deber tener más de 6 dígitos'
                 },
                 'maritalStatus':{
                     required:'Por favor ingrese un estado civil',
@@ -230,11 +232,19 @@ var MemberFormValidation = function() {
                     minlength:'El número deber tener 9 dígitos'
                 },
                 'photo':{
-                    required: 'Por favor inrese una foto'
+                    required: 'Por favor ingrese una foto'
                 }                
             }
         });
     };
+    jQuery.validator.addMethod("domain", function(value, element) {
+        var today=new Date();
+    var sbirthDate = $('#birthDate').val();
+    var splitdate = sbirthDate.split("/");
+    var birthDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
+    if(birthDate >= today){ return false;}
+    else {return true;}
+    }, "La fecha no puede ser mayor a la de hoy");
 
     return {
         init: function () {

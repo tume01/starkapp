@@ -1,9 +1,0 @@
-<div class="form-group">
-    <label class="col-xs-12">Sede</label>
-    <select class="form-control" onchange="{{foo}}" id="{{ select_id }}" name="headquarter_id" size="1">
-        <option value="-1">Todos</option>
-        {% for headquarter in headquarters %}
-        <option value="{{headquarter.id}}" >{{headquarter.name}}</option>
-        {% endfor %}
-    </select>
-</div>

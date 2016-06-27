@@ -36,7 +36,9 @@ var AffiliateFormValidation = function() {
                 },
                 'num_doc': {
                     required: true,   
-                    number: true, 
+                    number: true,
+                    min:1,
+                    minlength: 8,
                     remote: {
                         url: url,
                         type: "post",
@@ -60,7 +62,7 @@ var AffiliateFormValidation = function() {
                             }
                         }
                     }, 
-                    min: 1,                        
+                    min: 1                       
                 },                              
                 'address': {
                     required: true,
@@ -82,6 +84,11 @@ var AffiliateFormValidation = function() {
                     min:1
                     
                 },
+                'cellphoneNumber':{
+                    required:true,
+                    number: true,
+                    minlength:9
+                },
                 'email': {
                     required: true,
                     email: true
@@ -93,34 +100,17 @@ var AffiliateFormValidation = function() {
                     required:true,
                     maxlength:20
                 },
-                'workPlace':{
-                    required:true,
-                    maxlength:200
-                },
-                'workPlaceJob':{
-                    required:true,
-                    maxlength:200   
-                },
-                'workPlacePhone':{
-                    required:true,
-                    number: true, 
-                    minlength:7
-                },
                 'maritalStatus':{
                     required:true,
                     maxlength:20  
-                },
-                'cellphoneNumber':{
-                    required:true,
-                    number: true, 
-                    minlength:9
                 },                
                 'specialization':{
                     required:true,
                     maxlength:200  
                 },
                 'birthDate' : {
-                    required: true
+                    required: true,
+                    domain:true
                 },
                 'birthPlace': {
                     required: true,
@@ -155,7 +145,7 @@ var AffiliateFormValidation = function() {
                 'num_doc': {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
-                    remote: 'Este documento ya esta en uso',
+                    remote: 'Este documento ya está en uso',
                     min: 'Por favor ingrese un documento válido' ,    
                     maxlength: 'Por favor ingrese un documento válido'             
                 },              
@@ -175,8 +165,8 @@ var AffiliateFormValidation = function() {
                 'phone': {
                     required: 'Por favor ingrese un teléfono',   
                     number: 'Por favor ingrese un número válido' ,
-                    minlength:'El telefono deber tener más de 6 digitos',
-                    min: 'Por favor ingrese un telefono válido'                  
+                    minlength:'El teléfono deber tener más de 6 digitos',
+                    min: 'Por favor ingrese un teléfono válido'                  
                 },
                 
                 'email': {
@@ -207,37 +197,26 @@ var AffiliateFormValidation = function() {
                     required:'Por favor ingrese una nacionalidad',
                     maxlength:'La nacionalidad debe tener máximo 20 caracteres'
                 },
-                'workPlace':{
-                    required:'Por favor ingrese su centro de trabajo',
-                    maxlength:'El centro de trabajo debe tener máximo 200 caracteres'
-                },
-                'workPlaceJob':{
-                    required:'Por favor ingrese su puesto de trabajo',
-                    maxlength:'El puesto de trabajo debe tener máximo 200 caracteres'
-                },
-                'workPlacePhone':{
-                    required:'Por favor ingrese el teléfono del lugar de trabajo',
-                    number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener más de 6 dígitos'
-                },
                 'maritalStatus':{
                     required:'Por favor ingrese un estado civil',
                     maxlength:'El estado civil debe tener máximo 200 caracteres'  
                 },
-                'cellphoneNumber':{
-                    required:'Por favor ingrese un número celular',
-                    number: 'Por favor ingrese un número válido',
-                    minlength:'El número deber tener 9 digitos'
-                },
                 'photo':{
-                    required: 'Por favor inrese una foto'
+                    required: 'Por favor ingrese una foto'
                 }                
-            }
-
             }
         });
     };
 
+    jQuery.validator.addMethod("domain", function(value, element) {
+        var today=new Date();
+    var sbirthDate = $('#birthDate').val();
+    var splitdate = sbirthDate.split("/");
+    var birthDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
+    if(birthDate >= today){ return false;}
+    else {return true;}
+    }, "La fecha no puede ser mayor a la de hoy");
+    
     return {
         init: function () {
 

@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MemberService import MembersService
 from services.AffiliateService import AffiliateService
+from django.core.files.images import get_image_dimensions
 
 class MembershipApplicationForm(forms.Form):
     alphabetic = RegexValidator(r'^[a-zA-Z]*$', 'Only alphabetic characters are allowed.')
@@ -31,6 +32,7 @@ class MembershipApplicationForm(forms.Form):
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
     email = forms.CharField(max_length=200, error_messages={'required': 'El campo Correo es requerido', 'max_length': 'El campo Correo no debe superar los 200 caracteres'})
     phone = forms.IntegerField(error_messages={'required': 'El campo Numero de telefono es requerido'})
+    photo = forms.ImageField(required=False)
 
     snum_doc = forms.IntegerField( required=False)
     sbirthDate = forms.DateField( required=False, input_formats=['%d/%m/%Y'])
@@ -43,7 +45,36 @@ class MembershipApplicationForm(forms.Form):
     sworkPlace = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
     sworkPlaceJob = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
     semail = forms.CharField(max_length=200, required=False,error_messages={'max_length': 'El campo Correo no debe superar los 200 caracteres'})
+    scellPhoneNumber = forms.IntegerField(required=False)
     sphoto = forms.ImageField(required=False)
+
+    def clean_photo(self):
+        data = self.cleaned_data["photo"]
+        if data == None:
+            return data
+        w, h = get_image_dimensions(data)
+        if w > 301:
+            raise forms.ValidationError("Error en el ancho de la imagen")
+        if h > 301:
+            raise forms.ValidationError("Error en la alutra de la imgen")
+        return data
+
+    def clean_sphoto(self):
+        data = self.cleaned_data["sphoto"]
+        if data == None:
+            return data
+        w, h = get_image_dimensions(data)
+        if w > 301:
+            raise forms.ValidationError("Error en el ancho de la imagen del conyuge")
+        if h > 301:
+            raise forms.ValidationError("Error en la alutra de la imgen del conyuge")
+        return data
+
+    def clean_birthDate(self):
+        data = self.cleaned_data['birthDate']
+        if (data > datetime.now().date()):
+            raise forms.ValidationError("La fecha de nacimiento no puede ser mayor a la de hoy")
+        return data
 
     def clean_dni(self):
         data = self.cleaned_data['num_doc']
@@ -80,26 +111,32 @@ class MembershipApplicationForm(forms.Form):
 
     def clean_workPlacePhone(self):
         data = self.cleaned_data['workPlacePhone']
-        if (data < 999999):
-            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
-        if (data > 10000000):
-            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+
+        if data is None:
+            return None
+        
+        if (data <= 999999):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener como mínimo 7 digitos")
         return data
 
     def clean_phone(self):
         data = self.cleaned_data['phone']
-        if (data < 999999):
-            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
-        if (data > 10000000):
-            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+
+        if data is None:
+            return None
+        
+        if (data <= 999999):
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener como minimo 7 digitos")
         return data
 
     def clean_cellphoneNumber(self):
         data = self.cleaned_data['cellphoneNumber']
-        if (data < 99999999):
-            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
-        if (data > 1000000000):
-            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
+
+        if data is None:
+            return None
+        
+        if (data <= 99999999):
+            raise forms.ValidationError("El numero de celular tiene que tener como mínimo 9 digitos")
         return data
 
     def clean_finalDate(self):

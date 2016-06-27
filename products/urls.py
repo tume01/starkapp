@@ -4,6 +4,8 @@ from . import views
 app_name = 'products'
 
 urlpatterns = [
+	url(r'^make/purchase', views.make_purchase, name='make_purchase'),
+	url(r'^index/shop/product', views.index_shop_products, name='index_shop_products'),
 	url(r'^register_in_out/(?P<id>\d+)$', views.register_in_out, name='register_in_out'),
 	url(r'^index_in_out', views.index_in_out, name='index_in_out'),
     url(r'^create/insert', views.create_product, name='insert'),

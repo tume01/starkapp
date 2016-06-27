@@ -19,7 +19,6 @@ from django.core import serializers
 from datetime import datetime
 import json
 
-
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
@@ -66,30 +65,32 @@ def edit_member_index(request):
 
     provinces = ubigeo_service.distinctProvince(filter_ubigeo)
 
-    filter_ubigeo["department"] = member.birthUbigeo.department
-
-    provinces2 = ubigeo_service.distinctProvince(filter_ubigeo)
-
     filter_ubigeo = {}
 
     filter_ubigeo["province"] = member.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    filter_ubigeo = {}
+
+    filter_ubigeo["department"] = member.birthUbigeo.department
+
+    birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
     filter_ubigeo["province"] = member.birthUbigeo.province
 
-    districts2 = ubigeo_service.distinctDistrict(filter_ubigeo)
+    birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
 
-    member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
+    member.birthDate = datetime.strftime(member.birthDate, '%d/%m/%Y')
 
     context = {
         'member' : member,
         'departments' : departments,
         'provinces' : provinces,
         'districts' : districts,
-        'provincesBirth': provinces2,
-        'districtsBirth': districts2,
+        'birthprovinces': birthprovinces,
+        'birthdistricts': birthdistricts,
         'doc_types': doc_types,
     }
 
@@ -132,7 +133,7 @@ def delete_member(request):
 @require_http_methods(['POST'])
 def edit_member(request):
 
-    form = MemberForm(request.POST)
+    form = MemberForm(request.POST, request.FILES)
 
     id_edit = request.POST['id']
 
@@ -166,13 +167,25 @@ def edit_member(request):
 
         districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
-        member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = member.birthUbigeo.department
+
+        birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo["province"] = member.birthUbigeo.province
+
+        birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+        member.birthDate = datetime.strftime(member.birthDate, '%d/%m/%Y')
 
         context = {
             'member' : member,
             'departments' : departments,
             'provinces' : provinces,
+            'birthprovinces' : birthprovinces,
             'districts' : districts,
+            'birthdistricts' : birthdistricts,
             'doc_types': doc_types,
         }
 
@@ -436,3 +449,37 @@ def get_entry(request):
     guest = serializers.serialize('json', guest)
 
     return  HttpResponse(guest, content_type = "application/json")
+
+def getMembers(request):
+
+    filter_member = {'document_number':  request.POST['document_number']}
+
+    member_service = MembersService()
+
+    members = member_service.filter(filter_member)
+        
+    members = list(filter(is_member_not_suspended, members))
+
+    for memberX in members:
+
+        memberX.address = memberX.identity_document_type.name
+
+    member = {
+        'name': '',
+        'lastName': '',
+        'secondLastName': '',
+        'documentNumber': '',
+    }
+
+    if members:
+        member['name'] = members[0].name
+        member['lastName'] = members[0].paternalLastName
+        member['secondLastName'] = members[0].maternalLastName
+        member['documentNumber'] = members[0].document_number
+        member['userId'] = members[0].id
+    else:
+        member = None
+        
+    data = json.dumps(member)
+
+    return HttpResponse(data, content_type='application/json')

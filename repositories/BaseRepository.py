@@ -25,10 +25,7 @@ class BaseRepository(AbstractBaseRepository):
             return None
 
     def create(self, create_data):
-        new_element = self.model()
-
-        for key, value in create_data.items():
-            new_element.__setattr__(key, value)
+        new_element = self.model(**create_data)
 
         new_element.save()
 
@@ -48,7 +45,7 @@ class BaseRepository(AbstractBaseRepository):
         return self.model.objects.get(id=element).delete()
 
     def softDelete(self, delete_id):
-        return self.update(delete_id,{"deleted_at", datetime.datetime.now()})
+        return self.update(delete_id,{"deleted_at": datetime.datetime.now()})
 
     def filter(self, filters):
         return self.model.objects.filter(**filters)

@@ -41,6 +41,7 @@ Lista de afiliados
                 {% csrf_token %}  
                 <input type="hidden" id="hid3" name="id"/>
             </form>
+             <div class="block-content">
              <div class="row">
                 <div class="col-lg-4" >
                     <div class="form-group">
@@ -57,6 +58,7 @@ Lista de afiliados
                     <label class="col-xs-12" for="example-select"> Apellidos Materno: {{member.maternalLastName}}</label>
                     </div>
                 </div>
+            </div>
             </div>
             <br>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
@@ -92,7 +94,7 @@ Lista de afiliados
                                     <button class="btn btn-xs btn-default editar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Editar Afiliado"><i class="fa fa-user"></i></button>
                                     <button class="btn btn-xs btn-default eliminar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Eliminar Afiliado"><i class="fa fa-user-times"></i></button>
                                     {% if not isSuspended %} 
-                                    <button class="btn btn-xs btn-default trasladar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Trasladar Membresía"><i class="fa fa-user-times"></i></button>
+                                    <button class="btn btn-xs btn-default trasladar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Trasladar Membresía"><i class="fa fa-arrow-circle-right"></i></button>
                                     {%else%} 
                                     <button class="btn btn-xs btn-default trasladar" data-id="{{affiliate.id}}" type="button"  data-toggle="tooltip" title="Trasladar Membresía" disabled><i class="fa fa-user-times"></i></button>
                                     {% endif %}

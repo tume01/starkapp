@@ -19,6 +19,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 #ADMIN
 @login_required
@@ -66,10 +67,10 @@ def filter(request):
     type_identity_doc = request.POST['identity_document_type']
 
     if iniDate != '':
-        filter_member_application["initialDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
+        filter_member_application["initialDate__gte"] = datetime.strptime(iniDate, '%d/%m/%Y')
 
     if endDate != '':
-        filter_member_application["finalDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
+        filter_member_application["finalDate__lte"] = datetime.strptime(endDate, '%d/%m/%Y')
 
     if num_doc != '':
         filter_member_application["document_number__contains"] = num_doc
@@ -111,8 +112,6 @@ def create_index(request):
         'doc_types': doc_types,
         'titulo' : 'titulo'
     }
-
-    print(types)
 
     return render(request, 'Admin/Membership/new_membership_request.html', context)
 
@@ -222,7 +221,7 @@ def create_membership_application(request):
 
     sidentity_document_id = request.POST['sidentity_document_type']
 
-    form = MembershipApplicationForm(request.POST)
+    form = MembershipApplicationForm(request.POST, request.FILES)
 
     request2 = FormValidator.validateForm(form, request)
 
@@ -274,7 +273,32 @@ def create_membership_application(request):
 
         insert_data["status"] = 1
 
-        insert_data["photo"] = request.FILES['photo']
+        if 'photo' in request.FILES:
+
+            insert_data["photo"] = request.FILES['photo']
+
+        else:
+
+            membership_type_service = MembershipTypeService()
+
+            identity_doc_type_service = IdentityDocumentTypeService()
+
+            types = membership_type_service.getMembershipTypes()
+
+            doc_types = identity_doc_type_service.getIdentityDocumentTypes()
+
+            ubigeo = ubigeo_service.distinctDepartment()
+
+            context = {
+                'types' : types,
+                'doc_types' : doc_types,
+                'ubigeo' : ubigeo,
+                'titulo': 'titulo'
+            }
+
+            messages.error(request, 'Debe ingresar una foto')
+
+            return render(request, 'Admin/Membership/new_membership_request.html', context)
 
         insert_data["gender"] = request.POST['gender']
 
@@ -314,6 +338,8 @@ def create_membership_application(request):
 
             insert_data["sgender"] = request.POST['sgender']
 
+            insert_data["scellPhoneNumber"] = form.cleaned_data['scellPhoneNumber']
+
             insert_data["sspecialization"] = form.cleaned_data['sspecialization']
 
             insert_data["snationality"] = form.cleaned_data['snationality']
@@ -332,7 +358,9 @@ def create_membership_application(request):
 
             insert_data["sbirthUbigeo"] = ubi[0]
 
-            insert_data["sphoto"] = request.FILES['sphoto']
+            if 'sphoto' in request.FILES:
+
+                insert_data["sphoto"] = request.FILES['sphoto']
 
             insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
 
@@ -379,7 +407,7 @@ def edit_membership_application(request):
 
     ubigeo_service = UbigeoService()
 
-    form = MembershipApplicationForm(request.POST)
+    form = MembershipApplicationForm(request.POST, request.FILES)
 
     id_application = request.POST['id']
 
@@ -438,7 +466,7 @@ def edit_membership_application(request):
         insert_data["status"] = 1
 
         if 'photo' in request.FILES:
-            print('LUL')
+            
             insert_data["photo"] = request.FILES['photo']
 
         insert_data["gender"] = request.POST['gender']
@@ -487,6 +515,8 @@ def edit_membership_application(request):
 
             insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
 
+            insert_data["scellPhoneNumber"] = form.cleaned_data['scellPhoneNumber']
+
             filter_ubigeo["department"] = request.POST['sbirthDepartment']
 
             filter_ubigeo["province"] = request.POST['sbirthProvince']
@@ -528,9 +558,9 @@ def edit_membership_application(request):
 
         membership_application = member_application_service.getMembership_Application(id_application)
 
-        membership_application.initialDate = datetime.strftime(membership_application.initialDate, '%m/%d/%Y')
+        membership_application.initialDate = datetime.strftime(membership_application.initialDate, '%d/%m/%Y')
 
-        membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%m/%d/%Y')
+        membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%d/%m/%Y')
 
         ubigeo_service = UbigeoService()
 
@@ -629,7 +659,7 @@ def user_index(request):
 @require_http_methods(['POST'])
 def create_objection(request):
 
-    form = oforms.ObjectionForm(request.POST)
+    form = oforms.ObjectionForm(request.POST, request.FILES)
 
     requestId = request.POST['id_membership']
 
@@ -846,9 +876,44 @@ def approve_membership_application(request):
 @require_http_methods(['POST'])
 def verify_document_number(request):
 
-    username = request.POST['name']
+    if not isinstance(request.POST['name'], int):
 
-    if User.objects.filter(username=username).exists():
+        username = request.POST['name']
+
+        if User.objects.filter(username=username).exists():
+
+            return  HttpResponse("false")
+
+        return  HttpResponse("true")
+
+
+    member_application_service = Membership_ApplicationService()
+
+    member_service = MembersService()
+
+    affiliate_service = AffiliateService()
+
+    filter_data = {}
+
+    filter_data["document_number"] = request.POST['name']
+
+    filter_data["status"] = 1
+
+    filter_data2 = {}
+
+    filter_data2["document_number"] = request.POST['name']
+
+    filter_data2["state"] = 1
+
+    if( member_service.filter(filter_data2)):
+
+        return  HttpResponse("false")
+
+    if( member_application_service.filter(filter_data)):
+
+        return  HttpResponse("false")
+
+    if( affiliate_service.filter(filter_data2)):
 
         return  HttpResponse("false")
 

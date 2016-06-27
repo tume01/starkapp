@@ -43,22 +43,48 @@ Lista de promociones
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Promoción</label>
                                             <div class="col-md-6">
-                                               <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="description" placeholder="Promoción"  type="text">
-                                                </div>
+                                                <input class="form-control" id="example-input1-group1" name="description" placeholder="Promoción" type="text">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Descuento</label>
-                                            <div class="col-sm-6">
-                                                <input class="form-control" id="example-number-input" name="percentage" placeholder="Descuento" >
-                                                <div class="help-block">Agregue el %</div>
+                                            <label class="col-xs-12" for="start_date">Fechas del Evento</label>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="start_date" name="start_date" placeholder="Fecha y hora del Inicio del Evento" value="" >
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="end_date" name="end_date" placeholder="Fecha y hora del Fin del Evento" value="" >
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>                            
+                                </div>
+                                <label class="col-xs-12" for="example-number-input"> Seleccione la promoción</label>
+                                <div class="row">
+                                    <label class="col-xs-12" for="start_date">Solo membresía<button type="button" id="add_membership"><i class="glyphicon glyphicon-plus-sign"></i></button><button type="button" class="round-button-circle" id="delete_membership"><i class="glyphicon glyphicon-plus-minus"></i></button></label>
+                                    <div id="membership_table" data-url="{% url 'promotions:get_membership' %}">
+                                    </div>
+                                </div> 
+                                <div class="row">
+                                        <label class="col-xs-12" for="start_date">Bungalow y Membresía <button type="button" id="add_bungalow"><i class="glyphicon glyphicon-plus-sign"></i></button><button type="button" id="delete_bungalow"><i class="glyphicon glyphicon-plus-minus"></i></button></label>
+                                        <div id="bungalow_table" data-url="{% url 'promotions:get_bungalows' %}">
+                                        </div>
+                                </div>
+                                <div class="row">
+                                        <label class="col-xs-12" for="start_date">Eventos y Membresía  <button type="button" class="round-button-circle" id="add_event"><i class="glyphicon glyphicon-plus-sign"></i></button><button type="button" class="round-button-circle" id="delete_event"><i class="glyphicon glyphicon-plus-minus"></i></button></label>
+                                        <div id="event_table" data-url="{% url 'promotions:get_events' %}">
+                                        </div>
+                                </div>                 
                                 <div class="form-group">                    
                                     <div class="col-xs-2 col-xs-offset-4">
                                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
@@ -66,7 +92,6 @@ Lista de promociones
                                     <div class="col-xs-2">
                                         <button class="btn btn-danger" type="button" onclick="location.href='{% url "promotions:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
                                     </div>
-
                                 </div>
                             </form>
                         </div>

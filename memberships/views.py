@@ -26,7 +26,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import EmailMessage
 from django.utils.crypto import get_random_string
-
+from services.PaymentService import PaymentService
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
@@ -367,11 +367,13 @@ def create_membership(request):
 
             insert_affiliate["nationality"] =  request.POST['snationality']
 
+            insert_data["cellphoneNumber"] = request.POST['scellphoneNumber']
+
             insert_affiliate["birthDate"] = datetime.strptime(request.POST['sbirthDate'], '%d/%m/%Y')
 
             insert_affiliate["birthPlace"] =  request.POST['sbirthPlace']
 
-            insert_affiliate['maritalStatus'] = 'casado'
+            insert_affiliate['maritalStatus'] = 'Casado/a'
 
             filter_ubigeo["department"] = request.POST['department']
 
@@ -431,7 +433,19 @@ def create_membership(request):
 
         member_application_service.update(id_application, insert_data)
 
-        return HttpResponseRedirect(reverse('membership_application:index'))
+        membershipApplications = member_application_service.getMembership_Applications()
+
+        identity_document_type_service = IdentityDocumentTypeService()
+
+        doc_types = identity_document_type_service.getIdentityDocumentTypes()
+
+        context = {
+            'membershipApplications' : membershipApplications,
+            'doc_types' : doc_types,
+            'memberCreated' : True
+        }
+
+        return render(request, 'Admin/Membership/index_membership_request.html', context) 
 
     else:
         member_application_service = Membership_ApplicationService()
@@ -468,9 +482,9 @@ def membership_edit_index(request):
 
     membership = member.membership
 
-    membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+    membership.initialDate = datetime.strftime(membership.initialDate, '%d/%m/%Y')
 
-    membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+    membership.finalDate = datetime.strftime(membership.finalDate, '%d/%m/%Y')
 
     membership_type_service = MembershipTypeService()
 
@@ -501,9 +515,9 @@ def membership_edit(request):
 
         membership = membership_service.getMembership(id_edit)
 
-        membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+        membership.initialDate = datetime.strftime(membership.initialDate, '%d/%m/%Y')
 
-        membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+        membership.finalDate = datetime.strftime(membership.finalDate, '%d/%m/%Y')
         
         types = membership_type_service.getMembershipTypes()
 
@@ -533,16 +547,44 @@ def membership_edit(request):
 @permission_required('dummy.permission_usuario', login_url='login:ini')	
 def membership_show(request):
 
-	user = request.user
+    user = request.user
     
-	member_service = MembersService()
-	filter = {}
-	filter["user"] =user
-	member = member_service.filter(filter)
-	context = {
-		'membership' : member[0].membership
-	}
-	return render(request, 'User/membership.html',context)
-	
+    member_service = MembersService()
+    filter = {}
+    filter["user"] =user
+    member = member_service.filter(filter)
 
-	
+    paymentEnabled = True
+
+    membership_type_service = MembershipTypeService()
+
+    filter_data = {}
+
+    filter_data["name"] = 'Vitalicio'
+
+    lifeLongType = membership_type_service.filter(filter_data)[0]
+
+    if member[0].membership.membership_type.name == lifeLongType.name:
+
+        paymentEnabled = False
+
+    print(paymentEnabled)
+        
+    context = {
+	    'membership' : member[0].membership,
+            'paymentEnabled' : paymentEnabled
+    }
+    
+    return render(request, 'User/membership.html',context)
+
+def payMembership(request):
+
+    member_service = MembersService()
+    member = member_service.getMemberByUser(request.user)
+
+    if PaymentService.createMembershipProduct(member.membership, member):
+        return HttpResponseRedirect(reverse('checkout:index') + '?product_type=2')
+
+    messages.error(request, 'Error al tratar de pagar membresia')
+
+    return HttpResponseRedirect(reverse('membership:show'))

@@ -47,6 +47,7 @@ class Membership_Application(m.Model):
     sworkPlace = m.TextField(max_length=200, blank=True, null=True)
     sworkPlaceJob = m.TextField(max_length=200, blank=True, null=True)
     sworkPlacePhone = m.IntegerField(blank=True, null=True)
+    scellPhoneNumber = m.IntegerField(blank=True, null=True)
     semail=m.TextField(max_length=200, blank=True, null=True)
     sbirthUbigeo = m.ForeignKey(z.Ubigeo, blank=True, null=True,related_name='spouse_birth_ubigeo', on_delete=m.CASCADE)
 

@@ -218,9 +218,9 @@ var MemberFormValidation = function() {
                     minlength:'El número deber tener 9 digitos'
                 },
                 'photo':{
-                    required: 'Por favor inrese una foto'
+                    required: 'Por favor ingrese una foto'
                 }                
-            }                
+                            
             }
         });
     };

@@ -35,8 +35,9 @@ var MembershipRequestFormValidation = function() {
                 },
                 'num_doc': {
                     required: true,
-                    number: true, 
-                    min: 1,  
+                    number: true,
+                    min: 1,
+                    minlength: 8,
                     remote: {
                         url: url,
                         type: "post",
@@ -97,7 +98,8 @@ var MembershipRequestFormValidation = function() {
                     maxlength:200  
                 },
                 'birthDate' : {
-                    required: true
+                    required: true,
+                    domain  : true 
                 },
                 'birthPlace': {
                     required: true,
@@ -129,7 +131,19 @@ var MembershipRequestFormValidation = function() {
                 'birthDistrict':{
                     required:true
                 },
+                'addressDepartment':{
+                    required:true
+                },
+                'addressProvince':{
+                    required:true
+                },
+                'addressDistrict':{
+                    required:true
+                },
                 'photo':{
+                    required:true
+                },
+                'address':{
                     required:true
                 }
             },
@@ -150,7 +164,7 @@ var MembershipRequestFormValidation = function() {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
                     min: 'Por favor ingrese un documento válido' ,
-                    remote: 'Este documento ya esta en uso',
+                    remote: 'Este documento ya está en uso',
                     maxlength: 'Por favor ingrese un documento válido'                    
                 },
                 'comments': {
@@ -158,10 +172,10 @@ var MembershipRequestFormValidation = function() {
                     maxlength: 'El comentario debe tener máximo 200 caracteres'
                 },
                 'initialDate': {
-                    required: 'Por favor seleccione una fecha'
+                    required: 'Por favor seleccione una fecha de inicio'
                 },
                 'finalDate': {
-                    required: 'Por favor ingrese una dirección'
+                    required: 'Por favor seleccione una fecha de fin'
                 },
                 'nationality':{
                     required:'Por favor ingrese una nacionalidad',
@@ -178,7 +192,7 @@ var MembershipRequestFormValidation = function() {
                 'workPlacePhone':{
                     required:'Por favor ingrese el teléfono del lugar de trabajo',
                     number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener más de 6 digitos'
+                    minlength:'El teléfono deber tener más de 6 digitos'
                 },
                 'maritalStatus':{
                     required:'Por favor ingrese un estado civil',
@@ -187,12 +201,12 @@ var MembershipRequestFormValidation = function() {
                 'cellphoneNumber':{
                     required:'Por favor ingrese un número celular',
                     number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener 9 digitos'
+                    minlength:'El teléfono deber tener 9 digitos'
                 },
                 'phone':{
                     required:'Por favor ingrese un teléfono',
                     number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener más de 6 digitos'
+                    minlength:'El teléfono deber tener más de 6 digitos'
                 },
                 'specialization':{
                     required:'Por favor ingrese una especialización',
@@ -221,13 +235,32 @@ var MembershipRequestFormValidation = function() {
                 'birthDistrict':{
                     required:'Por favor ingrese un distrito'
                 },
+                'addressDepartment':{
+                    required:'Por favor ingrese un departamento'
+                },
+                'addressProvince':{
+                    required:'Por favor ingrese una provincia'
+                },
+                'addressDistrict':{
+                    required:'Por favor ingrese un distrito'
+                },
                 'photo':{
-                    required: 'Por favor inrese una foto'
+                    required: 'Por favor ingrese una foto'
+                },
+                'address':{
+                    required: 'Por favor ingrese una dirección'
                 }                
-            }
             }
         });
     };
+    jQuery.validator.addMethod("domain", function(value, element) {
+        var today=new Date();
+    var sbirthDate = $('#birthDate').val();
+    var splitdate = sbirthDate.split("/");
+    var birthDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
+    if(birthDate >= today){ return false;}
+    else {return true;}
+    }, "La fecha no puede ser mayor a la de hoy");
 
     return {
         init: function () {

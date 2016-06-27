@@ -303,3 +303,44 @@ def register_in_out(request, id):
 
     return HttpResponse( json.dumps(req_send), content_type='application/json')
 
+
+@require_http_methods(['GET'])
+def index_shop_products(request):
+    product_service = ProductsService()
+    providers_service = ProvidersService()
+    product_types_service = ProductTypesService()
+
+    products = product_service.getProducts()
+    all_providers = providers_service.getActiveProviders()
+    all_product_types = product_types_service.getProductTypes()
+
+    context = {
+        'products' : products,
+        'all_providers' : all_providers,
+        'all_product_types' : all_product_types,
+        'titulo' : 'titulo'
+    }
+
+    return render(request, 'User/Products/index_shop_products.html', context) 
+
+
+@require_http_methods(['POST'])
+def make_purchase(request):
+    req = json.loads( request.body.decode('utf-8') )
+    update_data = {}
+
+    product = ProductsService().find(req.get("id"))
+
+    update_data["product_type"] = product.product_type
+    update_data["provider"] = product.provider.all()
+    #purchase_order = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE)
+    update_data["price"] = product.price
+    update_data["actual_stock"] = product.actual_stock - int(req.get("quantity"))
+    update_data["minimum_stock"] = product.minimum_stock
+    update_data["status"] = product.status
+    update_data["description"] = product.description
+    update_data["name"] = product.name
+
+    ProductsService().update(req.get("id"), update_data)
+
+    return HttpResponse( json.dumps(req), content_type='application/json')

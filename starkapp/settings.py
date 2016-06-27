@@ -65,7 +65,8 @@ INSTALLED_APPS = [
     'entry',
     'guests',
     'suspension',
-    'reserve_field'
+    'reserve_field',
+    'politics'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -145,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Lima'
 
 USE_I18N = True
 
@@ -166,7 +167,7 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static")
 
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"uploads")
+MEDIA_ROOT = os.path.join(BASE_DIR,"uploads")
 
 MEDIA_URL = '/uploads/'
 

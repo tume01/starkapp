@@ -138,7 +138,7 @@ def create_affiliate(request):
 
         return render(request, 'User/Affiliates/index_affiliates.html', context)
 
-    form = AffiliateForm(request.POST)
+    form = AffiliateForm(request.POST, request.FILES)
 
     ubigeo_service = UbigeoService()
 
@@ -205,7 +205,32 @@ def create_affiliate(request):
 
         create_data["ubigeo"] = ubi[0]
 
-        create_data["photo"] = request.FILES['photo']
+        if 'photo' in request.FILES:
+
+            create_data["photo"] = request.FILES['photo']
+
+        else:
+
+            affiliate_service = AffiliateService()
+
+            member_service = MembersService()
+
+            member = member_service.getMember(id_member)
+
+            filter_affiliate = {}
+
+            filter_affiliate["member"] = member
+
+            filter_affiliate["state"] = 1
+
+            affiliates = affiliate_service.filter(filter_affiliate)
+
+            context = {
+                'member' : member,
+                'affiliates' : affiliates
+            }
+
+            return render(request, 'User/Affiliates/index_affiliates.html', context)
 
         create_data["gender"] = request.POST['gender']
 
@@ -291,19 +316,29 @@ def edit_affiliate_index(request):
 
     provinces = ubigeo_service.distinctProvince(filter_ubigeo)
 
-    filter_ubigeo = {}
-
     filter_ubigeo["province"] = affiliate.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
-    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+    filter_ubigeo = {}
+
+    filter_ubigeo["department"] = affiliate.birthUbigeo.department
+
+    birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+    filter_ubigeo["province"] = affiliate.birthUbigeo.province
+
+    birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%d/%m/%Y')
 
     context = {
         'affiliate' : affiliate,
         'departments' : departments,
         'provinces' : provinces,
+        'birthprovinces' : birthprovinces,
         'districts' : districts,
+        'birthdistricts' : birthdistricts,
         'doc_types': doc_types,
         'relationships' : relationships
     }
@@ -344,7 +379,7 @@ def edit_affiliate(request):
 
         return render(request, 'User/Affiliates/index_affiliates.html', context)
 
-    form = AffiliateForm(request.POST)
+    form = AffiliateForm(request.POST, request.FILES)
 
     ubigeo_service = UbigeoService()
 
@@ -364,20 +399,46 @@ def edit_affiliate(request):
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo_service = UbigeoService()
+
+        departments = ubigeo_service.distinctDepartment()
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = affiliate.ubigeo.department
+
+        provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo["province"] = affiliate.ubigeo.province
+
+        districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
         relationships = relationships_service.getRelationships()
 
-        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%d/%m/%Y')
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = affiliate.birthUbigeo.department
+
+        birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo["province"] = affiliate.birthUbigeo.province
+
+        birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
         context = {
             'affiliate': affiliate,
-            'ubigeo': ubigeo,
+            'departments' : departments,
+            'provinces' : provinces,
+            'birthprovinces' : birthprovinces,
+            'districts' : districts,
+            'birthdistricts' : birthdistricts,
             'doc_types': doc_types,
             'relationships' : relationships
         }
 
-        return render(request, 'User/Affiliates/edit_affiliatehtml', context)
+        return render(request, 'User/Affiliates/edit_affiliate.html', context)
 
     else:
 
@@ -414,6 +475,7 @@ def edit_affiliate(request):
         edit_data["ubigeo"] = ubi[0]
 
         if 'photo' in request.FILES:
+            
             edit_data["photo"] = request.FILES['photo']
 
         edit_data["gender"] = request.POST['gender']
@@ -601,7 +663,7 @@ def admin_create_affiliate(request):
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
 
-    form = AffiliateForm(request.POST)
+    form = AffiliateForm(request.POST, request.FILES)
 
     ubigeo_service = UbigeoService()
 
@@ -670,7 +732,35 @@ def admin_create_affiliate(request):
 
         create_data["ubigeo"] = ubi[0]
 
-        create_data["photo"] = request.FILES['photo']
+        if 'photo' in request.FILES:
+
+            create_data["photo"] = request.FILES['photo']
+
+        else:
+
+            affiliate_service = AffiliateService()
+
+            member_service = MembersService()
+
+            member = member_service.getMember(id_member)
+
+            filter_affiliate = {}
+
+            filter_affiliate["member"] = member
+
+            filter_affiliate["state"] = 1
+
+            affiliates = affiliate_service.filter(filter_affiliate)
+
+            isSuspended = isMemberSuspended(member)
+
+            context = {
+                'member' : member,
+                'affiliates' : affiliates,
+                'isSuspended' : isSuspended
+            }
+
+            return render(request, 'Admin/Affiliates/index_affiliates.html', context)
 
         create_data["gender"] = request.POST['gender']
 
@@ -759,19 +849,31 @@ def admin_edit_affiliate_index(request):
 
     provinces = ubigeo_service.distinctProvince(filter_ubigeo)
 
-    filter_ubigeo = {}
-
     filter_ubigeo["province"] = affiliate.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
-    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+    filter_ubigeo = {}
+
+    filter_ubigeo["department"] = affiliate.birthUbigeo.department
+
+    birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+    filter_ubigeo["province"] = affiliate.birthUbigeo.province
+
+    birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+
+
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%d/%m/%Y')
 
     context = {
         'affiliate' : affiliate,
         'departments' : departments,
         'provinces' : provinces,
+        'birthprovinces' : birthprovinces,
         'districts' : districts,
+        'birthdistricts' : birthdistricts,
         'doc_types': doc_types,
         'relationships' : relationships
     }
@@ -815,7 +917,7 @@ def admin_edit_affiliate(request):
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
 
-    form = AffiliateForm(request.POST)
+    form = AffiliateForm(request.POST, request.FILES)
 
     ubigeo_service = UbigeoService()
 
@@ -845,21 +947,31 @@ def admin_edit_affiliate(request):
 
         provinces = ubigeo_service.distinctProvince(filter_ubigeo)
 
-        filter_ubigeo = {}
-
         filter_ubigeo["province"] = affiliate.ubigeo.province
 
         districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = affiliate.birthUbigeo.department
+
+        birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo["province"] = affiliate.birthUbigeo.province
+
+        birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
         relationships = relationships_service.getRelationships()
 
-        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%d/%m/%Y')
 
         context = {
             'affiliate' : affiliate,
             'departments' : departments,
             'provinces' : provinces,
+            'birthprovinces' : birthprovinces,
             'districts' : districts,
+            'birthdistricts' : birthdistricts,
             'doc_types': doc_types,
             'relationships' : relationships
         }

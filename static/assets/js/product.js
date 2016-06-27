@@ -43,6 +43,13 @@ $('#SaveProduct').click(function(){
 		//console.log('form');
 		//console.log($('#selectProductType').val());
 	}
+	else if($('#actualStock').val() <= $('#minStock').val()){
+		swal({
+            title: "",
+            text: "El stock actual debe superar al minimo.",
+            type: "info"
+        });
+	}
 	else{
 		console.log('ajax');
 		data = {};
@@ -81,36 +88,81 @@ $('#SaveProduct').click(function(){
 
 $('#EditProduct').click(function(){
 	console.log('click editar');
-	data = {};
-	data.name = $('#name').val();
-	data.actualStock = $('#actualStock').val();
-	data.minStock = $('#minStock').val();
-	data.productType = $('#selectProductType').val();
-	data.description = $('#description').val();
-	data.providers = $('#select2Provider').val();
-	data.price = $('#price').val();
 
-	console.log(data);
+	if ($('#name').val() == '' || $('#actualStock').val() == '' || $('#minStock').val() == '' ||
+		$('#price').val() == '' || 
+		$('#selectProductType').val() == '' || $('#selectProductType').val() == null){
 
-	var xhr = $.ajax({
-	    type: "POST", 
-	    url: "/products/edit/update/"+ $('#idProduct').val(), //url que procesa
-	    dataType: "text",
-	    data: JSON.stringify(data),
-	    contentType: "application/json; charset=utf-8",
-    });
+		$('#formNewProduct').submit();
+		//console.log('form');
+		//console.log($('#selectProductType').val());
+	}
+	else if($('#actualStock').val() <= $('#minStock').val()){
+		swal({
+            title: "",
+            text: "El stock actual debe superar al minimo.",
+            type: "info"
+        });
+	}
+	else{
+		swal({
+                title: "Edicion de producto",
+                text: "Se actualizara el producto seleccionado. ¿Desea continuar?",
+                type: "info",
+                showCancelButton: true,
+                //confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Aceptar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+        },
+        function(){ 
+		    swal({
+                title: "Producto actualizado!",
+                text: "",
+                type: "success",
+                //showCancelButton: true,
+                //confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Aceptar",
+                //cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){
+            	data = {};
+				data.name = $('#name').val();
+				data.actualStock = $('#actualStock').val();
+				data.minStock = $('#minStock').val();
+				data.productType = $('#selectProductType').val();
+				data.description = $('#description').val();
+				data.providers = $('#select2Provider').val();
+				data.price = $('#price').val();
 
-    xhr.done(function(data) {
-		console.log('done='+data);
-		window.location="/products";
-    });
+				console.log(data);
 
-    xhr.fail(function(xhr, status, text){
-        console.log("Error " + xhr.readyState + " " +text);
+				var xhr = $.ajax({
+				    type: "POST", 
+				    url: "/products/edit/update/"+ $('#idProduct').val(), //url que procesa
+				    dataType: "text",
+				    data: JSON.stringify(data),
+				    contentType: "application/json; charset=utf-8",
+			    });
 
-    });
+			    xhr.done(function(data) {
+					console.log('done='+data);
+					window.location="/products";
+			    });
 
-    return xhr;
+			    xhr.fail(function(xhr, status, text){
+			        console.log("Error " + xhr.readyState + " " +text);
+
+			    });
+            	return xhr;
+            });
+
+            
+		});
+	}
 
 });
 
@@ -254,6 +306,72 @@ function addRowsOnTable(item, i){
 
 }
 
+
+function shopProduct(id, stock){
+	console.log('shop product'+ id);
+
+	swal({   
+		title: "Ingrese la cantidad del producto",   
+		//text: "Coloque un stock",   
+		type: "input",   
+		showCancelButton: true,   
+		closeOnConfirm: false,   
+		animation: "slide-from-top",   
+		inputPlaceholder: "" 
+	},
+	function(inputValue){         
+		if (!$.isNumeric(inputValue) || inputValue == "") {     
+			swal.showInputError("Debe ingresar un numero");     
+			return false;   
+		}
+		else{
+			if (inputValue > stock){
+				swal.showInputError("No hay stock suficiente");  
+				return false;   
+			}
+			else{
+				data = {};
+				data.id = id;
+				data.quantity = inputValue;
+				console.log(data);
+
+				var xhr = $.ajax({
+				    type: "POST", 
+				    url: "/products/make/purchase/", 
+				    dataType: "json",
+				    data: JSON.stringify(data),
+				    contentType: "application/json; charset=utf-8",
+			    });
+
+				xhr.done(function(data) {
+					console.log('done='+data); 
+					swal({
+		                title: "Compra exitosa!",
+		                text: "",
+		                type: "success",
+		                //showCancelButton: true,
+		                //confirmButtonColor: "#DD6B55",
+		                confirmButtonClass: "btn-danger",
+		                confirmButtonText: "Aceptar",
+		                //cancelButtonText: "Cancelar",
+		                closeOnConfirm: false
+		            },
+		            function(){
+		            	window.location = "/products/index/shop/product";
+		        	});
+			    });
+
+			    xhr.fail(function(xhr, status, text){
+			        console.log("Error " + xhr.readyState + " " +text);
+
+			    });
+
+			    return xhr;	
+			}
+		}
+		
+	});
+}
 
 /*
 $('#formNewProduct').submit(function(){
