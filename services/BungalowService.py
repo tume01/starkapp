@@ -24,3 +24,7 @@ class BungalowService(object):
     @classmethod
     def findBungalow(cls, id):
         return cls._repository.find(id)
+
+    @classmethod
+    def filter(cls, filters):
+        return cls._repository.filter(filters)

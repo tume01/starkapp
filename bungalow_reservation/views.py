@@ -1,3 +1,4 @@
+from django.db.models import Sum, Count
 from django.template import loader
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
@@ -18,7 +19,7 @@ from bungalow_reservation.models import BungalowReservation
 import datetime
 from django.http import JsonResponse
 import json
-
+from services.PaymentService import PaymentService
 
 @require_http_methods(['POST'])
 def check_in(request):
@@ -78,6 +79,36 @@ def cancel(request):
 def admin_index(request):
     reservations = BungalowReservationService.getReservations()
 
+    #Datos de reporte
+    bungalows_count = BungalowService.getBungalows().count()
+
+
+    """
+    bungalows_types = BungalowTypeService.getBungalowTypes()
+    
+    bungalows_sales = 0
+
+    for bungalow_type in bungalows_types:
+        qry_bun = BungalowService.filter({'bungalow_type_id': bungalow_type.id})
+        bungalows_sales = bungalows_sales + qry_bun.count()*bungalow_type.price
+    """
+    reservation_sales = reservations.aggregate(Sum('bungalow_price'))['bungalow_price__sum']
+    reservation_count = reservations.count()
+    reservation_ocup  = reservation_count/bungalows_count*100
+
+    finalized_reserv  = BungalowReservationService.filter({'status': 3}).count()
+    reservation_conc  = finalized_reserv/reservation_count
+
+    #Se obtiene el tipo de bungalow con mayor y menor demanda
+    reserv_group_by_type = reservations.values('bungalow_type_id').annotate(Count('bungalow_type_id')).order_by('-bungalow_type_id__count')
+
+    #import pdb; pdb.set_trace() 
+
+    bungalow_type_top  = BungalowTypeService.findBungalowType(reserv_group_by_type.first()['bungalow_type_id']).name
+    bungalow_type_last = BungalowTypeService.findBungalowType(reserv_group_by_type.last()['bungalow_type_id']).name
+
+
+
     member = MembersService().getMemberByUserId(request.user)
     if (member):
         print("Filter by Member")
@@ -97,6 +128,12 @@ def admin_index(request):
 
     context = {
         'reservations': paginated_reservations,
+        'reservation_sales': reservation_sales,
+        'reservation_count': reservation_count,
+        'reservation_ocup': reservation_ocup,
+        'reservation_conc': reservation_conc,
+        'bungalow_type_top': bungalow_type_top,
+        'bungalow_type_last': bungalow_type_last,
         'bungalowTypes': BungalowTypeService.getBungalowTypes(),
         'headquarters': HeadquarterService().getHeadquarters(),
         'status_choices': BungalowReservation.STATUS_CHOICES,
@@ -343,10 +380,10 @@ def user_create_reserve(request):
     arrival_date = datetime.datetime.strptime(request.POST['arrival_date'], '%d/%m/%Y')
     departure_date = arrival_date + datetime.timedelta(days=int(request.POST['duration']))
 
-    create_new_reservation(bungalow, member, arrival_date, departure_date)
+    bungalow_reservation = create_new_reservation(bungalow, member, arrival_date, departure_date)
 
-    return HttpResponseRedirect(reverse('bungalowReservation:user_index'))
-
+    if PaymentService.createBungalowReservationProduct(bungalow_reservation, member):
+        return HttpResponseRedirect(reverse('checkout:index') + '?product_type=4')
 
 # Helpers
 def create_new_reservation(bungalow, member, arrival_date, departure_date):
@@ -371,7 +408,7 @@ def create_new_reservation(bungalow, member, arrival_date, departure_date):
     insert_data["arrival_date"] = arrival_date
     insert_data["departure_date"] = departure_date
 
-    BungalowReservationService.create(insert_data)
+    return BungalowReservationService.create(insert_data)
 
 
 # Unimplemented

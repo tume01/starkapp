@@ -10,6 +10,7 @@ from services.BungalowReservationService import BungalowReservationService
 from itertools import chain
 from adapters.DateManager import DateManager
 from services.FineService import FineService
+from django.db.models import Sum
 
 class PaymentService(object):
 
@@ -169,6 +170,7 @@ class PaymentService(object):
                 cls.registerMembership(member, products)
             elif product_type == 1:
                 cls.registerFine(member, products)
+  
 
             return products.update(status=1)
         return False
@@ -177,10 +179,10 @@ class PaymentService(object):
     @classmethod
     def getEventDiscount(cls, event, membership_type):
         
-        discounts =  event.eventpromotion_set.filter(membership_type=membership_type)
+        discounts =  event.event_type.eventpromotion_set.filter(membership_type=membership_type)
 
         if discounts:
-            return discounts.aggregate(Sum('percentage'))['percentage__sum']
+            return discounts.aggregate(Sum('percentage'))['percentage__sum'] / 100
 
         return 0
 
@@ -190,7 +192,7 @@ class PaymentService(object):
         discounts =  membership_type.membershippromotion_set.all()
 
         if discounts:
-            return discounts.aggregate(Sum('percentage'))['percentage__sum']
+            return discounts.aggregate(Sum('percentage'))['percentage__sum'] / 100
             
         return 0
 
@@ -269,7 +271,7 @@ class PaymentService(object):
     def createBungalowReservationProduct(cls, bungalow_reservation, member):
 
         insert_data = {
-            'description': 'Pago de Rerva Bungalow:' + bungalow_reservation.bungalow_number,
+            'description': 'Pago de Rerva Bungalow:' + str(bungalow_reservation.bungalow_number),
             'quantity': 1,
             'product_type': 4,
             'product_id': bungalow_reservation.pk,
