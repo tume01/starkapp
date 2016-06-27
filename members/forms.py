@@ -32,9 +32,9 @@ class MemberForm(forms.Form):
         if data == None:
             return data
         w, h = get_image_dimensions(data)
-        if w < 301:
+        if w > 301:
             raise forms.ValidationError("Error en el ancho de la imagen")
-        if h < 301:
+        if h > 301:
             raise forms.ValidationError("Error en la alutra de la imgen")
         return data
 
