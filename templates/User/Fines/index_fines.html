@@ -79,6 +79,8 @@ Lista de multas
                     </div>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
+            <form class="form" id='busqueda' method="post" action='{% url "fine:pay" %}'>
+            {% csrf_token %}
             <table class="table table-bordered table-striped js-dataTable-simple" id='tabla'>
                 <thead>
                     <tr>
@@ -98,15 +100,24 @@ Lista de multas
                             <td class="font-w600">{{fine.status}} </td>
                             <td class="text-center">
                                             {% if fine.status == "Pendiente de Pago" %}
+                                            <div class="form-group">
                                                 <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default editar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Pagar"><i class="fa fa-usd"></i></button>
+                                                    <input type="checkbox" name="check_list[]" value="{{fine.id}}">
+                                                    <!--<button class="btn btn-xs btn-default editar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Pagar"><i class="fa fa-usd"></i></button>-->
                                                 </div>
+                                            </div>
                                             {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                <div class="form-group">                    
+                                    <div class="col-xs-2 col-xs-offset-4">
+                                        <button class="btn btn-success" id='button' type='submit' ><i class="fa fa-check push-5-r"></i> Pagar</button>
+                                    </div>
+                                </div>
+            </form>
             </div>
         </div>
         <!-- END Simple Table Full -->

@@ -48,7 +48,7 @@ def index(request):
 @require_http_methods(['GET'])
 def iniUser(request):
 
-    if request.user.groups.all()[0] == 'usuarios':
+    if request.user.groups.all()[0].name == 'usuarios':
         return render(request, 'User/starting_screen.html')
     else:
         return render(request, 'Admin/starting_screen.html')
@@ -61,7 +61,7 @@ def iniUser(request):
 @require_http_methods(['GET'])
 def iniAdmin(request): 
 
-    if request.user.groups.all()[0] == 'usuarios':
+    if request.user.groups.all()[0].name == 'usuarios':
         return render(request, 'User/starting_screen.html')
     else:
         return render(request, 'Admin/starting_screen.html')
@@ -73,7 +73,7 @@ def iniAdmin(request):
 @require_http_methods(['GET'])
 def ini(request):
     
-    if request.user.groups.all()[0] == 'usuarios':
+    if request.user.groups.all()[0].name == 'usuarios':
         return render(request, 'User/starting_screen.html')
     else:
         return render(request, 'Admin/starting_screen.html')
