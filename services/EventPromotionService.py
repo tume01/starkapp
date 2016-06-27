@@ -16,7 +16,7 @@ class EventPromotionService(object):
 	def getEventPromotion(self):
 		return self.__event_promotion_repository.all()
 
-	def findHeadquarter(self, id):
+	def findEventPromotion(self, id):
 		return self.__event_promotion_repository.find(id)
 	
 	def filter(self, filters):

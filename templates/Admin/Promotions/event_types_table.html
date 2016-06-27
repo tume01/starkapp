@@ -1,5 +1,10 @@
-<label class="col-xs-12" for="seat">Elegir Evento</label>
-<div class="col-md-6">
+<div class="col-md-6" id="event_types_options">
+    <div class="form-group">
+        <label class="col-xs-12" for="example-number-input">Descuento</label>
+        <div class="col-sm-6">
+        <input class="form-control" id="example-number-input" name="event_percentage" placeholder="Descuento" >
+        </div>
+    </div>
     <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-building"></i></span>
         <select class="form-control" id="example-select" name="event_type" size="1">
@@ -8,4 +13,19 @@
         {% endfor %}
         </select>
     </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+        	<label class="col-xs-12" for="seat">Elegir membresía</label>
+            <div class="col-md-6">
+                <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-building"></i></span>
+                <select class="form-control" id="example-select" name="membership_event_type" size="1">
+                {% for membership in membership_types %}
+                	<option value="{{membership.id}}">{{membership.name}}</option>
+                {% endfor %}
+                </select>
+            	</div>
+        	</div>
+    	</div>
+	</div>
 </div>

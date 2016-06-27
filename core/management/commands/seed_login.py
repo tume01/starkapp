@@ -2135,15 +2135,6 @@ class Command(BaseCommand):
         fine3 = Fine(fine_type=ftype3, member=memb2,  observations='No asistio a una reunion importante',status='Por Pagar')
         fine3.save()
 
-        prom1 = Promotion(description='Promocion venta de bungalows', percentage=15, status=1)
-        prom1.save()
-
-        prom2 = Promotion(description='Promocion oferta de membresia', percentage=10, status=1)
-        prom2.save()
-
-        prom3 = Promotion(description='Promocion productos todos', percentage=5, status=1)
-        prom3.save()
-
         aff = Affiliate(member=memb1, identity_document_type=doc1, ubigeo=u2, name='Fabio',
                         paternalLastName='Olcese', maternalLastName='Undertale', document_number=98765432, phone=3813812,
                         email='mailm4@mailcito.com', address='The witcher', state=1)

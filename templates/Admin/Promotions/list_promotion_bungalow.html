@@ -32,7 +32,7 @@ Lista de promociones
                 {% csrf_token %}  
                 <input type="hidden" id="hid1" name="id"/>
             </form>
-            <form id="myFormEdit" action="{% url "promotions:edit_index" %} " method="post">
+            <form id="myFormEdit" action="{% url 'promotions:index_edit_bungalow' %} " method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid2" name="id"/>
             </form>
@@ -92,17 +92,22 @@ Lista de promociones
             <table class="table table-bordered table-striped js-dataTable-simple" id='tabla'>
                 <thead>
                     <tr>
-                            <th>Promocion</th>                                      
+                            <th>Promocion</th>
+                            <th>Porcentaje</th>                                      
+                            <th>Fecha de inicio</th>                                      
+                            <th>Fecha Fin</th>                                      
                             <th>Acción</th>                                        
                         </tr>
                     </thead>
                     <tbody id='tbodyid'>
-                        {% for promotion in promotions %}         
+                        {% for promotion,name in promotions %}         
                         <tr>
-                            <td class="font-w600">{{promotion.description}}</td>
+                            <td class="font-w600">{{name}}</td>
+                            <td class="font-w600">{{promotion.percentage}}</td>
+                            <td class="font-w600">{{start}}</td>
+                            <td class="font-w600">{{end}}</td>
                             <td class="text-center">
                                 <div class="btn-group">
-                                    <a class="btn btn-xs btn-default" href="{% url 'promotions:show' promotion.id %}" data-id="{{promotion.id}}" type="button" data-toggle="tooltip" title="Mostrar Promoción"><i class="glyphicon glyphicon-plus"></i></a>
                                     <button class="btn btn-xs btn-default editar" data-id="{{promotion.id}}" type="button"  data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button>
                                     <button class="btn btn-xs btn-default eliminar" data-id="{{promotion.id}}" type="button" data-toggle="tooltip" title="Eliminar Promoción"><i class="fa fa-times"></i></button>
                                 </div>

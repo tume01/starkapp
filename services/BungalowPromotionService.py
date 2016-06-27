@@ -2,7 +2,7 @@ from repositories import BungalowPromotionRepository
 
 class BungalowPromotionService(object):
 
-	__bungalow_promotion_repository = BungalowPromotionRepository.BungalowPromotion()
+	__bungalow_promotion_repository = BungalowPromotionRepository.BungalowPromotionRepository()
 
 	def create(self, insert_data):
 		return self.__bungalow_promotion_repository.create(insert_data)
@@ -16,7 +16,7 @@ class BungalowPromotionService(object):
 	def getBungalowPromotion(self):
 		return self.__bungalow_promotion_repository.all()
 
-	def findHeadquarter(self, id):
+	def findBungalowPromotion(self, id):
 		return self.__bungalow_promotion_repository.find(id)
 	
 	def filter(self, filters):

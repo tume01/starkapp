@@ -2,7 +2,7 @@ from repositories import MembershipPromotionRepository
 
 class MembershipPromotionService(object):
 
-	__membership_promotion_repository = MembershipPromotionRepository.MembershipPromotion()
+	__membership_promotion_repository = MembershipPromotionRepository.MembershipPromotionRepository()
 
 	def create(self, insert_data):
 		return self.__membership_promotion_repository.create(insert_data)
@@ -16,7 +16,7 @@ class MembershipPromotionService(object):
 	def getMembershipPromotion(self):
 		return self.__membership_promotion_repository.all()
 
-	def findHeadquarter(self, id):
+	def findMembershipPromotion(self, id):
 		return self.__membership_promotion_repository.find(id)
 	
 	def filter(self, filters):
