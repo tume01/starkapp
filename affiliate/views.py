@@ -330,7 +330,7 @@ def edit_affiliate_index(request):
 
     birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
-    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%d/%m/%Y')
 
     context = {
         'affiliate' : affiliate,
@@ -415,7 +415,7 @@ def edit_affiliate(request):
 
         relationships = relationships_service.getRelationships()
 
-        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%d/%m/%Y')
 
         filter_ubigeo = {}
 
@@ -865,7 +865,7 @@ def admin_edit_affiliate_index(request):
 
 
 
-    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+    affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%d/%m/%Y')
 
     context = {
         'affiliate' : affiliate,
@@ -963,7 +963,7 @@ def admin_edit_affiliate(request):
 
         relationships = relationships_service.getRelationships()
 
-        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%m/%d/%Y')
+        affiliate.birthDate = datetime.strftime(affiliate.birthDate, '%d/%m/%Y')
 
         context = {
             'affiliate' : affiliate,
