@@ -90,6 +90,20 @@ Creación de bungalows
                 </div>
 
                 <div class="row">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label>Sede</label>
+                            <select class="form-control" name="member_id" size="1">
+                                {% for member in members %}
+                                <option value="{{ member.id }}">
+                                    {{ member.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="form-group">
                         <div class="col-xs-2 col-xs-offset-4">
                             <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Crear
