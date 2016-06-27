@@ -89,15 +89,16 @@ $('#SaveProduct').click(function(){
 $('#EditProduct').click(function(){
 	console.log('click editar');
 
+
 	if ($('#name').val() == '' || $('#actualStock').val() == '' || $('#minStock').val() == '' ||
 		$('#price').val() == '' || 
 		$('#selectProductType').val() == '' || $('#selectProductType').val() == null){
 
-		$('#formNewProduct').submit();
+		$('#formEditProduct').submit();
 		//console.log('form');
 		//console.log($('#selectProductType').val());
 	}
-	else if($('#actualStock').val() <= $('#minStock').val()){
+	else if(parseInt($('#actualStock').val()) <= parseInt($('#minStock').val())){
 		swal({
             title: "",
             text: "El stock actual debe superar al minimo.",
