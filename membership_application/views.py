@@ -10,6 +10,7 @@ from services.AffiliateService import AffiliateService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
+from services.PoliticsService import PoliticsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
 from adapters.FormValidator import FormValidator
@@ -40,7 +41,8 @@ def index(request):
         'doc_types' : doc_types,
     }
 
-    return render(request, 'Admin/Membership/index_membership_request.html', context) 
+    return render(request, 'Admin/Membership/index_membership_request.html', context)
+
 
 
 @login_required
@@ -86,12 +88,14 @@ def filter(request):
     data = serializers.serialize("json", membershipApplications)
 
     return HttpResponse(data, content_type='application/json')
+
     
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_index(request):
+
 
     membership_type_service = MembershipTypeService()
 
@@ -105,12 +109,20 @@ def create_index(request):
 
     ubigeo = ubigeo_service.distinctDepartment()
 
-    context = {
+    politics_service = PoliticsService()
 
+    filter_politics = {}
+
+    filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+    daysToAdd = politics_service.filter(filter_politics)[0].value
+
+    context = {
         'types' : types,
         'ubigeo' : ubigeo,
         'doc_types': doc_types,
-        'titulo' : 'titulo'
+        'titulo' : 'titulo',
+        'daysToAdd' : daysToAdd
     }
 
     return render(request, 'Admin/Membership/new_membership_request.html', context)
@@ -120,6 +132,7 @@ def create_index(request):
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_index(request):
+
 
     membership_type_service = MembershipTypeService()
 
@@ -159,6 +172,14 @@ def edit_index(request):
 
     districts2 = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    politics_service = PoliticsService()
+
+    filter_politics = {}
+
+    filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+    daysToAdd = politics_service.filter(filter_politics)[0].value
+
     context = {
         'types' : types,
         'doc_types' : doc_types,
@@ -168,6 +189,7 @@ def edit_index(request):
         'provincesBirth': provinces2,
         'districtsBirth': districts2,
         'membership_application' : membership_application,
+        'daysToAdd' : daysToAdd
     }
 
     if(membership_application.sbirthUbigeo):
@@ -189,6 +211,7 @@ def edit_index(request):
     return render(request, 'Admin/Membership/edit_membership_request.html', context)
 
 
+
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
@@ -205,6 +228,9 @@ def delete_membership_application(request):
     member_application_service.update(id_application, insert_data)
 
     return HttpResponseRedirect(reverse('membership_application:index'))
+
+
+
 
 
 
@@ -289,11 +315,20 @@ def create_membership_application(request):
 
             ubigeo = ubigeo_service.distinctDepartment()
 
+            politics_service = PoliticsService()
+
+            filter_politics = {}
+
+            filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+            daysToAdd = politics_service.filter(filter_politics)[0].value
+
             context = {
                 'types' : types,
                 'doc_types' : doc_types,
                 'ubigeo' : ubigeo,
-                'titulo': 'titulo'
+                'titulo': 'titulo',
+                'daysToAdd' : daysToAdd
             }
 
             messages.error(request, 'Debe ingresar una foto')
@@ -324,7 +359,11 @@ def create_membership_application(request):
 
         insert_data["phone"] = form.cleaned_data['phone']
 
-        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '':
+        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '' \
+                and form.cleaned_data['smaternalLastName'] != '' and form.cleaned_data['snum_doc'] != '' \
+                and form.cleaned_data['snationality'] != '' and form.cleaned_data['sbirthDate'] != ' ' \
+                and form.cleaned_data['sbirthPlace'] != '' and form.cleaned_data['scellPhoneNumber'] != '' \
+                and form.cleaned_data['semail'] != '':
 
             insert_data["sidentity_document_type_id"] = sidentity_document_id
 
@@ -338,7 +377,7 @@ def create_membership_application(request):
 
             insert_data["sgender"] = request.POST['sgender']
 
-            insert_data["scellphoneNumber"] = form.cleaned_data['scellphoneNumber']
+            insert_data["scellPhoneNumber"] = form.cleaned_data['scellPhoneNumber']
 
             insert_data["sspecialization"] = form.cleaned_data['sspecialization']
 
@@ -387,11 +426,20 @@ def create_membership_application(request):
 
         ubigeo = ubigeo_service.distinctDepartment()
 
+        politics_service = PoliticsService()
+
+        filter_politics = {}
+
+        filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+        daysToAdd = politics_service.filter(filter_politics)[0].value
+
         context = {
             'types' : types,
             'doc_types' : doc_types,
             'ubigeo' : ubigeo,
-            'titulo': 'titulo'
+            'titulo': 'titulo',
+            'daysToAdd' : daysToAdd
         }
 
         return render(request2, 'Admin/Membership/new_membership_request.html', context)
@@ -466,7 +514,7 @@ def edit_membership_application(request):
         insert_data["status"] = 1
 
         if 'photo' in request.FILES:
-            
+
             insert_data["photo"] = request.FILES['photo']
 
         insert_data["gender"] = request.POST['gender']
@@ -493,7 +541,11 @@ def edit_membership_application(request):
 
         insert_data["phone"] = form.cleaned_data['phone']
 
-        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '':
+        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != ''\
+            and form.cleaned_data['smaternalLastName'] != '' and form.cleaned_data['snum_doc'] != ''\
+            and form.cleaned_data['snationality'] != '' and form.cleaned_data['sbirthDate'] != ' '\
+            and form.cleaned_data['sbirthPlace'] != '' and form.cleaned_data['scellPhoneNumber'] != ''\
+            and form.cleaned_data['semail'] != '':
 
             insert_data["sidentity_document_type_id"] = sidentity_document_id
 
@@ -515,7 +567,7 @@ def edit_membership_application(request):
 
             insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
 
-            insert_data["scellphoneNumber"] = form.cleaned_data['scellphoneNumber']
+            insert_data["scellPhoneNumber"] = form.cleaned_data['scellPhoneNumber']
 
             filter_ubigeo["department"] = request.POST['sbirthDepartment']
 
@@ -530,7 +582,7 @@ def edit_membership_application(request):
             if 'sphoto' in request.FILES:
 
                 insert_data["sphoto"] = request.FILES['sphoto']
-    
+
             insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
 
             insert_data["sworkPlaceJob"] = form.cleaned_data['sworkPlaceJob']
@@ -578,6 +630,14 @@ def edit_membership_application(request):
 
         districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+        politics_service = PoliticsService()
+
+        filter_politics = {}
+
+        filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+        daysToAdd = politics_service.filter(filter_politics)[0].value
+
         context = {
             'types': types,
             'doc_types': doc_types,
@@ -585,6 +645,7 @@ def edit_membership_application(request):
             'provinces': provinces,
             'districts': districts,
             'membership_application': membership_application,
+            'daysToAdd' : daysToAdd
         }
 
         return render(request2, 'Admin/Membership/edit_membership_request.html', context)
@@ -680,7 +741,7 @@ def create_objection(request):
     membership_application = member_application_service.getMembership_Application(requestId)
 
     member = member_service.getMemberByUser(current_user)
-        
+
     filter_data = {}
 
     filter_data["member"] = member
@@ -724,7 +785,7 @@ def create_objection(request):
         return HttpResponseRedirect(reverse('membership_application:user_index'))
 
     else:
-        
+
 
         context = {
             'membership_application': membership_application,
@@ -832,7 +893,7 @@ def delete_objection(request):
 def approve_membership_application(request):
 
     if 'Accept' in request.POST:
-    
+
         id_application = request.POST['id']
 
         member_application_service = Membership_ApplicationService()
@@ -847,11 +908,20 @@ def approve_membership_application(request):
 
         ubigeo = ubigeo_service.distinctDepartment()
 
+        politics_service = PoliticsService()
+
+        filter_politics = {}
+
+        filter_politics["name"] = 'MONTHS_MEMBERSHIP_PAYMENT_PERIOD'
+
+        monthsToAdd = politics_service.filter(filter_politics)[0].value
+
         context = {
             'titulo' : 'titulo',
             'doc_types' : doc_types,
             'ubigeo' : ubigeo,
             'membership_application' : membership_application,
+            'monthsToAdd' : monthsToAdd
         }
 
         return render(request, 'Admin/Membership/new_membership_member.html', context)
