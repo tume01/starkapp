@@ -53,7 +53,7 @@ Lista de multas
                                                     <select class="form-control" id="example-select" name="status" size="1">
                                                         <option value="">Todas</option>
                                                         <option value="Pagada">Pagadas</option>
-                                                        <option value="Por Pagar">Por Pagar</option>
+                                                        <option value="Pendiente de Pago">Pendiente de Pago</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -97,6 +97,11 @@ Lista de multas
                             <td class="font-w600">S/. {{fine.price}} </td>
                             <td class="font-w600">{{fine.status}} </td>
                             <td class="text-center">
+                                            {% if fine.status == "Pendiente de Pago" %}
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-default editar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Pagar"><i class="fa fa-usd"></i></button>
+                                                </div>
+                                            {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
