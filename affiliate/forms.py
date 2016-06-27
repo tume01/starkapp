@@ -42,18 +42,30 @@ class AffiliateForm(forms.Form):
 
     def clean_workPlacePhone(self):
         data = self.cleaned_data['workPlacePhone']
+        
+        if data is None:
+            return None
+        
         if (data < 999999):
             raise forms.ValidationError("El numero de telefono de oficina tiene que tener minimo 7 digitos")
         return data
 
     def clean_phone(self):
         data = self.cleaned_data['phone']
+
+        if data is None:
+            return None
+        
         if (data < 999999):
             raise forms.ValidationError("El numero de telefono de casa tiene que tener como mínimo 7 digitos")
         return data
 
     def clean_cellphoneNumber(self):
         data = self.cleaned_data['cellphoneNumber']
+
+        if data is None:
+            return None
+        
         if (data < 99999999):
             raise forms.ValidationError("El numero de celular tiene que tener como mínimo 9 digitos")
         return data
