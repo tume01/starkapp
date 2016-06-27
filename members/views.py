@@ -66,30 +66,32 @@ def edit_member_index(request):
 
     provinces = ubigeo_service.distinctProvince(filter_ubigeo)
 
-    filter_ubigeo["department"] = member.birthUbigeo.department
-
-    provinces2 = ubigeo_service.distinctProvince(filter_ubigeo)
-
     filter_ubigeo = {}
 
     filter_ubigeo["province"] = member.ubigeo.province
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    filter_ubigeo = {}
+
+    filter_ubigeo["department"] = member.birthUbigeo.department
+
+    birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
     filter_ubigeo["province"] = member.birthUbigeo.province
 
-    districts2 = ubigeo_service.distinctDistrict(filter_ubigeo)
+    birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
 
-    member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
+    member.birthDate = datetime.strftime(member.birthDate, '%d/%m/%Y')
 
     context = {
         'member' : member,
         'departments' : departments,
         'provinces' : provinces,
         'districts' : districts,
-        'provincesBirth': provinces2,
-        'districtsBirth': districts2,
+        'birthprovinces': birthprovinces,
+        'birthdistricts': birthdistricts,
         'doc_types': doc_types,
     }
 
@@ -166,13 +168,25 @@ def edit_member(request):
 
         districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
-        member.birthDate = datetime.strftime(member.birthDate, '%m/%d/%Y')
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = member.birthUbigeo.department
+
+        birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo["province"] = member.birthUbigeo.province
+
+        birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+        member.birthDate = datetime.strftime(member.birthDate, '%d/%m/%Y')
 
         context = {
             'member' : member,
             'departments' : departments,
             'provinces' : provinces,
+            'birthprovinces' : birthprovinces,
             'districts' : districts,
+            'birthdistricts' : birthdistricts,
             'doc_types': doc_types,
         }
 

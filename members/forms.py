@@ -1,6 +1,8 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.core.validators import EmailValidator
+from datetime import datetime
+from datetime import date
 
 
 class MemberForm(forms.Form):
@@ -23,6 +25,11 @@ class MemberForm(forms.Form):
     birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'},input_formats=['%d/%m/%Y'])
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
 
+    def clean_birthDate(self):
+        data = self.cleaned_data['birthDate']
+        if (data > datetime.now().date()):
+            raise forms.ValidationError("La fecha de nacimiento no puede ser mayor a la de hoy")
+        return data
 
     def clean_dni(self):
         data = self.cleaned_data['num_doc']

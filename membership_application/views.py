@@ -67,10 +67,10 @@ def filter(request):
     type_identity_doc = request.POST['identity_document_type']
 
     if iniDate != '':
-        filter_member_application["initialDate__gte"] = datetime.strptime(iniDate, '%m/%d/%Y')
+        filter_member_application["initialDate__gte"] = datetime.strptime(iniDate, '%d/%m/%Y')
 
     if endDate != '':
-        filter_member_application["finalDate__lte"] = datetime.strptime(endDate, '%m/%d/%Y')
+        filter_member_application["finalDate__lte"] = datetime.strptime(endDate, '%d/%m/%Y')
 
     if num_doc != '':
         filter_member_application["document_number__contains"] = num_doc
@@ -554,9 +554,9 @@ def edit_membership_application(request):
 
         membership_application = member_application_service.getMembership_Application(id_application)
 
-        membership_application.initialDate = datetime.strftime(membership_application.initialDate, '%m/%d/%Y')
+        membership_application.initialDate = datetime.strftime(membership_application.initialDate, '%d/%m/%Y')
 
-        membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%m/%d/%Y')
+        membership_application.finalDate = datetime.strftime(membership_application.finalDate, '%d/%m/%Y')
 
         ubigeo_service = UbigeoService()
 
