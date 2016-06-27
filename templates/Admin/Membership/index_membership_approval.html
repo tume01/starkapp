@@ -25,9 +25,31 @@ Lista de objeciones
 <!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
 
 <!-- Page Content -->
+
 <div class="content">
+                                  
     <!-- Simple Table Full -->
     <div class="block block-bordered">
+         <div class="block block-content">
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Nombres: {{membership_application.firstName}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Apellido Paterno: {{membership_application.paternalLastName}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Apellidos Materno: {{membership_application.maternalLastName}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
          <form id="myFormDelete" action="{% url "membership_application:approve" %} " method="post">
                 {% csrf_token %}  
                 <input type="hidden" id="hid1" value="{{id}}" name="id"/>

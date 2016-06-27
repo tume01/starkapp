@@ -13,10 +13,11 @@ from .forms import FineTypeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 import json
+from services.PaymentService import PaymentService
 
-
+#tipos de multa
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def type_index(request):
 
@@ -28,12 +29,29 @@ def type_index(request):
         'fines' : fines,
     }
 
+    if request.session.has_key('fine_type_inserted'):
+
+        context.update({'fine_type_inserted':request.session.get('fine_type_inserted')})
+
+        del request.session['fine_type_inserted']
+
+    elif request.session.has_key('fine_type_deleted'):
+
+        context.update({'fine_type_deleted':request.session.get('fine_type_deleted')})
+
+        del request.session['fine_type_deleted']
+
+    elif request.session.has_key('fine_type_edited'):
+
+        context.update({'fine_type_edited':request.session.get('fine_type_edited')})
+
+        del request.session['fine_type_edited']
+
     return render(request, 'Admin/Fines/index_type_fine.html', context) 
 
 
-
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def create_type_index(request):
 
@@ -45,7 +63,7 @@ def create_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_type_index(request):
 
@@ -63,7 +81,7 @@ def edit_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def delete_type(request):
 
@@ -73,28 +91,17 @@ def delete_type(request):
 
     edit_data["status"] = 0
 
-    filter_data = {}
+    fine_type_service = FineTypeService()
 
-    filter_data["fine_type_id"] = id_edit
+    fine_type_service.update(id_edit, edit_data)
 
-    filter_data["status"] = 'Por Pagar'
-
-    fine_service = FineService()
-
-    fines = fine_service.filter(filter_data)
-
-    if(len(fines) == 0):
-
-        fine_type_service = FineTypeService()
-
-        fine_type_service.update(id_edit, edit_data)
+    request.session['fine_type_deleted'] = "True"
 
     return HttpResponseRedirect(reverse('fine:index_type'))
 
 
-
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_type(request):
 
@@ -116,6 +123,8 @@ def create_type(request):
 
         fine_type_service.create(insert_data)
 
+        request.session['fine_type_inserted'] = "True"
+
         return HttpResponseRedirect(reverse('fine:index_type'))
 
     else:
@@ -126,10 +135,8 @@ def create_type(request):
         return render(request, 'Admin/Fines/new_type_fine.html', context)
 
 
-
-
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_type(request):
 
@@ -161,12 +168,14 @@ def edit_type(request):
 
         fine_type_service.update(id_edit, edit_data)
 
+        request.session['fine_type_edited'] = "True"
+
         return HttpResponseRedirect(reverse('fine:index_type'))
 
 
-
+#Multas
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_index(request):
 
@@ -186,7 +195,7 @@ def create_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create(request2):
 
@@ -232,7 +241,7 @@ def create(request2):
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def index(request):
 
@@ -262,7 +271,7 @@ def index(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def filter(request):
 
@@ -295,7 +304,7 @@ def filter(request):
 
 
 @login_required
-@permission_required('dummy.permission_usuario', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
 @require_http_methods(['GET'])
 def user_index(request):
 
@@ -323,7 +332,7 @@ def user_index(request):
     return render(request, 'User/Fines/index_fines.html', context)
 
 @login_required
-@permission_required('dummy.permission_usuario', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
 @require_http_methods(['POST'])
 def user_filter(request):
 
@@ -357,3 +366,23 @@ def user_filter(request):
     recipe_list_json = json.dumps(list) #dump list as JSON
 
     return HttpResponse(recipe_list_json, 'application/javascript')
+
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
+@require_http_methods(['POST'])
+def payFine(request):
+
+    fines = request.POST.getlist('check_list[]')
+
+    member_service = MembersService()
+    member = member_service.getMemberByUser(request.user)
+    fine_service = FineService()
+    
+    for fine_id in fines:
+        fine = fine_service.getFine(fine_id)
+        if not PaymentService.createFineProduct(fine, member):
+            messages.error(request, 'Error al tratar de pagar multas')
+
+            return HttpResponseRedirect(reverse('fine:user_index'))  
+
+    return HttpResponseRedirect(reverse('checkout:index') + '?product_type=1')

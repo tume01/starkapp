@@ -1,0 +1,78 @@
+{% extends 'User/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+
+{% block head_title %}
+Admin: productos
+{% endblock %}
+
+{% block head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Compra de productos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Productos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Compra de Productos
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+
+<!-- Page Content -->
+<div class="content content-narrow">
+    <!-- Simple Table Full -->
+    <div class="block">
+                    <div class="block">    
+                    <table id="productsTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">#</th>
+                                <th>Nombre de producto</th>
+                                <th class="text-center" style="width: 40%;">Descripcion</th>
+                                <th>Precio</th>
+                                <th class="hidden-xs">Stock Actual</th>
+                                
+                                <th class="text-center" style="width: 10%;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in products %}
+                            <tr>
+                                <td class="text-center">{{p.id}}</td>
+                                <td class="font-w600">{{p.name}}</td>
+                                <td class="text-left">{{p.description}}</td>
+                                <td class="hidden-xs">{{p.price}}</td> 
+                                <td class="text-center">{{p.actual_stock}}</td>
+                                
+                                <td class="text-center">    
+                                    <div class="btn-group">
+                                        <a><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Comprar Producto"><i class="fa fa-shopping-cart" onclick="javascript:shopProduct({{p.id}}, {{p.actual_stock}})"></i></button></a>   
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END Simple Table Full -->
+        </div>     
+
+
+        <!-- HASTA AQUÍ -->       
+        {% endblock %}
+
+{% block scripts %}
+    <script src='{% static "assets/js/product.js" %}'></script>
+{% endblock %}

@@ -185,8 +185,13 @@ Lista de solicitudes de membresía
 
     <script>
 
-        var nombre;
+    var nombre;
     var apellido;
+
+    var insert = {{request_inserted|yesno:"true,false"}}
+    var edit = {{request_edited|yesno:"true,false"}}
+    var deleted = {{request_deleted|yesno:"true,false"}}
+    var accepted = {{memberCreated|yesno:"true,false"}}
 
   function editar() {
         $('.editar').click(function (e) {
@@ -228,11 +233,45 @@ Lista de solicitudes de membresía
 
     $(document).ready(function () {
 
+        if(insert){
+            swal({
+                title: "Promoción creada",
+                text: "Se ha creado la promoción exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(edit){
+            swal({
+                title: "Promoción editada",
+                text: "Se ha editado la promoción exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(deleted){
+            swal({
+                title: "Promoción eliminada",
+                text: "Se ha eliminado la promoción exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(accepted){
+            swal({
+                title: "Miembro aceptado",
+                text: "Se ha creado el miembro exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }
+
         editar();
         eliminar();
         cerrar();
 
- $('#button').click(function(){
+        $('#button').click(function(){
         {
             var frm = $('#busqueda');
             $.ajax({

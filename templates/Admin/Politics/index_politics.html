@@ -1,0 +1,70 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: politicas
+{% endblock %}
+
+{% block head_dahsboard %}
+Politicas
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de politicas
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Politicas
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de politicas
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+    <!-- Simple Table Full -->
+    <div class="block block-bordered">
+                        <!--<div class="block-header">
+                            <h3 class="block-title">Simple Table <small>Full</small></h3>
+                        </div>-->
+
+                        <div class="block-content">
+                            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+                            <table class="table table-bordered table-striped js-dataTable-simple">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Nombre</th>
+                                        <th>Valor</th>
+                                        <th >Acción</th>                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for politic in politics %}
+                                        <tr>
+                                            <td class="text-center">{{politic.id}}</td>
+                                            <td class="font-w600">{{politic.name}}</td>
+                                            <td class="hidden-xs">{{politic.value}}</td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <a href="{% url 'politics:update_index' politic.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Politica"><i class="fa fa-pencil"></i></button></a>
+                                                    <a href="{% url 'politics:delete' politic.id %}"><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Deshabilitar Politica"><i class="fa fa-times"></i></button></a>
+                                                </div>
+                                            </td>    
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- END Simple Table Full -->
+                </div>
+                <!-- END Page Content -->
+
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}

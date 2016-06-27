@@ -1,6 +1,6 @@
 from repositories import EventsRepository
 from datetime import datetime,date,timedelta
-
+from .PoliticsService import PoliticsService
 class EventsService(object):
 
     """docstring for BungalowsService"""
@@ -25,7 +25,7 @@ class EventsService(object):
     def getEvent(self, id):
         return self.__event_repository.find(id)
 
-    def registerMember(self, event_id, user):
+    def registerMember(self, event_id, user, guests):
 
         event = self.getEvent(event_id)
 
@@ -34,14 +34,16 @@ class EventsService(object):
         if event.assistance > assistants:
 
             if not event.eventregistration_set.filter(member_id=user.id, deleted_at=None):
-                return self.__event_repository.addMember(event, user)
+                return self.__event_repository.addMember(event, user, guests)
 
         return None
 
     def removeUserRegistration(self, event_id, member_id):
         event = self.getEvent(event_id)
+        politics_service = PoliticsService()
+        MAX_DAYS_DELETE_EVENT = politics_service.filter({'name':'MAX_DAYS_DELETE_EVENT'}).first().value
 
-        week_before = date.today() - timedelta(days=7)
+        week_before = date.today() - timedelta(days=MAX_DAYS_DELETE_EVENT)
       
         return event.eventregistration_set.filter(member_id=member_id, registered_at__gte=week_before).update(deleted_at=datetime.now())
 
@@ -51,3 +53,6 @@ class EventsService(object):
 
         return event.eventregistration_set.filter(deleted_at=None)
 
+    @classmethod
+    def get(cls, id):
+        return cls.__event_repository.find(id)

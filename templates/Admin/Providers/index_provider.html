@@ -6,19 +6,35 @@ Admin: proveedores
 {% endblock %}
 
 {% block head_dahsboard %}
-Proveedores
+{% if p_type == 1%}
+    Proveedores
+{% else %}
+    Concesionarios
+{% endif %}
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de proveedores
+{% if p_type == 1%}
+    Lista completa de proveedores
+{% else %}
+    Lista completa de concesionarios
+{% endif %}
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Proveedores
+{% if p_type == 1%}
+    Proveedores
+{% else %}
+    Concesionarios
+{% endif %}
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de proveedores
+{% if p_type == 1%}
+    Lista completa de proveedores
+{% else %}
+    Lista completa de concesionarios
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -58,7 +74,11 @@ Lista de proveedores
                     <div class="col-lg-5">
                         <div class="form-group">
                             <div class="col-xs-12">
+                                {% if p_type == 1 %}
                                 <label class="control-label" for="filter-businessName">Proveedor</label>
+                                {% else %}
+                                <label class="control-label" for="filter-businessName">Concesionarios</label>
+                                {% endif %}
                                 <input class="form-control" type="text" id="filter-businessName" name="filter-businessName">
                             </div>
                         </div>
@@ -126,6 +146,7 @@ Lista de proveedores
                                 </thead>
                                 <tbody>
                                     {% for provider in proveedores %}
+                                    {% if provider.provider_type.id == p_type %}
                                     <tr>
                                         <td class="text-center">{{provider.id}}</td>
                                         <td class="font-w600">{{provider.businessName}}</td> 
@@ -140,15 +161,22 @@ Lista de proveedores
                                         <td class="text-center">{{provider.email}}</td>
                                         <td class="text-center">
                                             <div class="btn-group">
+                                                {% if p_type == 1%}
                                                 <a href='{% url "providers:edit" provider.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Proveedor"><i class="fa fa-pencil"></i></button></a>
 
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Proveedor"><i class="fa fa-times"></i></button>
+                                                
+                                                {% else %}
+                                                <a href='{% url "providers:edit_concesionary" provider.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Concesionario"><i class="fa fa-pencil"></i></button></a>
+
+                                                
+                                                {% endif %}
 
                                                 <!--<button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Proveedor"><i class="fa fa-times"></i></button>-->
 
                                             </div>
                                         </td>
                                     </tr>
+                                    {% endif %}
                                     {% endfor %}
                                 </tbody>
                             </table>

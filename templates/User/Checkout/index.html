@@ -1,0 +1,227 @@
+{% extends 'User/Layouts/base.html' %}
+{% load staticfiles %}
+{% block head_title %}
+User: Pago de Productos
+{% endblock %}
+
+{% block head_dahsboard %}
+Pago de Productos
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de eventos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Pago de Productos
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Checkout
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="block">
+        <form method="post" action="{% url 'checkout:pay' %}" class="js-validation-bootstrap">
+            {% if product_type %}
+            <input hidden type="text" value="{{product_type}}" name="product_type">
+            {% endif %}
+            {% csrf_token %}
+            <div class="block-content">
+                <p style="font-size: 18px"><strong>DETALLE DEL PAGO</strong></p>
+                <div class="block block-bordered">
+                    <div class="block-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 10%">Cantidad</th>
+                                            <th style="width: 50%">Producto</th>
+                                            <th style="width: 20%">Precio Unitario (S/.)</th>
+                                            <th style="width: 20%">Precio Total (S/.)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for product in products %}
+                                            <tr>
+                                                <td class="text-right">{{product.quantity}}</td>
+                                                <td>{{product.description}}</td>
+                                                <td class="text-right">{{product.unit_price}}</td>
+                                                <td class="text-right">{{product.total}}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr class="text-right">
+                                            <td class="invisible"></td>
+                                            <td class="invisible"></td>
+                                            <td><strong>Subtotal</strong></td>
+                                            <td>{{subtotal}}</td>
+                                        </tr>
+                                        <tr class="text-right">
+                                            <td class="invisible"></td>
+                                            <td class="invisible"></td>
+                                            <td><strong>Descuentos</strong></td>
+                                            <td>{{discount}}</td>
+                                        </tr>
+                                        <tr class="text-right">
+                                            <td class="invisible"></td>
+                                            <td class="invisible"></td>
+                                            <td><strong>IGV 18%</strong></td>
+                                            <td>{{igv_total}}</td>
+                                        </tr>
+                                        <tr class="text-right">
+                                            <td class="invisible"></td>
+                                            <td class="invisible"></td>
+                                            <td><strong>Total a pagar (S/.)</strong></td>
+                                            <td>{{total}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>                           
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% if total %}
+            <div class="block-content">
+                <p style="font-size: 18px"><strong>COMPROBANTE DE PAGO</strong></p>
+                <div class="block block-bordered">
+                    <div class="block-content">
+                        <div class="row">
+                            <div class="col-sm-12" style="margin-bottom: 20px">
+                                <span style="margin-right: 10px">Seleccione documento de venta:</span>
+                                <input type="radio" name="payment" id="payment" value="ticket" style="margin-left: 10px" />Boleta
+                                <input type="radio" name="payment" id="payment" value="invoice" style="margin-left: 10px" />Factura 
+                            </div>
+                        </div>
+                        <div class="row" id="invoice-container" hidden>
+                            <div class="col-sm-12">
+                                <div class="block block-bordered">
+                                    <div class="block-content">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>Nombre o Razon Social</label>
+                                                    <input type="text" class="form-control" name="name_social" id="name_social" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>RUC</label>
+                                                    <input type="text" class="form-control" name="ruc" id="ruc"/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Direccion</label>
+                                                    <input type="text" class="form-control" name="address" id="address"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="block-content">
+                <p style="font-size: 18px"><strong>DATOS DE TARJETA</strong></p>
+                <div class="block block-bordered">
+                    <div class="block-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label>Titular de la tarjeta*</label>
+                                    <input type="text" class="form-control" name="card_holder" id="card_holder" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Numero de tarjeta*</label>
+                                    <input type="text" class="form-control" name="card_number" id="card_number" />
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <label>Fecha Expiracion</label>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <select class="form-control">
+                                                        <option value="01">01</option>
+                                                        <option value="02">02</option>
+                                                        <option value="03">03</option>
+                                                        <option>04</option>
+                                                        <option>05</option>
+                                                        <option>06</option>
+                                                        <option>07</option>
+                                                        <option>08</option>
+                                                        <option>09</option>
+                                                        <option>10</option>
+                                                        <option>11</option>
+                                                        <option>12</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <select class="form-control">
+                                                        <option>2016</option>
+                                                        <option>2017</option>
+                                                        <option>2018</option>
+                                                        <option>2019</option>
+                                                        <option>2020</option>
+                                                        <option>2021</option>
+                                                        <option>2022</option>
+                                                        <option>2023</option>
+                                                        <option>2024</option>
+                                                        <option>2025</option>
+                                                        <option>2026</option>
+                                                        <option>2027</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group">
+                                                <label>CSV/CVV*</label>
+                                                <input type="text" class="form-control" name="csv"  id="csv"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="block-content">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6 text-right">
+                            <button href="" class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Enviar</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/events" class="btn btn-danger" type="button"><i class="fa fa-times push-5-r"></i> Cancelar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+<script src='{% static "assets/js/core/jquery.min.js" %}'></script>
+<script src='{% static "assets/js/User/checkout/form-checkout.js" %}'></script>
+<script>
+    $(document).ready(function() {
+        $('input[type=radio][name=payment]').change(function() {
+            if (this.value == 'ticket') {
+                $('#invoice-container').hide();
+                $('#name_social').prop( "disabled", true );
+                $('#address').prop( "disabled", true );
+                $('#ruc').prop( "disabled", true );
+            }
+            else if (this.value == 'invoice') {
+                $('#invoice-container').show();
+                $('#name_social').prop( "disabled", false );
+                $('#address').prop( "disabled", false );
+                $('#ruc').prop( "disabled", false );
+            }
+        });
+    });
+</script>
+{% endblock %}

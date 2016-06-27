@@ -16,3 +16,4 @@ class Product(models.Model):
     status = models.IntegerField()
     description = models.CharField(max_length=100, default='')
     name = models.CharField(max_length=20, default='')
+    deleted_at = models.DateTimeField(null=True)

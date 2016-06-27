@@ -87,7 +87,6 @@ def create_index(request):
 
     return render(request, 'Admin/bungalow/new_bungalow.html', context)
 
-
 @require_http_methods(['POST'])
 def create_bungalow(request):
 

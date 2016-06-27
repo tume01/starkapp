@@ -28,7 +28,7 @@ var UserFormValidation = function() {
                         url: url,
                         type: "post",
                         data: {
-                            username: function() {
+                            name: function() {
                                 return $( "#name" ).val();
                             }, 'csrfmiddlewaretoken': CSRF_TOKEN, 
                             user: user
@@ -44,7 +44,7 @@ var UserFormValidation = function() {
                 'name': {
                     required: 'Por favor ingrese un nombre de usuario',
                     maxlength: 'El usuario no puede tener más de 200 caracteres',
-                    remote: 'Este usuario ya esta en uso'
+                    remote: 'Este usuario ya está en uso'
                 },
                 'password':{
                 	required: 'Por favor ingrese una clave',
