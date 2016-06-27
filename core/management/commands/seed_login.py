@@ -2059,7 +2059,7 @@ class Command(BaseCommand):
                                                sfirstName='Ana',spaternalLastName='Roncal',smaternalLastName='Neyra',sdocument_number=98745632,sgender=1,
                                                sspecialization='Ingenieria Informatica',snationality='Peruana',sbirthDate=datetime.now() - timedelta(20),sbirthPlace='Av.La Molina.123',
                                                sphoto='membership_application/ana_roncal.jpg',sworkPlace='PUCP',sworkPlaceJob='Profesora',sworkPlacePhone=7654321,
-                                               semail='jose.gil@pucp.pe',sbirthUbigeo=u4,status=1)
+                                               semail='jose.gil@pucp.pe',sbirthUbigeo=u4,status=1,scellPhoneNumber=789456132)
         mApplication2.save()
 
         mApplication3 = Membership_Application(membership_type=mshiptype1, identity_document_type=doc1, firstName='Marco',
