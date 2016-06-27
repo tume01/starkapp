@@ -1,4 +1,4 @@
-{% extends 'Admin/Layouts/base.html' %}
+{% extends 'User/Layouts/base.html' %}
 {% load staticfiles %}
 
 {% block head_title %}
@@ -34,7 +34,7 @@ Creación de bungalows
             </ul>
         </div>
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='{% url "bungalowReservation:admin_create_reserve" %}' method="POST">
+            <form class="form-horizontal push-10-t push-10" action='{% url "bungalowReservation:user_create_reserve" %}' method="POST">
                 {% csrf_token %}
 
                 <input type="hidden" name="bungalow_id" value="{{reservation.bungalow_id}}">

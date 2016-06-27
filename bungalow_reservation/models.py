@@ -3,7 +3,7 @@ import datetime
 
 from bungalow.models import Bungalow
 from members.models import Member
-
+from bungalow_service.models import Bungalow_service
 
 class BungalowReservation(models.Model):
     STATUS_CHOICES = (
@@ -33,10 +33,6 @@ class BungalowReservation(models.Model):
     bungalow_id = models.IntegerField(null=True)
     member_id = models.IntegerField(null=True)
 
-    # member_document_number = models.IntegerField()
-    # member_phone = models.IntegerField()
-    # TODO: Wait to seeder
-
     payment_document = models.ForeignKey('payment_documents.Payment_Document', on_delete=models.CASCADE, null=True)
     # TODO: Change because persistence issues
 
@@ -50,6 +46,8 @@ class BungalowReservation(models.Model):
 
     deleted_at = models.DateTimeField(null=True)
 
+    aditional_services = models.ManyToManyField(Bungalow_service)
+
     def getStatusName(self):
         index = self.status
         statusData = self.STATUS_CHOICES[index]
@@ -58,8 +56,9 @@ class BungalowReservation(models.Model):
     def getReservationDays(self):
         d1 = self.arrival_date
         d2 = self.departure_date
-
         dd = [d1 + datetime.timedelta(days=d) for d in range((d2 - d1).days + 1)]
+
         reserved = [int(day.strftime('%Y%m%d')) for day in dd]
 
+        print(reserved)
         return reserved
