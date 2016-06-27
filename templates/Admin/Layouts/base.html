@@ -505,6 +505,17 @@
                         </li>
                         {% endif %}
 
+                        {% if perms.dummy.permission_admin %}
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Políticas</span></a>
+                            <ul>
+                                <li>
+                                   <a href='{% url 'politics:index' %}'>Ver políticas</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+
                     </ul>
                 </div>
                 <!-- END Side Content -->
