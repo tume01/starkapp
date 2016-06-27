@@ -24,8 +24,8 @@ class MembershipTypeForm(forms.Form):
 
 class MembershipForm(forms.Form):
 
-    initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'}, input_formats=['%m/%d/%Y'])
-    finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'}, input_formats=['%m/%d/%Y'])
+    initialDate = forms.DateField(error_messages={'required': 'El campo Fecha inicial es requerido'}, input_formats=['%d/%m/%Y'])
+    finalDate = forms.DateField(error_messages={'required': 'El campo Fecha final es requerido'},input_formats=['%d/%m/%Y'])
 
     def clean_finalDate(self):
         data = self.cleaned_data['finalDate']

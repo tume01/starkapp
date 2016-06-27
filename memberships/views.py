@@ -12,12 +12,15 @@ from services.SuspensionService import SuspensionService
 from services.ObjectionService import ObjectionsService
 from services.UbigeoService import UbigeoService
 from services.MemberService import MembersService
+from services.RelationshipService import RelationshipService
+from services.AffiliateService import AffiliateService
 from django.contrib.auth.models import User, Group
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
 from adapters.FormValidator import FormValidator
 from .forms import MembershipTypeForm
 from .forms import MembershipForm
+from membership_application import forms as apForms
 from members import forms as mForms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
@@ -190,14 +193,18 @@ def membership_accept(request):
 
     application_id = request.POST['id']
 
-    insert_data = {}
-
     objection_service = ObjectionsService()
 
     objections = objection_service.getObjectionByApplicationId(application_id)
 
+    member_application_service = Membership_ApplicationService()
+
+    membership_application =  member_application_service.getMembership_Application(application_id)
+
+
     context = {
         'objections' : objections,
+        'membership_application' : membership_application,
         'id' : application_id,
     }
 
@@ -252,7 +259,7 @@ def create_membership(request):
         group = Group.objects.get(name='usuarios')
 
         group.user_set.add(user)
-        
+    
 
         #Datos del miembro
 
@@ -294,9 +301,123 @@ def create_membership(request):
 
         insert_data["ubigeo"] = ubi[0]
 
+        insert_data["photo"] = request.POST['photo']
+
+        insert_data["gender"] = request.POST['gender']
+
+        insert_data["workPlace"] = form2.cleaned_data['workPlace']
+
+        insert_data["workPlaceJob"] = form2.cleaned_data['workPlaceJob']
+
+        insert_data["workPlacePhone"] = form2.cleaned_data['workPlacePhone']
+
+        insert_data["nationality"] = form2.cleaned_data['nationality']
+
+        insert_data["maritalStatus"] = form2.cleaned_data['maritalStatus']
+
+        insert_data["cellphoneNumber"] = form2.cleaned_data['cellphoneNumber']
+
+        insert_data["specialization"] = form2.cleaned_data['specialization']
+
+        insert_data["birthDate"] = form2.cleaned_data['birthDate']
+
+        insert_data["birthPlace"] = form2.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo)
+
+        insert_data["birthUbigeo"] = ubi[0]
+
         member_service = MembersService()
 
-        member_service.create(insert_data)
+        newmember = member_service.create(insert_data)
+
+        #En caso se halla registrado un conyuge se agrega como afiliado
+
+        spouseName = request.POST['sfirstName']
+
+        if spouseName != 'None':
+
+            insert_affiliate = {}
+
+            insert_affiliate["member"] = newmember
+
+            insert_affiliate["name"] = spouseName
+
+            insert_affiliate["identity_document_type_id"] = request.POST['sidentity_document_type']
+
+            insert_affiliate["paternalLastName"] = request.POST['spaternalLastName']
+
+            insert_affiliate["maternalLastName"] =  request.POST['smaternalLastName']
+
+            insert_affiliate["document_number"] =  request.POST['snum_doc']
+
+            insert_affiliate["phone"] = form2.cleaned_data['phone']
+
+            insert_affiliate["address"] = form2.cleaned_data['address']
+
+            insert_affiliate["gender"] = request.POST['sgender']
+
+            insert_affiliate["specialization"] = request.POST['sspecialization']
+
+            insert_affiliate["nationality"] =  request.POST['snationality']
+
+            insert_affiliate["birthDate"] = datetime.strptime(request.POST['sbirthDate'], '%d/%m/%Y')
+
+            insert_affiliate["birthPlace"] =  request.POST['sbirthPlace']
+
+            insert_affiliate['maritalStatus'] = 'Casado/a'
+
+            filter_ubigeo["department"] = request.POST['department']
+
+            filter_ubigeo["province"] = request.POST['province']
+
+            filter_ubigeo["district"] = request.POST['district']
+
+            ubi = ubigeo_service.filter(filter_ubigeo)
+
+            insert_affiliate["ubigeo"] = ubi[0]
+
+            filter_ubigeo["department"] = request.POST['sbirthDepartment']
+
+            filter_ubigeo["province"] = request.POST['sbirthProvince']
+
+            filter_ubigeo["district"] = request.POST['sbirthDistrict']
+
+            ubi = ubigeo_service.filter(filter_ubigeo)
+
+            insert_affiliate["birthUbigeo"] = ubi[0]
+
+            insert_affiliate["photo"] = request.POST['sphoto']
+
+            insert_affiliate["workPlace"] =  request.POST['sworkPlace']
+
+            insert_affiliate["workPlaceJob"] =  request.POST['sworkPlaceJob']
+
+            insert_affiliate["workPlacePhone"] = request.POST['sworkPlacePhone']
+
+            insert_affiliate["email"] =  request.POST['semail']
+
+            insert_affiliate["state"] = 1
+
+            relationship_service = RelationshipService()
+
+            filter_relationship = {}
+
+            filter_relationship['description'] = 'Cónyuge'
+
+            relationships = relationship_service.filter(filter_relationship)
+
+            insert_affiliate['relationship'] = relationships[0]
+
+            affiliate_service = AffiliateService()
+
+            affiliate_service.create(insert_affiliate)
 
         #Elimino solicitud (se pone como aceptada)
 
@@ -347,9 +468,9 @@ def membership_edit_index(request):
 
     membership = member.membership
 
-    membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+    membership.initialDate = datetime.strftime(membership.initialDate, '%d/%m/%Y')
 
-    membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+    membership.finalDate = datetime.strftime(membership.finalDate, '%d/%m/%Y')
 
     membership_type_service = MembershipTypeService()
 
@@ -380,9 +501,9 @@ def membership_edit(request):
 
         membership = membership_service.getMembership(id_edit)
 
-        membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+        membership.initialDate = datetime.strftime(membership.initialDate, '%d/%m/%Y')
 
-        membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+        membership.finalDate = datetime.strftime(membership.finalDate, '%d/%m/%Y')
         
         types = membership_type_service.getMembershipTypes()
 
@@ -412,16 +533,32 @@ def membership_edit(request):
 @permission_required('dummy.permission_usuario', login_url='login:ini')	
 def membership_show(request):
 
-	user = request.user
+    user = request.user
     
-	member_service = MembersService()
-	filter = {}
-	filter["user"] =user
-	member = member_service.filter(filter)
-	context = {
-		'membership' : member[0].membership
-	}
-	return render(request, 'User/membership.html',context)
-	
+    member_service = MembersService()
+    filter = {}
+    filter["user"] =user
+    member = member_service.filter(filter)
 
-	
+    paymentEnabled = True
+
+    membership_type_service = MembershipTypeService()
+
+    filter_data = {}
+
+    filter_data["name"] = 'Vitalicio'
+
+    lifeLongType = membership_type_service.filter(filter_data)[0]
+
+    if member[0].membership.membership_type.name == lifeLongType.name:
+
+        paymentEnabled = False
+
+    print(paymentEnabled)
+        
+    context = {
+	    'membership' : member[0].membership,
+            'paymentEnabled' : paymentEnabled
+    }
+    
+    return render(request, 'User/membership.html',context)

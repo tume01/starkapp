@@ -86,6 +86,10 @@ def create_suspension(request):
 
         insert_data['status'] = 1
 
+        admin_user = request.user
+
+        insert_data['responsable'] = admin_user.first_name
+
         suspension_service = SuspensionService()
 
         suspension_service.create(insert_data)

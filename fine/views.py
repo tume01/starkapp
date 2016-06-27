@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import permission_required
 import json
 
 
+#tipos de multa
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')
 @require_http_methods(['GET'])
@@ -28,8 +29,25 @@ def type_index(request):
         'fines' : fines,
     }
 
-    return render(request, 'Admin/Fines/index_type_fine.html', context) 
+    if request.session.has_key('fine_type_inserted'):
 
+        context.update({'fine_type_inserted':request.session.get('fine_type_inserted')})
+
+        del request.session['fine_type_inserted']
+
+    elif request.session.has_key('fine_type_deleted'):
+
+        context.update({'fine_type_deleted':request.session.get('fine_type_deleted')})
+
+        del request.session['fine_type_deleted']
+
+    elif request.session.has_key('fine_type_edited'):
+
+        context.update({'fine_type_edited':request.session.get('fine_type_edited')})
+
+        del request.session['fine_type_edited']
+
+    return render(request, 'Admin/Fines/index_type_fine.html', context) 
 
 
 @login_required
@@ -73,24 +91,13 @@ def delete_type(request):
 
     edit_data["status"] = 0
 
-    filter_data = {}
+    fine_type_service = FineTypeService()
 
-    filter_data["fine_type_id"] = id_edit
+    fine_type_service.update(id_edit, edit_data)
 
-    filter_data["status"] = 'Por Pagar'
-
-    fine_service = FineService()
-
-    fines = fine_service.filter(filter_data)
-
-    if(len(fines) == 0):
-
-        fine_type_service = FineTypeService()
-
-        fine_type_service.update(id_edit, edit_data)
+    request.session['fine_type_deleted'] = "True"
 
     return HttpResponseRedirect(reverse('fine:index_type'))
-
 
 
 @login_required
@@ -116,6 +123,8 @@ def create_type(request):
 
         fine_type_service.create(insert_data)
 
+        request.session['fine_type_inserted'] = "True"
+
         return HttpResponseRedirect(reverse('fine:index_type'))
 
     else:
@@ -124,8 +133,6 @@ def create_type(request):
         }
 
         return render(request, 'Admin/Fines/new_type_fine.html', context)
-
-
 
 
 @login_required
@@ -161,10 +168,12 @@ def edit_type(request):
 
         fine_type_service.update(id_edit, edit_data)
 
+        request.session['fine_type_edited'] = "True"
+
         return HttpResponseRedirect(reverse('fine:index_type'))
 
 
-
+#Multas
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])

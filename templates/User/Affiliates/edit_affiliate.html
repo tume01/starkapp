@@ -36,8 +36,38 @@ Editar afiliado
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "affiliate:edit" %}' enctype="multipart/form-data" method="post" >
                             {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-lg-8" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">(*) Campos no necesarios.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <img src="{{ MEDIA_URL }}{{affiliate.photo}}" height="200" width="200" class="img-event-preview">
+                                    <div class="form-group">
+                                        <label class="col-xs-12" for="photo">Foto</label>
+                                        <input type="file" name="photo" class="form-control, col-xs-12" id="photo">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Género</label>
+                                        <div class="col-sm-8">
+                                             {% if affiliate.gender == 0 %}
+                                                <input type="radio" name="gender" checked value="0"> Masculino<br>
+                                                <input type="radio" name="gender" value="1"> Femenino<br>
+                                            {% else %}
+                                                <input type="radio" name="gender" value="0"> Masculino<br>
+                                                <input type="radio" name="gender" checked value="1"> Femenino<br>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                              <div class="row">
                                     <div class="col-lg-3" >
                                         <div class="form-group" style="display: none;">
@@ -59,7 +89,7 @@ Editar afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Apellido paterno</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="{{affiliate.paternalLastName}}" type="text">
                                             </div>
                                         </div>
@@ -67,27 +97,27 @@ Editar afiliado
                                     <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input">Apellido materno</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input6-group1" name="maternalLastName" placeholder="Apellido materno" value="{{affiliate.maternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
                                 </div>          
                                 <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>                                            
-                                                <div class="col-lg-8">
+                                                <div class="col-md-10">
                                                    <div class="input-group">
                                                         <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="{{affiliate.document_number}}" pattern="[0-9]*" >
                                                     </div>
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Tipo</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-xs-12" for="example-select">Tipo</label>
+                                                <div class="col-md-10">
                                                     <select class="form-control" id="example-select" name="identity_document_type" size="1">
                                                         {% for doc_type in doc_types %}
                                                             {% if doc_type.id == affiliate.identity_document_type.id %}
@@ -100,23 +130,171 @@ Editar afiliado
                                                 </div>
                                             </div>                                        
                                     </div>
-                                </div>          
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                                <label class="col-xs-12"  for="example-select">Parentesco</label>
+                                                <div class="col-md-10">
+                                                    <select class="form-control" id="example-select" name="relationship" size="1">
+                                                         {% for relationship in relationships %}
+                                                            {% if relationship.id == affiliate.relationship.id %}
+                                                                <option selected value="{{relationship.id}}">{{relationship.description}}</option>
+                                                            {% else %}
+                                                                <option value="{{relationship.id}}">{{relationship.description}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-number-input">Especialidad*</label>
+                                            <div class="col-md-10">
+                                               <div class="input-group">
+                                                    {% if affiliate.specialization%}
+                                                    <input class="form-control" id="example-input1-group1" name="specialization" value="{{affiliate.specialization}}"  type="text">
+                                                    {% else %}
+                                                    <input class="form-control" id="example-input1-group1" name="specialization" value=''  type="text">
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Nacionalidad</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" id="example-input2-group1" name="nationality" value="{{affiliate.nationality}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                            <div class="form-group">
+                                                <label class="col-xs-12" for="example-daterange1">Fecha de nacimiento</label>
+                                                <div class="col-md-10">
+                                                    <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                        <input class="form-control" type="text" id="example-daterange1" name="birthDate" value="{{affiliate.birthDate}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+
+                                 <div class="row">
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-number-input">Centro de Trabajo*</label>
+                                            <div class="col-md-10">
+                                               <div class="input-group">
+                                                   {% if affiliate.workPlace%}
+                                                    <input class="form-control" id="example-input1-group1" name="workPlace" value="{{affiliate.workPlace}}"  type="text">
+                                                    {% else %}
+                                                    <input class="form-control" id="example-input1-group1" name="workPlace" value=''  type="text">
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Puesto de Trabajo*</label>
+                                            <div class="col-md-10">
+                                                {% if affiliate.workPlaceJob%}
+                                                <input class="form-control" id="example-input2-group1" name="workPlaceJob" value="{{affiliate.workPlaceJob}}" type="text">
+                                                {% else %}
+                                                <input class="form-control" id="example-input2-group1" name="workPlaceJob" value='' type="text">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Teléfono de Oficina*</label>
+                                            <div class="col-md-10">
+                                                {% if affiliate.workPlacePhone %}
+                                                <input class="form-control" id="example-input3-group1" name="workPlacePhone" value="{{affiliate.workPlacePhone}}" pattern="[0-9]*">
+                                                {% else %}
+                                                <input class="form-control" id="example-input3-group1" name="workPlacePhone" value=''>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input2">Lugar de Nacimiento</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input1-group2" name="birthPlace" value="{{affiliate.birthPlace}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Departamento</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="birthDepartment" name="birthDepartment" size="1">
+                                                            {% for u in departments%}
+                                                                {% if u.department == affiliate.birthUbigeo.department %}
+                                                                <option selected value="{{u.department}}">{{u.department}}</option>
+                                                                {% else %}
+                                                                <option value="{{u.department}}">{{u.department}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Provincia</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="birthProvince" name="birthProvince" size="1">
+                                                            {% for u in birthprovinces%}
+                                                                {% if u.province == affiliate.birthUbigeo.province %}
+                                                                    <option selected value="{{u.province}}">{{u.province}}</option>
+                                                                {% else %}
+                                                                    <option value="{{u.province}}">{{u.province}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Distrito</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="birthDistrict" name="birthDistrict" size="1">
+                                                       {% for u in birthdistricts%}
+                                                            {% if u.district == affiliate.birthUbigeo.district %}
+                                                                <option selected value="{{u.district}}">{{u.district}}</option>
+                                                            {% else %}
+                                                                <option value="{{u.district}}">{{u.district}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
                                 <div class="row">
 
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Direccion</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-sm-8">
                                                 <input class="form-control" id="example-input1-group2" name="address" placeholder="address" value="{{affiliate.address}}" type="text">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="department" name="department" size="1">
-                                                        <option value="">Seleccione</option>
                                                             {% for u in departments%}
                                                                 {% if u.department == affiliate.ubigeo.department %}
                                                                 <option selected value="{{u.department}}">{{u.department}}</option>
@@ -128,12 +306,11 @@ Editar afiliado
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
-                                                    <select class="form-control" id="province" name="province" size="1">
-                                                        <option value="">Seleccione</option>
+                                                    <select class="form-control" id="province" name="province" size="1">                                                        
                                                             {% for u in provinces%}
                                                                 {% if u.province == affiliate.ubigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
@@ -145,12 +322,11 @@ Editar afiliado
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="district" name="district" size="1">
-                                                        <option value="">Seleccione</option>
                                                         {% for u in districts%}
                                                             {% if u.district == affiliate.ubigeo.district %}
                                                                 <option selected value="{{u.district}}">{{u.district}}</option>
@@ -163,22 +339,70 @@ Editar afiliado
                                             </div>
                                     </div>
 
-                                </div>        
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-number-input">Estado Civil</label>
+                                            <div class="col-md-10">
+                                               <select class="form-control" id="example-input1-group1" name="maritalStatus" size="1">       
+                                                        {% if affiliate.maritalStatus == "Casado/a" %}
+                                                            <option selected value="Casado/a">Casado/a</option>
+                                                            <option value="Soltero/a">Soltero/a</option>
+                                                            <option value="Divorciado/a">Divorciado/a</option>
+                                                            <option value="Viudo/a">Viudo/a</option>
+                                                        {% else %}
+                                                            {% if affiliate.maritalStatus == "Soltero/a" %}
+                                                                <option value="Casado/a">Casado/a</option>
+                                                                <option selected value="Soltero/a">Soltero/a</option>
+                                                                <option value="Divorciado/a">Divorciado/a</option>
+                                                                <option value="Viudo/a">Viudo/a</option>
+                                                            {% else %}
+                                                                {% if affiliate.maritalStatus == "Divorciado/a" %}
+                                                                    <option value="Casado/a">Casado/a</option>
+                                                                    <option value="Soltero/a">Soltero/a</option>
+                                                                    <option selected value="Divorciado/a">Divorciado/a</option>
+                                                                    <option value="Viudo/a">Viudo/a</option>
+                                                                {% else %}
+                                                                    <option value="Casado/a">Casado/a</option>
+                                                                    <option value="Soltero/a">Soltero/a</option>
+                                                                    <option value="Divorciado/a">Divorciado/a</option>
+                                                                    <option selected value="Viudo/a">Viudo/a</option> 
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Telefono Celular*</label>
+                                            <div class="col-md-10">
+                                                {% if affiliate.cellphoneNumber%}
+                                                <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="{{affiliate.cellphoneNumber}}" pattern="[0-9]*">
+                                                {% else %}
+                                                <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="" type="text">
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                  <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-3" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select">Teléfono</label>
-                                            <div class="col-md-12">
+                                            <div class="col-md-10">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-number1-group2" name="phone" placeholder="Teléfono" value="{{affiliate.phone}}"  >
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-number-input2">Correo</label>
-                                            <div class="col-sm-9">
+                                            <div class="col-md-10">
                                                 <input class="form-control" id="example-input4-group2" name="email" value="{{affiliate.email}}" placeholder="Correo" type="text">
                                             </div>
                                         </div>
@@ -218,13 +442,42 @@ var url= "{% url 'affiliate:verify_affiliate' %}"
                 cache:false,
                 success: function(returndata){ 
                     $('#province').empty();
-                    $('#province').append($('<option>', { text : 'Seleccione', value : ''}));
-                    $('#district').empty();
-                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                    //$('#province').append($('<option>', { text : 'Seleccione', value : ''}));
+                    //$('#district').empty();
+                    //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
                     $.each(returndata, function(i, item) {
-                        $('#province').append($('<option>', { 
-                            text : item.province 
-                        }));
+                        if(i==0){
+                            $('#province').append($('<option>', { 
+                                text : item.province ,
+                                selected : true
+                            }));
+                            $.ajax({
+                                type:'post',
+                                url:'{% url "ubigeo:distritos" %}',
+                                data:{province:item.province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                cache:false,
+                                success: function(returndata){ 
+                                    $('#district').empty();
+                                    //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                                    $.each(returndata, function(i, item) {
+                                        if(i==0){
+                                            $('#district').append($('<option>', { 
+                                                text : item.district ,
+                                                selected : true
+                                            }));
+                                        }else{
+                                            $('#district').append($('<option>', { 
+                                                text : item.district 
+                                            }));
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            $('#province').append($('<option>', { 
+                                text : item.province 
+                            }));
+                        }
                     });
                 }
             });
@@ -241,17 +494,106 @@ var url= "{% url 'affiliate:verify_affiliate' %}"
                 cache:false,
                 success: function(returndata){ 
                     $('#district').empty();
-                    $('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                    //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
                     $.each(returndata, function(i, item) {
-                        $('#district').append($('<option>', { 
-                            text : item.district 
-                        }));
+                        if(i==0){
+                            $('#district').append($('<option>', { 
+                                text : item.district ,
+                                selected : true
+                            }));
+                        }else{
+                            $('#district').append($('<option>', { 
+                                text : item.district 
+                            }));
+                        }
                     });
                 }
             });
         }
         });
-        
+
+        $('#birthDepartment').change(function(){
+        var birthDepartment = $('#birthDepartment :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:provincias" %}',
+                data:{department:birthDepartment, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#birthProvince').empty();
+                    //$('#birthProvince').append($('<option>', { text : 'Seleccione', value : ''}));
+                    //$('#birthDistrict').empty();
+                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#birthProvince').append($('<option>', {
+                                text : item.province,
+                                selected : true
+                            }));
+                            $.ajax({
+                                type:'post',
+                                url:'{% url "ubigeo:distritos" %}',
+                                data:{province:item.province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                cache:false,
+                                success: function(returndata){
+                                    $('#birthDistrict').empty();
+                                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                                    $.each(returndata, function(i, item) {
+                                        if(i==0){
+                                            $('#birthDistrict').append($('<option>', {
+                                                text : item.district,
+                                                selected : true
+                                            }));
+                                        }else{
+                                            $('#birthDistrict').append($('<option>', {
+                                                text : item.district
+                                            }));
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            $('#birthProvince').append($('<option>', {
+                                text : item.province
+                            }));
+                        }
+                    });
+                }
+            });
+            
+        }
+        });
+
+        $('#birthProvince').change(function(){
+        var birthProvince = $('#birthProvince :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:distritos" %}',
+                data:{province:birthProvince, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#birthDistrict').empty();
+                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#birthDistrict').append($('<option>', {
+                                text : item.district,
+                                selected : true
+                            }));
+                        }else{
+                            $('#birthDistrict').append($('<option>', {
+                                text : item.district
+                            }));
+                        }
+                    });
+                }
+            });
+        }
+        });
+
+        //$('#department').selectedIndex = "1";
     });
 </script>
 
