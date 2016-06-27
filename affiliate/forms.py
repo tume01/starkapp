@@ -1,6 +1,8 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.core.validators import EmailValidator
+from datetime import datetime
+from datetime import time
 
 
 class AffiliateForm(forms.Form):
@@ -21,7 +23,7 @@ class AffiliateForm(forms.Form):
     maritalStatus = forms.CharField(required=False, max_length=20, error_messages={'max_length': 'El campo Estado civil no debe superar los 20 caracteres'})
     cellphoneNumber = forms.IntegerField(required=False)
     specialization = forms.CharField(max_length=200, error_messages={'max_length': 'El campo Especialización no debe superar los 200 caracteres'})
-    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'},input_formats=['%d/%m/%Y'])
+    birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'}, input_formats=['%d/%m/%Y'])
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
 
     def clean_dni(self):
@@ -30,6 +32,12 @@ class AffiliateForm(forms.Form):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
         if (data > 100000000):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
+        return data
+
+    def clean_birthDate(self):
+        data = self.cleaned_data['birthDate']
+        if (data > datetime.now().date()):
+            raise forms.ValidationError("La fecha de nacimiento no puede ser mayor a la de hoy")
         return data
 
     def clean_workPlacePhone(self):

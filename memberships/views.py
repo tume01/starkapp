@@ -533,16 +533,32 @@ def membership_edit(request):
 @permission_required('dummy.permission_usuario', login_url='login:ini')	
 def membership_show(request):
 
-	user = request.user
+    user = request.user
     
-	member_service = MembersService()
-	filter = {}
-	filter["user"] =user
-	member = member_service.filter(filter)
-	context = {
-		'membership' : member[0].membership
-	}
-	return render(request, 'User/membership.html',context)
-	
+    member_service = MembersService()
+    filter = {}
+    filter["user"] =user
+    member = member_service.filter(filter)
 
-	
+    paymentEnabled = True
+
+    membership_type_service = MembershipTypeService()
+
+    filter_data = {}
+
+    filter_data["name"] = 'Vitalicio'
+
+    lifeLongType = membership_type_service.filter(filter_data)[0]
+
+    if member[0].membership.membership_type.name == lifeLongType.name:
+
+        paymentEnabled = False
+
+    print(paymentEnabled)
+        
+    context = {
+	    'membership' : member[0].membership,
+            'paymentEnabled' : paymentEnabled
+    }
+    
+    return render(request, 'User/membership.html',context)
