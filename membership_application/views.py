@@ -872,6 +872,17 @@ def approve_membership_application(request):
 @require_http_methods(['POST'])
 def verify_document_number(request):
 
+    if not isinstance(request.POST['name'], int):
+
+        username = request.POST['name']
+
+        if User.objects.filter(username=username).exists():
+
+            return  HttpResponse("false")
+
+        return  HttpResponse("true")
+
+
     member_application_service = Membership_ApplicationService()
 
     member_service = MembersService()
