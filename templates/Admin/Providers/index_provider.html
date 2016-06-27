@@ -6,19 +6,35 @@ Admin: proveedores
 {% endblock %}
 
 {% block head_dahsboard %}
-Proveedores
+{% if p_type == 1%}
+    Proveedores
+{% else %}
+    Concesionarios
+{% endif %}
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Lista completa de proveedores
+{% if p_type == 1%}
+    Lista completa de proveedores
+{% else %}
+    Lista completa de concesionarios
+{% endif %}
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Proveedores
+{% if p_type == 1%}
+    Proveedores
+{% else %}
+    Concesionarios
+{% endif %}
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Lista de proveedores
+{% if p_type == 1%}
+    Lista completa de proveedores
+{% else %}
+    Lista completa de concesionarios
+{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -126,6 +142,7 @@ Lista de proveedores
                                 </thead>
                                 <tbody>
                                     {% for provider in proveedores %}
+                                    {% if provider.provider_type.id == p_type %}
                                     <tr>
                                         <td class="text-center">{{provider.id}}</td>
                                         <td class="font-w600">{{provider.businessName}}</td> 
@@ -149,6 +166,7 @@ Lista de proveedores
                                             </div>
                                         </td>
                                     </tr>
+                                    {% endif %}
                                     {% endfor %}
                                 </tbody>
                             </table>

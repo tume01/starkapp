@@ -28,12 +28,42 @@ def index(request):
 
     providers = provider_service.getProviders()
 
+    #p_type = 1
+
     context = {
         'proveedores' : providers2,
+        'p_type' : 1,
         'titulo' : 'titulo'
     }
 
     return render(request, 'Admin/Providers/index_provider.html', context)
+
+
+@login_required
+@permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
+@require_http_methods(['GET'])
+def index_concesionary(request):
+    provider_service = ProvidersService()
+
+    filters = getProviderFilters(request)
+
+    providers2 = provider_service.filter(filters)
+
+    providers = provider_service.getProviders()
+    
+    p_type = 1
+
+    print("hbsakckcdcncnmcnmcnmxnmxnxnxnnx")
+    print(p_type)
+
+    context = {
+        'proveedores' : providers2,
+        'p_type' : 2,
+        'titulo' : 'titulo'
+    }
+
+    return render(request, 'Admin/Providers/index_provider.html', context)
+
 
 @login_required
 @permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
