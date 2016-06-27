@@ -170,6 +170,7 @@ class PaymentService(object):
                 cls.registerMembership(member, products)
             elif product_type == 1:
                 cls.registerFine(member, products)
+  
 
             return products.update(status=1)
         return False
@@ -270,7 +271,7 @@ class PaymentService(object):
     def createBungalowReservationProduct(cls, bungalow_reservation, member):
 
         insert_data = {
-            'description': 'Pago de Rerva Bungalow:' + bungalow_reservation.bungalow_number,
+            'description': 'Pago de Rerva Bungalow:' + str(bungalow_reservation.bungalow_number),
             'quantity': 1,
             'product_type': 4,
             'product_id': bungalow_reservation.pk,
