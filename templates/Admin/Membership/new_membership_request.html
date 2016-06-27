@@ -525,10 +525,12 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-daterange1">Rango de fechas para objeciones</label>
                                             <div class="col-md-8">
-                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" placeholder="Desde">
+                                                <div class="input-group">
+                                                    <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                    <input class="form-control" type="text" id="fechaIni" name="initialDate" placeholder="Desde">
+                                                     </div>
                                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" placeholder="hasta">
+                                                    <input class="form-control" type="text" id="fechaFin" name="finalDate" readonly placeholder="hasta">
                                                 </div>
                                             </div>
                                         </div>
@@ -576,12 +578,34 @@ var url= "{% url "membership_application:verify_document_number" %}"
 
  $(document).ready(function () {
 
+
     $('#conyu').click(function(){
         $('.conyuge').show();
         $('#conyu').prop("disabled", true);
         $('#focus').focus();
-
     });
+
+
+    $('#fechaFin').removeClass( "input-daterange" );
+
+    $('#fechaIni').change(function(){
+
+        var iniDate = $('#fechaIni').val();
+        var splitdate = iniDate.split("/");
+        var someDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
+
+        var numberOfDaysToAdd = 13;
+        someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+
+        var dd = someDate.getDate();
+        var mm = someDate.getMonth() + 1;
+        var y = someDate.getFullYear();
+
+        var someFormattedDate = dd + '/'+ mm + '/'+ y;
+        $('#fechaFin').val(someFormattedDate);
+
+
+     });
 
         $('#department').change(function(){
         var department = $('#department :selected').text();

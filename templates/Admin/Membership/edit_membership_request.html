@@ -553,7 +553,7 @@ Nueva solicitud de membresía
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="sworkPlace" 
-                                                     {% if membership_application.sworkPlace  %} 
+                                                {% if membership_application.sworkPlace  %} 
                                                     value="{{membership_application.sworkPlace}}"
                                                 {% endif %}
                                                  type="text">
@@ -674,10 +674,12 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-daterange1">Rango de fechas para objeciones</label>
                                             <div class="col-md-8">
-                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" value="{{membership_application.initialDate|date:"d/m/Y"}}">
+                                                <div class="input-group">
+                                                    <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                    <input class="form-control" type="text" id="fechaIni" name="initialDate" value="{{membership_application.initialDate|date:"d/m/Y"}}">
+                                                    </div>
                                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" value="{{membership_application.finalDate|date:"d/m/Y"}}">
+                                                    <input class="form-control" type="text" id="fechaFin" name="finalDate" value="{{membership_application.finalDate|date:"d/m/Y"}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -734,6 +736,29 @@ var CSRF_TOKEN = '{{ csrf_token }}';
 var url= "{% url 'membership_application:verify_document_number' %}"
 
  $(document).ready(function () {
+
+    $('#fechaFin').removeClass( "input-daterange" );
+
+    $('#fechaIni').change(function(){
+
+        var iniDate = $('#fechaIni').val();
+        var splitdate = iniDate.split("/");
+        var someDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
+
+        var numberOfDaysToAdd = 13;
+        someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+
+        var dd = someDate.getDate();
+        var mm = someDate.getMonth() + 1;
+        var y = someDate.getFullYear();
+
+        var someFormattedDate = dd + '/'+ mm + '/'+ y;
+        $('#fechaFin').val(someFormattedDate);
+
+
+     });
+
+
         $('#department').change(function(){
         var department = $('#department :selected').text();
         {
