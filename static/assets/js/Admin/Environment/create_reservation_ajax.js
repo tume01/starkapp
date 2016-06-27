@@ -1,20 +1,46 @@
-// Submit post on submit
-$('#filters-form').on('submit', function(event){
-    var req_data = submitFilters();
-    verifyDay(req_data);
+
+
+$(document).ready(function() {
+    $('#calendar').fullCalendar({
+        defaultDate: new Date(),
+        editable: true,
+        allDayDefault: true,
+        defaultView: "month",
+        eventLimit: true, // allow "more" link when too many events
+        events: function(start, end, timezone, callback){
+            var startDate = new Date(start);
+            var endDate = new Date(end);
+            endDate.setDate(endDate.getDate() - 1);
+            var currentDate = new Date()
+            if (startDate < currentDate) startDate = currentDate
+//            Debido al TimeZone
+            startDate.setHours(startDate.getHours() - 5);
+
+            refreshEvents(startDate, endDate, callback);
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+//            TODO: Reserve a Bungalow with current filters
+            var href2 = '{% url "environments:create_reservation" %}'
+            console.log(href2)
+            console.log(calEvent)
+//            location.href = '{% url "bungalowReservation:index" %}';
+        }
+    });
 });
 
-$('#insert-form').on('submit', function(event){
-    var req_data = submitFilters();
-    insertReservation(req_data);
-});
+function createReservation(){
 
+};
 
 $('#headquarter_id').on('change', function(event){
     var req_data = submitFilters();
     chargeEnvironments(req_data);
 });
 
+$('#environment_id').on('change', function(event){
+     console.log("Probando webadas");
+    $('#calendar').fullCalendar( 'refetchEvents' );
+});
 
 
 function submitFilters() {
@@ -25,27 +51,7 @@ function submitFilters() {
     return requestData;
 };
 
-function chargeEnvironments(requestData) {    
-    $.ajax({
-        url : "create/getEnvs", // the endpoint
-        type : "POST", // http method
-        data : requestData, // data sent with the post request
-
-        // handle a successful response
-        success : function(response) {
-            $('#select_env').html(response);
-        },
-
-        // handle a non-successful response
-        error : function(xhr,errmsg,err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log("ERROR"); // another sanity check
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
-};
-
+//General filter
 function getFilters() {
     var filter = {
         'env_name'       : $('#env_name').val(),
@@ -58,15 +64,16 @@ function getFilters() {
     return filter;
 };
 
-function verifyDay(requestData){
+function chargeEnvironments(requestData) {    
     $.ajax({
-        url : "create/post", // the endpoint
-        type : "POST", // http method
-        data : requestData, // data sent with the post request
+        url      : "create/getEnvs", // the endpoint
+        type     : "POST", // http method
+        data     : requestData, // data sent with the post request
+        dataType : 'text',
 
         // handle a successful response
         success : function(response) {
-            $('#form-content').html(response);
+            $('#environment_id').html(response);
         },
 
         // handle a non-successful response
@@ -79,28 +86,37 @@ function verifyDay(requestData){
     });
 };
 
-function insertReservation(requestData){
+
+
+
+function refreshEvents(start, end, callback){
+    console.log("Refresh Events");
+    var requestData = {
+        'start' : Math.floor(start.getTime()/1000),
+        'end' : Math.floor(end.getTime()/1000),
+        'headquarter_id' : $('#headquarter_id option:selected').val(),
+        //'environment_id' : $('#environment_id option:selected').val(),
+        'environment_id' : 1,
+        'csrfmiddlewaretoken' : getCookie('csrftoken')
+    }
+
     $.ajax({
-        url : "create/insert", // the endpoint
+        url : "create/refresh", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 
         // handle a successful response
-        success : function(response) {
-            console.log("SUCCESS");
-            window.location.href = response;
+        success : function(data) {
+            console.log("AJAX REQUEST", data.events);
+            callback(data.events);
         },
 
         // handle a non-successful response
         error : function(xhr,errmsg,err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
             console.log("ERROR"); // another sanity check
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
         }
     });
-};
-
+}
 
 
 function getCookie(name) {

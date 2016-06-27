@@ -25,10 +25,7 @@ class BaseRepository(AbstractBaseRepository):
             return None
 
     def create(self, create_data):
-        new_element = self.model()
-
-        for key, value in create_data.items():
-            new_element.__setattr__(key, value)
+        new_element = self.model(**create_data)
 
         new_element.save()
 

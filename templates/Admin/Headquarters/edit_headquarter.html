@@ -23,22 +23,20 @@ Sedes
 {% endblock %}
 
 {% block content %}
-    <div class="content">
-        {% if messages %}
-            {% for msg in messages %}
-                <div class="alert alert-warning" role="alert">
-                    {{msg.message}}
-                </div>
-            {% endfor %}
-        {% endif %}
-    </div>
-
 <div class="content">
-    <div class="block">
-        
+    <div class="block">        
+        <div class="content">
+            {% if messages %}
+                {% for msg in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        {{msg.message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action="{% url 'headquarters:update' headquarter.id %}" method="post">
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action="{% url 'headquarters:update' headquarter.id %}" method="post">
             {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-2">
@@ -64,9 +62,13 @@ Sedes
                         <label class="col-xs-8" for="id_ubigeo_departamento">Departamento</label>
                             <div class="col-md-6">
                                 <select class="form-control" id="department" name="department" size="1">
-                                <option value="">{{hq_ubigeo.department}}</option>
-                                {% for ubigeo in ubigeos %}
+                                <option value="">Seleccione</option>
+                                {% for ubigeo in departments %}
+                                    {% if ubigeo.department == headquarter.ubigeos.department %}
+                                    <option selected value="{{ubigeo.department}}">{{ubigeo.department}}</option>
+                                    {% else %}
                                     <option value="{{ubigeo.department}}">{{ubigeo.department}}</option>
+                                    {% endif %}
                                 {% endfor %}
                                 </select>
                             </div>
@@ -87,7 +89,14 @@ Sedes
                         <label class="col-xs-8" for="id_ubigeo_province">Provincia</label>
                             <div class="col-md-8">
                                 <select class="form-control" id="province" name="province" size="1">
-                                    <option value="">{{hq_ubigeo.province}}</option>
+                                <option value="">Seleccione</option>
+                                    {% for ubigeo in provinces %}
+                                        {% if ubigeo.province == headquarter.ubigeos.province %}
+                                        <option selected value="{{ubigeo.province}}">{{ubigeo.province}}</option>
+                                        {% else %}
+                                        <option value="{{ubigeo.province}}">{{ubigeo.province}}</option>
+                                        {% endif %}
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -107,7 +116,14 @@ Sedes
                         <label class="col-xs-8" for="id_ubigeo_district">Distrito</label>
                             <div class="col-md-10">
                                 <select class="form-control" id="district" name="district" size="1">
-                                    <option value="">{{hq_ubigeo.district}}</option>
+                                <option value="">Seleccione</option>
+                                    {% for ubigeo in districts %}
+                                        {% if ubigeo.district == headquarter.ubigeos.district %}
+                                        <option selected value="{{ubigeo.district}}">{{ubigeo.district}}</option>
+                                        {% else %}
+                                        <option value="{{ubigeo.district}}">{{ubigeo.district}}</option>
+                                        {% endif %}
+                                    {% endfor %}
                                 </select>
                             </div>
                         </div>
@@ -217,8 +233,6 @@ Sedes
         App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
     });
 </script>
-
-
 
 <script src='{% static "assets/js/Admin/Headquarters/headquarters_forms_validations.js" %}'></script>
 <script src='{% static "assets/js/tablas.js" %}'></script>

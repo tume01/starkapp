@@ -25,46 +25,45 @@ Lista de solicitudes de actividades
     <form class="form" action="{% url 'activities:index_signup' %}" method="get">
         <div class="block">
             <div class="block-content">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label">Nombre</label>
-                                <input class="form-control" type="text" id="name" name="name">
-                            </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">Nombre</label>
+                            <input class="form-control" type="text" id="name" name="name">
                         </div>
-                        <div class="col-lg-1">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label">Capacidad</label>
-                                <input class="form-control" type="text" id="attendance" name="attendance">
-                            </div>
+                    </div>
+                    <div class="col-lg-1">
+                        <div class="form-group">
+                            <label class="col-sm-12 control-label">Capacidad</label>
+                            <input class="form-control" type="text" id="attendance" name="attendance">
                         </div>
-                        <div class="col-lg-4">
-
-                            <div class="form-group">
-                                <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
-                                <div class="col-xs-12">
-                                    <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                        <input class="form-control input-datetime" type="text" id="start_date" name="start_date" placeholder="Desde">
-                                        <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                        <input class="form-control input-datetime" type="text" id="end_date" name="end_date" placeholder="hasta">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="col-xs-12" for="example-select">Tipo de Actividad</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control" id="activity_type_id" name="activity_type_id" size="1">
-                                        <option value>Todas las sedes</option>
-                                        {% for activity_type in activity_types %}
-                                        <option value="{{ activity_type.id }}">{{ activity_type.name }}</option>
-                                        {% endfor %}
-                                    </select>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
+                            <div class="col-xs-12">
+                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
+                                    <input class="form-control input-datetime" type="text" id="start_date" name="start_date" placeholder="Desde">
+                                    <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
+                                    <input class="form-control input-datetime" type="text" id="end_date" name="end_date" placeholder="hasta">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label class="col-xs-12" for="example-select">Tipo de Actividad</label>
+                            <div class="col-sm-12">
+                                <select class="form-control" id="activity_type_id" name="activity_type_id" size="1">
+                                    <option value>Todas las sedes</option>
+                                    {% for activity_type in activity_types %}
+                                    <option value="{{ activity_type.id }}">{{ activity_type.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="block-content">
                 <div class="form-group">
@@ -81,39 +80,35 @@ Lista de solicitudes de actividades
     </form>
 </div>
 <div class="content">
-    <div class="block">
+    <div class="block block-bordered">
         <div class="block-content">
-            <div class="block block-bordered">
-                <div class="block-content">
-                    <table class="table table-bordered table-striped js-dataTable-simple">
-                         <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Capacidad</th>
-                                <th>Ambiente</th>
-                                <th>Fecha Inicio</th>  
-                                <th>Fecha Fin</th>  
-                                <th>Acciones</th>                                      
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for activity in activities %}                                       
-                                <tr>
-                                    <td class="font-w600">{{activity.name}}</td>
-                                    <td class="font-w600">{{activity.attendance}}</td>
-                                    <td class="font-w600">{{activity.enviroment.name}}</td>
-                                    <td class="font-w600">{{activity.start_date|date:"d/m/Y H:i"}}</td>
-                                    <td class="font-w600">{{activity.end_date|date:"d/m/Y H:i"}}</td>
-                                    <td class="text-center">
-                                       <div class="btn-group">
-                                            <a href="{% url 'activities:select_signup' activity.id%}"><button class="btn btn-xs btn-default objetar" type="button" data-toggle="tooltip" title="Ver Detalle"><i class="fa fa-eye"></i></button></a>
-                                        </div>
-                                    </td>    
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+            <div class="row">
+                {% for activity in activities %}
+                    <div class="col-xs-4">
+                        <a href="{% url 'activities:select_signup' activity.id %}" class="block block-link-hover2 block-bordered">
+                            <div class="block-header">
+                                <h3 class="block-title text-center">{{activity.name}}</h3>
+                            </div>
+                            <img src="{{image_url}}{{activity.photo}}" class="img-responsive img-event-preview">
+                            <div class="block-content">
+                                <div class="row items-push text-center">
+                                    <div class="col-xs-4">
+                                        <div class="push-5"><i class="si si-calendar fa-2x"></i></div>
+                                        <div class="h5 font-w300 text-muted">Inicio: {{activity.start_date|date:"d/m/Y H:i"}}</div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="push-5"><i class="si si-calendar fa-2x"></i></div>
+                                        <div class="h5 font-w300 text-muted">Fin: {{activity.end_date|date:"d/m/Y H:i"}}</div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <div class="push-5"><i class="si si-users fa-2x"></i></div>
+                                        <div class="h5 font-w300 text-muted">Capacidad: {{activity.attendance}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

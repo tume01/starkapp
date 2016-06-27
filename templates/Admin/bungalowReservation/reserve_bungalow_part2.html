@@ -34,8 +34,11 @@ Creación de bungalows
             </ul>
         </div>
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10" action='{% url "bungalowReservation:create_reserve" %}' method="POST">
+            <form class="form-horizontal push-10-t push-10" action='{% url "bungalowReservation:admin_create_reserve" %}' method="POST">
                 {% csrf_token %}
+
+                <input type="hidden" name="bungalow_id" value="{{reservation.bungalow_id}}">
+                <input type="hidden" name="arrival_date" value="{{reservation.arrival_date|date:'d/m/Y'}}">
 
                 <div class="row">
                     <div class="col-lg-5">
@@ -53,7 +56,7 @@ Creación de bungalows
                     <div class="col-lg-5 col-lg-offset-1">
                         <div class="form-group">
                             <label>Tipo de bungalow</label>
-                            <select class="form-control" name="bungalow_type_id" size="1">
+                            <select class="form-control" disabled name="bungalow_type_id" size="1">
                                 {% for bungalowType in bungalowTypes %}
                                 <option {% if bungalowType.id == reservation.bungalow_type_id %} selected='selected' {% endif %} value="{{ bungalowType.id }}">
                                     {{ bungalowType.name }}
@@ -69,7 +72,7 @@ Creación de bungalows
                         <div class="form-group">
                             <label>Fecha de Entrada</label>
                             <div class="input-group">
-                                <input class="form-control" disabled name="arrival_date" value={{reservation.arrival_date}} type="text">
+                                <input class="form-control" disabled name="arrival_date" value={{reservation.arrival_date|date:"d/m/Y"}} type="text">
                             </div>
                         </div>
                     </div>
@@ -77,7 +80,7 @@ Creación de bungalows
                     <div class="col-lg-5 col-lg-offset-1">
                         <div class="form-group">
                             <label>Seleccione la cantidad de dias</label>
-                            <select class="form-control" id="bungalow_type_id">
+                            <select class="form-control" name="duration">
                                 {% for val in durationOptions %}
                                 <option value="{{val}}">{{val}} Dias</option>
                                 {% endfor %}
@@ -86,6 +89,20 @@ Creación de bungalows
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label>Sede</label>
+                            <select class="form-control" name="member_id" size="1">
+                                {% for member in members %}
+                                <option value="{{ member.id }}">
+                                    {{ member.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="form-group">
                         <div class="col-xs-2 col-xs-offset-4">
