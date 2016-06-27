@@ -10,7 +10,7 @@ class BungalowReservation(models.Model):
         (0, 'Pendiente'),
         (1, 'Reservada'),
         (2, 'En uso'),
-        (4, 'Finalizada'),
+        (3, 'Finalizada'),
     )
 
     #bungalow = models.ForeignKey('bungalow.Bungalow', on_delete=models.CASCADE, null=True)
