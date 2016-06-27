@@ -50,7 +50,7 @@ Nueva solicitud de membresía
                                       <input type="hidden" class="form-control" id="example-input1-group1" name="id" value="{{membership_application.id}}"  type="text">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> Miembro(*)</label>
+                                        <h4 class="col-xs-12" for="example-select"> Miembro(*)</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Telefono Celular(*)</label>
+                                            <label class="col-xs-8" for="example-number-input">Teléfono Celular(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="{{membership_application.cellphoneNumber}}" type="text">
                                             </div>
@@ -383,15 +383,15 @@ Nueva solicitud de membresía
                                     </div>
                                 </div>
                                 <br>
-                                <div class="row">
+                                <div id="focus" class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> Conyuge</label>
+                                        <h4 class="col-xs-12" for="example-select"> Cónyuge</h4>
                                         </div>
                                     </div>
                                 </div>
-                                <br>
-                                <div class="row">
+                                <br  style="display: none;">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-sm-3">
                                          {% if membership_application.sphoto  %} 
                                          <img src="{{ MEDIA_URL }}{{membership_application.sphoto}}"  height="200" width="200" class="iimg-event-preview">
@@ -421,7 +421,7 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Nombres</label>
@@ -461,13 +461,13 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
                                             <div class="col-lg-12">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="num_doc" name="snum_doc" 
+                                                        <input class="form-control" id="num_doc2" name="snum_doc" 
                                                     {% if membership_application.sdocument_number  %} 
                                                     value="{{membership_application.sdocument_number}}"
                                                 {% endif %}
@@ -507,7 +507,7 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Especialidad</label>
@@ -546,14 +546,14 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Centro de Trabajo</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="sworkPlace" 
-                                                     {% if membership_application.sworkPlace  %} 
+                                                {% if membership_application.sworkPlace  %} 
                                                     value="{{membership_application.sworkPlace}}"
                                                 {% endif %}
                                                  type="text">
@@ -586,7 +586,7 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
@@ -654,7 +654,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> General</label>
+                                        <h4 class="col-xs-12" for="example-select"> General</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -674,10 +674,12 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-daterange1">Rango de fechas para objeciones</label>
                                             <div class="col-md-8">
-                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" value="{{membership_application.initialDate|date:"d/m/Y"}}">
+                                                <div class="input-group">
+                                                    <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                    <input class="form-control" type="text" id="fechaIni" name="initialDate" value="{{membership_application.initialDate|date:"d/m/Y"}}">
+                                                    </div>
                                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" value="{{membership_application.finalDate|date:"d/m/Y"}}">
+                                                    <input class="form-control" type="text" id="fechaFin" name="finalDate" value="{{membership_application.finalDate|date:"d/m/Y"}}">
                                                 </div>
                                             </div>
                                         </div>
@@ -701,7 +703,10 @@ Nueva solicitud de membresía
                                 </div>
                             </div>
                                 <div class="form-group">
-                                    <div class="col-xs-2 col-xs-offset-4">
+                                    <div class="col-xs-2 col-xs-offset-3">
+                                        <button class="btn btn-primary"  id='conyu' type="button"><i class="fa fa-plus push-5-r"></i> Cónyuge</button>
+                                    </div>   
+                                    <div class="col-xs-2">
                                         <button class="btn btn-success" id='button' typr='submit' ><i class="fa fa-check push-5-r"></i> Guardar</button>
                                     </div>
                                     <div class="col-xs-2">
@@ -731,6 +736,27 @@ var CSRF_TOKEN = '{{ csrf_token }}';
 var url= "{% url 'membership_application:verify_document_number' %}"
 
  $(document).ready(function () {
+
+    $('#fechaIni').change(function(){
+
+        var iniDate = $('#fechaIni').val();
+        var splitdate = iniDate.split("/");
+        var someDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
+
+        var numberOfDaysToAdd = 13;
+        someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+
+        var dd = someDate.getDate();
+        var mm = someDate.getMonth() + 1;
+        var y = someDate.getFullYear();
+
+        var someFormattedDate = dd + '/'+ mm + '/'+ y;
+        $('#fechaFin').val(someFormattedDate);
+
+
+     });
+
+
         $('#department').change(function(){
         var department = $('#department :selected').text();
         {
@@ -741,9 +767,6 @@ var url= "{% url 'membership_application:verify_document_number' %}"
                 cache:false,
                 success: function(returndata){ 
                     $('#province').empty();
-                    //$('#province').append($('<option>', { text : 'Seleccione', value : ''}));
-                    //$('#district').empty();
-                    //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
                     $.each(returndata, function(i, item) {
                         if(i==0){
                             $('#province').append($('<option>', { 
@@ -892,7 +915,144 @@ var url= "{% url 'membership_application:verify_document_number' %}"
         }
         });
 
-        //$('#department').selectedIndex = "1";
+        $('#sbirthDepartment').change(function(){
+        var birthDepartment = $('#sbirthDepartment :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:provincias" %}',
+                data:{department:birthDepartment, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#sbirthProvince').empty();
+                    //$('#birthProvince').append($('<option>', { text : 'Seleccione', value : ''}));
+                    //$('#birthDistrict').empty();
+                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#sbirthProvince').append($('<option>', {
+                                text : item.province,
+                                selected : true
+                            }));
+                            $.ajax({
+                                type:'post',
+                                url:'{% url "ubigeo:distritos" %}',
+                                data:{province:item.province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                cache:false,
+                                success: function(returndata){
+                                    $('#birthDistrict').empty();
+                                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                                    $.each(returndata, function(i, item) {
+                                        if(i==0){
+                                            $('#sbirthDistrict').append($('<option>', {
+                                                text : item.district,
+                                                selected : true
+                                            }));
+                                        }else{
+                                            $('#sbirthDistrict').append($('<option>', {
+                                                text : item.district
+                                            }));
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            $('#sbirthProvince').append($('<option>', {
+                                text : item.province
+                            }));
+                        }
+                    });
+                }
+            });
+            
+        }
+        });
+
+
+        $('#sbirthProvince').change(function(){
+        var birthProvince = $('#sbirthProvince :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:distritos" %}',
+                data:{province:birthProvince, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#sbirthDistrict').empty();
+                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#sbirthDistrict').append($('<option>', {
+                                text : item.district,
+                                selected : true
+                            }));
+                        }else{
+                            $('#sbirthDistrict').append($('<option>', {
+                                text : item.district
+                            }));
+                        }
+                    });
+                }
+            });
+        }
+        });
+
+    if($('#num_doc2').val()== ''){
+        var e3= document.getElementById("sbirthDepartment");
+        $.ajax({
+            type:'post',
+            url:'{% url "ubigeo:provincias" %}',
+            data:{department:e3.options[e3.selectedIndex].text, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            cache:false,
+            success: function(returndata){ 
+                $('#sbirthProvince').empty();
+                $.each(returndata, function(i, item) {
+                    if(i==0){
+                        $('#sbirthProvince').append($('<option>', { 
+                            text : item.province ,
+                            selected : true
+                        }));
+                        $.ajax({
+                            type:'post',
+                            url:'{% url "ubigeo:distritos" %}',
+                            data:{province:item.province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                            cache:false,
+                            success: function(returndata){ 
+                                $('#sbirthDistrict').empty();
+                                $.each(returndata, function(i, item) {
+                                    if(i==0){
+                                        $('#sbirthDistrict').append($('<option>', { 
+                                            text : item.district ,
+                                            selected : true
+                                        }));
+                                    }else{
+                                        $('#sbirthDistrict').append($('<option>', { 
+                                            text : item.district 
+                                        }));
+                                    }
+                                });
+                            }
+                        });
+                    }else{
+                        $('#sbirthProvince').append($('<option>', { 
+                            text : item.province 
+                        }));
+                    }
+                });
+            }
+        });
+    }else{
+        $('.conyuge').show();
+        $('#conyu').prop("disabled", true);
+    }
+
+    $('#conyu').click(function(){
+        $('.conyuge').show();
+        $('#conyu').prop("disabled", true);
+        $('#focus').focus();
+
+    });
+
     });
 
 </script>

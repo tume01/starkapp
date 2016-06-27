@@ -52,9 +52,9 @@ class MembershipApplicationForm(forms.Form):
         if data == None:
             return data
         w, h = get_image_dimensions(data)
-        if w != 200:
+        if w > 301:
             raise forms.ValidationError("Error en el ancho de la imagen")
-        if h != 200:
+        if h > 301:
             raise forms.ValidationError("Error en la alutra de la imgen")
         return data
 
@@ -63,9 +63,9 @@ class MembershipApplicationForm(forms.Form):
         if data == None:
             return data
         w, h = get_image_dimensions(data)
-        if w != 300:
+        if w > 301:
             raise forms.ValidationError("Error en el ancho de la imagen del conyuge")
-        if h != 300:
+        if h > 301:
             raise forms.ValidationError("Error en la alutra de la imgen del conyuge")
         return data
 

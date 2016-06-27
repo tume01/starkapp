@@ -1,0 +1,118 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: promociones
+{% endblock %}
+
+{% block head_dahsboard %}
+Promociones
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de promociones
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Promociones
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de promociones
+{% endblock %}
+
+{% block content %}
+     <div class="content content-narrow">
+                    <div class="content">
+                        {% if messages %}
+                            {% for msg in messages %}
+                                <div class="alert alert-warning" role="alert">
+                                    {{msg.message}}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    <!-- Mega Form -->
+                    <div class="block block-bordered">
+                        <div class="block-content">
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "promotions:edit_membership" %}' method="post" >
+                            {% csrf_token %}
+                                <input type="hidden" name="membership" value="{{membership_type_id}}"></input>
+                                <div class="row">
+                                    <div class="col-lg-6" style="display: none;">
+                                        <div class="form-group">
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input0-group1" name="id" placeholder="ID"  type="number" value= "{{promotion.id}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Promoción</label>
+                                            <div class="col-md-6">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="description" placeholder="Promoción"  type="text" value= "{{promotion.description}}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input">Descuento</label>
+                                            <div class="col-sm-4">
+                                                <input class="form-control" id="example-number-input" name="percentage" placeholder="Descuento" value= "{{percentage}}"  type="number" step="5" style="text-align:right;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>        
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-datetimepicker3">Fechas del Evento</label>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="start_date"  value="{{promotion.startDate|date:"d/m/Y H:i A"}}">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="js-datetimepicker input-group date" data-show-today-button="true" data-show-clear="true" data-show-close="true">
+                                                    <input class="form-control" type="text" id="example-datetimepicker3" name="end_date" value="{{promotion.endDate|date:"d/m/Y H:i A"}}">
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                    
+                                <div class="form-group">                    
+                                    <div class="col-xs-2 col-xs-offset-4">
+                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger" type="button" onclick="location.href='{% url "promotions:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
+                                    </div>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END Mega Form -->
+                </div>    
+
+{% endblock %}
+
+{% block scripts %}
+
+<script src='{% static "assets/js/Admin/Promotion/promotion_forms_validation.js" %}'></script>
+
+
+
+{% endblock %}

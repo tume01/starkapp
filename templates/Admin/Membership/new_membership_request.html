@@ -51,7 +51,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> Miembro</label>
+                                        <h4 class="col-xs-12" for="example-select"> Miembro</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -316,15 +316,15 @@ Nueva solicitud de membresía
                                     </div>
                                 </div>
                                 <br>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> Conyuge</label>
+                                        <h4 class="col-xs-12" id="focus" for="example-select"> Cónyuge</h4>
                                         </div>
                                     </div>
                                 </div>
-                                <br>
-                                <div class="row">
+                                <br style="display: none;">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="photo">Foto</label>
@@ -341,7 +341,7 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Nombres</label>
@@ -369,7 +369,7 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
@@ -401,7 +401,7 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Especialidad</label>
@@ -431,7 +431,7 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Centro de Trabajo</label>
@@ -459,7 +459,7 @@ Nueva solicitud de membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row conyuge" style="display: none;">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
@@ -505,7 +505,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select"> General</label>
+                                        <h4 class="col-xs-12" for="example-select"> General</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -525,10 +525,12 @@ Nueva solicitud de membresía
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-daterange1">Rango de fechas para objeciones</label>
                                             <div class="col-md-8">
-                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" placeholder="Desde">
+                                                <div class="input-group">
+                                                    <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                    <input class="form-control" type="text" id="fechaIni" name="initialDate" placeholder="Desde">
+                                                     </div>
                                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" placeholder="hasta">
+                                                    <input class="form-control" type="text" id="fechaFin" name="finalDate" readonly placeholder="hasta">
                                                 </div>
                                             </div>
                                         </div>
@@ -547,8 +549,11 @@ Nueva solicitud de membresía
                                 </div>
                                 </div>
                                </div>
-                                <div class="form-group">                    
-                                    <div class="col-xs-2 col-xs-offset-4">
+                                <div class="form-group">  
+                                 <div class="col-xs-2 col-xs-offset-3">
+                                        <button class="btn btn-primary"  id='conyu' type="button"><i class="fa fa-plus push-5-r"></i> Cónyuge</button>
+                                    </div>                  
+                                    <div class="col-xs-2">
                                         <button class="btn btn-success" id='button' type='submit' ><i class="fa fa-check push-5-r"></i> Guardar</button>
                                     </div>
                                     <div class="col-xs-2">
@@ -572,6 +577,32 @@ var CSRF_TOKEN = '{{ csrf_token }}';
 var url= "{% url "membership_application:verify_document_number" %}"
 
  $(document).ready(function () {
+
+
+    $('#conyu').click(function(){
+        $('.conyuge').show();
+        $('#conyu').prop("disabled", true);
+        $('#focus').focus();
+    });
+
+    $('#fechaIni').change(function(){
+
+        var iniDate = $('#fechaIni').val();
+        var splitdate = iniDate.split("/");
+        var someDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
+
+        var numberOfDaysToAdd = 13;
+        someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+
+        var dd = someDate.getDate();
+        var mm = someDate.getMonth() + 1;
+        var y = someDate.getFullYear();
+
+        var someFormattedDate = dd + '/'+ mm + '/'+ y;
+        $('#fechaFin').val(someFormattedDate);
+
+
+     });
 
         $('#department').change(function(){
         var department = $('#department :selected').text();

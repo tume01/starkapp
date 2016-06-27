@@ -35,8 +35,9 @@ var MembershipRequestFormValidation = function() {
                 },
                 'num_doc': {
                     required: true,
-                    number: true, 
-                    min: 1,  
+                    number: true,
+                    min: 1,
+                    minlength: 8,
                     remote: {
                         url: url,
                         type: "post",
@@ -257,8 +258,6 @@ var MembershipRequestFormValidation = function() {
     var sbirthDate = $('#birthDate').val();
     var splitdate = sbirthDate.split("/");
     var birthDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
-    console.log(birthDate)
-    console.log(today)
     if(birthDate >= today){ return false;}
     else {return true;}
     }, "La fecha no puede ser mayor a la de hoy");

@@ -1,0 +1,25 @@
+<div class="form-group" id="bungalow_types_options">
+    <select class="form-control" id="example-select" name="bungalow_type" size="1">
+    {% for type in bungalow_types %}
+    	<option value="{{type.id}}">{{type.name}}</option>
+	{% endfor %}
+    </select>
+
+    <label class="col-xs-12" for="example-number-input">Descuento</label>
+    <div class="col-sm-4">
+    	<input class="form-control" id="example-number-input" name="bungalow_percentage" placeholder="Descuento" >
+    </div>
+
+   	<div class="col-lg-4">
+       	<label class="col-xs-12" for="seat">Elegir membresía</label>
+        <div class="col-md-4">
+        	<div class="input-group">
+            <select class="form-control" id="example-select" name="membership_bungalow_type" size="1">
+            {% for membership in membership_types %}
+            	<option value="{{membership.id}}">{{membership.name}}</option>
+            {% endfor %}
+            </select>
+           	</div>
+        </div>
+	</div>
+</div>
