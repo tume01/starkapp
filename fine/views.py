@@ -367,12 +367,19 @@ def user_filter(request):
 
     return HttpResponse(recipe_list_json, 'application/javascript')
 
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
+@require_http_methods(['POST'])
 def payFine(request):
+
+    fines = request.POST.getlist('check_list[]')
 
     member_service = MembersService()
     member = member_service.getMemberByUser(request.user)
-
-    for fine in member.fine_set.all():
+    fine_service = FineService()
+    
+    for fine_id in fines:
+        fine = fine_service.getFine(fine_id)
         if not PaymentService.createFineProduct(fine, member):
             messages.error(request, 'Error al tratar de pagar multas')
 
