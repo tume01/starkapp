@@ -5,8 +5,9 @@ from events_type.models import EventsType
 # Create your models here.
 class Promotion(models.Model):
     description = models.TextField(max_length=200)
-    percentage = models.FloatField()
     status = models.IntegerField()
+    startDate = models.DateTimeField()
+    endDate = models.DateTimeField()
     #status 0 if the promotion isn't valid anymore
     membership_promotions = models.ManyToManyField(
         MembershipType,
@@ -28,24 +29,18 @@ class MembershipPromotion(models.Model):
     membership_type = models.ForeignKey(MembershipType, on_delete=models.CASCADE)
     promotion = models.ForeignKey(Promotion, on_delete=models.CASCADE)
     deleted_at = models.DateTimeField(null=True)
-    startDate = models.DateTimeField()
-    endDate = models.DateTimeField()
-    percentage = models.DateTimeField()
+    percentage = models.FloatField()
 
 class BungalowReservationPromotion(models.Model):
     membership_type = models.ForeignKey(MembershipType, on_delete=models.CASCADE)
     bungalow_type = models.ForeignKey(BungalowType, on_delete=models.CASCADE)
     promotion = models.ForeignKey(Promotion, on_delete=models.CASCADE)
     deleted_at = models.DateTimeField(null=True)
-    startDate = models.DateTimeField()
-    endDate = models.DateTimeField()
-    percentage = models.DateTimeField()
+    percentage = models.FloatField()
 
 class EventPromotion(models.Model):
     membership_type = models.ForeignKey(MembershipType, on_delete=models.CASCADE)
     event_type = models.ForeignKey(EventsType, on_delete=models.CASCADE)
     promotion = models.ForeignKey(Promotion, on_delete=models.CASCADE)
     deleted_at = models.DateTimeField(null=True)
-    startDate = models.DateTimeField()
-    endDate = models.DateTimeField()
-    percentage = models.DateTimeField()
+    percentage = models.FloatField()

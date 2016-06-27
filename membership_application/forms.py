@@ -45,6 +45,7 @@ class MembershipApplicationForm(forms.Form):
     sworkPlace = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
     sworkPlaceJob = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
     semail = forms.CharField(max_length=200, required=False,error_messages={'max_length': 'El campo Correo no debe superar los 200 caracteres'})
+    scellPhoneNumber = forms.IntegerField(required=False)
     sphoto = forms.ImageField(required=False)
 
     def clean_photo(self):
@@ -52,9 +53,9 @@ class MembershipApplicationForm(forms.Form):
         if data == None:
             return data
         w, h = get_image_dimensions(data)
-        if w != 200:
+        if w > 301:
             raise forms.ValidationError("Error en el ancho de la imagen")
-        if h != 200:
+        if h > 301:
             raise forms.ValidationError("Error en la alutra de la imgen")
         return data
 
@@ -63,9 +64,9 @@ class MembershipApplicationForm(forms.Form):
         if data == None:
             return data
         w, h = get_image_dimensions(data)
-        if w != 300:
+        if w > 301:
             raise forms.ValidationError("Error en el ancho de la imagen del conyuge")
-        if h != 300:
+        if h > 301:
             raise forms.ValidationError("Error en la alutra de la imgen del conyuge")
         return data
 

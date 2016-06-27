@@ -53,9 +53,9 @@ Admin: proveedores
 
         <div class="block-content">
             {% if p_type == 1 %}
-            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "providers:insert" %}' method="post" >
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" id="formNewProvider" action='{% url "providers:insert" %}' method="post" >
             {% else %}
-            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "providers:insert_concesionary" %}' method="post" >
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" id="formNewConcesionary" action='{% url "providers:insert_concesionary" %}' method="post" >
             {% endif %}
                 {% csrf_token %}                            
                 <div class="row">
@@ -180,7 +180,11 @@ Admin: proveedores
 
                 <div class="form-group">                    
                     <div class="col-xs-2 col-xs-offset-4">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Guardar</button>
+                        {% if p_type == 1 %}
+                        <button class="btn btn-success" type="button" id="NewProvider"><i class="fa fa-check push-5-r"></i>Guardar</button>
+                        {% else %}
+                        <button class="btn btn-success" type="button" id="NewConcesionary"><i class="fa fa-check push-5-r"></i>Guardar</button>
+                        {% endif %}
                     </div>
                     <div class="col-xs-2">
                         <a href='{% url "providers:index" %}'><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
@@ -196,6 +200,6 @@ Admin: proveedores
 {% block scripts %}
 
         <script src='{% static "assets/js/Admin/Provider/provider_forms_validation.js" %}'></script>
-        
+        <script src='{% static "assets/js/provider.js" %}'></script>
 
 {% endblock %}

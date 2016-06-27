@@ -9,6 +9,7 @@ from .seed_activity_type import *
 from .seed_product import *
 from .seed_provider_type import *
 
+from .seed_politics import *
 
 class Command(BaseCommand):
     args = '<var ...>'
@@ -29,6 +30,7 @@ class Command(BaseCommand):
         cleanEventType()
         cleanActivity()
         cleanProduct()
+        cleanPolitics()
 
         print('\n    Inserting...')
 
@@ -37,7 +39,8 @@ class Command(BaseCommand):
         insertHeadquarter()
         insertEnvironments()
         insertBungalow()
-        #insertProduct()
-        #insertBungalowReservation()
-        #insertEventType()
-        #insertActivity()
+        insertProduct()
+        insertBungalowReservation()
+        insertEventType()
+        insertActivity()
+        insertPolitic()

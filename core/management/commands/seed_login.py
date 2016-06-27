@@ -2162,14 +2162,6 @@ class Command(BaseCommand):
         #fine3 = Fine(fine_type=ftype3, member=memb2,  observations='No asistio a una reunion importante',status='Por Pagar')
         #fine3.save()
 
-        prom1 = Promotion(description='Promocion venta de bungalows', percentage=15, status=1)
-        prom1.save()
-
-        prom2 = Promotion(description='Promocion oferta de membresia', percentage=10, status=1)
-        prom2.save()
-
-        prom3 = Promotion(description='Promocion productos todos', percentage=5, status=1)
-        prom3.save()
 
         relationship_1 = Relationship(description='Cónyuge')
         relationship_1.save()
@@ -2188,7 +2180,10 @@ class Command(BaseCommand):
                         paternalLastName='Ramirez', maternalLastName='Horna', document_number=98765432, phone=3813812,
                         email='jose.gil@pucp.pe', address='Av.Universitaria.1036', state=1,relationship=relationship_2,gender=0,nationality='Peruana',
                         birthDate=datetime.now() - timedelta(20), birthPlace=datetime.now() - timedelta(20),
-                        birthUbigeo=u2,photo='membership_application/flavio_ramirez.jpg')
+                        birthUbigeo=u2,photo='membership_application/flavio_ramirez.jpg',specialization='Ingenieria de Telecomunicaciones',workPlace='PUCP',
+                        workPlaceJob='Profesor',workPlacePhone=4340344,maritalStatus='Soltero/a',cellphoneNumber=993904208)
+        
         aff.save()
+
 
         print('Data has been inserted\n')
