@@ -7,6 +7,7 @@ from services.FineService import FineService
 from services.MembershipService import MembershipService
 from services.EventsService import EventsService
 from services.BungalowReservationService import BungalowReservationService
+from itertools import chain
 
 class PaymentService(object):
 
@@ -70,8 +71,12 @@ class PaymentService(object):
         subtotal = 0
         total_discount = 0
         igv_amount = 0
+        total_producs = products
 
-        for product in products:
+        if products.first().product_type == 3:
+            total_producs = list(chain(products, cls.getCartProducts(5, member)))
+
+        for product in total_producs:
             discount = product.discount
             subtotal += product.total
             total_discount += discount
@@ -98,9 +103,41 @@ class PaymentService(object):
         return False
 
     @classmethod
-    def payInvoice(cls, products, user_info):
-        insert_data = {}
-        new_invoice = cls.__invoice_repository.create(insert_data)
+    def payInvoice(cls, products, member, ruc, addres, social_reson):
+
+        subtotal = 0
+        total_discount = 0
+        igv_amount = 0
+        total_producs = products
+        if products.first().product_type == 3:
+            total_producs = list(chain(products, cls.getCartProducts(5, member)))
+        for product in total_producs:
+            discount = product.discount
+            subtotal += product.total
+            total_discount += discount
+
+        subtotal = subtotal - total_discount 
+        igv_amount = subtotal*0.18
+        total = subtotal + igv_amount
+
+        insert_data = {
+            'products': products,
+            'subtotal': subtotal,
+            'discounts': total_discount,
+            'igv_amount': igv_amount,
+            'total': total,
+            'created_at': datetime.now(),
+            'name': addres,
+            'ruc': ruc,
+            'address': addres
+        }
+
+        if cls.__invoice_repository.create(insert_data):
+            if products.first().product_type == 3:
+                cls.registerEvent(member, products)
+            return products.update(status=1)
+        return False
+
 
     @classmethod
     def getProductDiscount(cls, product, membership_type):
@@ -110,6 +147,9 @@ class PaymentService(object):
     def createEventProduct(cls, member, guests, event):
 
         assistants = event.eventregistration_set.filter(deleted_at=None).count()
+        
+        if member.eventregistration_set.filter(event_id=event.pk).count():
+            return None
 
         if not event.assistance > assistants:
             return None
@@ -210,10 +250,8 @@ class PaymentService(object):
                 guests = cls.getCartProducts(5, member)
 
         products = member.cartproduct_set.filter(**filters)
-        finish_products = member.cartproduct_set.filter(**filters)
+
         if payment_document_type == 'ticket':
             return cls.payTicket(products, member)
  
         return cls.payInvoice(products, member, ruc, addres, social_reson)
-            
-        

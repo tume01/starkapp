@@ -23,7 +23,7 @@ Checkout
 {% block content %}
 <div class="content">
     <div class="block">
-        <form method="post" action="{% url 'checkout:pay' %}">
+        <form method="post" action="{% url 'checkout:pay' %}" class="js-validation-bootstrap">
             {% if product_type %}
             <input hidden type="text" value="{{product_type}}" name="product_type">
             {% endif %}
@@ -91,8 +91,8 @@ Checkout
                         <div class="row">
                             <div class="col-sm-12" style="margin-bottom: 20px">
                                 <span style="margin-right: 10px">Seleccione documento de venta:</span>
-                                <input type="radio" name="payment" value="ticket" style="margin-left: 10px" />Boleta
-                                <input type="radio" name="payment" value="invoice" style="margin-left: 10px" />Factura 
+                                <input type="radio" name="payment" id="payment" value="ticket" style="margin-left: 10px" />Boleta
+                                <input type="radio" name="payment" id="payment" value="invoice" style="margin-left: 10px" />Factura 
                             </div>
                         </div>
                         <div class="row" id="invoice-container" hidden>
@@ -129,12 +129,12 @@ Checkout
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label>Titular de la tarjeta</label>
-                                    <input type="text" class="form-control" name="" />
+                                    <label>Titular de la tarjeta*</label>
+                                    <input type="text" class="form-control" name="card_holder" id="card_holder" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Numero de tarjeta</label>
-                                    <input type="text" class="form-control" name="" />
+                                    <label>Numero de tarjeta*</label>
+                                    <input type="text" class="form-control" name="card_number" id="card_number" />
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
@@ -177,8 +177,8 @@ Checkout
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">
-                                                <label>CSV/CVV</label>
-                                                <input type="text" class="form-control" name="" />
+                                                <label>CSV/CVV*</label>
+                                                <input type="text" class="form-control" name="csv"  id="csv"/>
                                             </div>
                                         </div>
                                     </div>
@@ -205,6 +205,7 @@ Checkout
     </div>
 </div>
 <script src='{% static "assets/js/core/jquery.min.js" %}'></script>
+<script src='{% static "assets/js/User/checkout/form-checkout.js" %}'></script>
 <script>
     $(document).ready(function() {
         $('input[type=radio][name=payment]').change(function() {
