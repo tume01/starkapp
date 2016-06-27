@@ -38,7 +38,7 @@ Nueva solicitud de membresía
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class=" form-horizontal push-10-t push-10" action='{% url "membership_application:insert" %}' method="post" enctype="multipart/form-data">
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:insert" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-4" >
@@ -71,7 +71,7 @@ Nueva solicitud de membresía
                                         <label class="col-xs-8" for="example-number-input">Nombres</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="firstName" placeholder="Nombres"  type="text">
+                                                    <input class="form-control" id="firstName" name="firstName" placeholder="Nombres"  type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@ Nueva solicitud de membresía
                                             <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
                                             <div class="col-sm-12">
                                                 <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="birthDate" placeholder="Fecha de Nacimiento">
+                                                    <input class="form-control" type="text" id="birthDate" name="birthDate" placeholder="Fecha de Nacimiento">
                                                 </div>
                                             </div>
                                         </div>
@@ -571,6 +571,7 @@ var CSRF_TOKEN = '{{ csrf_token }}';
 var url= "{% url "membership_application:verify_document_number" %}"
 
  $(document).ready(function () {
+
         $('#department').change(function(){
         var department = $('#department :selected').text();
         {

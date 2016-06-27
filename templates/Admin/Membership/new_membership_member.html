@@ -76,7 +76,7 @@ Nueva membresía
                                                 </div>
                                             </div>
                                         </div>
-                                    <div class="col-lg-3" >                                        
+                                    <div class="col-lg-4" >                                        
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-number-input">Nombres</label>
                                             <div class="col-md-12">
@@ -86,7 +86,7 @@ Nueva membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Apellido paterno</label>
                                             <div class="col-sm-8">
@@ -94,7 +94,7 @@ Nueva membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Apellido materno</label>
                                             <div class="col-sm-8">
@@ -110,7 +110,7 @@ Nueva membresía
                                         <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
                                             <div class="col-lg-12">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="num_doc" name="num_doc" value="{{membership_application.document_number}}" pattern="[0-9]*" >
+                                                        <input class="form-control"  readonly="readonly" id="num_doc" name="num_doc" value="{{membership_application.document_number}}" pattern="[0-9]*" >
                                                     </div>
                                             </div>
                                         </div>
@@ -119,12 +119,10 @@ Nueva membresía
                                         <div class="form-group">
                                             <label class="col-xs-5" for="example-select">Tipo</label>
                                             <div class="col-sm-8">
-                                                <select class="form-control" id="example-select1" name="identity_document_type" size="1">
+                                                <select class="form-control" id="example-select1"  readonly="readonly" name="identity_document_type" size="1">
                                                     {% for doc_type in doc_types %}
                                                         {% if doc_type.id == membership_application.identity_document_type.id %}
                                                             <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
-                                                        {% else %}
-                                                            <option value="{{doc_type.id}}">{{doc_type.name}}</option>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </select>
@@ -315,15 +313,16 @@ Nueva membresía
                                     </div>
                                 </div>
                                 <br>
-                                <div class="row">
+                                <div class="row oculto">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select"> Conyuge</label>
                                         </div>
                                     </div>
                                 </div>
+
                                 <br>
-                                <div class="row">
+                                <div class="row oculto">
                                     <div class="col-sm-3">
                                         <img src="{{ MEDIA_URL }}{{membership_application.sphoto}}" height="200" width="200" class="img-event-preview">
                                         <div class="form-group" style="display: none;">
@@ -345,13 +344,13 @@ Nueva membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row oculto">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Nombres</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" readonly="readonly" name="sfirstName" value="{{membership_application.sfirstName}}"  type="text">
+                                                    <input class="form-control" id="sfirstName" readonly="readonly" name="sfirstName" value="{{membership_application.sfirstName}}"  type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -373,7 +372,7 @@ Nueva membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row oculto">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
@@ -392,8 +391,6 @@ Nueva membresía
                                                     {% for doc_type in doc_types %}
                                                         {% if doc_type.id == membership_application.sidentity_document_type.id %}
                                                             <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
-                                                        {% else %}
-                                                            <option value="{{doc_type.id}}">{{doc_type.name}}</option>
                                                         {% endif %}
                                                     {% endfor %}
                                                 </select>
@@ -411,7 +408,7 @@ Nueva membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row oculto">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Especialidad</label>
@@ -442,7 +439,7 @@ Nueva membresía
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="row">
+                                 <div class="row oculto">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Centro de Trabajo</label>
@@ -470,7 +467,7 @@ Nueva membresía
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row oculto">
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
@@ -510,6 +507,7 @@ Nueva membresía
                                             </div>
                                     </div>
                                 </div>
+
                                  <div class="row">
 
                                     <div class="col-lg-6">
@@ -548,7 +546,9 @@ Nueva membresía
 <script>
 
     $(document).ready(function () {
-
+        if ($('#sfirstName').val()=='None'){
+            $('.oculto').hide();
+        }
 
         
     });

@@ -220,7 +220,7 @@ var MemberFormValidation = function() {
                 'photo':{
                     required: 'Por favor inrese una foto'
                 }                
-            }                
+                            
             }
         });
     };
