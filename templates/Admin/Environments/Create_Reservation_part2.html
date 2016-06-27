@@ -1,0 +1,120 @@
+{% extends 'Admin/Layouts/base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: ambientes reservados
+{% endblock %}
+
+{% block head_dahsboard %}
+Reserva de Ambientes
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de ambientes reservados
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Reserva de Ambientes
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de ambientes reservados
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+
+    <!-- Table Header (Filters) -->
+    <div class="block">
+        <div class="block-content">
+            <form class="form" id="filters-form" action="{% url 'environment:insert_reservation' %}" method="post">
+            {% csrf_token %}
+
+            <input type="hidden" name="environment_id" value="{{reservation.environment.id}}">
+            <input type="hidden" name="start_date" value="{{reservation.start_date|date:'d/m/Y'}}">
+            
+                <div class="row">
+
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label lass="col-xs-12" for="headquarter_id">Sede:</label>
+                            <input class="form-control input-lg" type="text" id="headquarter_id" name="headquarter_id" value="{{reservation.environment.headquarter.name}}" disabled>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-lg-offset-1">
+                        <div class="form-group">
+                            <label lass="col-xs-12" for="environment_id">Ambiente:</label>
+                            <input class="form-control input-lg" type="text" id="environment_name" name="environment_name" value="{{reservation.environment.name}}" disabled>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="form-group">
+                            <label>Fecha de Entrada</label>
+                            <div class="input-group">
+                                <input class="form-control" disabled name="start_date" value="{{reservation.start_date | date:'d/m/Y'}}" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-5 col-lg-offset-1">
+                        <div class="form-group">
+                            <label>Seleccione la cantidad de dias</label>
+                            <select class="form-control" id="num_days" name="num_days">
+                                {% for val in durationOptions %}
+                                <option value="{{val}}">{{val}} Dias</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label for="price">Precio</label>
+                                <input class="form-control input-lg" type="text" id="price" name="price" placeholder="Ingrese precio de actividad..">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+
+               <div class="form-group">
+                    <div class="col-xs-4">
+                    </div>
+                    <div class="col-xs-2">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button></a>
+                    </div>
+                    <div class="col-xs-2">
+                        <a><button class="btn btn-danger" type="button"><i class="fa fa-arrow-left push-5-r"></i> Regresar</button></a>
+                    </div>
+                    <div class="col-xs-4">
+                    </div>
+                </div>
+
+                <br>
+            </form>
+        </div>
+    </div>
+    <!-- END Table Header (Filters) -->
+</div>
+<!-- END Page Content -->
+
+                <!-- HASTA AQUÍ -->       
+
+                {% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

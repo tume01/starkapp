@@ -152,3 +152,4 @@ class BungalowReservationService(object):
         filter_data['bungalow_id'] = bungalow_id
         filter_data['status'] = 2 #reservation in use
         return cls._repository.filter(filter_data)
+

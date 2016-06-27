@@ -28,7 +28,7 @@ var UserFormValidation = function() {
                         url: url,
                         type: "post",
                         data: {
-                            username: function() {
+                            name: function() {
                                 return $( "#name" ).val();
                             }, 'csrfmiddlewaretoken': CSRF_TOKEN, 
                             user: user

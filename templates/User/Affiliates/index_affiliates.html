@@ -36,6 +36,7 @@ Lista de afiliados
                 {% csrf_token %}  
                 <input type="hidden" id="hid1" name="id"/>
             </form>
+             <div class="block-content">
         <div class="row">
                 <div class="col-lg-4" >
                     <div class="form-group">
@@ -53,7 +54,7 @@ Lista de afiliados
                     </div>
                 </div>
             </div>
-            <br>
+              </div>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
 
@@ -65,9 +66,10 @@ Lista de afiliados
                             <th>Nombres</th>
                             <th>Apellido paterno</th>
                             <th>Apellido materno</th>
+                            <th>Parentesco</th>
                             <th>Teléfono</th>
                             <th>Correo</th>                                
-                            <th>Acciónes</th>                                        
+                            <th>Acciones</th>                                        
                         </tr>
                     </thead>
                     <tbody>
@@ -78,6 +80,7 @@ Lista de afiliados
                             <td class="font-w600">{{affiliate.name}}</td>
                             <td class="font-w600">{{affiliate.paternalLastName}}</td>
                             <td class="font-w600">{{affiliate.maternalLastName}}</td>
+                            <td class="font-w600">{{affiliate.relationship.description}}</td>
                             <td class="font-w600">{{affiliate.phone}}</td>
                             <td class="font-w600">{{affiliate.email}}</td>
                             <td class="text-center">
@@ -118,7 +121,40 @@ Lista de afiliados
 {% block scripts %}
 
     <script>
+
+    var insert = {{affiliate_inserted|yesno:"true,false"}}
+    var edit = {{affiliate_edited|yesno:"true,false"}}
+    var deleted = {{affiliate_deleted|yesno:"true,false"}}
+
     $(document).ready(function () {
+         if(insert){
+            swal({
+                title: "Afiliado creado",
+                text: "Se ha creado el afiliado exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(edit){
+            swal({
+                title: "Afiliado editado",
+                text: "Se ha editado el afiliado exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(deleted){
+            swal({
+                title: "Afiliado eliminado",
+                text: "Se ha eliminado el afiliado exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }
+
+
+
         $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid2').val(id)
@@ -128,7 +164,20 @@ Lista de afiliados
         $('.eliminar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();    
+            swal({
+                title: "Eliminar Afiliado",
+                text: "¿Desea eliminar a " + $(this).parent().parent().prevAll().eq(4).html()+" " + $(this).parent().parent().prevAll().eq(3).html() + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });     
 
         });    
         

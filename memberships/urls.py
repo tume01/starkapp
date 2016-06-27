@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^edit', views.membership_edit, name='edit'),
 
     url(r'^create/insert', views.create_membership, name='insert'),
-	
+	url(r'^pay', views.payMembership, name='pay'),
 	url(r'^show',views.membership_show,name='show'),
 ]

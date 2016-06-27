@@ -43,6 +43,7 @@ class Command(BaseCommand):
         Promotion.objects.all().delete()
         Ubigeo.objects.all().delete()
         Affiliate.objects.all().delete()
+        Relationship.objects.all().delete()
         print('    Data has been deleted\n')
 
     def insertLogin(self):
@@ -2032,74 +2033,75 @@ class Command(BaseCommand):
         mship3 = Membership(membership_type=mshiptype3, initialDate=datetime.now(), finalDate=datetime.now() + timedelta(days=9999), status=1)
         mship3.save()
 
-        mApplication1 = Membership_Application(membership_type=mshiptype1, identity_document_type=doc1, firstName='Enrique',
-                                               paternalLastName='Valeriano', maternalLastName='Loli',
-                                               document_number=27389283,
-                                               comments='Nada que comentar', initialDate=datetime.now() - timedelta(10),
-                                               finalDate=datetime.now() - timedelta(5), status=2)
 
-        mApplication1.save()
+        #mApplication1 = Membership_Application(membership_type=mshiptype1, identity_document_type=doc1, firstName='Enrique',
+        #                                       paternalLastName='Valeriano', maternalLastName='Loli',
+        #                                       document_number=27389283,
+        #                                       comments='Nada que comentar', initialDate=datetime.now() - timedelta(10),
+        #                                        finalDate=datetime.now() - timedelta(5), status=2)
 
-        mApplication2 = Membership_Application(membership_type=mshiptype2, identity_document_type=doc1, firstName='Jose',
-                                               paternalLastName='Luis', maternalLastName='Gil',
-                                               document_number=21334473,
-                                               comments='Un comentario', initialDate=datetime.now() - timedelta(9),
-                                               finalDate=datetime.now() - timedelta(4), status=2)
-        mApplication2.save()
+        #mApplication1.save()
 
-        mApplication3 = Membership_Application(membership_type=mshiptype3, identity_document_type=doc1, firstName='Diego',
-                                               paternalLastName='Coronado', maternalLastName='Miki',
-                                               document_number=22334563,
-                                               comments='Overwatch', initialDate=datetime.now() - timedelta(8),
-                                               finalDate=datetime.now() - timedelta(3), status=2)
-        mApplication3.save()
+        #mApplication2 = Membership_Application(membership_type=mshiptype2, identity_document_type=doc1, firstName='Jose',
+        #                                       paternalLastName='Luis', maternalLastName='Gil',
+         #                                      document_number=21334473,
+          #                                     comments='Un comentario', initialDate=datetime.now() - timedelta(9),
+           #                                    finalDate=datetime.now() - timedelta(4), status=2)
+        #mApplication2.save()
 
-        mApplication4 = Membership_Application(membership_type=mshiptype1, identity_document_type=doc1, firstName='Jose',
-                                               paternalLastName='Pereira', maternalLastName='Nose',
-                                               document_number=13382984,
-                                               comments='ElPastor', initialDate=datetime.now() - timedelta(2),
-                                               finalDate=datetime.now() + timedelta(11), status=1)
+        #mApplication3 = Membership_Application(membership_type=mshiptype3, identity_document_type=doc1, firstName='Diego',
+         #                                      paternalLastName='Coronado', maternalLastName='Miki',
+          #                                     document_number=22334563,
+           #                                    comments='Overwatch', initialDate=datetime.now() - timedelta(8),
+            #                                   finalDate=datetime.now() - timedelta(3), status=2)
+        #mApplication3.save()
 
-        mApplication4.save()
+        #mApplication4 = Membership_Application(membership_type=mshiptype1, identity_document_type=doc1, firstName='Jose',
+         #                                      paternalLastName='Pereira', maternalLastName='Nose',
+          #                                     document_number=13382984,
+           #                                    comments='ElPastor', initialDate=datetime.now() - timedelta(2),
+            #                                   finalDate=datetime.now() + timedelta(11), status=1)
 
-        mApplication5 = Membership_Application(membership_type=mshiptype2, identity_document_type=doc1, firstName='Camila',
-                                               paternalLastName='Barboza', maternalLastName='Mendoza',
-                                               document_number=83700174,
-                                               comments='Campivi', initialDate=datetime.now() - timedelta(1),
-                                               finalDate=datetime.now() + timedelta(10), status=1)
+        #mApplication4.save()
 
-        mApplication5.save()
+        #mApplication5 = Membership_Application(membership_type=mshiptype2, identity_document_type=doc1, firstName='Camila',
+         #                                      paternalLastName='Barboza', maternalLastName='Mendoza',
+          #                                     document_number=83700174,
+           #                                    comments='Campivi', initialDate=datetime.now() - timedelta(1),
+            #                                   finalDate=datetime.now() + timedelta(10), status=1)
 
-        mApplication6 = Membership_Application(membership_type=mshiptype3, identity_document_type=doc1, firstName='Juan',
-                                               paternalLastName='Jose', maternalLastName='Tenorio',
-                                               document_number=63890172,
-                                               comments='Overwatch', initialDate=datetime.now() - timedelta(8),
-                                               finalDate=datetime.now() - timedelta(1), status=0)
-        mApplication6.save()
+        #mApplication5.save()
+
+        #mApplication6 = Membership_Application(membership_type=mshiptype3, identity_document_type=doc1, firstName='Juan',
+          #                                     paternalLastName='Jose', maternalLastName='Tenorio',
+           #                                    document_number=63890172,
+            #                                   comments='Overwatch', initialDate=datetime.now() - timedelta(8),
+             #                                  finalDate=datetime.now() - timedelta(1), status=0)
+        #mApplication6.save()
 
         user1 = User.objects.create_user(username=27389283, email='mailm1@mailcito.com', password='1111',first_name='Enrique', last_name='Valeriano')
         usuarios.user_set.add(user1)
 
-        memb1 = Member(membership=mship1, identity_document_type=doc1, ubigeo=u2, user=user1, name='Enrique',
-                       paternalLastName='Valeriano', maternalLastName='Loli', document_number=27389283, phone=2394756,
-                       email='mailm1@mailcito.com', address='Av. KyaWeeb', state=1)
-        memb1.save()
+        #memb1 = Member(membership=mship1, identity_document_type=doc1, ubigeo=u2, user=user1, name='Enrique',
+         #              paternalLastName='Valeriano', maternalLastName='Loli', document_number=27389283, phone=2394756,
+          #             email='mailm1@mailcito.com', address='Av. KyaWeeb', state=1)
+        #memb1.save()
 
         user2 = User.objects.create_user(username=21334473, email='mailm2@mailcito.com', password='1111', first_name='Jose', last_name='Luis')
         usuarios.user_set.add(user2)
 
-        memb2 = Member(membership=mship2, identity_document_type=doc1, ubigeo=u3, user=user2, name='Jose',
-                       paternalLastName='Luis', maternalLastName='Gil', document_number=21334473, phone=6666666,
-                       email='mailm2@mailcito.com', address='Documentos', state=1)
-        memb2.save()
+        #memb2 = Member(membership=mship2, identity_document_type=doc1, ubigeo=u3, user=user2, name='Jose',
+         #              paternalLastName='Luis', maternalLastName='Gil', document_number=21334473, phone=6666666,
+          #             email='mailm2@mailcito.com', address='Documentos', state=1)
+        #memb2.save()
 
         user3 = User.objects.create_user(username=22334563, email='mailm3@mailcito.com', password='1111', first_name='Diego', last_name='Coronado')
         usuarios.user_set.add(user3)
 
-        memb3 = Member(membership=mship3, identity_document_type=doc1, ubigeo=u4, user=user3, name='Diego',
-                       paternalLastName='Coronado', maternalLastName='Overwatch', document_number=22334563, phone=1337420,
-                       email='mailm3@mailcito.com', address='Bliizard HQ', state=1)
-        memb3.save()
+        #memb3 = Member(membership=mship3, identity_document_type=doc1, ubigeo=u4, user=user3, name='Diego',
+         #              paternalLastName='Coronado', maternalLastName='Overwatch', document_number=22334563, phone=1337420,
+          #             email='mailm3@mailcito.com', address='Bliizard HQ', state=1)
+        #memb3.save()
 
         suspType1 = SuspensionType(name='Robo Leve', description='Suspension que se usa en caso haya un robo leve',
                                    status=1)
@@ -2109,13 +2111,13 @@ class Command(BaseCommand):
                                    status=1)
         suspType2.save()
 
-        susp1 = Suspension(suspension_type=suspType1, membership=mship1, reason='Acusaciòn de robo comprobada', initialDate=datetime.now(),
-                           finalDate=datetime.now() + timedelta(8), status=1)
-        susp1.save()
+        #susp1 = Suspension(suspension_type=suspType1, membership=mship1, reason='Acusaciòn de robo comprobada', initialDate=datetime.now(),
+         #                  finalDate=datetime.now() + timedelta(8),responsable='Administrador', status=1)
+        #susp1.save()
 
-        susp2 = Suspension(suspension_type=suspType2, membership=mship2, reason='Objetos de valor robados', initialDate=datetime.now() - timedelta(5),
-                           finalDate=datetime.now() - timedelta(1), status=0)
-        susp2.save()
+        #susp2 = Suspension(suspension_type=suspType2, membership=mship2, reason='Objetos de valor robados', initialDate=datetime.now() - timedelta(5),
+         #                  finalDate=datetime.now() - timedelta(1),responsable='Administrador', status=0)
+        #susp2.save()
 
         ftype1 = FineType(reason='Destruccion de silla', price=300, status=1)
         ftype1.save()
@@ -2126,14 +2128,14 @@ class Command(BaseCommand):
         ftype3 = FineType(reason='Falta a reunion comite', price=100, status=1)
         ftype3.save()
 
-        fine1 = Fine(fine_type=ftype1, member=memb2, observations='Destruyo una silla en la cancha A', status='Por Pagar')
-        fine1.save()
+        #fine1 = Fine(fine_type=ftype1, member=memb2, observations='Destruyo una silla en la cancha A', status='Por Pagar')
+        #fine1.save()
 
-        fine2 = Fine(fine_type=ftype2, member=memb2,  observations='Destruyo una mesa en la cancha B ',status='Por Pagar')
-        fine2.save()
+        #fine2 = Fine(fine_type=ftype2, member=memb2,  observations='Destruyo una mesa en la cancha B ',status='Por Pagar')
+        #fine2.save()
 
-        fine3 = Fine(fine_type=ftype3, member=memb2,  observations='No asistio a una reunion importante',status='Por Pagar')
-        fine3.save()
+        #fine3 = Fine(fine_type=ftype3, member=memb2,  observations='No asistio a una reunion importante',status='Por Pagar')
+        #fine3.save()
 
         prom1 = Promotion(description='Promocion venta de bungalows', percentage=15, status=1)
         prom1.save()
@@ -2144,9 +2146,22 @@ class Command(BaseCommand):
         prom3 = Promotion(description='Promocion productos todos', percentage=5, status=1)
         prom3.save()
 
-        aff = Affiliate(member=memb1, identity_document_type=doc1, ubigeo=u2, name='Fabio',
-                        paternalLastName='Olcese', maternalLastName='Undertale', document_number=98765432, phone=3813812,
-                        email='mailm4@mailcito.com', address='The witcher', state=1)
-        aff.save()
+        relationship_1 = Relationship(description='Cónyuge')
+        relationship_1.save()
+
+        relationship_2 = Relationship(description='Padre')
+        relationship_2.save()
+
+        relationship_3 = Relationship(description='Madre')
+        relationship_3.save()
+
+        relationship_4 = Relationship(description='Hijo/a')
+        relationship_4.save()
+
+
+        #aff = Affiliate(member=memb1, identity_document_type=doc1, ubigeo=u2, name='Fabio',
+        #                paternalLastName='Olcese', maternalLastName='Undertale', document_number=98765432, phone=3813812,
+        #                email='mailm4@mailcito.com', address='The witcher', state=1,relationship=relationship_4)
+        #aff.save()
 
         print('Data has been inserted\n')

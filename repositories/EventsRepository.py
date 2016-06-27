@@ -9,7 +9,7 @@ class EventsRepository(BaseRepository):
     def __init__(self):
         BaseRepository.__init__(self, Event)
 
-    def addMember(self, event, member):
-        registration = EventRegistration(event=event, member=member, registered_at=datetime.now())
+    def addMember(self, event, member, guests):
+        registration = EventRegistration(event=event, member=member, registered_at=datetime.now(), guests=guests)
 
         return not registration.save()
