@@ -17,7 +17,7 @@ import json
 
 #tipos de multa
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def type_index(request):
 
@@ -51,7 +51,7 @@ def type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def create_type_index(request):
 
@@ -63,7 +63,7 @@ def create_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_type_index(request):
 
@@ -81,7 +81,7 @@ def edit_type_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def delete_type(request):
 
@@ -101,7 +101,7 @@ def delete_type(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_type(request):
 
@@ -136,7 +136,7 @@ def create_type(request):
 
 
 @login_required
-@permission_required('dummy.permission_admin', login_url='login:ini')
+@permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_type(request):
 
@@ -175,7 +175,7 @@ def edit_type(request):
 
 #Multas
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_index(request):
 
@@ -195,7 +195,7 @@ def create_index(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create(request2):
 
@@ -241,7 +241,7 @@ def create(request2):
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def index(request):
 
@@ -271,7 +271,7 @@ def index(request):
 
 
 @login_required
-@permission_required('dummy.permission_membresia', login_url='login:ini')
+@permission_required('dummy.permission_membresia', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def filter(request):
 
@@ -304,7 +304,7 @@ def filter(request):
 
 
 @login_required
-@permission_required('dummy.permission_usuario', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
 @require_http_methods(['GET'])
 def user_index(request):
 
@@ -332,7 +332,7 @@ def user_index(request):
     return render(request, 'User/Fines/index_fines.html', context)
 
 @login_required
-@permission_required('dummy.permission_usuario', login_url='login:ini')
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
 @require_http_methods(['POST'])
 def user_filter(request):
 

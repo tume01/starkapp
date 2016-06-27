@@ -221,7 +221,7 @@ def create_membership_application(request):
 
     sidentity_document_id = request.POST['sidentity_document_type']
 
-    form = MembershipApplicationForm(request.POST)
+    form = MembershipApplicationForm(request.POST, request.FILES)
 
     request2 = FormValidator.validateForm(form, request)
 
@@ -405,7 +405,7 @@ def edit_membership_application(request):
 
     ubigeo_service = UbigeoService()
 
-    form = MembershipApplicationForm(request.POST)
+    form = MembershipApplicationForm(request.POST, request.FILES)
 
     id_application = request.POST['id']
 
@@ -655,7 +655,7 @@ def user_index(request):
 @require_http_methods(['POST'])
 def create_objection(request):
 
-    form = oforms.ObjectionForm(request.POST)
+    form = oforms.ObjectionForm(request.POST, request.FILES)
 
     requestId = request.POST['id_membership']
 

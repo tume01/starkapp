@@ -41,6 +41,14 @@ Nueva solicitud de membresía
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:insert" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                                 <div class="row">
+                                    <div class="col-lg-8" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">(*) Campos necesarios.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-12" for="example-select"> Miembro</label>
@@ -51,13 +59,13 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-sm-5">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="photo">Foto</label>
+                                            <label class="col-xs-12" for="photo">Foto(*)</label>
                                             <input type="file" name="photo" class="form-control, col-xs-12" id="photo">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Género</label>
+                                            <label class="col-xs-8" for="example-number-input">Género(*)</label>
                                             <div class="col-sm-8">
                                                   <input type="radio" name="gender" checked value="0"> Masculino<br>
                                                   <input type="radio" name="gender" value="1"> Femenino<br>
@@ -68,7 +76,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Nombres</label>
+                                        <label class="col-xs-8" for="example-number-input">Nombres(*)</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="firstName" name="firstName" placeholder="Nombres"  type="text">
@@ -78,7 +86,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Apellido paterno</label>
+                                            <label class="col-xs-8" for="example-number-input">Apellido paterno(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" type="text">
                                             </div>
@@ -86,7 +94,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Apellido materno</label>
+                                            <label class="col-xs-8" for="example-number-input">Apellido materno(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input3-group1" name="maternalLastName" placeholder="Apellido materno" type="text">
                                             </div>
@@ -96,7 +104,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
+                                        <label class="col-xs-8" for="example-select">Doc. de Identificacion(*)</label>
                                             <div class="col-lg-12">
                                                    <div class="input-group">
                                                         <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" pattern="[0-9]*" >
@@ -106,7 +114,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                            <label class="col-xs-5" for="example-select">Tipo</label>
+                                            <label class="col-xs-5" for="example-select">Tipo(*)</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" id="example-select1" name="identity_document_type" size="1">
                                                     {% for doc_type in doc_types %}
@@ -118,7 +126,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Nacionalidad</label>
+                                        <label class="col-xs-8" for="example-number-input">Nacionalidad(*)</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="nationality" placeholder="Nacionalidad"  type="text">
@@ -130,7 +138,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Centro de Trabajo</label>
+                                        <label class="col-xs-8" for="example-number-input">Centro de Trabajo(*)</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="workPlace" placeholder="Lugar donde Trabaja"  type="text">
@@ -140,7 +148,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Puesto de Trabajo</label>
+                                            <label class="col-xs-8" for="example-number-input">Puesto de Trabajo(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="workPlaceJob" placeholder="Puesto" type="text">
                                             </div>
@@ -148,7 +156,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Teléfono de Oficina</label>
+                                            <label class="col-xs-8" for="example-number-input">Teléfono de Oficina(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input3-group1" name="workPlacePhone" placeholder="Telefono" type="text">
                                             </div>
@@ -159,8 +167,8 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Estado Civil</label>
-                                            <div class="col-sm-12">
+                                        <label class="col-xs-8" for="example-number-input">Estado Civil(*)</label>
+                                            <div class="col-sm-8">
                                                <select class="form-control" id="example-input1-group1" name="maritalStatus" size="1">       
                                                         <option selected value="Casado/a">Casado/a</option>
                                                         <option value="Soltero/a">Soltero/a</option>
@@ -172,7 +180,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Telefono Celular</label>
+                                            <label class="col-xs-8" for="example-number-input">Telefono Celular(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="cellphoneNumber" placeholder="Telefono Celular" type="text">
                                             </div>
@@ -180,7 +188,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Teléfono de Casa</label>
+                                            <label class="col-xs-8" for="example-number-input">Teléfono de Casa(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input3-group1" name="phone" placeholder="Telefono" type="text">
                                             </div>
@@ -191,7 +199,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Especialidad</label>
+                                        <label class="col-xs-8" for="example-number-input">Especialidad(*)</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="specialization" placeholder="Especialidad"  type="text">
@@ -201,7 +209,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
+                                            <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento(*)</label>
                                             <div class="col-sm-12">
                                                 <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
                                                     <input class="form-control" type="text" id="birthDate" name="birthDate" placeholder="Fecha de Nacimiento">
@@ -212,7 +220,7 @@ Nueva solicitud de membresía
 
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Correo</label>
+                                            <label class="col-xs-8" for="example-number-input">Correo(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input3-group1" name="email" placeholder="Correo" type="text">
                                             </div>
@@ -223,7 +231,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
+                                            <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input1-group2" name="birthPlace" placeholder="Lugar de Nacimiento" type="text">
                                             </div>
@@ -231,7 +239,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Departamento</label>
+                                                <label class="col-xs-6" for="example-select">Departamento(*)</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthDepartment" name="birthDepartment" size="1">
                                                             {% for u in ubigeo%}
@@ -243,7 +251,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Provincia</label>
+                                                <label class="col-xs-6" for="example-select">Provincia(*)</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthProvince" name="birthProvince" size="1">
                                                     </select>
@@ -252,7 +260,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Distrito</label>
+                                                <label class="col-xs-6" for="example-select">Distrito(*)</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthDistrict" name="birthDistrict" size="1">
                                                     </select>
@@ -263,7 +271,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input2">Dirección</label>
+                                            <label class="col-xs-8" for="example-number-input2">Dirección(*)</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input1-group2" name="address" placeholder="Lugar de Nacimiento" type="text">
                                             </div>
@@ -271,7 +279,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Departamento</label>
+                                                <label class="col-xs-6" for="example-select">Departamento(*)</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="department" name="addressDepartment" size="1">
                                                             {% for u in ubigeo%}
@@ -283,7 +291,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Provincia</label>
+                                                <label class="col-xs-6" for="example-select">Provincia(*)</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="province" name="addressProvince" size="1">
                                                     </select>
@@ -292,20 +300,12 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Distrito</label>
+                                                <label class="col-xs-6" for="example-select">Distrito(*)</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="district" name="addressDistrict" size="1">                                                       
                                                     </select>
                                                 </div>
                                             </div>
-                                    </div>
-                                </div>
-                                <br>
-                                <div class="row">
-                                    <div class="col-lg-8" >
-                                        <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">(*) Campos no necesarios. En caso sea necesario se tienen que llenar todos.</label>
-                                        </div>
                                     </div>
                                 </div>
                                 <br>
@@ -320,13 +320,13 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="photo">Foto*</label>
+                                            <label class="col-xs-12" for="photo">Foto</label>
                                             <input type="file" name="sphoto" class="form-control, col-xs-12" id="sphoto">
                                         </div>
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Género*</label>
+                                            <label class="col-xs-8" for="example-number-input">Género</label>
                                             <div class="col-sm-8">
                                                   <input type="radio" checked name="sgender" value="0"> Masculino<br>
                                                   <input type="radio" name="sgender" value="1"> Femenino<br>
@@ -337,7 +337,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Nombres*</label>
+                                        <label class="col-xs-8" for="example-number-input">Nombres</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="sfirstName" placeholder="Nombres"  type="text">
@@ -347,7 +347,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Apellido paterno*</label>
+                                            <label class="col-xs-8" for="example-number-input">Apellido paterno</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="spaternalLastName" placeholder="Apellido paterno" type="text">
                                             </div>
@@ -355,7 +355,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Apellido materno*</label>
+                                            <label class="col-xs-8" for="example-number-input">Apellido materno</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input3-group1" name="smaternalLastName" placeholder="Apellido materno" type="text">
                                             </div>
@@ -365,7 +365,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-select">Doc. de Identificacion*</label>
+                                        <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
                                             <div class="col-lg-12">
                                                    <div class="input-group">
                                                         <input class="form-control" id="snum_doc" name="snum_doc" placeholder="Doc" pattern="[0-9]*" >
@@ -375,7 +375,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                            <label class="col-xs-5" for="example-select">Tipo*</label>
+                                            <label class="col-xs-5" for="example-select">Tipo</label>
                                             <div class="col-sm-8">
                                                 <select class="form-control" id="example-select1" name="sidentity_document_type" size="1">
                                                     {% for doc_type in doc_types %}
@@ -387,7 +387,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Nacionalidad*</label>
+                                            <label class="col-xs-8" for="example-number-input">Nacionalidad</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="snationality" placeholder="nacionalidad" type="text">
                                             </div>
@@ -397,7 +397,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Especialidad*</label>
+                                        <label class="col-xs-8" for="example-number-input">Especialidad</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="sspecialization" placeholder="Especialidad"  type="text">
@@ -407,7 +407,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento*</label>
+                                            <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
                                             <div class="col-sm-12">
                                                 <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
                                                     <input class="form-control" type="text" id="example-daterange1" name="sbirthDate" placeholder="Fecha de Nacimiento">
@@ -417,7 +417,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Correo*</label>
+                                            <label class="col-xs-8" for="example-number-input">Correo</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input3-group1" name="semail" placeholder="Correo" type="text">
                                             </div>
@@ -427,7 +427,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-8" for="example-number-input">Centro de Trabajo*</label>
+                                        <label class="col-xs-8" for="example-number-input">Centro de Trabajo</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="sworkPlace" placeholder="Lugar donde Trabaja"  type="text">
@@ -437,7 +437,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Puesto de Trabajo*</label>
+                                            <label class="col-xs-8" for="example-number-input">Puesto de Trabajo</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="sworkPlaceJob" placeholder="Puesto" type="text">
                                             </div>
@@ -445,7 +445,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Teléfono de Oficina*</label>
+                                            <label class="col-xs-8" for="example-number-input">Teléfono de Oficina</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input3-group1" name="sworkPlacePhone" placeholder="Telefono" type="text">
                                             </div>
@@ -455,7 +455,7 @@ Nueva solicitud de membresía
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento*</label>
+                                            <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input1-group2" name="sbirthPlace" placeholder="Lugar de Nacimiento" type="text">
                                             </div>
@@ -463,7 +463,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Departamento*</label>
+                                                <label class="col-xs-6" for="example-select">Departamento</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthDepartment" name="sbirthDepartment" size="1">
                                                             {% for u in ubigeo%}
@@ -475,7 +475,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Provincia*</label>
+                                                <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthProvince" name="sbirthProvince" size="1">
                                                     </select>
@@ -484,7 +484,7 @@ Nueva solicitud de membresía
                                     </div>
                                     <div class="col-lg-6" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Distrito*</label>
+                                                <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthDistrict" name="sbirthDistrict" size="1">
                                                     </select>
