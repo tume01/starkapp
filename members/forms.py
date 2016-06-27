@@ -41,6 +41,10 @@ class MemberForm(forms.Form):
 
     def clean_workPlacePhone(self):
         data = self.cleaned_data['workPlacePhone']
+
+        if data is None:
+            return None
+        
         if (data < 999999):
             raise forms.ValidationError("El numero de telefono de oficina tiene que tener como mínimo 7 digitos")
         return data
