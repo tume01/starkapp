@@ -29,7 +29,7 @@ class BungalowReservationService(object):
         return cls._repository.find(id)
 
     @classmethod
-    def getMonthAvailableDaysBF(cls, bungalowHeadquarterId, bungalowTypeId, start, end):
+    def getMonthAvailableDaysBF(cls, bungalowHeadquarterId, bungalowTypeId, start, end, admin = False):
         startDate = datetime.datetime.fromtimestamp(start)
         endDate = datetime.datetime.fromtimestamp(end)
         num_days = (endDate - startDate).days + 1
@@ -77,7 +77,9 @@ class BungalowReservationService(object):
         print(len(bungalowDay))
 
         # Compose the url (Worst Approach EVER!)
-        url = "create/reserve/?bungalow_id={}&date={}";
+        url = "admin_" if admin else ""
+        url += "create/reserve/?bungalow_id={}&date={}";
+        print("URL >>> ", url, admin)
 
         returnValue = []
         for n in range(len(bungalowDay)):
@@ -152,3 +154,4 @@ class BungalowReservationService(object):
         filter_data['bungalow_id'] = bungalow_id
         filter_data['status'] = 2 #reservation in use
         return cls._repository.filter(filter_data)
+

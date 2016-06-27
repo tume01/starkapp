@@ -72,7 +72,40 @@ Lista de tipos de multas
 {% block scripts %}
 
     <script>
+
+    var insert = {{fine_type_inserted|yesno:"true,false"}}
+    var edit = {{fine_type_edited|yesno:"true,false"}}
+    var deleted = {{fine_type_deleted|yesno:"true,false"}}
+
+
     $(document).ready(function () {
+
+        if(insert){
+            swal({
+                title: "Tipo de multa creado",
+                text: "Se ha creado el tipo de multa exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(edit){
+            swal({
+                title: "Tipo de multa editado",
+                text: "Se ha editado el tipo de multa exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(deleted){
+            swal({
+                title: "Tipo de multa eliminado",
+                text: "Se ha eliminado el tipo de multa exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }
+
         $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid2').val(id)

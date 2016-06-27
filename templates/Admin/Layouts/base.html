@@ -115,7 +115,7 @@
                                     <a href='{% url "bungalow:create_index" %}'>Crear Bungalows</a>
                                 </li>
                                 <li>
-                                    <a href='{% url "bungalowReservation:index" %}'>Editar disponibilidad de Bungalows</a>
+                                    <a href='{% url "bungalowReservation:admin_index" %}'>Editar disponibilidad de Bungalows</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'bungalowReservation:admin_create_index'%}">Reservar Bungalow</a>
@@ -303,11 +303,10 @@
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
-
-                                <li>
+                                <li hidden>
                                     <a href='{% url 'users:type/index' %}'>Tipos de usuario</a>
                                 </li>
-                                <li>
+                                <li hidden>
                                     <a href='{% url 'users:type/create_index' %}'>Registrar tipos de usuario</a>
                                 </li>
 
@@ -315,7 +314,7 @@
                                     <a href='{% url 'users:index' %}'>Usuarios</a>
                                 </li>
                                 <li>
-                                    <a href='{% url 'users:create_index' %}'>Registrar usuario (Externo)</a>
+                                    <a href='{% url 'users:create_index' %}'>Registrar usuario</a>
                                 </li>
                             </ul>
                         </li>
@@ -371,7 +370,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li class="dropdown-header">{{ user.groups.all.0  }} - {{ user.first_name }}</li>
-                        <li class="dropdown-header">Actions</li>
+                        
                         <li>
                             <a tabindex="-1" href="{% url "login:logout" %}">
                                 <i class="si si-logout pull-right"></i>Cerrar sesión
@@ -394,7 +393,7 @@
         <div class="content bg-image overflow-hidden" style="background-image: url('{% static "assets/img/photos/photo3@2x.jpg" %}');">
             <div class="push-50-t push-15">
                 <h1 class="h2 text-white animated zoomIn">Dashboard</h1>
-                <h2 class="h5 text-white-op animated zoomIn">Bienvenido Administrador</h2>
+                <h2 class="h5 text-white-op animated zoomIn">Bienvenido {{ user.first_name }}</h2>
             </div>
         </div>
 

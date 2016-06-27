@@ -68,13 +68,23 @@ Lista de solicitudes de actividades
                         </div>
                     </div>
                 </div>
+                <form class="" action='{% url "events:signup" event.id %}' method="post">
+                <div class="block-content block-content-full">
+                    <div class="form-group">
+                        <div class="row items-push">
+                            <div class="col-lg-4">
+                                <label>Cantidad de Invitados</label>
+                                <input type="text" name="guests" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="block-content block-content-full text-center">
-                    <form class="" action='{% url "events:signup" event.id %}' method="post">
                     {% csrf_token %}
                         <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Inscribirse</button>
                         <a href="{% url 'events:userSignup_index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
-                    </form>
                 </div>
+                </form>
             </div>
         </div>
     </div>

@@ -25,6 +25,24 @@ def index(request):
         'promotions' : promotions,
     }
 
+    if request.session.has_key('promotion_inserted'):
+
+        context.update({'promotion_inserted':request.session.get('promotion_inserted')})
+
+        del request.session['promotion_inserted']
+
+    elif request.session.has_key('promotion_deleted'):
+
+        context.update({'promotion_deleted':request.session.get('promotion_deleted')})
+
+        del request.session['promotion_deleted']
+
+    elif request.session.has_key('promotion_edited'):
+
+        context.update({'promotion_edited':request.session.get('promotion_edited')})
+
+        del request.session['promotion_edited']
+
     return render(request, 'Admin/Promotions/index_promotion.html', context) 
 
 
@@ -105,6 +123,8 @@ def delete_promotion(request):
 
     promotion_service.update(id_edit, edit_data)
 
+    request.session['promotion_deleted'] = "True"
+
     return HttpResponseRedirect(reverse('promotions:index'))
 
 
@@ -116,9 +136,9 @@ def create_promotion(request):
 
     form = PromotionForm(request.POST)
 
-    request = FormValidator.validateForm(form, request)
+    request2 = FormValidator.validateForm(form, request)
 
-    if not request:
+    if not request2:
 
         insert_data = {}
 
@@ -131,6 +151,8 @@ def create_promotion(request):
         promotion_service = PromotionsService()
 
         promotion_service.create(insert_data)
+
+        request.session['promotion_inserted'] = "True"
 
         return HttpResponseRedirect(reverse('promotions:index'))
 
@@ -171,6 +193,8 @@ def edit_promotion(request):
         edit_data["description"] = form.cleaned_data['description']
 
         edit_data["percentage"] = form.cleaned_data['percentage']
+
+        request.session['promotion_edited'] = "True"
         
         promotion_service.update(id_edit, edit_data)
 
