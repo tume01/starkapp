@@ -47,6 +47,7 @@ class MembershipApplicationForm(forms.Form):
     semail = forms.CharField(max_length=200, required=False,error_messages={'max_length': 'El campo Correo no debe superar los 200 caracteres'})
     scellPhoneNumber = forms.IntegerField(required=False)
     sphoto = forms.ImageField(required=False)
+    sdocument_number = forms.IntegerField(required=False)
 
     def clean_photo(self):
         data = self.cleaned_data["photo"]
