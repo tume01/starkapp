@@ -366,3 +366,13 @@ def user_filter(request):
     recipe_list_json = json.dumps(list) #dump list as JSON
 
     return HttpResponse(recipe_list_json, 'application/javascript')
+
+
+@login_required
+@permission_required('dummy.permission_usuario', login_url='login:iniUser')
+@require_http_methods(['POST'])
+def pay(request):
+
+    check_list = request.POST.getlist('check_list[]')
+
+    
