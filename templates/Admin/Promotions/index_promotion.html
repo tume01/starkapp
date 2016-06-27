@@ -92,20 +92,18 @@ Lista de promociones
             <table class="table table-bordered table-striped js-dataTable-simple" id='tabla'>
                 <thead>
                     <tr>
-                            <th>Promocion</th>
-                            <th>Descuento</th>                                       
+                            <th>Promocion</th>                                      
                             <th>Acción</th>                                        
                         </tr>
                     </thead>
                     <tbody id='tbodyid'>
-                        {% for promotion in promotions %}                                       
+                        {% for promotion in promotions %}         
                         <tr>
                             <td class="font-w600">{{promotion.description}}</td>
-                            <td class="font-w600" style="text-align:right;">{{promotion.percentage}} %</td>
                             <td class="text-center">
                                 <div class="btn-group">
+                                    <a class="btn btn-xs btn-default" href="{% url 'promotions:show' promotion.id %}" data-id="{{promotion.id}}" type="button" data-toggle="tooltip" title="Mostrar Promoción"><i class="glyphicon glyphicon-plus"></i></a>
                                     <button class="btn btn-xs btn-default editar" data-id="{{promotion.id}}" type="button"  data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button>
-
                                     <button class="btn btn-xs btn-default eliminar" data-id="{{promotion.id}}" type="button" data-toggle="tooltip" title="Eliminar Promoción"><i class="fa fa-times"></i></button>
                                 </div>
                             </td>    

@@ -1,0 +1,15 @@
+<div class="form-group" id="membership_types_options">
+    <label class="col-xs-6" for="desc">Descuento</label>
+    <div class="col-sm-6">
+        <input class="form-control" id="example-number-input" name="membership_percentage" placeholder="Descuento" >
+    </div>
+
+    <label class="col-xs-6" for="member">Elegir membresía</label>
+    <div class="col-sm-6">
+        <select class="form-control" id="example-select" name="membership_type" size="1">
+        {% for membership in membership_types %}
+            <option value="{{membership.id}}">{{membership.name}}</option>
+        {% endfor %}
+        </select>
+    </div>
+</div>
