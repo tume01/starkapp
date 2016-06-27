@@ -373,7 +373,6 @@ def create_promotion(request):
 
             membership_promotion_service.create(insert_promotion_membership)
 
-        return HttpResponseRedirect(reverse('promotions:list_membership'))
 
 
     #Save promotions for bungalows
@@ -390,7 +389,6 @@ def create_promotion(request):
             insert_promotion_bungalow['promotion_id'] = promotion_id
             bungalow_promotion_service.create(insert_promotion_bungalow)
 
-        return HttpResponseRedirect(reverse('promotions:list_bungalow'))
 
     #Save promotions for events
     if  event_id_array:
@@ -398,13 +396,18 @@ def create_promotion(request):
         event_promotion_service = EventPromotionService()
         insert_promotion_event = {}
 
-        for event_id,member_id,percentage in zip(event_id_array,membership_event_id_array,bungalow_percentage_array):
+        for event_id,member_id,percentage in zip(event_id_array,membership_event_id_array,event_percentage_array):
 
             insert_promotion_event['membership_type_id'] = member_id
-            insert_promotion_event['event_type_id'] = bungalow_id
+            insert_promotion_event['event_type_id'] = event_id
             insert_promotion_event['percentage'] = percentage
             insert_promotion_event['promotion_id'] = promotion_id
             event_promotion_service.create(insert_promotion_event)
+
+    if membership_id_array:
+        return HttpResponseRedirect(reverse('promotions:list_membership'))
+    if bungalow_id_array:
+        return HttpResponseRedirect(reverse('promotions:list_bungalow'))
 
     return HttpResponseRedirect(reverse('promotions:list_event'))
 
@@ -510,7 +513,7 @@ def edit_promotion_event(request):
         'membership_type_id' : membership_id
     }
 
-    promotion = bungalow_promotion_service.filter(filters)
+    promotion = event_promotion_service.filter(filters)
 
     edit_data = {}
 
@@ -518,6 +521,6 @@ def edit_promotion_event(request):
 
     for promotion in promotions:
 
-        promotion_service.update(promotion_id, edit_data)
+        event_promotion_service.update(promotion_id, edit_data)
 
     return HttpResponseRedirect(reverse('promotions:list_event'))
