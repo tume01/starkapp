@@ -74,7 +74,11 @@ Admin: proveedores
                     <div class="col-lg-5">
                         <div class="form-group">
                             <div class="col-xs-12">
+                                {% if p_type == 1 %}
                                 <label class="control-label" for="filter-businessName">Proveedor</label>
+                                {% else %}
+                                <label class="control-label" for="filter-businessName">Concesionarios</label>
+                                {% endif %}
                                 <input class="form-control" type="text" id="filter-businessName" name="filter-businessName">
                             </div>
                         </div>
@@ -157,9 +161,15 @@ Admin: proveedores
                                         <td class="text-center">{{provider.email}}</td>
                                         <td class="text-center">
                                             <div class="btn-group">
+                                                {% if p_type == 1%}
                                                 <a href='{% url "providers:edit" provider.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Proveedor"><i class="fa fa-pencil"></i></button></a>
 
-                                                <button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Proveedor"><i class="fa fa-times"></i></button>
+                                                
+                                                {% else %}
+                                                <a href='{% url "providers:edit_concesionary" provider.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Concesionario"><i class="fa fa-pencil"></i></button></a>
+
+                                                
+                                                {% endif %}
 
                                                 <!--<button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Proveedor"><i class="fa fa-times"></i></button>-->
 
