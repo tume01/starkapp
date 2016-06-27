@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name="frontend_home.html"), name='home'),
     url(r'^fieldsReservations/',include('reserve_field.urls')),
     url(r'^checkout/', include('payment_documents.urls')),
+    url(r'^politics/', include('politics.urls')),
 ]
 
 if settings.DEBUG:
