@@ -41,7 +41,6 @@ def list_promotion_event(request):
 
     event_promotion_service = EventPromotionService()
     promotions = event_promotion_service.getEventPromotion()
-    
 
     promotion_names=[]
     promotion_start=[]
@@ -69,7 +68,7 @@ def list_promotion_bungalow(request):
 
     bungalow_promotion_service = BungalowPromotionService()
     promotions = bungalow_promotion_service.getBungalowPromotion()
-    
+
     promotion_names=[]
     promotion_start=[]
     promotion_end=[]
@@ -252,7 +251,7 @@ def index_edit_promotion_bungalow(request):
 
     bungalow_promotion_service = BungalowPromotionService()
 
-    promotion = bungalow_promotion_service.getBungalowPromotion(id_promotion)
+    promotion = bungalow_promotion_service.findBungalowPromotion(id_promotion)
 
     context = {
         'promotion' : promotion_super,
@@ -275,7 +274,7 @@ def index_edit_promotion_event(request):
 
     event_promotion_service = EventPromotionService()
 
-    promotion = bungalow_promotion_service.getEventPromotion(id_promotion)
+    promotion = event_promotion_service.findEventPromotion(id_promotion)
 
     context = {
         'promotion' : promotion_super,
@@ -301,7 +300,7 @@ def delete_promotion(request):
 
     promotion_service.update(id_edit, edit_data)
 
-    return HttpResponseRedirect(reverse('promotions:index'))
+    return HttpResponseRedirect(reverse('promotions:list_membership'))
 
 
 
@@ -477,7 +476,7 @@ def edit_promotion_bungalow(request):
         'membership_type_id' : membership_id
     }
 
-    promotion = bungalow_promotion_service.filter(filters)
+    promotions = bungalow_promotion_service.filter(filters)
         
     edit_data = {}
 
@@ -513,7 +512,7 @@ def edit_promotion_event(request):
         'membership_type_id' : membership_id
     }
 
-    promotion = event_promotion_service.filter(filters)
+    promotions = event_promotion_service.filter(filters)
 
     edit_data = {}
 
