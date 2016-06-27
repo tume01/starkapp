@@ -133,7 +133,7 @@ def delete_member(request):
 @require_http_methods(['POST'])
 def edit_member(request):
 
-    form = MemberForm(request.POST)
+    form = MemberForm(request.POST, request.FILES)
 
     id_edit = request.POST['id']
 
