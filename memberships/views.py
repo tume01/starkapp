@@ -431,7 +431,19 @@ def create_membership(request):
 
         member_application_service.update(id_application, insert_data)
 
-        return HttpResponseRedirect(reverse('membership_application:index'))
+        membershipApplications = member_application_service.getMembership_Applications()
+
+        identity_document_type_service = IdentityDocumentTypeService()
+
+        doc_types = identity_document_type_service.getIdentityDocumentTypes()
+
+        context = {
+            'membershipApplications' : membershipApplications,
+            'doc_types' : doc_types,
+            'memberCreated' : True
+        }
+
+        return render(request, 'Admin/Membership/index_membership_request.html', context) 
 
     else:
         member_application_service = Membership_ApplicationService()
