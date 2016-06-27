@@ -26,7 +26,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core.mail import EmailMessage
 from django.utils.crypto import get_random_string
-
+from services.PaymentService import PaymentService
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
@@ -562,3 +562,15 @@ def membership_show(request):
     }
     
     return render(request, 'User/membership.html',context)
+
+def payMembership(request):
+
+    member_service = MembersService()
+    member = member_service.getMemberByUser(request.user)
+
+    if PaymentService.createMembershipProduct(member.membership, member):
+        return HttpResponseRedirect(reverse('checkout:index') + '?product_type=2')
+
+    messages.error(request, 'Error al tratar de pagar membresia')
+
+    return HttpResponseRedirect(reverse('membership:show'))

@@ -99,7 +99,7 @@ Lista de multas
                             <td class="text-center">
                                             {% if fine.status == "Pendiente de Pago" %}
                                                 <div class="btn-group">
-                                                    <button class="btn btn-xs btn-default editar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Pagar"><i class="fa fa-usd"></i></button>
+                                                    <a href="{% url 'fine:pay' %}"><button class="btn btn-xs btn-default editar" data-id="{{membershipApp.id}}" type="button"  data-toggle="tooltip" title="Pagar"><i class="fa fa-usd"></i></button></a>
                                                 </div>
                                             {% endif %}
                             </td>

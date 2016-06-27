@@ -20,6 +20,7 @@ def index(request):
     member = member_service.getMemberByUser(request.user)
 
     products = PaymentService.getCartProducts(product_type, member)
+    product_list = products
     guests_subtotal = 0
     guests_discounts = 0
 

@@ -13,7 +13,7 @@ from .forms import FineTypeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 import json
-
+from services.PaymentService import PaymentService
 
 #tipos de multa
 @login_required
@@ -366,3 +366,16 @@ def user_filter(request):
     recipe_list_json = json.dumps(list) #dump list as JSON
 
     return HttpResponse(recipe_list_json, 'application/javascript')
+
+def payFine(request):
+
+    member_service = MembersService()
+    member = member_service.getMemberByUser(request.user)
+
+    for fine in member.fine_set.all():
+        if not PaymentService.createFineProduct(fine, member):
+            messages.error(request, 'Error al tratar de pagar multas')
+
+            return HttpResponseRedirect(reverse('fine:user_index'))  
+
+    return HttpResponseRedirect(reverse('checkout:index') + '?product_type=1')

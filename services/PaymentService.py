@@ -8,6 +8,8 @@ from services.MembershipService import MembershipService
 from services.EventsService import EventsService
 from services.BungalowReservationService import BungalowReservationService
 from itertools import chain
+from adapters.DateManager import DateManager
+from services.FineService import FineService
 
 class PaymentService(object):
 
@@ -66,6 +68,28 @@ class PaymentService(object):
         return cls.__paymentDocument_repository.find(id)
 
     @classmethod
+    def registerMembership(cls, member, products):
+        membership_service = MembershipService()
+
+        for product in products:
+            membership = membership_service.getMembership(product.product_id) 
+            extra_time = DateManager.add_months(membership.finalDate, 12)
+            membership.finalDate=extra_time
+            membership.save()
+        return True
+    
+    @classmethod 
+    def registerFine(cls, member, products):
+        fine_service = FineService()
+        print(products)
+        for product in products:
+            fine = fine_service.getFine(product.product_id)
+            fine.status = 'Pagada'
+            fine.save()
+
+        return True
+
+    @classmethod
     def payTicket(cls, products, member):
 
         subtotal = 0
@@ -95,9 +119,15 @@ class PaymentService(object):
         }
 
         if cls.__ticket_repository.create(insert_data):
+            product_type = products.first().product_type
 
-            if products.first().product_type == 3:
+            if product_type == 3:
                 cls.registerEvent(member, products)
+            elif product_type == 2:
+                cls.registerMembership(member, products)
+            elif product_type == 1:
+                cls.registerFine(member, products)
+
             return products.update(status=1)
 
         return False
@@ -189,7 +219,7 @@ class PaymentService(object):
             'description': 'Pago de Membresia:' + membership.membership_type.name,
             'quantity': 1,
             'product_type': 2,
-            'product_id': membership.membership_type.pk,
+            'product_id': membership.pk,
             'member': member,
             'discount': 0,
             'total': membership.membership_type.price,
