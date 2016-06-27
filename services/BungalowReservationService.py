@@ -17,6 +17,10 @@ class BungalowReservationService(object):
         return cls._repository.update(id, update_data)
 
     @classmethod
+    def filter(cls, filters):
+        return cls._repository.filter(filters)
+
+    @classmethod
     def delete(cls, id):
         return cls._repository.softDelete(id)
 

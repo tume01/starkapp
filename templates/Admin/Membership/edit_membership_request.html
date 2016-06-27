@@ -587,7 +587,7 @@ Nueva solicitud de membresía
                                     </div>
                                 </div>
                                 <div class="row conyuge" style="display: none;">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
                                             <div class="col-sm-8">
@@ -599,11 +599,11 @@ Nueva solicitud de membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Telefono Celular(*)</label>
+                                            <label class="col-xs-8" for="example-number-input">Teléfono Celular</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input2-group1" name="scellphoneNumber" value="{{membership_application.scellphoneNumber}}" type="text">
+                                                <input class="form-control" id="example-input2-group1" name="scellPhoneNumber" value="{{membership_application.scellPhoneNumber}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -744,6 +744,7 @@ Nueva solicitud de membresía
 <script>
 var CSRF_TOKEN = '{{ csrf_token }}';
 var url= "{% url 'membership_application:verify_document_number' %}"
+var numberOfDaysToAdd = {{daysToAdd}}
 
  $(document).ready(function () {
 
@@ -753,7 +754,6 @@ var url= "{% url 'membership_application:verify_document_number' %}"
         var splitdate = iniDate.split("/");
         var someDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
 
-        var numberOfDaysToAdd = 13;
         someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
 
         var dd = someDate.getDate();
