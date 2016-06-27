@@ -1,0 +1,221 @@
+{% extends 'Admin/Layouts/base.html' %}
+
+{% block head_title %}
+Admin: promociones
+{% endblock %}
+
+{% block head_dahsboard %}
+Promociones
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista completa de promociones
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Promociones
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+Lista de promociones
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+  <!-- Simple Table Full -->
+    <div class="block block-bordered">
+            <form id="myFormDelete" action="{% url "promotions:delete" %} " method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid1" name="id"/>
+            </form>
+            <form id="myFormEdit" action="{% url 'promotions:index_edit_membership' %} " method="post">
+                {% csrf_token %}  
+                <input type="hidden" id="hid2" name="id"/>
+            </form>
+            <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
+            <div class="block-content">
+                <div class="block">
+                        <div class="block-content">
+                            <form class="form" id='busqueda' method="post" >
+                                {% csrf_token %}
+                                <div class row>
+                                    <div class="row">
+                                        <div class="col-lg-5" >
+                                            <div class="form-group">
+                                            <label class="col-xs-12" for="example-select">Rango de descuento</label>
+                                                <div class="col-md-12">
+                                                   <div class="input-group">
+                                                        <div class="row">
+                                                            <div class="form-group col-xs-4">
+                                                                <input class="form-control" id="example-number1-group2" name="from_num" placeholder="Desde" pattern="[0-9]*"  >
+                                                            </div>
+                                                            <div class="form-group col-xs-4">
+                                                                <input class="form-control" id="example-number1-group2" name="to_num" placeholder="Hasta" pattern="[0-9]*"  >
+                                                            </div>
+                                                       </div>
+                                                   </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5" >
+                                            <div class="form-group">
+                                            <label class="col-xs-1 " for="example-select">Estado</label>
+                                                <div class="col-sm-12">
+                                                    <select class="form-control" id="example-select" name="status" size="1">
+                                                        <option value="3">Todas</option>
+                                                        <option value="0">Inactivo</option>
+                                                        <option value="1">Activo</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   <br>
+                                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <button class="btn btn-sm btn-primary" id="button" type="button">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </form>
+                        </div>
+                    </div>
+            <table class="table table-bordered table-striped js-dataTable-simple" id='tabla'>
+                <thead>
+                    <tr>
+                            <th>Promocion</th>
+                            <th>Porcentaje</th>                                      
+                            <th>Fecha de inicio</th>                                      
+                            <th>Fecha Fin</th>                                      
+                            <th>Acción</th>                                        
+                        </tr>
+                    </thead>
+                    <tbody id='tbodyid'>
+                        {% for promotion,name,start,end in promotions %}         
+                        <tr>
+                            <td class="font-w600">{{name}}</td>
+                            <td class="font-w600">{{promotion.percentage}}</td>
+                            <td class="font-w600">{{start}}</td>
+                            <td class="font-w600">{{end}}</td>
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <button class="btn btn-xs btn-default editar" data-id="{{promotion.id}}" type="button"  data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-xs btn-default eliminar" data-id="{{promotion.id}}" type="button" data-toggle="tooltip" title="Eliminar Promoción"><i class="fa fa-times"></i></button>
+                                </div>
+                            </td>    
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- END Simple Table Full -->
+    </div>
+    <!-- END Page Content -->
+{% endblock %}
+
+{% block scripts %}
+
+    <script>
+    var desc;
+    var id;
+    var percen;
+
+    function editar() {
+       $('.editar').click(function (e) {
+            var id = $(this).attr("data-id")          
+            $('#hid2').val(id)
+            document.forms["myFormEdit"].submit();    
+
+        });
+    }
+
+    function eliminar() {
+       $('.eliminar').click(function (e) {
+           var id = $(this).attr("data-id")          
+            $('#hid1').val(id)
+             swal({
+                title: "Eliminar Promoción",
+                text: '¿Desea eliminar la promoción: "' + $(this).parent().parent().prevAll().eq(1).html()+'"' + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });                  
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        editar();
+        eliminar();       
+
+
+
+        $('#button').click(function(){
+        {
+            var frm = $('#busqueda');
+            $.ajax({
+                type:'post',
+                url:'{% url "promotions:filter" %}',
+                data: frm.serialize(),
+                cache:false,
+                success: function(returndata){
+                    $('#tabla').dataTable().fnDestroy();
+                    $("#tbodyid").empty();                  
+                    $.each (returndata, function (key, value) {
+                        desc=returndata[key].fields.description;
+                        percen=returndata[key].fields.percentage;
+                        id=returndata[key].pk;
+                        if(returndata[key].fields.status)
+                            var html = '<div class="btn-group"><button class="btn btn-xs btn-default editar" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Editar Promoción"><i class="fa fa-pencil"></i></button><button class="btn btn-xs btn-default eliminar" data-id="'+id+'" type="button" data-toggle="tooltip" title="Eliminar Promoción"><i class="fa fa-times"></i></button></div>'
+                        else var html = 'Inactivo'
+                        $("#tbodyid").append('<tr><td class="font-w600">'+desc+'</td><td class="font-w600" style="text-align:right;">'+percen+'&nbsp;%</td><td class="text-center">'+html+'</td></tr>');
+                    });  
+                    $('#tabla').dataTable({
+                            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
+                            pageLength: 10,
+                            "autoWidth": false,
+                            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                            searching: false,
+                            oLanguage: {
+                                sLengthMenu: "",                
+                                sInfoEmpty:"No hay entradas",
+                                sZeroRecords:"No hay datos disponibles",
+                                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
+                            },
+                            dom:
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-6'i><'col-sm-6'p>>"
+                    });   
+
+                    editar();   
+                    eliminar();                 
+                },
+                
+            });
+        }
+        });
+        
+    });
+    </script>
+    <!-- HASTA AQUÍ -->       
+
+{% endblock %}
+

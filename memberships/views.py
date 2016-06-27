@@ -367,6 +367,8 @@ def create_membership(request):
 
             insert_affiliate["nationality"] =  request.POST['snationality']
 
+            insert_data["cellphoneNumber"] = request.POST['scellphoneNumber']
+
             insert_affiliate["birthDate"] = datetime.strptime(request.POST['sbirthDate'], '%d/%m/%Y')
 
             insert_affiliate["birthPlace"] =  request.POST['sbirthPlace']

@@ -45,7 +45,7 @@ class BaseRepository(AbstractBaseRepository):
         return self.model.objects.get(id=element).delete()
 
     def softDelete(self, delete_id):
-        return self.update(delete_id,{"deleted_at", datetime.datetime.now()})
+        return self.update(delete_id,{"deleted_at": datetime.datetime.now()})
 
     def filter(self, filters):
         return self.model.objects.filter(**filters)
