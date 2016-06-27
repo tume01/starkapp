@@ -233,8 +233,8 @@ def index_edit_promotion_membership(request):
 
     context = {
         'promotion' : promotion_super,
-        'endDate' : promotion_super.endDate,
-        'percentage': promotion.percentage
+        'percentage': promotion.percentage,
+        'membership_type_id' : promotion.membership_type_id
     }
 
     return render(request, 'Admin/Promotions/edit_promotion_membership.html', context)
@@ -256,7 +256,8 @@ def index_edit_promotion_bungalow(request):
 
     context = {
         'promotion' : promotion_super,
-        'percentage': promotion.percentage
+        'percentage': promotion.percentage,
+        'membership_type_id' : promotion.membership_type_id
     }
 
     return render(request, 'Admin/Promotions/edit_promotion_bungalow.html', context)
@@ -278,7 +279,8 @@ def index_edit_promotion_event(request):
 
     context = {
         'promotion' : promotion_super,
-        'percentage': promotion.percentage
+        'percentage': promotion.percentage,
+        'membership_type_id' : promotion.membership_type_id
     }
 
     return render(request, 'Admin/Promotions/edit_promotion_event.html', context)
@@ -421,6 +423,8 @@ def edit_promotion_membership(request):
     edit_data["startDate"] = datetime.datetime.strptime(request.POST.get("start_date"),"%m/%d/%Y %H:%M %p").date()
     edit_data["endDate"] = datetime.datetime.strptime(request.POST.get("end_date"),"%m/%d/%Y %H:%M %p").date()
 
+    membership_id = int(request.POST.get('membership'))
+
     promotion_service.update(id_edit, edit_data)
 
     membership_promotion_service = MembershipPromotionService()
@@ -430,7 +434,8 @@ def edit_promotion_membership(request):
     promo_member =  promotion.membershippromotion_set.all()
 
     filters = {
-        'promotion_id' : id_edit
+        'promotion_id' : id_edit,
+        'membership_type_id' : membership_id
     }
 
     promotions = membership_promotion_service.filter(filters)
@@ -462,8 +467,11 @@ def edit_promotion_bungalow(request):
 
     bungalow_promotion_service = BungalowPromotionService()
 
+    membership_id = int(request.POST.get('membership'))
+
     filters = {
         'promotion_id' : id_edit,
+        'membership_type_id' : membership_id
     }
 
     promotion = bungalow_promotion_service.filter(filters)
@@ -495,8 +503,11 @@ def edit_promotion_event(request):
 
     event_promotion_service = EventPromotionService()
 
+    membership_id = int(request.POST.get('membership'))
+
     filters = {
         'promotion_id' : id_edit,
+        'membership_type_id' : membership_id
     }
 
     promotion = bungalow_promotion_service.filter(filters)

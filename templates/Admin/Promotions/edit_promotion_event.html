@@ -38,6 +38,7 @@ Lista de promociones
                         <div class="block-content">
                             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "promotions:edit_membership" %}' method="post" >
                             {% csrf_token %}
+                                <input type="hidden" name="membership" value="{{membership_type_id}}"></input>
                                 <div class="row">
                                     <div class="col-lg-6" style="display: none;">
                                         <div class="form-group">
