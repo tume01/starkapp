@@ -12,9 +12,11 @@ from services.SuspensionService import SuspensionService
 from services.AffiliateService import AffiliateService
 from adapters.FormValidator import FormValidator
 from .forms import  MemberForm
+from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.core import serializers
+from datetime import datetime
 import json
 
 @login_required
@@ -69,11 +71,26 @@ def edit_member_index(request):
 
     districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    filter_ubigeo = {}
+
+    filter_ubigeo["department"] = member.birthUbigeo.department
+
+    birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+    filter_ubigeo["province"] = member.birthUbigeo.province
+
+    birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+
+    member.birthDate = datetime.strftime(member.birthDate, '%d/%m/%Y')
+
     context = {
         'member' : member,
         'departments' : departments,
         'provinces' : provinces,
         'districts' : districts,
+        'birthprovinces': birthprovinces,
+        'birthdistricts': birthdistricts,
         'doc_types': doc_types,
     }
 
@@ -94,6 +111,16 @@ def delete_member(request):
 
     member_service = MembersService()
 
+    member = member_service.getMember(id_edit)
+
+    user = member.user
+
+    #The user won't be able to login anymore
+
+    user.is_active = False
+
+    user.save()
+
     member_service.update(id_edit, edit_data)
 
     return HttpResponseRedirect(reverse('members:index'))
@@ -106,7 +133,7 @@ def delete_member(request):
 @require_http_methods(['POST'])
 def edit_member(request):
 
-    form = MemberForm(request.POST)
+    form = MemberForm(request.POST, request.FILES)
 
     id_edit = request.POST['id']
 
@@ -124,12 +151,42 @@ def edit_member(request):
 
         doc_types = identity_document_type_service.getIdentityDocumentTypes()
 
-        ubigeo = ubigeo_service.getAllUbigeo()
+        ubigeo_service = UbigeoService()
+
+        departments = ubigeo_service.distinctDepartment()
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = member.ubigeo.department
+
+        provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["province"] = member.ubigeo.province
+
+        districts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+        filter_ubigeo = {}
+
+        filter_ubigeo["department"] = member.birthUbigeo.department
+
+        birthprovinces = ubigeo_service.distinctProvince(filter_ubigeo)
+
+        filter_ubigeo["province"] = member.birthUbigeo.province
+
+        birthdistricts = ubigeo_service.distinctDistrict(filter_ubigeo)
+
+        member.birthDate = datetime.strftime(member.birthDate, '%d/%m/%Y')
 
         context = {
-            'member': member,
-            'ubigeo': ubigeo,
-            'doc_types': doc_types
+            'member' : member,
+            'departments' : departments,
+            'provinces' : provinces,
+            'birthprovinces' : birthprovinces,
+            'districts' : districts,
+            'birthdistricts' : birthdistricts,
+            'doc_types': doc_types,
         }
 
         return render(request, 'Admin/Members/edit_member.html', context)
@@ -166,6 +223,39 @@ def edit_member(request):
 
         edit_data["ubigeo"] = ubi[0]
 
+        if 'photo' in request.FILES:
+            edit_data["photo"] = request.FILES['photo']
+
+        edit_data["gender"] = request.POST['gender']
+
+        edit_data["workPlace"] = form.cleaned_data['workPlace']
+
+        edit_data["workPlaceJob"] = form.cleaned_data['workPlaceJob']
+
+        edit_data["workPlacePhone"] = form.cleaned_data['workPlacePhone']
+
+        edit_data["nationality"] = form.cleaned_data['nationality']
+
+        edit_data["maritalStatus"] = form.cleaned_data['maritalStatus']
+
+        edit_data["cellphoneNumber"] = form.cleaned_data['cellphoneNumber']
+
+        edit_data["specialization"] = form.cleaned_data['specialization']
+
+        edit_data["birthDate"] = form.cleaned_data['birthDate']
+
+        edit_data["birthPlace"] = form.cleaned_data['birthPlace']
+
+        filter_ubigeo["department"] = request.POST['birthDepartment']
+
+        filter_ubigeo["province"] = request.POST['birthProvince']
+
+        filter_ubigeo["district"] = request.POST['birthDistrict']
+
+        ubi = ubigeo_service.filter(filter_ubigeo).first()
+
+        edit_data["birthUbigeo"] = ubi
+
         member_service = MembersService()
 
         member_service.update(id_edit, edit_data)
@@ -198,7 +288,13 @@ def member_filter(request):
 
     identity_document_type = request.POST['identity_document_type']
 
-    filter_member['state'] = 1
+    if suspended == '3':
+
+        filter_member['state'] = 0
+
+    elif suspended != '2':
+
+        filter_member['state'] = 1
 
     if paternalLastName != '':
         filter_member['paternalLastName__icontains'] = paternalLastName
@@ -239,7 +335,7 @@ def is_member_suspended(member):
 
     filter_data = {}
 
-    filter_data['membership_id'] = member.id
+    filter_data['membership_id'] = member.membership.id
 
     member_suspensions = suspension_service.filter(filter_data)
 
@@ -251,7 +347,7 @@ def is_member_not_suspended(member):
 
     filter_data = {}
 
-    filter_data['membership_id'] = member.id
+    filter_data['membership_id'] = member.membership.id
 
     member_suspensions = suspension_service.filter(filter_data)
 

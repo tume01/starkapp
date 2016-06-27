@@ -37,7 +37,6 @@ var AffiliateFormValidation = function() {
                 'num_doc': {
                     required: true,   
                     number: true, 
-                    min: 1,
                     remote: {
                         url: url,
                         type: "post",
@@ -49,7 +48,19 @@ var AffiliateFormValidation = function() {
                                 return $( "#id_member" ).val();
                             }
                         }
-                    }                           
+                    },
+                    maxlength: {
+                        depends: function (elem) {
+                            if($("#example-select").val()==1 && ($('#num_doc').val().length == 8)) {
+                                return false;
+                            }else if($("#example-select").val()==2 && ($('#num_doc').val().length == 12)){
+                                return false;
+                            }else{
+                                return true;
+                            }
+                        }
+                    }, 
+                    min: 1                       
                 },                              
                 'address': {
                     required: true,
@@ -74,6 +85,45 @@ var AffiliateFormValidation = function() {
                 'email': {
                     required: true,
                     email: true
+                },                
+                'gender':{
+                    required:true
+                },
+                'nationality':{
+                    required:true,
+                    maxlength:20
+                },
+                'maritalStatus':{
+                    required:true,
+                    maxlength:20  
+                },                
+                'specialization':{
+                    required:true,
+                    maxlength:200  
+                },
+                'birthDate' : {
+                    required: true,
+<<<<<<< HEAD
+                    domain: true
+=======
+                    domain:true
+>>>>>>> refs/remotes/origin/TeamOlcese
+                },
+                'birthPlace': {
+                    required: true,
+                    maxlength:200
+                },                                                                
+                'birthDepartment':{
+                    required:true
+                },
+                'birthProvince':{
+                    required:true
+                },
+                'birthDistrict':{
+                    required:true
+                },
+                'photo':{
+                    required:true
                 }
             },
             messages: {
@@ -93,7 +143,8 @@ var AffiliateFormValidation = function() {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
                     remote: 'Este documento ya esta en uso',
-                    min: 'Por favor ingrese un documento válido' ,                
+                    min: 'Por favor ingrese un documento válido' ,    
+                    maxlength: 'Por favor ingrese un documento válido'             
                 },              
                 'address': {
                     required: 'Por favor ingrese una dirección',
@@ -118,11 +169,51 @@ var AffiliateFormValidation = function() {
                 'email': {
                     required:'Por favor ingrese un email',
                     email:'Por favor ingrese un email válido'                
-                }           
+                },
+                'birthDepartment':{
+                    required:'Por favor ingrese un departamento'
+                },
+                'birthProvince':{
+                    required:'Por favor ingrese una provincia'
+                },
+                'birthDistrict':{
+                    required:'Por favor ingrese un distrito'
+                },
+                'specialization':{
+                    required:'Por favor ingrese una especialización',
+                    maxlength:'La especialización debe tener máximo 200 caracteres'  
+                },
+                'birthDate' : {
+                    required: 'Por favor ingrese la fecha de nacimiento'
+                },
+                'birthPlace': {
+                    required: 'Por favor ingrese un lugar de nacimiento',
+                    maxlength:'El lugar de nacimiento debe tener máximo 200 caracteres'
+                },
+                'nationality':{
+                    required:'Por favor ingrese una nacionalidad',
+                    maxlength:'La nacionalidad debe tener máximo 20 caracteres'
+                },
+                'maritalStatus':{
+                    required:'Por favor ingrese un estado civil',
+                    maxlength:'El estado civil debe tener máximo 200 caracteres'  
+                },
+                'photo':{
+                    required: 'Por favor inrese una foto'
+                }                
             }
         });
     };
 
+    jQuery.validator.addMethod("domain", function(value, element) {
+        var today=new Date();
+    var sbirthDate = $('#birthDate').val();
+    var splitdate = sbirthDate.split("/");
+    var birthDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
+    if(birthDate >= today){ return false;}
+    else {return true;}
+    }, "La fecha no puede ser mayor a la de hoy");
+    
     return {
         init: function () {
 

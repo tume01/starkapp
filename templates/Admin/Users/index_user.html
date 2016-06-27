@@ -32,9 +32,60 @@ Lista de usuarios
                 {% csrf_token %}  
                 <input type="hidden" id="hid2" name="id"/>
             </form>
+        <div class="block-content">
+                            <form class="form" id="busqueda" method="post" >
+                                {% csrf_token %}
+                               <br>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Usuario</label>
+                                            <div class="col-md-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-number1-group2" name="username" placeholder="Usuario" pattern="[0-9]*"  size="60">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 <div class="col-lg-5" >
+                                        <div class="form-group">
+                                        <label class="col-xs-6 " for="example-select">Tipo de Usuario</label>
+                                            <div class="col-sm-12">
+                                                <select class="form-control" id="example-select" name="user_type" size="1">
+                                                    <option value="Todos">Todos</option>
+                                                    {% for group in groups %}
+                                                        {% if group.name == "usuarios_suspendidos"%}
+                                                            <option value="{{group.name}}">usuarios suspendidos</option>
+                                                        {% else %}
+                                                            <option value="{{group.name}}">{{group.name}}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <br>
+                                </div>
+                                <br>
+
+
+                                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-4">
+                                <button class="btn btn-sm btn-primary" id="button" type="button">Buscar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                            </form>
+                        </div>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
-            <table class="table table-bordered table-striped js-dataTable-simple">
+            <table  id="tabla" class="table table-bordered table-striped js-dataTable-simple">
                 <thead>
                     <tr>
                             <th>Usuario</th>      
@@ -42,13 +93,17 @@ Lista de usuarios
                             <th>Acción</th>                                        
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="tbodyid">
                         {% for user in users %}                                       
                         <tr>
                             <td class="font-w600">{{user.username}}</td>
-                            {% for group in user.groups.all %}     
-                            <td class="font-w600">{{group.name}}</td>
-                             {% endfor %}
+                            {% if user.groups.all.count > 1 %}
+                                <td class="font-w600">usuario suspendido</td>
+                            {% else %}
+                                {% for group in user.groups.all %}
+                                <td class="font-w600">{{group.name}}</td>
+                                {% endfor %}
+                            {% endif %}
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button class="btn btn-xs btn-default editar" data-id="{{user.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-pencil"></i></button>
@@ -68,13 +123,85 @@ Lista de usuarios
 {% block scripts %}
 
     <script>
-    $(document).ready(function () {
-        $('.editar').click(function (e) {
+
+    var insert = {{user_inserted|yesno:"true,false"}}
+    var edit = {{user_edited|yesno:"true,false"}}
+
+    function editar() {
+       $('.editar').click(function (e) {
             var id = $(this).attr("data-id")          
             $('#hid2').val(id)
             document.forms["myFormEdit"].submit();    
 
-        });      
+        });
+    }
+
+
+    $(document).ready(function () {
+
+        if(insert){
+            swal({
+                title: "Usuario creado",
+                text: "Se ha creado al usuario exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }else if(edit){
+            swal({
+                title: "Usuario editado",
+                text: "Se ha editado al usuario exitosamente",
+                type: "success",                
+                showConfirmButton: false,
+                timer: 2000
+            }); 
+        }
+
+         editar();
+
+           $('#button').click(function(){
+        {
+            var frm = $('#busqueda');
+            $.ajax({
+                type:'post',
+                url:'{% url "users:filter" %}',
+                data: frm.serialize(),
+                cache:false,
+                success: function(returndata){
+                    $('#tabla').dataTable().fnDestroy();
+                    $("#tbodyid").empty();   
+                    returndata = JSON.parse(returndata)               
+                    $.each (returndata, function (key, value) {
+                        group=returndata[key].group;
+                        name=returndata[key].name;
+                        id=returndata[key].id;
+                            var html = '<div class="btn-group"><button class="btn btn-xs btn-default editar" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-pencil"></i></button>'
+                        $("#tbodyid").append('<tr><td class="font-w600">'+name+'</td><td class="font-w600">'+group+'</td><td class="text-center">'+html+'</td></tr>');
+                    });  
+                    $('#tabla').dataTable({
+                            columnDefs: [ { orderable: true, targets: [ 1 ] } ],
+                            pageLength: 10,
+                            "autoWidth": false,
+                            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+                            searching: false,
+                            oLanguage: {
+                                sLengthMenu: "",                
+                                sInfoEmpty:"No hay entradas",
+                                sZeroRecords:"No hay datos disponibles",
+                                sInfo: "Mostrando <strong>_START_</strong> al <strong>_END_</strong> de <strong>_TOTAL_</strong>",
+                            },
+                            dom:
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-6'i><'col-sm-6'p>>"
+                    });   
+
+                    editar();                
+                },
+                
+            });
+        }
+        });
+   
         
     });
     </script>

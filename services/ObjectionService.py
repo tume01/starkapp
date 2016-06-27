@@ -23,5 +23,9 @@ class ObjectionsService(object):
 
     def getObjectionByApplicationId(self, id):
         filter_objection = {}
-        filter_objection['membership_application'] = id
+        filter_objection["membership_application"] = id
+        filter_objection["status"] = 1
         return self.__objection_repository.filter(filter_objection)
+
+    def filter(self, filters):
+        return self.__objection_repository.filter(filters)

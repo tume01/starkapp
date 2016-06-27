@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>YoQúeríaPHP -{% block head_title %}{% endblock %}</title>    
+    <title>YoQúeríaPHP -{% block head_title %}{% endblock %}</title>
 
     <meta name="description" content="YoQúeríaPHP - Admin">
     <meta name="author" content="TeamStark" >
@@ -18,10 +18,12 @@
     <!-- Web fonts -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700%7COpen+Sans:300,400,400italic,600,700">
 
-    <!-- Page JS Plugins CSS --> 
+    <!-- Page JS Plugins CSS -->
     <link rel="stylesheet" href='{% static "assets/js/plugins/slick/slick.min.css" %}'>
     <link rel="stylesheet" href='{% static "assets/js/plugins/slick/slick-theme.min.css" %}'>
     <link rel="stylesheet" href='{% static "assets/js/plugins/datatables/jquery.dataTables.min.css" %}'>
+    <link rel="stylesheet" href='{% static "assets/js/plugins/sweetalert/sweetalert.css" %}'>
+    
 
     <!-- Bootstrap and OneUI CSS framework -->
     <link rel="stylesheet" href='{% static "assets/css/bootstrap.min.css" %}'>
@@ -34,7 +36,7 @@
 <body>
  <div id="page-container" class="sidebar-l sidebar-o side-scroll header-navbar-fixed">
 
-    
+
 
     <!-- Sidebar -->
     <nav id="sidebar">
@@ -64,7 +66,7 @@
                                 <a data-toggle="theme" data-theme='{% static "assets/css/themes/amethyst.min.css" %}' tabindex="-1" href="javascript:void(0)">
                                     <i class="fa fa-circle text-amethyst pull-right"></i> <span class="font-w600">Amethyst</span>
                                 </a>
-                            </li> 
+                            </li>
                             <li>
                                 <a data-toggle="theme" data-theme='{% static "assets/css/themes/city.min.css" %}' tabindex="-1" href="javascript:void(0)">
                                     <i class="fa fa-circle text-city pull-right"></i> <span class="font-w600">City</span>
@@ -73,7 +75,7 @@
                             <li>
                                 <a data-toggle="theme" data-theme='{% static "assets/css/themes/flat.min.css" %}' tabindex="-1" href="javascript:void(0)">
                                     <i class="fa fa-circle text-flat pull-right"></i> <span class="font-w600">Flat</span>
-                                </a> 
+                                </a>
                             </li>
                             <li>
                                 <a data-toggle="theme" data-theme='{% static "assets/css/themes/modern.min.css" %}' tabindex="-1" href="javascript:void(0)">
@@ -100,7 +102,7 @@
                             <a class="active" href=''><i class="si si-speedometer"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                         </li>
                         <li class="nav-main-heading"><span class="sidebar-mini-hide">Usuario del Club</span></li>
-                        {% if not perms.dummy.permission_usuario_suspendido %} 
+                        {% if not perms.dummy.permission_usuario_suspendido %}
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                             <ul>
@@ -119,7 +121,7 @@
                                     <a href=''>Ver inscripciones de cursos</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Actividades</span></a>
                             <ul>
@@ -128,7 +130,7 @@
                                 </li>
                                 <li>
                                     <a href="{% url 'activities:index_signup' %}">Lista Actividades</a>
-                                </li>                           
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -136,10 +138,10 @@
                             <ul>
                                 <li>
                                     <a href="{% url 'events:userEvents_index' %}">Mis Eventos</a>
-                                </li>  
+                                </li>
                                 <li>
                                     <a href="{% url 'events:userSignup_index' %}">Eventos</a>
-                                </li>                          
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -148,10 +150,10 @@
                             </ul>
                         </li>
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-futbol-o"></i><span class="sidebar-mini-hide">Canchas</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-bicycle"></i><span class="sidebar-mini-hide">Reserva de canchas</span></a>
                             <ul>
                                 <li>
-                                    <a href="{% url 'reserve_field:index_admin'%}">Reservar Cancha</a>
+                                    <a href='{% url "reserve_field:index_admin" %}'>Ver Reservas de canchas</a>
                                 </li>
                             </ul>
                         </li>
@@ -162,9 +164,9 @@
                         </li>
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
-                            <ul>  
+                            <ul>
                                 <li>
-                                    <a href='{% url "membership_application:user_index" %}'>Solicitudes de membresía</a> 
+                                    <a href='{% url "membership_application:user_index" %}'>Solicitudes de membresía</a>
                                 </li>
                                 <li>
                                     <a href='{% url "memberships:show" %}'> Ver Membresía</a>
@@ -173,7 +175,7 @@
                                     <a href='{% url "affiliate:index" %}'> Ver Afiliados</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
@@ -181,7 +183,7 @@
                                     <a href='{% url "users:show_user" %}'>Cambiar Contraseña</a>
                                 </li>
                             </ul>
-                        </li>  
+                        </li>
 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
@@ -192,15 +194,15 @@
                             </ul>
                         </li>
                         {% endif %}
-                        {% if perms.dummy.permission_usuario_suspendido %} 
+                        {% if perms.dummy.permission_usuario_suspendido %}
                         <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-user"></i><span class="sidebar-mini-hide">Membresía</span></a>
-                            <ul>  
+                            <ul>
                                 <li>
                                     <a href='{% url "memberships:show" %}'> Ver Membresía</a>
                                 </li>
                             </ul>
-                        </li> 
+                        </li>
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-male"></i><span class="sidebar-mini-hide">Usuarios</span></a>
                             <ul>
@@ -208,7 +210,7 @@
                                     <a href='{% url "users:show_user" %}'>Cambiar Contraseña</a>
                                 </li>
                             </ul>
-                        </li>  
+                        </li>
 
                          <li>
                             <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Multas</span></a>
@@ -235,7 +237,7 @@
         <!-- Header Navigation Right -->
         <ul class="nav-header pull-right">
             <li>
-                <div class="btn-group"> 
+                <div class="btn-group">
                     <button class="btn btn-default btn-image dropdown-toggle" data-toggle="dropdown" type="button">
                         <img src='{% static "assets/img/avatars/avatar10.jpg" %}' alt="Avatar">
                         <span class="caret"></span>
@@ -320,11 +322,11 @@
     <!-- Main Container -->
     <main id="main-container">
 
-        <!-- Page Header --> 
+        <!-- Page Header -->
         <div class="content bg-image overflow-hidden" style="background-image: url('{% static "assets/img/photos/photo3@2x.jpg" %}');">
             <div class="push-50-t push-15">
                 <h1 class="h2 text-white animated zoomIn">Dashboard</h1>
-                <h2 class="h5 text-white-op animated zoomIn">Bienvenido Miembro</h2>
+                <h2 class="h5 text-white-op animated zoomIn">Bienvenido {{ user.first_name }} {{ user.last_name }}</h2>
             </div>
         </div>
 
@@ -389,7 +391,7 @@
                 // Init page helpers (Slick Slider plugin)
                 App.initHelpers('slick');
             });
-        </script> 
+        </script>
 
         <!-- Page JS Plugins -->
         <script src='{% static "assets/js/plugins/datatables/jquery.dataTables.min.js" %}'></script>
@@ -405,6 +407,7 @@
         <script src='{% static "assets/js/plugins/bootstrap-colorpicker/bootstrap-colorpicker.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/select2/select2.min.js" %}'></script>
+        <script src='{% static "assets/js/plugins/sweetalert/sweetalert.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/masked-inputs/jquery.maskedinput.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-auto-complete/jquery.auto-complete.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/ion-rangeslider/js/ion.rangeSlider.min.js" %}'></script>
@@ -430,7 +433,7 @@
         <!--<script src="assets/js/pages/base_forms_validation.js"></script>-->
         <script src='{% static "assets/js/plugins/jquery-validation/jquery.validate.min.js" %}'></script>
         <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
-        
+
 {% block scripts %}
 {% endblock %}
 

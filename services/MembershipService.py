@@ -20,3 +20,7 @@ class MembershipService(object):
 
     def filter(self,filters):
         return self.__membership_repository.filter(filters)
+
+    @classmethod
+    def get(cls,id):
+        return cls.__membership_repository.find(id)

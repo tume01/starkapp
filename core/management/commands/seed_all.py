@@ -4,6 +4,8 @@ from .seed_bungalow_reservation import *
 from .seed_headquarter import *
 from .seed_environments import *
 from .seed_login import Command as LoginSeed
+from .seed_event_type import *
+from .seed_activity_type import *
 
 class Command(BaseCommand):
     help = 'This command will seed the all database'
@@ -12,16 +14,20 @@ class Command(BaseCommand):
         print('\n  Full Seeder is running...\n')
 
         print('    Deleting...')
-        login = LoginSeed() 
+        login = LoginSeed()
         login.cleanLogin()
         cleanHeadquarter()
         cleanEnvironments()
         cleanBungalow()
         cleanBungalowReservation()
+        cleanEventType()
+        cleanActivity()
 
         print('\n    Inserting...')
         login.insertLogin()
         insertHeadquarter()
         insertEnvironments()
         insertBungalow()
-        insertBungalowReservation()
+        #insertBungalowReservation()
+        #insertEventType()
+        #insertActivity()

@@ -16,5 +16,6 @@ urlpatterns = [
     url(r'^user', views.user_index, name='user_index'),
     url(r'^index', views.index, name='index'),
     url(r'^filter', views.filter, name='filter'),
+    url(r'^pay', views.payFine, name='pay'),
     url(r'^create', views.create_index, name='create_index'),
 ]

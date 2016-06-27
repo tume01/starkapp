@@ -36,7 +36,7 @@ Editar usuario
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "users:password" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "users:edit" %}' method="post" >
                             {% csrf_token %}
                                 <div class="row">
                                     <div class="col-lg-6" style="display: none;">
@@ -75,7 +75,7 @@ Editar usuario
                                 <div class="col-lg-6">
                         <div class="form-group">
                             <label class="col-xs-12" for="example-select">Seleccione un tipo</label>
-                            <div class="col-sm-10">
+                            <div class="col-sm-9">
                                 <select class="form-control" id="example-select" name="user_type" size="1">
                                      {% for group in groups %}       
                                     <option value="{{group.id}}">{{group.name}}</option>

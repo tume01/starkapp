@@ -80,3 +80,4 @@ class BungalowReservationService(object):
         filter_data = {}
         filter_data['member_id'] = member_id
         return cls._repository.filter(filter_data)
+

@@ -14,7 +14,7 @@ from .forms import EventForm
 import datetime
 from services.MemberService import MembersService
 from django.conf import settings
-
+from services.PaymentService import PaymentService
 
 @require_http_methods(['GET'])
 def index(request):
@@ -118,7 +118,7 @@ def create_event(request):
 
         insert_data["description"] = form.cleaned_data.get('description')
 
-        insert_data["environment_id"] = form.cleaned_data.get('environment')
+        #insert_data["environment_id"] = form.cleaned_data.get('environment')
 
         member_service = MembersService()
 
@@ -194,9 +194,9 @@ def update_events(request, event_id):
     if request.POST.get('ruc'):
         insert_data["ruc"]  = request.POST.get('ruc')
 
-    if request.POST.get('environment'):
+    #if request.POST.get('environment'):
 
-        insert_data["environment_id"] = request.POST.get('environment')
+        #insert_data["environment_id"] = request.POST.get('environment')
 
     if request.POST.get('user'):
 
@@ -338,15 +338,16 @@ def select_userEvent(request, event_id):
     return render(request, 'User/Events/select.html', context)
 
 def userSignup(request, event_id):
-
+    
+    guests = int(request.POST.get('guests', 0))
     member_service = MembersService()
     event_service = EventsService()
 
     member = member_service.getMemberByUser(request.user)
-
-    if event_service.registerMember(event_id, member):
-        messages.success(request, 'Inscripcion en evento exitosa')
-        return HttpResponseRedirect(reverse('events:userEvents_index'))
+    event = EventsService.get(event_id)
+    
+    if PaymentService.createEventProduct(member, guests, event):
+        return HttpResponseRedirect(reverse('checkout:index') + '?product_type=3')
 
     messages.error(request, 'Error al inscribirse en el evento')
 
@@ -369,7 +370,6 @@ def userSignout(request, event_id):
 def checkoutEvent(request, event_id):
 
     guests = request.POST.get('guests', 0)
-
     member_service = MembersService()
     member = member_service.getMemberByUser(request.user)
 
@@ -377,6 +377,9 @@ def checkoutEvent(request, event_id):
 
     event =environment_service.getEvent(event_id)
 
-    checkout_products = payment_service.createCheckoutProducts(products,member)
+    if PaymentService.createEventProduct(member, guests, event):
+        return HttpResponseRedirect(reverse('checkout:index') + '?product_type=' + 3)
 
-    return HttpResponseRedirect(reverse('payments:checkout_preview'))
+    messages.error(request, 'Error al inscribirse en el evento')
+
+    return HttpResponseRedirect(reverse('events:userEvent_select', args=[event_id]))

@@ -34,7 +34,7 @@ Lista de miembros
                         <div class="col-lg-5" >
                             <div class="form-group">
                             <label class="col-xs-12" for="example-select">Nombre</label>
-                                <div class="col-md-12">
+                                <div class="col-md-10">
                                    <div class="input-group">
                                         <input class="form-control" id="example-number1-group2" name="name" placeholder="Nombre" type="text"  size="60">
                                     </div>
@@ -45,7 +45,7 @@ Lista de miembros
                         <div class="col-lg-5" >
                             <div class="form-group">
                             <label class="col-xs-12" for="example-select">Apellido Paterno</label>
-                                <div class="col-sm-12">
+                                <div class="col-sm-10">
                                    <div class="input-group">
                                         <input class="form-control" id="example-number1-group2" name="paternalLastName" placeholder="Apellido Paterno" type="text"  size="60">
                                     </div>
@@ -57,8 +57,8 @@ Lista de miembros
                     <div class="row">
                         <div class="col-lg-5" >
                             <div class="form-group">
-                            <label class="col-xs-12" for="example-select">Numero de Documento</label>
-                                <div class="col-lg-12">
+                            <label class="col-xs-10" for="example-select">Numero de Documento</label>
+                                <div class="col-lg-10">
                                    <div class="input-group">
                                         <input class="form-control" id="example-number1-group2" name="num_doc" placeholder="Num Documento" pattern="[0-9]*"  size="60">
                                     </div>
@@ -69,7 +69,7 @@ Lista de miembros
                         <div class="col-lg-5" >
                             <div class="form-group">
                             <label class="col-lg-6" for="example-select">Apellido Materno</label>
-                                <div class="col-lg-12">
+                                <div class="col-lg-10">
                                    <div class="input-group">
                                         <input class="form-control" id="example-number1-group2" name="maternalLastName" placeholder="Apellido Materno" type="text" size="60" >
                                     </div>
@@ -82,11 +82,12 @@ Lista de miembros
                         <div class="col-lg-5" >
                             <div class="form-group">
                             <label class="col-lg-6 " for="example-select">Estado de Suspension</label>
-                                <div class="col-sm-12">
+                                <div class="col-sm-10">
                                     <select class="form-control" id="example-select" name="suspended" size="1">
                                         <option value="2">Todos</option>
                                         <option value="0">No suspendido</option>
                                         <option value="1">Suspendido</option>
+                                        <option value="3">Eliminado</option>
                                     </select>
                                 </div>
                             </div>
@@ -95,7 +96,7 @@ Lista de miembros
                         <div class="col-lg-5" >
                             <div class="form-group">
                             <label class="col-xs-6 " for="example-select">Documento de Identidad</label>
-                                <div class="col-sm-12">
+                                <div class="col-sm-10">
                                     <select class="form-control" id="example-select" name="identity_document_type" size="1">
                                         <option value="Todos">Todos</option>
                                         {% for doc_type in doc_types %}
@@ -163,7 +164,7 @@ Lista de miembros
                             <th>Apellido materno</th>
                             <th>Teléfono</th>
                             <th>Correo</th>                                
-                            <th>Acciónes</th>                                        
+                            <th>Acciones</th>                                        
                         </tr>
                     </thead>
                     <tbody id='tbodyid'>
@@ -196,6 +197,7 @@ Lista de miembros
         <!-- END Simple Table Full -->
     </div>
     <!-- END Page Content -->
+
 {% endblock %}
 
 {% block scripts %}
@@ -211,13 +213,26 @@ Lista de miembros
     }
 
     function eliminar() {
-       $('.eliminar').click(function (e) {
-            var id = $(this).attr("data-id")          
-            $('#hid1').val(id)
-            document.forms["myFormDelete"].submit();    
+        $('.eliminar').click(function (e) {
+            var id = $(this).attr("data-id");    
+            $('#hid1').val(id) ;
+           swal({
+                title: "Eliminar Miembro",
+                text: "¿Desea eliminar a " + $(this).parent().parent().prevAll().eq(4).html()+" " + $(this).parent().parent().prevAll().eq(3).html() + "?",
+                type: "error",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){                
+                document.forms["myFormDelete"].submit();     
+            });      
         });  
     }
-
+    
     function membre() {
         $('.membre').click(function (e) {
             var id = $(this).attr("data-id")          
@@ -251,6 +266,10 @@ Lista de miembros
 
     $(document).ready(function () {
 
+        $('#eliminarMiembro').click(function (e) {        
+            document.forms["myFormDelete"].submit();    
+        });  
+
         editar();
         eliminar();  
         suspension();
@@ -278,7 +297,11 @@ Lista de miembros
                         phone=returndata[key].fields.phone;
                         email=returndata[key].fields.email;
                         id=returndata[key].pk;
-                        var html =  '<div class="btn-group"><button class="btn btn-xs btn-default editar" style="height:30px; width:30px" data-id='+id+ 'type="button"  data-toggle="tooltip" title="Editar Miembro"><i class="fa fa-user"></i></button><button class="btn btn-xs btn-default eliminar" style="height:30px; width:30px" data-id='+id+'type="button"  data-toggle="tooltip" title="Eliminar Miembro"><i class="fa fa-user-times"></i></button><button class="btn btn-xs btn-default membre" style="height:30px; width:30px" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Editar Membresia"><i class="fa fa-pencil-square"></i></button> <!-- <button class="btn btn-xs btn-default user" data-id="{{member.id}}" type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-edit"></i></button>  --> <button class="btn btn-xs btn-default fines" style="height:30px; width:30px" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Ver Multas"><i class="fa fa-exclamation-triangle"></i></button><button class="btn btn-xs btn-default affiliates" style="height:30px; width:30px" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Ver Afiliados"><i class="fa fa-users"></i></button><button class="btn btn-xs btn-default suspension" style="height:30px; width:30px" data-id="'+id+'" type="button"  data-toggle="tooltip" title="Suspender Miembro"><i class="fa fa-legal"></i></button></div>'
+                        var html =  '<div class="btn-group"><button class="btn btn-xs btn-default editar" style="height:30px; width:30px" data-id='+id+ ' type="button"  data-toggle="tooltip" title="Editar Miembro"><i class="fa fa-user"></i></button><button class="btn btn-xs btn-default eliminar" style="height:30px; width:30px" data-id='+id+' type="button"  data-toggle="tooltip" title="Eliminar Miembro"><i class="fa fa-user-times"></i></button><button class="btn btn-xs btn-default membre" style="height:30px; width:30px" data-id='+id+' type="button"  data-toggle="tooltip" title="Editar Membresia"><i class="fa fa-pencil-square"></i></button> <!-- <button class="btn btn-xs btn-default user" data-id='+id+' type="button"  data-toggle="tooltip" title="Editar Usuario"><i class="fa fa-edit"></i></button>  --> <button class="btn btn-xs btn-default fines" style="height:30px; width:30px" data-id='+id+' type="button"  data-toggle="tooltip" title="Ver Multas"><i class="fa fa-exclamation-triangle"></i></button><button class="btn btn-xs btn-default affiliates" style="height:30px; width:30px" data-id='+id+' type="button"  data-toggle="tooltip" title="Ver Afiliados"><i class="fa fa-users"></i></button><button class="btn btn-xs btn-default suspension" style="height:30px; width:30px" data-id='+id+' type="button"  data-toggle="tooltip" title="Suspender Miembro"><i class="fa fa-legal"></i></button></div>'
+
+                        if(returndata[key].fields.state==0){
+                            html = ''
+                        }
 
                         $("#tbodyid").append('<tr><td class="font-w600">'+doc+'</td><td class="font-w600">'+doc_num+'</td><td class="font-w600">'+name+'</td><td class="font-w600">'+pat+'</td><td class="font-w600">'+mat+'</td><td class="font-w600">'+phone+'</td><td class="font-w600">'+email+'</td><td class="text-center">'+html+'</td></tr>');
                     });  

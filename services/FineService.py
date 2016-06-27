@@ -29,4 +29,6 @@ class FineService(object):
         filter_fine['member'] = id_Member
         return self.__fine_repository.filter(filter_fine)
 
-
+    @classmethod
+    def get(cls,id):
+        return cls.__fine_repository.find(id)
