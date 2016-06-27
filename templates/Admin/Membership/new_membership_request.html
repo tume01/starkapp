@@ -585,6 +585,7 @@ Nueva solicitud de membresía
 <script>
 var CSRF_TOKEN = '{{ csrf_token }}';
 var url= "{% url "membership_application:verify_document_number" %}"
+var numberOfDaysToAdd = {{daysToAdd}}
 
  $(document).ready(function () {
 
@@ -601,7 +602,6 @@ var url= "{% url "membership_application:verify_document_number" %}"
         var splitdate = iniDate.split("/");
         var someDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
 
-        var numberOfDaysToAdd = 13;
         someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
 
         var dd = someDate.getDate();

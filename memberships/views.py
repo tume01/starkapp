@@ -11,6 +11,7 @@ from services.MembershipService import MembershipService
 from services.SuspensionService import SuspensionService
 from services.ObjectionService import ObjectionsService
 from services.UbigeoService import UbigeoService
+from services.PoliticsService import PoliticsService
 from services.MemberService import MembersService
 from services.RelationshipService import RelationshipService
 from services.AffiliateService import AffiliateService
@@ -455,11 +456,25 @@ def create_membership(request):
         doc_types = identity_doc_type_service.getIdentityDocumentTypes()
 
         membershipApplication = member_application_service.getMembership_Application(membershipApplicationId)
+
+        politics_service = PoliticsService()
+
+        filter_politics = {}
+
+        filter_politics["name"] = 'MONTHS_MEMBERSHIP_PAYMENT_PERIOD'
+
+        monthsToAdd = politics_service.filter(filter_politics)[0].value
+
+        ubigeo_service = UbigeoService()
+
+        ubigeo = ubigeo_service.distinctDepartment()
     
         context = {
             'titulo': 'titulo',
             'doc_types' : doc_types,
             'membership_application': membershipApplication,
+            'ubigeo' : ubigeo,
+            'monthsToAdd' : monthsToAdd
         }
 
         return render(request, 'Admin/Membership/new_membership_member.html', context)
@@ -490,10 +505,22 @@ def membership_edit_index(request):
 
     types = membership_type_service.getMembershipTypes()
 
+    politics_service = PoliticsService()
+
+    filter_politics = {}
+
+    filter_politics["name"] = 'MONTHS_MEMBERSHIP_PAYMENT_PERIOD'
+
+    monthsToAdd = politics_service.filter(filter_politics)[0].value
+
     context = {
         'membership' : membership,
         'types' : types,
+        'monthsToAdd' : monthsToAdd
     }
+
+    print(membership.initialDate)
+    print(membership.finalDate)
 
     return render(request, 'Admin/Membership/edit_membership.html', context)
 
@@ -521,9 +548,18 @@ def membership_edit(request):
         
         types = membership_type_service.getMembershipTypes()
 
+        politics_service = PoliticsService()
+
+        filter_politics = {}
+
+        filter_politics["name"] = 'MONTHS_MEMBERSHIP_PAYMENT_PERIOD'
+
+        monthsToAdd = politics_service.filter(filter_politics)[0].value
+
         context = {
             'membership': membership,
             'types' : types,
+            'monthsToAdd' : monthsToAdd
         }
 
         return render(request, 'Admin/Membership/edit_membership.html', context)
@@ -567,8 +603,6 @@ def membership_show(request):
     if member[0].membership.membership_type.name == lifeLongType.name:
 
         paymentEnabled = False
-
-    print(paymentEnabled)
         
     context = {
 	    'membership' : member[0].membership,
