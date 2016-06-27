@@ -10,6 +10,7 @@ from services.AffiliateService import AffiliateService
 from services.IdentityDocumentTypeService import IdentityDocumentTypeService
 from services.UbigeoService import UbigeoService
 from services.ObjectionService import ObjectionsService
+from services.PoliticsService import PoliticsService
 from django.views.decorators.http import require_http_methods
 from datetime import datetime
 from adapters.FormValidator import FormValidator
@@ -105,12 +106,20 @@ def create_index(request):
 
     ubigeo = ubigeo_service.distinctDepartment()
 
-    context = {
+    politics_service = PoliticsService()
 
+    filter_politics = {}
+
+    filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+    daysToAdd = politics_service.filter(filter_politics)[0].value
+
+    context = {
         'types' : types,
         'ubigeo' : ubigeo,
         'doc_types': doc_types,
-        'titulo' : 'titulo'
+        'titulo' : 'titulo',
+        'daysToAdd' : daysToAdd
     }
 
     return render(request, 'Admin/Membership/new_membership_request.html', context)
@@ -159,6 +168,14 @@ def edit_index(request):
 
     districts2 = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+    politics_service = PoliticsService()
+
+    filter_politics = {}
+
+    filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+    daysToAdd = politics_service.filter(filter_politics)[0].value
+
     context = {
         'types' : types,
         'doc_types' : doc_types,
@@ -168,6 +185,7 @@ def edit_index(request):
         'provincesBirth': provinces2,
         'districtsBirth': districts2,
         'membership_application' : membership_application,
+        'daysToAdd' : daysToAdd
     }
 
     if(membership_application.sbirthUbigeo):
@@ -289,11 +307,20 @@ def create_membership_application(request):
 
             ubigeo = ubigeo_service.distinctDepartment()
 
+            politics_service = PoliticsService()
+
+            filter_politics = {}
+
+            filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+            daysToAdd = politics_service.filter(filter_politics)[0].value
+
             context = {
                 'types' : types,
                 'doc_types' : doc_types,
                 'ubigeo' : ubigeo,
-                'titulo': 'titulo'
+                'titulo': 'titulo',
+                'daysToAdd' : daysToAdd
             }
 
             messages.error(request, 'Debe ingresar una foto')
@@ -338,7 +365,7 @@ def create_membership_application(request):
 
             insert_data["sgender"] = request.POST['sgender']
 
-            insert_data["scellphoneNumber"] = form.cleaned_data['scellphoneNumber']
+            insert_data["scellPhoneNumber"] = form.cleaned_data['scellPhoneNumber']
 
             insert_data["sspecialization"] = form.cleaned_data['sspecialization']
 
@@ -387,11 +414,20 @@ def create_membership_application(request):
 
         ubigeo = ubigeo_service.distinctDepartment()
 
+        politics_service = PoliticsService()
+
+        filter_politics = {}
+
+        filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+        daysToAdd = politics_service.filter(filter_politics)[0].value
+
         context = {
             'types' : types,
             'doc_types' : doc_types,
             'ubigeo' : ubigeo,
-            'titulo': 'titulo'
+            'titulo': 'titulo',
+            'daysToAdd' : daysToAdd
         }
 
         return render(request2, 'Admin/Membership/new_membership_request.html', context)
@@ -515,7 +551,7 @@ def edit_membership_application(request):
 
             insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
 
-            insert_data["scellphoneNumber"] = form.cleaned_data['scellphoneNumber']
+            insert_data["scellPhoneNumber"] = form.cleaned_data['scellPhoneNumber']
 
             filter_ubigeo["department"] = request.POST['sbirthDepartment']
 
@@ -578,6 +614,14 @@ def edit_membership_application(request):
 
         districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
+        politics_service = PoliticsService()
+
+        filter_politics = {}
+
+        filter_politics["name"] = 'DAYS_OBJECTION_PERIOD'
+
+        daysToAdd = politics_service.filter(filter_politics)[0].value
+
         context = {
             'types': types,
             'doc_types': doc_types,
@@ -585,6 +629,7 @@ def edit_membership_application(request):
             'provinces': provinces,
             'districts': districts,
             'membership_application': membership_application,
+            'daysToAdd' : daysToAdd
         }
 
         return render(request2, 'Admin/Membership/edit_membership_request.html', context)
@@ -847,11 +892,20 @@ def approve_membership_application(request):
 
         ubigeo = ubigeo_service.distinctDepartment()
 
+        politics_service = PoliticsService()
+
+        filter_politics = {}
+
+        filter_politics["name"] = 'MONTHS_MEMBERSHIP_PAYMENT_PERIOD'
+
+        monthsToAdd = politics_service.filter(filter_politics)[0].value
+
         context = {
             'titulo' : 'titulo',
             'doc_types' : doc_types,
             'ubigeo' : ubigeo,
             'membership_application' : membership_application,
+            'monthsToAdd' : monthsToAdd
         }
 
         return render(request, 'Admin/Membership/new_membership_member.html', context)

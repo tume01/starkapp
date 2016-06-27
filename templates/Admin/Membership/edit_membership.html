@@ -105,6 +105,7 @@ Editar membresía
 {% block scripts %}
 
 <script>
+var numberOfMonthsToAdd = {{monthsToAdd}}
 
     $(document).ready(function () {
 
@@ -113,8 +114,6 @@ Editar membresía
         var iniDate = $('#fechaIni').val();
         var splitdate = iniDate.split("/");
         var someDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
-
-        var numberOfMonthsToAdd = 12;
 
         someDate = addMonths(someDate, numberOfMonthsToAdd)
 

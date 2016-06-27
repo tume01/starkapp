@@ -181,7 +181,7 @@ Nueva membresía
                                     </div>
                                     <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Telefono Celular</label>
+                                            <label class="col-xs-8" for="example-number-input">Teléfono Celular</label>
                                             <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="cellphoneNumber" readonly="readonly" value="{{membership_application.cellphoneNumber}}" type="text">
                                             </div>
@@ -468,7 +468,7 @@ Nueva membresía
                                     </div>
                                 </div>
                                 <div class="row oculto">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
                                             <div class="col-sm-8">
@@ -476,11 +476,11 @@ Nueva membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-8" for="example-number-input">Telefono Celular(*)</label>
+                                            <label class="col-xs-8" for="example-number-input">Teléfono Celular</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input2-group1" readonly="readonly" name="scellphoneNumber" value="{{membership_application.scellphoneNumber}}" type="text">
+                                                <input class="form-control" id="example-input2-group1" readonly="readonly" name="scellPhoneNumber" value="{{membership_application.scellPhoneNumber}}" type="text">
                                             </div>
                                         </div>
                                     </div>
@@ -556,6 +556,7 @@ Nueva membresía
 {% block scripts %}
 
 <script>
+var numberOfMonthsToAdd = {{monthsToAdd}}
 
     $(document).ready(function () {
 
@@ -564,8 +565,6 @@ Nueva membresía
         var iniDate = $('#fechaIni').val();
         var splitdate = iniDate.split("/");
         var someDate = new Date(splitdate[1]+" "+splitdate[0]+" "+splitdate[2]);
-
-        var numberOfMonthsToAdd = 12;
 
         someDate = addMonths(someDate, numberOfMonthsToAdd)
 

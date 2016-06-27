@@ -145,6 +145,9 @@ var MembershipRequestFormValidation = function() {
                 },
                 'address':{
                     required:true
+                },
+                'snum_doc':{
+                    equal:true
                 }
             },
             messages: {
@@ -165,7 +168,8 @@ var MembershipRequestFormValidation = function() {
                     number: 'Por favor ingrese un documento válido' ,
                     min: 'Por favor ingrese un documento válido' ,
                     remote: 'Este documento ya está en uso',
-                    maxlength: 'Por favor ingrese un documento válido'                    
+                    minlength: 'Por favor ingrese un documento válido',
+                    maxlength: 'Por favor ingrese un documento válido'                     
                 },
                 'comments': {
                     required: 'Por favor ingrese un comentario',
@@ -261,6 +265,12 @@ var MembershipRequestFormValidation = function() {
     if(birthDate >= today){ return false;}
     else {return true;}
     }, "La fecha no puede ser mayor a la de hoy");
+
+    jQuery.validator.addMethod("equal", function(value, element) {          
+        if( $('#num_doc').val() ==  $('#snum_doc').val()){ return false;}
+        else {return true;}
+    }, "Este documento ya está en uso en la solicitud");
+
 
     return {
         init: function () {
