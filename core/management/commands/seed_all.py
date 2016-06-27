@@ -41,4 +41,4 @@ class Command(BaseCommand):
         insertBungalowReservation()
         insertEventType()
         insertActivity()
-        insertPolitic()
+        insertPolitic() 
