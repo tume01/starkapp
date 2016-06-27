@@ -483,3 +483,35 @@ def getMembers(request):
     data = json.dumps(member)
 
     return HttpResponse(data, content_type='application/json')
+
+
+
+@login_required
+@require_http_methods(['POST'])
+def calculate_punctuation(request):
+    members_service = MembersService()
+    member = members_service.filter({'user_id':request.user.id}).first()
+    req = json.loads( request.body.decode('utf-8') )
+
+    req_send = {}
+    req_send["document"] = member.document_number
+    req_send["punctuation"] = member.punctuation
+
+    return HttpResponse(json.dumps(req_send), content_type='application/json')
+
+
+@login_required
+@require_http_methods(['POST'])
+def register_punctuation(request):
+    members_service = MembersService()
+    member = members_service.filter({'user_id':request.user.id}).first()
+    req = json.loads( request.body.decode('utf-8') )
+    
+    print(req["points"])
+
+    member.punctuation = int(req["points"])
+    member.save()
+
+    return HttpResponse(json.dumps(req), content_type='application/json')
+    
+
