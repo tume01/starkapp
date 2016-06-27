@@ -468,10 +468,20 @@ Nueva solicitud de membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-6">
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Departamento</label>
-                                                <div class="col-sm-8">
+                                            <label class="col-xs-8" for="example-number-input">Telefono Celular(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input2-group1" name="scellphoneNumber" placeholder="Telefono Celular" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row conyuge" style="display: none;">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                                <label class="col-xs-8" for="example-select">Departamento</label>
+                                                <div class="col-sm-12">
                                                     <select class="form-control" id="sbirthDepartment" name="sbirthDepartment" size="1">
                                                             {% for u in ubigeo%}
                                                                 <option value="{{u.department}}">{{u.department}}</option>
@@ -480,19 +490,19 @@ Nueva solicitud de membresía
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Provincia</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-xs-8" for="example-select">Provincia</label>
+                                                <div class="col-sm-12">
                                                     <select class="form-control" id="sbirthProvince" name="sbirthProvince" size="1">
                                                     </select>
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Distrito</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-xs-8" for="example-select">Distrito</label>
+                                                <div class="col-sm-12">
                                                     <select class="form-control" id="sbirthDistrict" name="sbirthDistrict" size="1">
                                                     </select>
                                                 </div>

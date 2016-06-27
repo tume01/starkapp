@@ -476,30 +476,40 @@ Nueva membresía
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-6">
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Departamento</label>
-                                                <div class="col-sm-8">
+                                            <label class="col-xs-8" for="example-number-input">Telefono Celular(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input2-group1" readonly="readonly" name="scellphoneNumber" value="{{membership_application.scellphoneNumber}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row oculto">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                                <label class="col-xs-8" for="example-select">Departamento</label>
+                                                <div class="col-sm-12">
                                                     <select class="form-control" id="sbirthDepartment" readonly="readonly" name="sbirthDepartment" size="1">
                                                             <option selected value="{{membership_application.sbirthUbigeo.department}}">{{membership_application.sbirthUbigeo.department}}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Provincia</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-xs-8" for="example-select">Provincia</label>
+                                                <div class="col-sm-12">
                                                     <select class="form-control" id="sbirthProvince" readonly="readonly" name="sbirthProvince" size="1">
                                                         <option selected value="{{membership_application.sbirthUbigeo.province}}">{{membership_application.sbirthUbigeo.province}}</option>
                                                     </select>
                                                 </div>
                                             </div>
                                     </div>
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
-                                                <label class="col-xs-6" for="example-select">Distrito</label>
-                                                <div class="col-sm-8">
+                                                <label class="col-xs-8" for="example-select">Distrito</label>
+                                                <div class="col-sm-12">
                                                     <select class="form-control" id="sbirthDistrict" readonly="readonly" name="sbirthDistrict" size="1">
                                                         <option selected value="{{membership_application.sbirthUbigeo.district}}">{{membership_application.sbirthUbigeo.district}}</option>
                                                     </select>
