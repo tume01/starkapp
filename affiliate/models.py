@@ -34,4 +34,4 @@ class Affiliate(models.Model):
     workPlaceJob = models.TextField(max_length=200, blank=True, null=True)
     workPlacePhone = models.IntegerField(blank=True, null=True)
     maritalStatus = models.TextField(max_length=20)
-    cellphoneNumber = models.IntegerField(blank=True, null=True)
+    cellphoneNumber = models.IntegerField()

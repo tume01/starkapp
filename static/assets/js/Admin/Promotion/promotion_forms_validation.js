@@ -67,5 +67,47 @@ var PromotionFormValidation = function() {
     };
 }();
 
+$(document).ready(function(){
+
+    $("#add_membership").click(function(){
+        var route = $("#membership_table").data('url');
+        console.log(route);
+        $.ajax({
+            url: route,
+        }).done(function(data){
+            $("#membership_table").append(data);
+        });
+    });
+    $("#delete_membership").click(function(){
+        $("#membership_types_options").remove();
+    });
+
+    $("#add_bungalow").click(function(){
+        var route = $("#bungalow_table").data('url');
+        console.log(route);
+        $.ajax({
+            url: route,
+        }).done(function(data){
+            $("#bungalow_table").append(data);
+        });
+    });
+    $("#delete_bungalow").click(function(){
+        $("#bungalow_types_options").remove();
+    });
+
+    $("#add_event").click(function(){
+        var route = $("#event_table").data('url');
+        console.log(route);
+        $.ajax({
+            url: route,
+        }).done(function(data){
+            $("#event_table").append(data);
+        });
+    });
+    $("#delete_event").click(function(){
+        $("#event_types_options").remove();
+    });
+});
+
 // Initialize when page loads
 jQuery(function(){ PromotionFormValidation.init(); });

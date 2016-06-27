@@ -7,7 +7,7 @@ from .seed_login import Command as LoginSeed
 from .seed_event_type import *
 from .seed_activity_type import *
 from .seed_product import *
-
+from .seed_politics import *
 
 class Command(BaseCommand):
     args = '<var ...>'
@@ -28,6 +28,7 @@ class Command(BaseCommand):
         cleanEventType()
         cleanActivity()
         cleanProduct()
+        cleanPolitics()
 
         print('\n    Inserting...')
 
@@ -40,3 +41,4 @@ class Command(BaseCommand):
         insertBungalowReservation()
         insertEventType()
         insertActivity()
+        insertPolitic()

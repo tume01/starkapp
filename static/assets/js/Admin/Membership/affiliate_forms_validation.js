@@ -84,6 +84,11 @@ var AffiliateFormValidation = function() {
                     min:1
                     
                 },
+                'cellphoneNumber':{
+                    required:true,
+                    number: true,
+                    minlength:9
+                },
                 'email': {
                     required: true,
                     email: true
