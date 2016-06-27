@@ -338,7 +338,7 @@ def create_membership_application(request):
 
             insert_data["sgender"] = request.POST['sgender']
 
-            insert_data["scellphoneNumber"] = form.cleaned_data['scellphoneNumber']
+            insert_data["scellPhoneNumber"] = form.cleaned_data['scellPhoneNumber']
 
             insert_data["sspecialization"] = form.cleaned_data['sspecialization']
 
@@ -515,7 +515,7 @@ def edit_membership_application(request):
 
             insert_data["sbirthPlace"] = form.cleaned_data['sbirthPlace']
 
-            insert_data["scellphoneNumber"] = form.cleaned_data['scellphoneNumber']
+            insert_data["scellPhoneNumber"] = form.cleaned_data['scellPhoneNumber']
 
             filter_ubigeo["department"] = request.POST['sbirthDepartment']
 
