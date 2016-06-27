@@ -20,3 +20,7 @@ class EventsTypeService(object):
 
     def filter(self, filters):
         return self.__eventsType_repository.filter(filters)
+
+    @classmethod
+    def get(cls, id):
+        return cls.__eventsType_repository.find(id)

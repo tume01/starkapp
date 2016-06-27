@@ -25,7 +25,7 @@ class EventsService(object):
     def getEvent(self, id):
         return self.__event_repository.find(id)
 
-    def registerMember(self, event_id, user):
+    def registerMember(self, event_id, user, guests):
 
         event = self.getEvent(event_id)
 
@@ -34,7 +34,7 @@ class EventsService(object):
         if event.assistance > assistants:
 
             if not event.eventregistration_set.filter(member_id=user.id, deleted_at=None):
-                return self.__event_repository.addMember(event, user)
+                return self.__event_repository.addMember(event, user, guests)
 
         return None
 
@@ -51,3 +51,6 @@ class EventsService(object):
 
         return event.eventregistration_set.filter(deleted_at=None)
 
+    @classmethod
+    def get(cls, id):
+        return cls.__event_repository.find(id)

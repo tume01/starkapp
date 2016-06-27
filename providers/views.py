@@ -9,7 +9,14 @@ from .forms import ProviderForm
 
 from datetime import datetime,timedelta
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
+
+
+
+@login_required
+@permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def index(request):
 
@@ -28,7 +35,8 @@ def index(request):
 
     return render(request, 'Admin/Providers/index_provider.html', context)
 
-
+@login_required
+@permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
 def getProviderFilters(request):
 
     filters = {}
@@ -58,6 +66,8 @@ def getProviderFilters(request):
 
     return filters
 
+@login_required
+@permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def create_index(request):
 
@@ -71,6 +81,8 @@ def create_index(request):
 
     return render(request, 'Admin/Providers/new_provider.html', context)
 
+@login_required
+@permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def create_provider(request):
 
@@ -119,7 +131,8 @@ def create_provider(request):
             context = {'form' : form}
             return render(request, 'Admin/Providers/new_provider.html', context)
 
-
+@login_required
+@permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
 def edit_index(request,id):
 
@@ -141,6 +154,8 @@ def edit_index(request,id):
 
     return render(request, 'Admin/Providers/edit_provider.html', context)
 
+@login_required
+@permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def edit_provider(request,id):
 
@@ -183,6 +198,8 @@ def edit_provider(request,id):
             context = {'form' : form}
             return render(request, 'Admin/Providers/edit_provider.html', context)
 
+@login_required
+@permission_required('dummy.permission_proveedor', login_url='login:iniAdmin')
 @require_http_methods(['POST'])
 def filter_product(request):
     filter_data = {}

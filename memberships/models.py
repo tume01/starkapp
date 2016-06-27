@@ -14,4 +14,4 @@ class Membership(models.Model):
     initialDate = models.DateField()
     finalDate = models.DateField()
     status = models.IntegerField()
-    
+

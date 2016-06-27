@@ -63,7 +63,6 @@ def create_headquarters(request):
         insert_data["location"] = form.cleaned_data['location']
         insert_data["description"] = form.cleaned_data['description']
         insert_data["status"] = 1
-        #insert_data['ubigeos'] = form.cleaned_data['ubigeos']
 
         filter_ubigeo = {}
         filter_ubigeo["department"] = request.POST['department']
@@ -78,10 +77,11 @@ def create_headquarters(request):
     else:
 
         headquarters = headquarter_service.getHeadquarters()
-        ubigeo = ubigeo_service.distinctDepartment()
+        ubigeos = ubigeo_service.distinctDepartment()
 
         context = {
             'headquarters': headquarters,
+            'ubigeos': ubigeos
         }
         
         return render(request, 'Admin/Headquarters/new_headquarter.html', context)
@@ -95,13 +95,24 @@ def update_headquarters_index(request, headquarter_id):
     ubigeo_service = UbigeoService()
 
     headquarter = headquarter_service.findHeadquarter(headquarter_id)
-    hq_ubigeo = ubigeo_service.getUbigeoById(headquarter.ubigeos.id)
-    ubigeos = ubigeo_service.distinctDepartment()
+    ubigeos = ubigeo_service.getAllUbigeo()
+
+    departments = ubigeo_service.distinctDepartment()
+    filter_ubigeo = {}
+    filter_ubigeo["department"] = headquarter.ubigeos.department
+
+    provinces = ubigeo_service.distinctProvince(filter_ubigeo)
+    filter_ubigeo = {}
+    filter_ubigeo["province"] = headquarter.ubigeos.province
+
+    districts = ubigeo_service.distinctDistrict(filter_ubigeo)
 
     context = {     
         'headquarter': headquarter,
         'ubigeos': ubigeos,
-        'hq_ubigeo': hq_ubigeo
+        'departments' : departments,
+        'provinces' : provinces,
+        'districts' : districts,
     }
     
     return render(request, 'Admin/Headquarters/edit_headquarter.html', context)
@@ -113,8 +124,7 @@ def update_headquarters(request, headquarter_id):
     
     form = HeadquarterForm(request.POST)
     
-    if FormValidator.validateForm(form, request):
-        
+    if FormValidator.validateForm(form, request):        
         return HttpResponseRedirect(reverse('headquarters:select', args=[headquarter_id]))
 
     else:
@@ -132,7 +142,7 @@ def update_headquarters(request, headquarter_id):
         filter_ubigeo["province"] = request.POST['province']
         filter_ubigeo["district"] = request.POST['district']
         ubigeo = ubigeo_service.filter(filter_ubigeo)
-        edit_data['ubigeos'] = ubigeo[0]
+        edit_data["ubigeos"] = ubigeo[0]
 
         headquarter_service.update(headquarter_id, edit_data)
 

@@ -15,13 +15,6 @@ $(document).ready(function() {
             startDate.setHours(startDate.getHours() - 5);
 
             refreshEvents(startDate, endDate, callback);
-        },
-        eventClick: function(calEvent, jsEvent, view) {
-//            TODO: Reserve a Bungalow with current filters
-            var href2 = '{% url "bungalowReservation:index" %}'
-            console.log(href2)
-            console.log(calEvent)
-//            location.href = '{% url "bungalowReservation:index" %}';
         }
     });
 });
@@ -49,7 +42,7 @@ function refreshEvents(start, end, callback){
     }
 
     $.ajax({
-        url : "create/refresh_events", // the endpoint
+        url : "admin_create/refresh_events", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 

@@ -13,6 +13,7 @@ class Activity(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     activity_type= models.ForeignKey(ActivityType, on_delete=models.CASCADE)
     enviroment = models.ForeignKey(Environment, on_delete=models.CASCADE)
+    photo       = models.ImageField(upload_to='activities')
     members = models.ManyToManyField(
         Member,
         through='ActivityRegistration',

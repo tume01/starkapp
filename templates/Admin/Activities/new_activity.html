@@ -45,7 +45,7 @@ Creación de Actividades
 
         <!-- Block v2 -->
         <div class="block-content">
-            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:insert" %}' method="post">
+            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "activities:insert" %}' method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-sm-4">
@@ -123,6 +123,12 @@ Creación de Actividades
                                     </span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label for="photo">Imagen</label>
+                            <input type="file" name="photo" class="form-control" id="photo">
                         </div>
                     </div>
                 </div>

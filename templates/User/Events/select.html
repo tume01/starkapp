@@ -30,82 +30,62 @@ Lista de solicitudes de actividades
         {% endfor %}
     {% endif %}
 </div>
-<div class="content">
-    <div class="block">
-        <div class="block-content">
-            <form class="form-horizontal push-10-t push-10 js-validation-bootstrap" action='{% url "events:signup" event.id %}' method="post">
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="name">Nombre: {{event.name}}</label>
-                        </div>
-                    </div>
+<div class="content content-boxed">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block">
+                <div class="block-content block-content-full">
+                    {{event.name}} - {{event.event_type.name}}
                 </div>
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="attendance">Capacidad: {{event.attendance}}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="price">Precio: S/ {{event.price_member}}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label for="activity_type">Tipo: {{event.event_type.name}}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="environments">Ambiente: {{event.headquarter.name}}</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="start_date">Fecha/Hora Inicio Evento: {{event.start_date|date:"d/m/Y H:i"}}</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-12">
-                    <div class="form-group">
-                        <div class="col-xs-12">
-                            <label for="end_date">Fecha/Hora Fin Evento: {{event.end_date|date:"d/m/Y H:i"}}</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-group">
+                <img src="{{image_url}}{{event.photo}}" class="img-responsive img-event">
+                <div class="block-content">
+                    <div class="row items-push text-center">
                         <div class="col-xs-4">
-                        </div>
-                        <div class="col-xs-2">
-                            <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Inscribirse</button></a>
-                        </div>
-                        <div class="col-xs-2">
-                            <a href="{% url 'events:userEvents_index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                            <div class="push-5"><i class="si si-calendar fa-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Inicio: {{event.start_date|date:"d/m/Y H:i"}}</div>
                         </div>
                         <div class="col-xs-4">
+                            <div class="push-5"><i class="fa fa-money fa-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Precio Miembro :S/.{{event.price_member}}</div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="fa fa-money fa-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Precio Invitado :S/.{{event.price_invited}}</div>
+                        </div>
+                    </div>
+                    <div class="row items-push text-center">
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="si si-calendar fa-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Fin: {{event.end_date|date:"d/m/Y H:i"}}</div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="si si-users si-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Capacidad: {{event.attendance}} personas</div>
+                        </div>
+                        <div class="col-xs-4">
+                            <div class="push-5"><i class="si si-map si-2x"></i></div>
+                            <div class="h5 font-w300 text-muted">Lugar: {{event.headquarter.name}}</div>
                         </div>
                     </div>
                 </div>
+                <form class="" action='{% url "events:signup" event.id %}' method="post">
+                <div class="block-content block-content-full">
+                    <div class="form-group">
+                        <div class="row items-push">
+                            <div class="col-lg-4">
+                                <label>Cantidad de Invitados</label>
+                                <input type="text" name="guests" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-content block-content-full text-center">
+                    {% csrf_token %}
+                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i>Inscribirse</button>
+                        <a href="{% url 'events:userSignup_index' %}"><button class="btn btn-danger" type="button"><i class="fa fa-remove push-5-r"></i>Cancelar</button></a>
+                </div>
+                </form>
             </div>
-        </form>
         </div>
     </div>
 </div>

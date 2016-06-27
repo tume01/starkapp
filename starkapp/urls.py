@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^suspension/', include('suspension.urls')),
     url(r'^$', TemplateView.as_view(template_name="frontend_home.html"), name='home'),
     url(r'^fieldsReservations/',include('reserve_field.urls')),
+    url(r'^checkout/', include('payment_documents.urls')),
 ]
 
 if settings.DEBUG:
