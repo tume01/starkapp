@@ -35,8 +35,9 @@ var MembershipRequestFormValidation = function() {
                 },
                 'num_doc': {
                     required: true,
-                    number: true, 
-                    min: 1,  
+                    number: true,
+                    min: 1,
+                    minlength: 8,
                     remote: {
                         url: url,
                         type: "post",
@@ -163,7 +164,7 @@ var MembershipRequestFormValidation = function() {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
                     min: 'Por favor ingrese un documento válido' ,
-                    remote: 'Este documento ya esta en uso',
+                    remote: 'Este documento ya está en uso',
                     maxlength: 'Por favor ingrese un documento válido'                    
                 },
                 'comments': {
@@ -191,7 +192,7 @@ var MembershipRequestFormValidation = function() {
                 'workPlacePhone':{
                     required:'Por favor ingrese el teléfono del lugar de trabajo',
                     number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener más de 6 digitos'
+                    minlength:'El teléfono deber tener más de 6 digitos'
                 },
                 'maritalStatus':{
                     required:'Por favor ingrese un estado civil',
@@ -200,12 +201,12 @@ var MembershipRequestFormValidation = function() {
                 'cellphoneNumber':{
                     required:'Por favor ingrese un número celular',
                     number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener 9 digitos'
+                    minlength:'El teléfono deber tener 9 digitos'
                 },
                 'phone':{
                     required:'Por favor ingrese un teléfono',
                     number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener más de 6 digitos'
+                    minlength:'El teléfono deber tener más de 6 digitos'
                 },
                 'specialization':{
                     required:'Por favor ingrese una especialización',
@@ -244,10 +245,10 @@ var MembershipRequestFormValidation = function() {
                     required:'Por favor ingrese un distrito'
                 },
                 'photo':{
-                    required: 'Por favor inrese una foto'
+                    required: 'Por favor ingrese una foto'
                 },
                 'address':{
-                    required: 'Por favor inrese una dirección'
+                    required: 'Por favor ingrese una dirección'
                 }                
             }
         });

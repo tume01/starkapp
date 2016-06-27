@@ -38,6 +38,7 @@ var MemberFormValidation = function() {
                     required: true,   
                     number: true, 
                     min: 1,
+                    minlength: 8,
                     remote: {
                         url: url,
                         type: "post",
@@ -170,8 +171,8 @@ var MemberFormValidation = function() {
                 'phone': {
                     required: 'Por favor ingrese un teléfono',   
                     number: 'Por favor ingrese un número válido' ,
-                    minlength:'El telefono deber tener más de 6 dígitos',
-                    min: 'Por favor ingrese un telefono válido'                  
+                    minlength:'El teléfono deber tener más de 6 dígitos',
+                    min: 'Por favor ingrese un teléfono válido'                  
                 },
                 
                 'email': {
@@ -182,7 +183,7 @@ var MemberFormValidation = function() {
                     required: 'Por favor ingrese una fecha inicial'
                 },
                 'finalDate':{
-                    required: 'Por favor ingrese una fech final'
+                    required: 'Por favor ingrese una fecha final'
                 },
                 'birthDepartment':{
                     required:'Por favor ingrese un departamento'
@@ -219,7 +220,7 @@ var MemberFormValidation = function() {
                 'workPlacePhone':{
                     required:'Por favor ingrese el teléfono del lugar de trabajo',
                     number: 'Por favor ingrese un número válido',
-                    minlength:'El telefono deber tener más de 6 dígitos'
+                    minlength:'El teléfono deber tener más de 6 dígitos'
                 },
                 'maritalStatus':{
                     required:'Por favor ingrese un estado civil',
@@ -231,7 +232,7 @@ var MemberFormValidation = function() {
                     minlength:'El número deber tener 9 dígitos'
                 },
                 'photo':{
-                    required: 'Por favor inrese una foto'
+                    required: 'Por favor ingrese una foto'
                 }                
             }
         });
