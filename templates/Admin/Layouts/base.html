@@ -272,7 +272,10 @@
                                     <a href="{% url 'bungalowReservation:admin_create_index'%}">Reservar Bungalow</a>
                                 </li>
                                 <li>
-                                    <a href="Make_Sorteo.html">Sorteo de bungalows</a>
+                                    <a href="{% url 'bungalowRaffle:admin_index'%}">Sorteo de bungalows</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'bungalowRaffle:admin_create_index'%}">Crear Sorteo de bungalow</a>
                                 </li>
                                 <li>
                                     <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
