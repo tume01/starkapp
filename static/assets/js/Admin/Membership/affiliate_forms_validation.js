@@ -168,7 +168,11 @@ var AffiliateFormValidation = function() {
                     minlength:'El teléfono deber tener más de 6 digitos',
                     min: 'Por favor ingrese un teléfono válido'                  
                 },
-                
+                'cellphoneNumber':{
+                    required:'Por favor ingrese un celular',
+                    number: 'Por favor ingrese un número válido',
+                    minlength: 'El teléfono deber tener más de 8 digitos'
+                },                
                 'email': {
                     required:'Por favor ingrese un email',
                     email:'Por favor ingrese un email válido'                
