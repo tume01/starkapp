@@ -466,7 +466,6 @@ Nueva solicitud de membresía
                                                 <label class="col-xs-6" for="example-select">Departamento*</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthDepartment" name="sbirthDepartment" size="1">
-                                                            <option value="">Seleccione</option>
                                                             {% for u in ubigeo%}
                                                                 <option value="{{u.department}}">{{u.department}}</option>
                                                             {% endfor %}
@@ -479,7 +478,6 @@ Nueva solicitud de membresía
                                                 <label class="col-xs-6" for="example-select">Provincia*</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthProvince" name="sbirthProvince" size="1">
-                                                            <option value="">Seleccione</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -489,7 +487,6 @@ Nueva solicitud de membresía
                                                 <label class="col-xs-6" for="example-select">Distrito*</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="sbirthDistrict" name="sbirthDistrict" size="1">
-                                                       <option value="">Seleccione</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -729,9 +726,90 @@ var url= "{% url "membership_application:verify_document_number" %}"
             });
         }
         });
+
+        $('#sbirthDepartment').change(function(){
+        var birthDepartment = $('#sbirthDepartment :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:provincias" %}',
+                data:{department:birthDepartment, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#sbirthProvince').empty();
+                    //$('#birthProvince').append($('<option>', { text : 'Seleccione', value : ''}));
+                    //$('#birthDistrict').empty();
+                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#sbirthProvince').append($('<option>', {
+                                text : item.province,
+                                selected : true
+                            }));
+                            $.ajax({
+                                type:'post',
+                                url:'{% url "ubigeo:distritos" %}',
+                                data:{province:item.province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                cache:false,
+                                success: function(returndata){
+                                    $('#birthDistrict').empty();
+                                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                                    $.each(returndata, function(i, item) {
+                                        if(i==0){
+                                            $('#sbirthDistrict').append($('<option>', {
+                                                text : item.district,
+                                                selected : true
+                                            }));
+                                        }else{
+                                            $('#sbirthDistrict').append($('<option>', {
+                                                text : item.district
+                                            }));
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            $('#sbirthProvince').append($('<option>', {
+                                text : item.province
+                            }));
+                        }
+                    });
+                }
+            });
+            
+        }
+        });
+
+
+        $('#sbirthProvince').change(function(){
+        var birthProvince = $('#sbirthProvince :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:distritos" %}',
+                data:{province:birthProvince, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#sbirthDistrict').empty();
+                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#sbirthDistrict').append($('<option>', {
+                                text : item.district,
+                                selected : true
+                            }));
+                        }else{
+                            $('#sbirthDistrict').append($('<option>', {
+                                text : item.district
+                            }));
+                        }
+                    });
+                }
+            });
+        }
+        });
         
         var e = document.getElementById("department");
-
         $.ajax({
             type:'post',
             url:'{% url "ubigeo:provincias" %}',
@@ -780,7 +858,6 @@ var url= "{% url "membership_application:verify_document_number" %}"
         });
 
         var e2= document.getElementById("birthDepartment");
-
         $.ajax({
             type:'post',
             url:'{% url "ubigeo:provincias" %}',
@@ -788,9 +865,6 @@ var url= "{% url "membership_application:verify_document_number" %}"
             cache:false,
             success: function(returndata){ 
                 $('#birthProvince').empty();
-                //$('#province').append($('<option>', { text : 'Seleccione', value : ''}));
-                //$('#district').empty();
-                //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
                 $.each(returndata, function(i, item) {
                     if(i==0){
                         $('#birthProvince').append($('<option>', { 
@@ -804,7 +878,6 @@ var url= "{% url "membership_application:verify_document_number" %}"
                             cache:false,
                             success: function(returndata){ 
                                 $('#birthDistrict').empty();
-                                //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
                                 $.each(returndata, function(i, item) {
                                     if(i==0){
                                         $('#birthDistrict').append($('<option>', { 
@@ -828,7 +901,51 @@ var url= "{% url "membership_application:verify_document_number" %}"
             }
         });
 
-        //$('#department').selectedIndex = "1";
+        var e3= document.getElementById("sbirthDepartment");
+        $.ajax({
+            type:'post',
+            url:'{% url "ubigeo:provincias" %}',
+            data:{department:e3.options[e3.selectedIndex].text, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            cache:false,
+            success: function(returndata){ 
+                $('#sbirthProvince').empty();
+                $.each(returndata, function(i, item) {
+                    if(i==0){
+                        $('#sbirthProvince').append($('<option>', { 
+                            text : item.province ,
+                            selected : true
+                        }));
+                        $.ajax({
+                            type:'post',
+                            url:'{% url "ubigeo:distritos" %}',
+                            data:{province:item.province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                            cache:false,
+                            success: function(returndata){ 
+                                $('#sbirthDistrict').empty();
+                                $.each(returndata, function(i, item) {
+                                    if(i==0){
+                                        $('#sbirthDistrict').append($('<option>', { 
+                                            text : item.district ,
+                                            selected : true
+                                        }));
+                                    }else{
+                                        $('#sbirthDistrict').append($('<option>', { 
+                                            text : item.district 
+                                        }));
+                                    }
+                                });
+                            }
+                        });
+                    }else{
+                        $('#sbirthProvince').append($('<option>', { 
+                            text : item.province 
+                        }));
+                    }
+                });
+            }
+        });
+
+
     });
 
 </script>
