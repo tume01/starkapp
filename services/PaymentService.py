@@ -175,15 +175,24 @@ class PaymentService(object):
 
 
     @classmethod
-    def getProductDiscount(cls, product, membership_type):
-        if product.product_type == 3:
-            event = EventsService.get(product.product_id)
+    def getEventDiscount(cls, event, membership_type):
+        
+        discounts =  event.eventpromotion_set.filter(membership_type=membership_type)
 
-            return event.member
-        elif product.product_type == 2:
-            pass
-        elif product.product_type == 1:
-            pass        
+        if discounts:
+            return discounts.aggregate(Sum('percentage'))['percentage__sum']
+
+        return 0
+
+    @classmethod
+    def getMembershipDiscount(cls, membership_type):
+        
+        discounts =  membership_type.membershippromotion_set.all()
+
+        if discounts:
+            return discounts.aggregate(Sum('percentage'))['percentage__sum']
+            
+        return 0
 
     @classmethod
     def createEventProduct(cls, member, guests, event):
@@ -217,7 +226,7 @@ class PaymentService(object):
             'product_type': 3,
             'product_id': event.pk,
             'member': member,
-            'discount': 0,
+            'discount': cls.getEventDiscount(event, member.membership.membership_type)*event.price_member,
             'total': event.price_member,
             'unit_price': event.price_member,
         }
@@ -233,7 +242,7 @@ class PaymentService(object):
             'product_type': 2,
             'product_id': membership.pk,
             'member': member,
-            'discount': 0,
+            'discount': cls.getMembershipDiscount(membership.membership_type)*membership.membership_type.price,
             'total': membership.membership_type.price,
             'unit_price': membership.membership_type.price,
         }
