@@ -138,7 +138,7 @@ def create_affiliate(request):
 
         return render(request, 'User/Affiliates/index_affiliates.html', context)
 
-    form = AffiliateForm(request.POST)
+    form = AffiliateForm(request.POST, request.FILES)
 
     ubigeo_service = UbigeoService()
 
@@ -379,7 +379,7 @@ def edit_affiliate(request):
 
         return render(request, 'User/Affiliates/index_affiliates.html', context)
 
-    form = AffiliateForm(request.POST)
+    form = AffiliateForm(request.POST, request.FILES)
 
     ubigeo_service = UbigeoService()
 
@@ -663,7 +663,7 @@ def admin_create_affiliate(request):
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
 
-    form = AffiliateForm(request.POST)
+    form = AffiliateForm(request.POST, request.FILES)
 
     ubigeo_service = UbigeoService()
 
@@ -917,7 +917,7 @@ def admin_edit_affiliate(request):
 
         return render(request, 'Admin/Affiliates/index_affiliates.html', context)
 
-    form = AffiliateForm(request.POST)
+    form = AffiliateForm(request.POST, request.FILES)
 
     ubigeo_service = UbigeoService()
 
