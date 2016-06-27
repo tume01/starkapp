@@ -63,7 +63,7 @@ function getFilters() {
 
 function reloadTable(requestData){
     $.ajax({
-        url : "post", // the endpoint
+        url : "admin_post$", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 

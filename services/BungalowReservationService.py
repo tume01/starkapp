@@ -79,6 +79,7 @@ class BungalowReservationService(object):
         # Compose the url (Worst Approach EVER!)
         url = "admin_" if admin else ""
         url += "create/reserve/?bungalow_id={}&date={}";
+        print("URL >>> ", url, admin)
 
         returnValue = []
         for n in range(len(bungalowDay)):

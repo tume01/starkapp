@@ -32,7 +32,8 @@ class MembersService(object):
     def getMemberByUserId(self, userId):
         filter_data = {}
         filter_data['user_id'] = userId
-        return self.__member_repository.filter(filter_data)[0]
+        members = self.__member_repository.filter(filter_data)
+        return members[0] if members else None
 
     def getUserEvents(self, user):
 

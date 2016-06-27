@@ -21,38 +21,6 @@ import json
 
 
 @require_http_methods(['POST'])
-def refresh_table(request):
-    # bungalow_type_id = int(request.POST['bungalow_type_id'])
-    headquarter_id = int(request.POST['headquarter_id'])
-    status = int(request.POST['status'])
-
-    page = 1
-    if 'page' in request.POST:
-        page = int(request.POST['page'])
-
-    reservations = BungalowReservationService.getReservations()
-    print([r.bungalow_id for r in reservations])
-    if (status != -1):
-        print("Filter by Status")
-        reservations = reservations.filter(status=status)
-
-    if (headquarter_id != -1):
-        print("Filter by Headquarter_ID")
-        headquarter_name = HeadquarterService().findHeadquarter(headquarter_id).name
-        reservations = [reservation for reservation in reservations if
-                        reservation.bungalow_headquarter_name == headquarter_name]
-
-    paginator = Paginator(reservations, 10)
-    paginated_reservations = paginator.page(page)
-
-    context = {
-        'reservations': paginated_reservations,
-    }
-
-    return render_to_response('Admin/bungalowReservation/index_table.html', context)
-
-
-@require_http_methods(['POST'])
 def check_in(request):
     reservation_id = request.POST['reservation_id']
 
@@ -110,6 +78,11 @@ def cancel(request):
 def admin_index(request):
     reservations = BungalowReservationService.getReservations()
 
+    member = MembersService().getMemberByUserId(request.user)
+    if (member):
+        print("Filter by Member")
+        reservations = reservations.filter(member_id=member.id)
+
     paginator = Paginator(reservations, 10)
     page = request.GET.get('page')
 
@@ -131,6 +104,42 @@ def admin_index(request):
     }
 
     return render(request, 'Admin/bungalowReservation/index.html', context)
+
+
+@require_http_methods(['POST'])
+def admin_refresh_table(request):
+    # bungalow_type_id = int(request.POST['bungalow_type_id'])
+    headquarter_id = int(request.POST['headquarter_id'])
+    status = int(request.POST['status'])
+
+    page = 1
+    if 'page' in request.POST:
+        page = int(request.POST['page'])
+
+    reservations = BungalowReservationService.getReservations()
+    member = MembersService().getMemberByUserId(request.user)
+    if (member):
+        print("Filter by Member")
+        reservations = reservations.filter(member_id=member.id)
+
+    if (status != -1):
+        print("Filter by Status")
+        reservations = reservations.filter(status=status)
+
+    if (headquarter_id != -1):
+        print("Filter by Headquarter_ID")
+        headquarter_name = HeadquarterService().findHeadquarter(headquarter_id).name
+        reservations = [reservation for reservation in reservations if
+                        reservation.bungalow_headquarter_name == headquarter_name]
+
+    paginator = Paginator(reservations, 10)
+    paginated_reservations = paginator.page(page)
+
+    context = {
+        'reservations': paginated_reservations,
+    }
+
+    return render_to_response('Admin/bungalowReservation/index_table.html', context)
 
 
 @require_http_methods(['GET'])
@@ -208,6 +217,11 @@ def admin_create_reserve(request):
 def user_index(request):
     reservations = BungalowReservationService.getReservations()
 
+    member = MembersService().getMemberByUserId(request.user)
+    if (member):
+        print("Filter by Member")
+        reservations = reservations.filter(member_id=member.id)
+
     paginator = Paginator(reservations, 10)
     page = request.GET.get('page')
 
@@ -239,6 +253,42 @@ def user_create_index(request):
         'titulo': 'titulo'
     }
     return render(request, 'User/bungalowReservation/reserve_bungalow.html', context)
+
+
+@require_http_methods(['POST'])
+def user_refresh_table(request):
+    # bungalow_type_id = int(request.POST['bungalow_type_id'])
+    headquarter_id = int(request.POST['headquarter_id'])
+    status = int(request.POST['status'])
+
+    page = 1
+    if 'page' in request.POST:
+        page = int(request.POST['page'])
+
+    reservations = BungalowReservationService.getReservations()
+    member = MembersService().getMemberByUserId(request.user)
+    if (member):
+        print("Filter by Member")
+        reservations = reservations.filter(member_id=member.id)
+
+    if (status != -1):
+        print("Filter by Status")
+        reservations = reservations.filter(status=status)
+
+    if (headquarter_id != -1):
+        print("Filter by Headquarter_ID")
+        headquarter_name = HeadquarterService().findHeadquarter(headquarter_id).name
+        reservations = [reservation for reservation in reservations if
+                        reservation.bungalow_headquarter_name == headquarter_name]
+
+    paginator = Paginator(reservations, 10)
+    paginated_reservations = paginator.page(page)
+
+    context = {
+        'reservations': paginated_reservations,
+    }
+
+    return render_to_response('Admin/bungalowReservation/index_table.html', context)
 
 
 @require_http_methods(['POST'])

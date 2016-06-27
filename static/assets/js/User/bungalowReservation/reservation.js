@@ -42,7 +42,7 @@ function refreshEvents(start, end, callback){
     }
 
     $.ajax({
-        url : "user_create/refresh_events", // the endpoint
+        url : "create/refresh_events", // the endpoint
         type : "POST", // http method
         data : requestData, // data sent with the post request
 
