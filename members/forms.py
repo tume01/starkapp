@@ -3,6 +3,7 @@ from django.core.validators import RegexValidator
 from django.core.validators import EmailValidator
 from datetime import datetime
 from datetime import date
+from django.core.files.images import get_image_dimensions
 
 
 class MemberForm(forms.Form):
@@ -18,12 +19,24 @@ class MemberForm(forms.Form):
     workPlace = forms.CharField(max_length=200, required=False, error_messages={'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
     workPlaceJob = forms.CharField(max_length=200, required=False, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
     workPlacePhone = forms.IntegerField(required=False)
+    photo = forms.ImageField(required=False)
     nationality = forms.CharField(max_length=20, error_messages={'required': 'El campo Nacionalidad es requerido', 'max_length': 'El campo Nacionalidad no debe superar los 20 caracteres'})
     maritalStatus = forms.CharField(max_length=20, error_messages={'required': 'El campo Estado civil es requerido', 'max_length': 'El campo Estado civil no debe superar los 20 caracteres'})
     cellphoneNumber = forms.IntegerField(error_messages={'required': 'El campo Teléfono Celular es requerido'})
     specialization = forms.CharField(max_length=200, error_messages={'max_length': 'El campo Especialización no debe superar los 200 caracteres'})
     birthDate = forms.DateField(error_messages={'required': 'El campo Fecha de nacimiento es requerido'},input_formats=['%d/%m/%Y'])
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
+
+    def clean_photo(self):
+        data = self.cleaned_data["photo"]
+        if data == None:
+            return data
+        w, h = get_image_dimensions(data)
+        if w != 200:
+            raise forms.ValidationError("Error en el ancho de la imagen")
+        if h != 200:
+            raise forms.ValidationError("Error en la alutra de la imgen")
+        return data
 
     def clean_birthDate(self):
         data = self.cleaned_data['birthDate']

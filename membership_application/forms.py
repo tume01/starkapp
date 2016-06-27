@@ -4,6 +4,7 @@ from django.core.validators import RegexValidator
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MemberService import MembersService
 from services.AffiliateService import AffiliateService
+from django.core.files.images import get_image_dimensions
 
 class MembershipApplicationForm(forms.Form):
     alphabetic = RegexValidator(r'^[a-zA-Z]*$', 'Only alphabetic characters are allowed.')
@@ -31,6 +32,7 @@ class MembershipApplicationForm(forms.Form):
     birthPlace = forms.CharField(max_length=200, error_messages={'required': 'El campo Lugar de nacimiento es requerido', 'max_length': 'El campo Lugar de nacimiento no debe superar los 200 caracteres'})
     email = forms.CharField(max_length=200, error_messages={'required': 'El campo Correo es requerido', 'max_length': 'El campo Correo no debe superar los 200 caracteres'})
     phone = forms.IntegerField(error_messages={'required': 'El campo Numero de telefono es requerido'})
+    photo = forms.ImageField(required=False)
 
     snum_doc = forms.IntegerField( required=False)
     sbirthDate = forms.DateField( required=False, input_formats=['%d/%m/%Y'])
@@ -44,6 +46,28 @@ class MembershipApplicationForm(forms.Form):
     sworkPlaceJob = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
     semail = forms.CharField(max_length=200, required=False,error_messages={'max_length': 'El campo Correo no debe superar los 200 caracteres'})
     sphoto = forms.ImageField(required=False)
+
+    def clean_photo(self):
+        data = self.cleaned_data["photo"]
+        if data == None:
+            return data
+        w, h = get_image_dimensions(data)
+        if w != 200:
+            raise forms.ValidationError("Error en el ancho de la imagen")
+        if h != 200:
+            raise forms.ValidationError("Error en la alutra de la imgen")
+        return data
+
+    def clean_sphoto(self):
+        data = self.cleaned_data["sphoto"]
+        if data == None:
+            return data
+        w, h = get_image_dimensions(data)
+        if w != 300:
+            raise forms.ValidationError("Error en el ancho de la imagen del conyuge")
+        if h != 300:
+            raise forms.ValidationError("Error en la alutra de la imgen del conyuge")
+        return data
 
     def clean_birthDate(self):
         data = self.cleaned_data['birthDate']
