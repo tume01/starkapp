@@ -497,10 +497,6 @@ def membership_edit_index(request):
 
     membership = member.membership
 
-    membership.initialDate = datetime.strftime(membership.initialDate, '%d/%m/%Y')
-
-    membership.finalDate = datetime.strftime(membership.finalDate, '%d/%m/%Y')
-
     membership_type_service = MembershipTypeService()
 
     types = membership_type_service.getMembershipTypes()
@@ -518,9 +514,6 @@ def membership_edit_index(request):
         'types' : types,
         'monthsToAdd' : monthsToAdd
     }
-
-    print(membership.initialDate)
-    print(membership.finalDate)
 
     return render(request, 'Admin/Membership/edit_membership.html', context)
 
@@ -541,10 +534,6 @@ def membership_edit(request):
         membership_type_service = MembershipTypeService()
 
         membership = membership_service.getMembership(id_edit)
-
-        membership.initialDate = datetime.strftime(membership.initialDate, '%d/%m/%Y')
-
-        membership.finalDate = datetime.strftime(membership.finalDate, '%d/%m/%Y')
         
         types = membership_type_service.getMembershipTypes()
 
