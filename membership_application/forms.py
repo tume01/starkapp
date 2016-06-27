@@ -45,6 +45,12 @@ class MembershipApplicationForm(forms.Form):
     semail = forms.CharField(max_length=200, required=False,error_messages={'max_length': 'El campo Correo no debe superar los 200 caracteres'})
     sphoto = forms.ImageField(required=False)
 
+    def clean_birthDate(self):
+        data = self.cleaned_data['birthDate']
+        if (data > datetime.now().date()):
+            raise forms.ValidationError("La fecha de nacimiento no puede ser mayor a la de hoy")
+        return data
+
     def clean_dni(self):
         data = self.cleaned_data['num_doc']
         if (data < 9999999):

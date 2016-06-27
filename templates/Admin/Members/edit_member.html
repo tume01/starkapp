@@ -62,7 +62,7 @@ Editar miembro
                                 </div>
                             </div>
                              <div class="row">
-                                    <div class="col-lg-3" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group" style="display: none;">
                                             <div class="col-md-12">
                                                <div class="input-group">
@@ -78,26 +78,26 @@ Editar miembro
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-number-input">Nombres</label>
-                                            <div class="col-md-12">
+                                        <label class="col-xs-8" for="example-number-input">Nombres</label>
+                                            <div class="col-lg-12">
                                                <div class="input-group">
                                                     <input class="form-control" id="example-input1-group1" name="name" placeholder="Nombres" value="{{member.name}}"  type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Apellido paterno</label>
-                                            <div class="col-sm-9">
+                                            <label class="col-xs-8" for="example-number-input">Apellido paterno</label>
+                                            <div class="col-sm-8">
                                                 <input class="form-control" id="example-input2-group1" name="paternalLastName" placeholder="Apellido paterno" value="{{member.paternalLastName}}" type="text">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input">Apellido materno</label>
-                                            <div class="col-sm-9">
+                                            <label class="col-xs-8" for="example-number-input">Apellido materno</label>
+                                            <div class="col-sm-8">
                                                 <input class="form-control" id="example-input6-group1" name="maternalLastName" placeholder="Apellido materno" value="{{member.maternalLastName}}" type="text">
                                             </div>
                                         </div>
@@ -174,8 +174,7 @@ Editar miembro
                                     <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Estado Civil</label>
-                                            <div class="col-sm-12">
-                                               <div class="col-sm-12">
+                                               <div class="col-sm-8">
                                                <select class="form-control" id="example-input1-group1" name="maritalStatus" size="1">       
                                                         {% if member.maritalStatus == "Casado/a" %}
                                                             <option selected value="Casado/a">Casado/a</option>
@@ -203,7 +202,6 @@ Editar miembro
                                                             {% endif %}
                                                         {% endif %}
                                                 </select>
-                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -287,7 +285,7 @@ Editar miembro
                                                 <label class="col-xs-6" for="example-select">Provincia</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthProvince" name="birthProvince" size="1">
-                                                            {% for u in provincesBirth%}
+                                                            {% for u in birthprovinces%}
                                                                 {% if u.province == member.birthUbigeo.province %}
                                                                     <option selected value="{{u.province}}">{{u.province}}</option>
                                                                 {% else %}
@@ -303,7 +301,7 @@ Editar miembro
                                                 <label class="col-xs-6" for="example-select">Distrito</label>
                                                 <div class="col-sm-8">
                                                     <select class="form-control" id="birthDistrict" name="birthDistrict" size="1">
-                                                       {% for u in districtsBirth%}
+                                                       {% for u in birthdistricts%}
                                                             {% if u.district == member.birthUbigeo.district %}
                                                                 <option selected value="{{u.district}}">{{u.district}}</option>
                                                             {% else %}

@@ -468,9 +468,9 @@ def membership_edit_index(request):
 
     membership = member.membership
 
-    membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+    membership.initialDate = datetime.strftime(membership.initialDate, '%d/%m/%Y')
 
-    membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+    membership.finalDate = datetime.strftime(membership.finalDate, '%d/%m/%Y')
 
     membership_type_service = MembershipTypeService()
 
@@ -501,9 +501,9 @@ def membership_edit(request):
 
         membership = membership_service.getMembership(id_edit)
 
-        membership.initialDate = datetime.strftime(membership.initialDate, '%m/%d/%Y')
+        membership.initialDate = datetime.strftime(membership.initialDate, '%d/%m/%Y')
 
-        membership.finalDate = datetime.strftime(membership.finalDate, '%m/%d/%Y')
+        membership.finalDate = datetime.strftime(membership.finalDate, '%d/%m/%Y')
         
         types = membership_type_service.getMembershipTypes()
 
