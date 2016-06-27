@@ -105,7 +105,7 @@ var AffiliateFormValidation = function() {
                     maxlength:20  
                 },                
                 'specialization':{
-                    required:true,
+                    required:false,
                     maxlength:200  
                 },
                 'birthDate' : {
@@ -187,8 +187,7 @@ var AffiliateFormValidation = function() {
                     required:'Por favor ingrese un distrito'
                 },
                 'specialization':{
-                    required:'Por favor ingrese una especialización',
-                    maxlength:'La especialización debe tener máximo 200 caracteres'  
+                    maxlength:'La especialización debe tener máximo 200 caracteres'
                 },
                 'birthDate' : {
                     required: 'Por favor ingrese la fecha de nacimiento'
