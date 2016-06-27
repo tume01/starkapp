@@ -1,6 +1,6 @@
 from repositories import EventsRepository
 from datetime import datetime,date,timedelta
-
+from .PoliticsService import PoliticsService
 class EventsService(object):
 
     """docstring for BungalowsService"""
@@ -40,8 +40,10 @@ class EventsService(object):
 
     def removeUserRegistration(self, event_id, member_id):
         event = self.getEvent(event_id)
+        politics_service = PoliticsService()
+        MAX_DAYS_DELETE_EVENT = politics_service.filter({'name':'MAX_DAYS_DELETE_EVENT'}).first().value
 
-        week_before = date.today() - timedelta(days=7)
+        week_before = date.today() - timedelta(days=MAX_DAYS_DELETE_EVENT)
       
         return event.eventregistration_set.filter(member_id=member_id, registered_at__gte=week_before).update(deleted_at=datetime.now())
 
