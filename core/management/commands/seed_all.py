@@ -42,3 +42,4 @@ class Command(BaseCommand):
         insertEventType()
         insertActivity()
         insertPolitic() 
+        

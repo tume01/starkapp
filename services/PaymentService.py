@@ -10,6 +10,7 @@ from services.BungalowReservationService import BungalowReservationService
 from itertools import chain
 from adapters.DateManager import DateManager
 from services.FineService import FineService
+from django.db.models import Sum
 
 class PaymentService(object):
 
@@ -177,10 +178,10 @@ class PaymentService(object):
     @classmethod
     def getEventDiscount(cls, event, membership_type):
         
-        discounts =  event.eventpromotion_set.filter(membership_type=membership_type)
+        discounts =  event.event_type.eventpromotion_set.filter(membership_type=membership_type)
 
         if discounts:
-            return discounts.aggregate(Sum('percentage'))['percentage__sum']
+            return discounts.aggregate(Sum('percentage'))['percentage__sum'] / 100
 
         return 0
 
@@ -190,7 +191,7 @@ class PaymentService(object):
         discounts =  membership_type.membershippromotion_set.all()
 
         if discounts:
-            return discounts.aggregate(Sum('percentage'))['percentage__sum']
+            return discounts.aggregate(Sum('percentage'))['percentage__sum'] / 100
             
         return 0
 
