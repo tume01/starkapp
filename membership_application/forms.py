@@ -45,6 +45,7 @@ class MembershipApplicationForm(forms.Form):
     sworkPlace = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Centro de trabajo no debe superar los 200 caracteres'})
     sworkPlaceJob = forms.CharField(max_length=200,required=False, error_messages={'max_length': 'El campo Puesto de trabajo no debe superar los 200 caracteres'})
     semail = forms.CharField(max_length=200, required=False,error_messages={'max_length': 'El campo Correo no debe superar los 200 caracteres'})
+    scellPhoneNumber = forms.IntegerField(required=False)
     sphoto = forms.ImageField(required=False)
 
     def clean_photo(self):
