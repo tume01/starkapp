@@ -103,11 +103,7 @@ var AffiliateFormValidation = function() {
                 },
                 'birthDate' : {
                     required: true,
-<<<<<<< HEAD
-                    domain: true
-=======
                     domain:true
->>>>>>> refs/remotes/origin/TeamOlcese
                 },
                 'birthPlace': {
                     required: true,
@@ -142,7 +138,7 @@ var AffiliateFormValidation = function() {
                 'num_doc': {
                     required: 'Por favor ingrese un número de documento' ,
                     number: 'Por favor ingrese un documento válido' ,
-                    remote: 'Este documento ya esta en uso',
+                    remote: 'Este documento ya está en uso',
                     min: 'Por favor ingrese un documento válido' ,    
                     maxlength: 'Por favor ingrese un documento válido'             
                 },              
@@ -162,8 +158,8 @@ var AffiliateFormValidation = function() {
                 'phone': {
                     required: 'Por favor ingrese un teléfono',   
                     number: 'Por favor ingrese un número válido' ,
-                    minlength:'El telefono deber tener más de 6 digitos',
-                    min: 'Por favor ingrese un telefono válido'                  
+                    minlength:'El teléfono deber tener más de 6 digitos',
+                    min: 'Por favor ingrese un teléfono válido'                  
                 },
                 
                 'email': {
@@ -199,7 +195,7 @@ var AffiliateFormValidation = function() {
                     maxlength:'El estado civil debe tener máximo 200 caracteres'  
                 },
                 'photo':{
-                    required: 'Por favor inrese una foto'
+                    required: 'Por favor ingrese una foto'
                 }                
             }
         });
