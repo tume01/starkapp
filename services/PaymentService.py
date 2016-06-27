@@ -165,13 +165,25 @@ class PaymentService(object):
         if cls.__invoice_repository.create(insert_data):
             if products.first().product_type == 3:
                 cls.registerEvent(member, products)
+            elif product_type == 2:
+                cls.registerMembership(member, products)
+            elif product_type == 1:
+                cls.registerFine(member, products)
+
             return products.update(status=1)
         return False
 
 
     @classmethod
     def getProductDiscount(cls, product, membership_type):
-        pass        
+        if product.product_type == 3:
+            event = EventsService.get(product.product_id)
+
+            return event.member
+        elif product.product_type == 2:
+            pass
+        elif product.product_type == 1:
+            pass        
 
     @classmethod
     def createEventProduct(cls, member, guests, event):
