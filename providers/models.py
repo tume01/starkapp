@@ -2,6 +2,10 @@ from django.db import models
 from django.forms import ModelChoiceField
 
 # Create your models here.
+class ProviderType(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField(max_length=200)
+
 class Provider(models.Model):    
     #ambiente = models.ForeignKey("Ambiente", on_delete=models.CASCADE)
 
@@ -24,3 +28,6 @@ class Provider(models.Model):
     email= models.EmailField()    
     contactName = models.CharField(null=False, blank=False,max_length=120)
     contactPhone = models.BigIntegerField(null=False, blank=False)
+
+    provider_type = models.ForeignKey(ProviderType, on_delete=models.CASCADE)
+    vigencyDate = models.DateField(auto_now=False, auto_now_add=False)
