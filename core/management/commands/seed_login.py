@@ -2100,22 +2100,22 @@ class Command(BaseCommand):
              #                                  finalDate=datetime.now() - timedelta(1), status=0)
         #mApplication6.save()
 
-        user1 = User.objects.create_user(username=12345678, email='jose.gil@pucp.pe', password='1111',first_name='Walter', last_name='Segama')
+        user1 = User.objects.create_user(username=12345678, email='alvaro.santacruz@pucp.pe', password='1111',first_name='Walter', last_name='Segama')
         usuarios.user_set.add(user1)
 
         memb1 = Member(membership=mship1, identity_document_type=doc1, ubigeo=u100, user=user1, name='Walter',
                        paternalLastName='Segama', maternalLastName='Candiotti', document_number=12345678, phone=2394756,
-                       email='jose.gil@pucp.pe', address='Av.Universitaria.2036',photo='membership_application/walter_segama.jpg',gender=0,
+                       email='alvaro.santacruz@pucp.pe', address='Av.Universitaria.2036',photo='membership_application/walter_segama.jpg',gender=0,
                        nationality='Peruana',maritalStatus='Soltero/a',cellphoneNumber=987654321,birthDate=datetime.now() - timedelta(20),birthPlace=datetime.now() - timedelta(20),
                        birthUbigeo=u2,state=1)
         memb1.save()
 
-        user2 = User.objects.create_user(username=98765432, email='jose.gil@pucp.pe', password='1111', first_name='Marco', last_name='Sobrevilla')
+        user2 = User.objects.create_user(username=98765432, email='alvaro.santacruz@pucp.pe', password='1111', first_name='Marco', last_name='Sobrevilla')
         usuarios.user_set.add(user2)
 
         memb2 = Member(membership=mship1, identity_document_type=doc1, ubigeo=u100, user=user2, name='Marco',
                        paternalLastName='Sobrevilla', maternalLastName='Cabezudo', document_number=98765432, phone=2394756,
-                       email='jose.gil@pucp.pe', address='Av.Universitaria.2036',photo='membership_application/marco_sobrevilla.jpg',gender=0,
+                       email='alvaro.santacruz@pucp.pe', address='Av.Universitaria.2036',photo='membership_application/marco_sobrevilla.jpg',gender=0,
                        nationality='Peruana',maritalStatus='Soltero/a',cellphoneNumber=987654321,birthDate=datetime.now() - timedelta(20),birthPlace=datetime.now() - timedelta(20),
                        birthUbigeo=u2,state=1)
         memb2.save()

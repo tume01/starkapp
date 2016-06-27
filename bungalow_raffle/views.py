@@ -89,8 +89,9 @@ def admin_create(request):
 
     email = EmailMessage('Sorteo de Bungalow' ,
                              'Hola ' + member.name + ',\n\nHas sido seleccionado por sorteo y has ganado la estadia en el bungalow'+
-                         bungalow.number + ' en la sede ' + bungalow.headquarter.name + '.',
+                         str(bungalow.number) + ' en la sede ' + bungalow.headquarter.name + '.',
                              to=[member.email])
+    print(member.email)
 
     email.send()
     return HttpResponseRedirect(reverse('bungalowRaffle:admin_index'))
