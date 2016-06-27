@@ -40,7 +40,6 @@ var ProviderFormValidation = function() {
                     console.log('ola');
                     console.log($("#payment").val());
                      if($("#payment:checked").val() == 'invoice'){
-                        console.log('validar')
                          return true;                
                      }
                      else
@@ -52,7 +51,6 @@ var ProviderFormValidation = function() {
                 'ruc':{
                   required: function (element) {
                      if($("#payment:checked").val() == 'invoice'){
-                         console.log('validar')
                          return true;                
                      }
                      else
@@ -64,7 +62,6 @@ var ProviderFormValidation = function() {
                 'address':{
                   required: function (element) {
                      if($("#payment:checked").val() == 'invoice'){
-                         console.log('validar')
                          return true;                
                      }
                      else
