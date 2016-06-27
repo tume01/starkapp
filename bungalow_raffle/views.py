@@ -1,25 +1,15 @@
-from django.template import loader
+
 from django.shortcuts import render, render_to_response
-from django.http import HttpResponse
+from django.core.mail import EmailMessage
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-from services.BungalowReservationService import BungalowReservationService
-
 from services.BungalowTypeService import BungalowTypeService
 from services.HeadquarterService import HeadquarterService
-from services.MemberService import MembersService
 from services.BungalowRaffleService import BungalowRaffleService
 from services.BungalowService import BungalowService
-from services.Bungalow_serviceService import Bungalow_serviceService
-
-from bungalow_reservation.models import BungalowReservation
 import datetime
-from django.http import JsonResponse
-import json
-from services.PaymentService import PaymentService
 
 
 # Create your views here.
@@ -96,6 +86,13 @@ def admin_create(request):
     member = getRandomMember()
     arrival_date = datetime.datetime.strptime(request.POST['arrival_date'], '%d/%m/%Y')
     create_new_raffle(bungalow, member, arrival_date)
+
+    email = EmailMessage('Sorteo de Bungalow' ,
+                             'Hola ' + member.name + ',\n\nHas sido seleccionado por sorteo y has ganado la estadia en el bungalow'+
+                         bungalow.number + ' en la sede ' + bungalow.headquarter.name + '.',
+                             to=[member.email])
+
+    email.send()
     return HttpResponseRedirect(reverse('bungalowRaffle:admin_index'))
 
 

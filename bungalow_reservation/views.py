@@ -1,5 +1,4 @@
 from django.db.models import Sum, Count
-from django.template import loader
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
