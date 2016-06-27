@@ -872,9 +872,33 @@ def approve_membership_application(request):
 @require_http_methods(['POST'])
 def verify_document_number(request):
 
-    username = request.POST['name']
+    member_application_service = Membership_ApplicationService()
 
-    if User.objects.filter(username=username).exists():
+    member_service = MembersService()
+
+    affiliate_service = AffiliateService()
+
+    filter_data = {}
+
+    filter_data["document_number"] = request.POST['name']
+
+    filter_data["status"] = 1
+
+    filter_data2 = {}
+
+    filter_data2["document_number"] = request.POST['name']
+
+    filter_data2["state"] = 1
+
+    if( member_service.filter(filter_data2)):
+
+        return  HttpResponse("false")
+
+    if( member_application_service.filter(filter_data)):
+
+        return  HttpResponse("false")
+
+    if( affiliate_service.filter(filter_data2)):
 
         return  HttpResponse("false")
 
