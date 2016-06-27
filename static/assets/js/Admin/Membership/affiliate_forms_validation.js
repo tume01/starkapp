@@ -36,7 +36,9 @@ var AffiliateFormValidation = function() {
                 },
                 'num_doc': {
                     required: true,   
-                    number: true, 
+                    number: true,
+                    min:1,
+                    minlength: 8,
                     remote: {
                         url: url,
                         type: "post",

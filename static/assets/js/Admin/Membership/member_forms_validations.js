@@ -38,6 +38,7 @@ var MemberFormValidation = function() {
                     required: true,   
                     number: true, 
                     min: 1,
+                    minlength: 8,
                     remote: {
                         url: url,
                         type: "post",
