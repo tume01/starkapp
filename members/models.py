@@ -32,5 +32,3 @@ class Member(models.Model):
     workPlacePhone = models.IntegerField(blank=True, null=True)
 
     state=models.IntegerField()
-
-
