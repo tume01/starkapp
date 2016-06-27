@@ -128,93 +128,22 @@
                         <div class="side-content">
                             <ul class="nav-main">
                                 <li class="open">
-                                    <a class="nav-submenu"  href=#begin><i class="si si-home"></i><span class="sidebar-mini-hide">Inicio</span></a>                                    
+                                    <a href=#begin><i class="si si-home"></i><span class="sidebar-mini-hide">Inicio</span></a>                                    
                                 </li>
                                 <li>
                                     <a href="#bungalows"><i class="fa fa-bed"></i><span class="sidebar-mini-hide">Bungalows</span></a>
                                 </li>
                                 <li>
-                                    <a href="frontend_pricing.html"><i class="si si-wallet"></i><span class="sidebar-mini-hide">Pricing</span></a>
+                                    <a href="#numbers"><i class="fa-hashtag"></i><span class="sidebar-mini-hide">Datos</span></a>
                                 </li>
                                 <li>
-                                    <a href="frontend_contact.html"><i class="si si-envelope-open"></i><span class="sidebar-mini-hide">Contact</span></a>
+                                    <a href="#services"><i class="fa fa-sticky-note-o"></i><span class="sidebar-mini-hide">Servicios</span></a>
                                 </li>
                                 <li>
-                                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-book-open"></i><span class="sidebar-mini-hide">Pages</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href="frontend_team.html">Team</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_support.html">Support</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_search.html">Search</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_about.html">About</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_login.html">Log In</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_signup.html">Sign Up</a>
-                                        </li>
-                                    </ul>
+                                    <a href="#ratings"><i class="fa fa-comments-o"></i><span class="sidebar-mini-hide">Comentarios</span></a>
                                 </li>
                                 <li>
-                                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-pencil"></i><span class="sidebar-mini-hide">Blog</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href="frontend_blog_classic.html">Classic</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_blog_list.html">List</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_blog_grid.html">Grid</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_blog_story.html">Story</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_blog_story_cover.html">Story Cover</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-graduation"></i><span class="sidebar-mini-hide">e-Learning</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href="frontend_elearning_courses.html">Courses</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_elearning_course.html">Course</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_elearning_lesson.html">Lesson</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-bag"></i><span class="sidebar-mini-hide">e-Commerce</span></a>
-                                    <ul>
-                                        <li>
-                                            <a href="frontend_ecom_home.html">Home</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_ecom_search.html">Search Results</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_ecom_products.html">Products List</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_ecom_product.html">Product Page</a>
-                                        </li>
-                                        <li>
-                                            <a href="frontend_ecom_checkout.html">Checkout</a>
-                                        </li>
-                                    </ul>
+                                    <a href='{% url "login:index" %}'><i class="fa fa-users"></i><span class="sidebar-mini-hide">Iniciar Sesión</span></a>
                                 </li>
                             </ul>
                         </div>
@@ -373,7 +302,7 @@
 
                 <!-- Team -->
                 <div class="bg-gray-lighter">
-                    <section class="content content-boxed">
+                    <section id="services" class="content content-boxed">
                         <!-- Section Content -->
                         <div class="push-50-t push-20">
                             <div class="row items-push-2x">
@@ -427,23 +356,14 @@
                                     <div class="block">
                                         <div class="block-header">
                                             <ul class="block-options">
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Dribbble"><i class="si si-social-dribbble"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Twitter"><i class="si si-social-twitter"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Facebook"><i class="si si-social-facebook"></i></button>
-                                                </li>
                                             </ul>
-                                            <h3 class="block-title">Helen Silva</h3>
+                                            <h3 class="block-title">Juegos de mesa</h3>
                                         </div>
-                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo4.jpg');">
-                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar1.jpg" alt="">
+                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('{% static "assets/img/landing/juegos4.jpg" %}');">
+                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src='{% static "assets/img/landing/juegos4.jpg" %}' alt="">
                                         </div>
                                         <div class="block-content">
-                                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
+                                            <p>Diversión para todas las edades, ofrecemos distintos juegos de mesa para toda la familia desde fulbito de mesa hasta el clásico monopolio.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -451,23 +371,14 @@
                                     <div class="block">
                                         <div class="block-header">
                                             <ul class="block-options">
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Dribbble"><i class="si si-social-dribbble"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Twitter"><i class="si si-social-twitter"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Facebook"><i class="si si-social-facebook"></i></button>
-                                                </li>
                                             </ul>
-                                            <h3 class="block-title">George Stone</h3>
+                                            <h3 class="block-title">Fútbol</h3>
                                         </div>
-                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo6.jpg');">
-                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar13.jpg" alt="">
+                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('{% static "assets/img/landing/futbol.jpg" %}');">
+                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src='{% static "assets/img/landing/futbol.jpg" %}' alt="">
                                         </div>
                                         <div class="block-content">
-                                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
+                                            <p>Te consideras un Lionel Messi o una Alex Morgan, pues en nuestras canchas de fútbol puedes demostrar tus habilidades.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -475,97 +386,14 @@
                                     <div class="block">
                                         <div class="block-header">
                                             <ul class="block-options">
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Dribbble"><i class="si si-social-dribbble"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Twitter"><i class="si si-social-twitter"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Facebook"><i class="si si-social-facebook"></i></button>
-                                                </li>
                                             </ul>
-                                            <h3 class="block-title">Amy Hunter</h3>
+                                            <h3 class="block-title">Voley</h3>
                                         </div>
-                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo7.jpg');">
-                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar4.jpg" alt="">
+                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('{% static "assets/img/landing/voley3.jpg" %}');">
+                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src='{% static "assets/img/landing/voley3.jpg" %}' alt="">
                                         </div>
                                         <div class="block-content">
-                                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row items-push-2x">
-                                <div class="col-md-4 visibility-hidden" data-toggle="appear" data-class="animated zoomIn">
-                                    <div class="block">
-                                        <div class="block-header">
-                                            <ul class="block-options">
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Dribbble"><i class="si si-social-dribbble"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Twitter"><i class="si si-social-twitter"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Facebook"><i class="si si-social-facebook"></i></button>
-                                                </li>
-                                            </ul>
-                                            <h3 class="block-title">Emma Cooper</h3>
-                                        </div>
-                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo12.jpg');">
-                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar3.jpg" alt="">
-                                        </div>
-                                        <div class="block-content">
-                                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 visibility-hidden" data-toggle="appear" data-class="animated zoomIn">
-                                    <div class="block">
-                                        <div class="block-header">
-                                            <ul class="block-options">
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Dribbble"><i class="si si-social-dribbble"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Twitter"><i class="si si-social-twitter"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Facebook"><i class="si si-social-facebook"></i></button>
-                                                </li>
-                                            </ul>
-                                            <h3 class="block-title">Eugene Burke</h3>
-                                        </div>
-                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo8.jpg');">
-                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar16.jpg" alt="">
-                                        </div>
-                                        <div class="block-content">
-                                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 visibility-hidden" data-toggle="appear" data-class="animated zoomIn">
-                                    <div class="block">
-                                        <div class="block-header">
-                                            <ul class="block-options">
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Dribbble"><i class="si si-social-dribbble"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Twitter"><i class="si si-social-twitter"></i></button>
-                                                </li>
-                                                <li>
-                                                    <button type="button" data-toggle="tooltip" title="Facebook"><i class="si si-social-facebook"></i></button>
-                                                </li>
-                                            </ul>
-                                            <h3 class="block-title">Amber Walker</h3>
-                                        </div>
-                                        <div class="block-content block-content-full text-center bg-image" style="background-image: url('assets/img/photos/photo9.jpg');">
-                                            <img class="img-avatar img-avatar96 img-avatar-thumb" src="assets/img/avatars/avatar5.jpg" alt="">
-                                        </div>
-                                        <div class="block-content">
-                                            <p>Dolor posuere proin blandit accumsan senectus netus nullam curae, ornare laoreet adipiscing luctus mauris adipiscing pretium eget fermentum, tristique lobortis est ut metus lobortis tortor tincidunt himenaeos habitant quis dictumst proin odio sagittis purus mi, nec taciti vestibulum quis in sit varius lorem sit metus mi.</p>
+                                            <p>¿No eres de futbol, eres más de voley? Entonces juega los partidos que desees en nuestras canchas de voley iluminadas.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -575,73 +403,6 @@
                     </section>
                 </div>
                 <!-- END Team -->
-
-                <!-- Classic Features #2 -->
-                <div class="bg-white">
-                    <section class="content content-boxed">
-                        <!-- Section Content -->
-                        <div class="row items-push-3x push-50-t nice-copy">
-                            <div class="col-sm-4">
-                                <div class="text-center push-30">
-                                    <span class="item item-2x item-circle border">
-                                        <i class="si si-compass"></i>
-                                    </span>
-                                </div>
-                                <h3 class="h5 font-w600 text-uppercase text-center push-10">Cross Browser Support</h3>
-                                <p>OneUI will play nice with all modern browsers such as Chrome, Firefox, Safari, Opera and the latest versions of Internet Explorer (9 and up).</p>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="text-center push">
-                                    <span class="item item-2x item-circle border">
-                                        <i class="si si-book-open"></i>
-                                    </span>
-                                </div>
-                                <h3 class="h5 font-w600 text-uppercase text-center push-10">Documentation</h3>
-                                <p>OneUI comes packed with a great documentation which covers all the basics to get you familiar with template’s structure and files. It is the best way to get started.</p>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="text-center push">
-                                    <span class="item item-2x item-circle border">
-                                        <i class="si si-rocket"></i>
-                                    </span>
-                                </div>
-                                <h3 class="h5 font-w600 text-uppercase text-center push-10">Clean &amp; Commented Code</h3>
-                                <p>The code is created with the developer in mind. It is clean, easy to follow, easy to replicate and at the same time well commented, so that you never feel lost.</p>
-                            </div>
-                        </div>
-                        <div class="row items-push-3x nice-copy">
-                            <div class="col-sm-4">
-                                <div class="text-center push-30">
-                                    <span class="item item-2x item-circle border">
-                                        <i class="si si-wrench"></i>
-                                    </span>
-                                </div>
-                                <h3 class="h5 font-w600 text-uppercase text-center push-10">Components</h3>
-                                <p>OneUI comes packed with so many unique components. Carefully picked and integrated to enhance and enrich your project with great functionality. Use them anywhere you want.</p>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="text-center push">
-                                    <span class="item item-2x item-circle border">
-                                        <i class="si si-support"></i>
-                                    </span>
-                                </div>
-                                <h3 class="h5 font-w600 text-uppercase text-center push-10">Support</h3>
-                                <p>By purchasing a license of OneUI, you are eligible to email support. Should you get stuck somewhere or come accross any issue, don’t worry because I am here to provide assistance.</p>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="text-center push">
-                                    <span class="item item-2x item-circle border">
-                                        <i class="si si-heart"></i>
-                                    </span>
-                                </div>
-                                <h3 class="h5 font-w600 text-uppercase text-center push-10">Crafted With Love</h3>
-                                <p>I love what I do. I pay extra attention to small details and always try delivering the best I can with each project. My goal is to create a great product for you, that will make your life easier.</p>
-                            </div>
-                        </div>
-                        <!-- END Section Content -->
-                    </section>
-                </div>
-                <!-- END Classic Features #2 -->
 
                 <!-- Ratings -->
                 <div class="bg-image" style="background-image: url('{% static "assets/img/photos/photo3@2x.jpg" %}');">
@@ -692,18 +453,6 @@
                 </div>
                 <!-- END Ratings -->
 
-                <!-- Get Started -->
-                <div class="bg-gray-lighter">
-                    <section class="content content-full content-boxed">
-                        <!-- Section Content -->
-                        <div class="push-20-t push-20 text-center">
-                            <h3 class="h4 push-20 visibility-hidden" data-toggle="appear">Clean design in one powerful package. It was made for your next awesome project.</h3>
-                            <a class="btn btn-rounded btn-noborder btn-lg btn-success visibility-hidden" data-toggle="appear" data-class="animated bounceIn" href="frontend_pricing.html">Get Started Today</a>
-                        </div>
-                        <!-- END Section Content -->
-                    </section>
-                </div>
-                <!-- END Get Started -->
             </main>
             <!-- END Main Container -->
 
@@ -713,42 +462,36 @@
                     <!-- Footer Navigation -->
                     <div class="row push-30-t items-push-2x">
                         <div class="col-sm-4">
-                            <h3 class="h5 font-w600 text-uppercase push-20">Company</h3>
+                            <h3 class="h5 font-w600 text-uppercase push-20">Compañia</h3>
                             <ul class="list list-simple-mini font-s13">
                                 <li>
                                     <a class="font-w600" href='{% url "login:index" %}'>Inicio</a>
                                 </li>
                                 <li>
-                                    <a class="font-w600" href="frontend_features.html">Features</a>
+                                    <a class="font-w600" href="#services">Servicios</a>
                                 </li>
                                 <li>
-                                    <a class="font-w600" href="frontend_pricing.html">Pricing</a>
+                                    <a class="font-w600" href="#">Pricing</a>
                                 </li>
                                 <li>
-                                    <a class="font-w600" href="frontend_about.html">About Us</a>
+                                    <a class="font-w600" href="#">Nosotros</a>
                                 </li>
                                 <li>
-                                    <a class="font-w600" href="frontend_contact.html">Contact Us</a>
+                                    <a class="font-w600" href="#">Contacto</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-sm-4">
-                            <h3 class="h5 font-w600 text-uppercase push-20">Support</h3>
+                            <h3 class="h5 font-w600 text-uppercase push-20">Soporte</h3>
                             <ul class="list list-simple-mini font-s13">
                                 <li>
                                     <a class="font-w600" href='{% url "login:index" %}'>Log In</a>
                                 </li>
                                 <li>
-                                    <a class="font-w600" href="frontend_signup.html">Sign Up</a>
+                                    <a class="font-w600" href="javascript:void(0)">Políticas de privacidad</a>
                                 </li>
                                 <li>
-                                    <a class="font-w600" href="frontend_support.html">Support Center</a>
-                                </li>
-                                <li>
-                                    <a class="font-w600" href="javascript:void(0)">Privacy Policy</a>
-                                </li>
-                                <li>
-                                    <a class="font-w600" href="javascript:void(0)">Terms &amp; Conditions</a>
+                                    <a class="font-w600" href="javascript:void(0)">Terms &amp; Condiciones</a>
                                 </li>
                             </ul>
                         </div>
