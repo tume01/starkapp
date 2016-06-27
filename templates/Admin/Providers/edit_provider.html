@@ -51,7 +51,7 @@ Usuario: proveedores
         </div>
 
         <div class="block-content">
-            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "providers:update" id %}' method="post" >
+            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" id="formEditProvider" action='{% url "providers:update" id %}' method="post" >
                 {% csrf_token %}                       
                 <div class="row">
                     <div class="col-sm-2">
@@ -175,7 +175,8 @@ Usuario: proveedores
 
                 <div class="form-group">
                     <div class="col-xs-2 col-xs-offset-4">
-                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                        <!--<button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>-->
+                        <button class="btn btn-success" type="button" id="EditProvider"><i class="fa fa-check push-5-r"></i> Guardar</button>
                     </div>
                     <div class="col-xs-2">
                         <button class="btn btn-danger" type=""><i class="fa fa-remove push-5-r"></i> Cancelar</button>
@@ -192,6 +193,6 @@ Usuario: proveedores
 {% block scripts %}
 
         <script src='{% static "assets/js/Admin/Provider/provider_forms_validation.js" %}'></script>
-        
+        <script src='{% static "assets/js/provider.js" %}'></script>
 
         {% endblock %}
