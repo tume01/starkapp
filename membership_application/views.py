@@ -41,7 +41,8 @@ def index(request):
         'doc_types' : doc_types,
     }
 
-    return render(request, 'Admin/Membership/index_membership_request.html', context) 
+    return render(request, 'Admin/Membership/index_membership_request.html', context)
+
 
 
 @login_required
@@ -87,12 +88,14 @@ def filter(request):
     data = serializers.serialize("json", membershipApplications)
 
     return HttpResponse(data, content_type='application/json')
+
     
 
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['GET'])
 def create_index(request):
+
 
     membership_type_service = MembershipTypeService()
 
@@ -129,6 +132,7 @@ def create_index(request):
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
 def edit_index(request):
+
 
     membership_type_service = MembershipTypeService()
 
@@ -207,6 +211,7 @@ def edit_index(request):
     return render(request, 'Admin/Membership/edit_membership_request.html', context)
 
 
+
 @login_required
 @permission_required('dummy.permission_membresia', login_url='login:ini')
 @require_http_methods(['POST'])
@@ -223,6 +228,9 @@ def delete_membership_application(request):
     member_application_service.update(id_application, insert_data)
 
     return HttpResponseRedirect(reverse('membership_application:index'))
+
+
+
 
 
 
@@ -352,7 +360,7 @@ def create_membership_application(request):
         insert_data["phone"] = form.cleaned_data['phone']
 
         if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '' \
-                and form.cleaned_data['smaternalLastName'] != '' and form.cleaned_data['sdocument_number'] != '' \
+                and form.cleaned_data['smaternalLastName'] != '' and form.cleaned_data['snum_doc'] != '' \
                 and form.cleaned_data['snationality'] != '' and form.cleaned_data['sbirthDate'] != ' ' \
                 and form.cleaned_data['sbirthPlace'] != '' and form.cleaned_data['scellPhoneNumber'] != '' \
                 and form.cleaned_data['semail'] != '':
@@ -506,7 +514,7 @@ def edit_membership_application(request):
         insert_data["status"] = 1
 
         if 'photo' in request.FILES:
-            
+
             insert_data["photo"] = request.FILES['photo']
 
         insert_data["gender"] = request.POST['gender']
@@ -534,7 +542,7 @@ def edit_membership_application(request):
         insert_data["phone"] = form.cleaned_data['phone']
 
         if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != ''\
-            and form.cleaned_data['smaternalLastName'] != '' and form.cleaned_data['sdocument_number'] != ''\
+            and form.cleaned_data['smaternalLastName'] != '' and form.cleaned_data['snum_doc'] != ''\
             and form.cleaned_data['snationality'] != '' and form.cleaned_data['sbirthDate'] != ' '\
             and form.cleaned_data['sbirthPlace'] != '' and form.cleaned_data['scellPhoneNumber'] != ''\
             and form.cleaned_data['semail'] != '':
@@ -574,7 +582,7 @@ def edit_membership_application(request):
             if 'sphoto' in request.FILES:
 
                 insert_data["sphoto"] = request.FILES['sphoto']
-    
+
             insert_data["sworkPlace"] = form.cleaned_data['sworkPlace']
 
             insert_data["sworkPlaceJob"] = form.cleaned_data['sworkPlaceJob']
@@ -733,7 +741,7 @@ def create_objection(request):
     membership_application = member_application_service.getMembership_Application(requestId)
 
     member = member_service.getMemberByUser(current_user)
-        
+
     filter_data = {}
 
     filter_data["member"] = member
@@ -777,7 +785,7 @@ def create_objection(request):
         return HttpResponseRedirect(reverse('membership_application:user_index'))
 
     else:
-        
+
 
         context = {
             'membership_application': membership_application,
@@ -885,7 +893,7 @@ def delete_objection(request):
 def approve_membership_application(request):
 
     if 'Accept' in request.POST:
-    
+
         id_application = request.POST['id']
 
         member_application_service = Membership_ApplicationService()

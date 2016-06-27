@@ -18,6 +18,7 @@ class Member(models.Model):
     address=models.TextField(max_length=200)
     email=models.TextField(max_length=200)
 
+
     photo = models.ImageField(upload_to='member')
     gender = models.IntegerField()  # 0 masculino 1 femenino
     nationality = models.TextField(max_length=20)
@@ -32,5 +33,6 @@ class Member(models.Model):
     workPlacePhone = models.IntegerField(blank=True, null=True)
 
     state=models.IntegerField()
+
 
 

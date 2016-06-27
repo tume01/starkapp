@@ -6,19 +6,35 @@ Usuario: proveedores
 {% endblock %}
 
 {% block head_dahsboard %}
-Proveedores
+{% if p_type == 1%}
+    Proveedores
+{% else %}
+    Concesionarios
+{% endif %}
 {% endblock %}
 
 {% block function_head_dahsboard %}
-Editar proveedor
+{% if p_type == 1%}
+    Editar proveedor
+{% else %}
+    Editar concesionarios
+{% endif %}
 {% endblock %}
 
 {% block sub_head_dahsboard %}
-Proveedores
+{% if p_type == 1%}
+    Proveedores
+{% else %}
+    Concesionarios
+{% endif %}
 {% endblock %}
 
 {% block function_sub_head_dahsboard %}
-Edición de proveedor
+{% if p_type == 1%}
+    Edición de proveedor
+{% else %}
+    Edición de concesionarios
+{% endif %}
 {% endblock %}
 
 {% block content %}

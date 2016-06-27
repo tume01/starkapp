@@ -18,7 +18,7 @@ from bungalow_reservation.models import BungalowReservation
 import datetime
 from django.http import JsonResponse
 import json
-
+from services.PaymentService import PaymentService
 
 @require_http_methods(['POST'])
 def check_in(request):
@@ -343,10 +343,10 @@ def user_create_reserve(request):
     arrival_date = datetime.datetime.strptime(request.POST['arrival_date'], '%d/%m/%Y')
     departure_date = arrival_date + datetime.timedelta(days=int(request.POST['duration']))
 
-    create_new_reservation(bungalow, member, arrival_date, departure_date)
+    bungalow_reservation = create_new_reservation(bungalow, member, arrival_date, departure_date)
 
-    return HttpResponseRedirect(reverse('bungalowReservation:user_index'))
-
+    if PaymentService.createBungalowReservationProduct(bungalow_reservation, member):
+        return HttpResponseRedirect(reverse('checkout:index') + '?product_type=4')
 
 # Helpers
 def create_new_reservation(bungalow, member, arrival_date, departure_date):
@@ -371,7 +371,7 @@ def create_new_reservation(bungalow, member, arrival_date, departure_date):
     insert_data["arrival_date"] = arrival_date
     insert_data["departure_date"] = departure_date
 
-    BungalowReservationService.create(insert_data)
+    return BungalowReservationService.create(insert_data)
 
 
 # Unimplemented
