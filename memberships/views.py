@@ -371,7 +371,7 @@ def create_membership(request):
 
             insert_affiliate["birthPlace"] =  request.POST['sbirthPlace']
 
-            insert_affiliate['maritalStatus'] = 'casado'
+            insert_affiliate['maritalStatus'] = 'Casado/a'
 
             filter_ubigeo["department"] = request.POST['department']
 
