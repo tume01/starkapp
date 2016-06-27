@@ -2188,7 +2188,8 @@ class Command(BaseCommand):
                         paternalLastName='Ramirez', maternalLastName='Horna', document_number=98765432, phone=3813812,
                         email='jose.gil@pucp.pe', address='Av.Universitaria.1036', state=1,relationship=relationship_2,gender=0,nationality='Peruana',
                         birthDate=datetime.now() - timedelta(20), birthPlace=datetime.now() - timedelta(20),
-                        birthUbigeo=u2,photo='membership_application/flavio_ramirez.jpg')
+                        birthUbigeo=u2,photo='membership_application/flavio_ramirez.jpg',specialization='Ingenieria de Telecomunicaciones',workPlace='PUCP',
+                        workPlaceJob='Profesor',workPlacePhone=4340344,maritalStatus='Soltero/a',cellphoneNumber=993904208)
         aff.save()
 
         print('Data has been inserted\n')
