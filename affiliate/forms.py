@@ -1,6 +1,8 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.core.validators import EmailValidator
+from datetime import datetime
+from datetime import time
 
 
 class AffiliateForm(forms.Form):
@@ -30,6 +32,12 @@ class AffiliateForm(forms.Form):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
         if (data > 100000000):
             raise forms.ValidationError("El dni tiene que tener 8 digitos")
+        return data
+
+    def clean_birthDate(self):
+        data = self.cleaned_data['birthDate']
+        if (data > datetime.now().date()):
+            raise forms.ValidationError("La fecha de nacimiento no puede ser mayor a la de hoy")
         return data
 
     def clean_workPlacePhone(self):
