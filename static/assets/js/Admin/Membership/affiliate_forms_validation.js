@@ -103,7 +103,11 @@ var AffiliateFormValidation = function() {
                 },
                 'birthDate' : {
                     required: true,
+<<<<<<< HEAD
                     domain: true
+=======
+                    domain:true
+>>>>>>> refs/remotes/origin/TeamOlcese
                 },
                 'birthPlace': {
                     required: true,
@@ -209,7 +213,7 @@ var AffiliateFormValidation = function() {
     if(birthDate >= today){ return false;}
     else {return true;}
     }, "La fecha no puede ser mayor a la de hoy");
-
+    
     return {
         init: function () {
 

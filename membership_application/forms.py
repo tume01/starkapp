@@ -45,6 +45,12 @@ class MembershipApplicationForm(forms.Form):
     semail = forms.CharField(max_length=200, required=False,error_messages={'max_length': 'El campo Correo no debe superar los 200 caracteres'})
     sphoto = forms.ImageField(required=False)
 
+    def clean_birthDate(self):
+        data = self.cleaned_data['birthDate']
+        if (data > datetime.now().date()):
+            raise forms.ValidationError("La fecha de nacimiento no puede ser mayor a la de hoy")
+        return data
+
     def clean_dni(self):
         data = self.cleaned_data['num_doc']
         if (data < 9999999):
@@ -80,26 +86,20 @@ class MembershipApplicationForm(forms.Form):
 
     def clean_workPlacePhone(self):
         data = self.cleaned_data['workPlacePhone']
-        if (data < 999999):
-            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
-        if (data > 10000000):
-            raise forms.ValidationError("El numero de telefono de oficina tiene que tener 7 digitos")
+        if (data <= 999999):
+            raise forms.ValidationError("El numero de telefono de oficina tiene que tener como mínimo 7 digitos")
         return data
 
     def clean_phone(self):
         data = self.cleaned_data['phone']
-        if (data < 999999):
-            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
-        if (data > 10000000):
-            raise forms.ValidationError("El numero de telefono de casa tiene que tener 7 digitos")
+        if (data <= 999999):
+            raise forms.ValidationError("El numero de telefono de casa tiene que tener como minimo 7 digitos")
         return data
 
     def clean_cellphoneNumber(self):
         data = self.cleaned_data['cellphoneNumber']
-        if (data < 99999999):
-            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
-        if (data > 1000000000):
-            raise forms.ValidationError("El numero de celular tiene que tener 9 digitos")
+        if (data <= 99999999):
+            raise forms.ValidationError("El numero de celular tiene que tener como mínimo 9 digitos")
         return data
 
     def clean_finalDate(self):
