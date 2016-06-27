@@ -351,7 +351,11 @@ def create_membership_application(request):
 
         insert_data["phone"] = form.cleaned_data['phone']
 
-        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '':
+        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '' \
+                and form.cleaned_data['smaternalLastName'] != '' and form.cleaned_data['sdocument_number'] != '' \
+                and form.cleaned_data['snationality'] != '' and form.cleaned_data['sbirthDate'] != ' ' \
+                and form.cleaned_data['sbirthPlace'] != '' and form.cleaned_data['scellPhoneNumber'] != '' \
+                and form.cleaned_data['semail'] != '':
 
             insert_data["sidentity_document_type_id"] = sidentity_document_id
 
@@ -529,7 +533,11 @@ def edit_membership_application(request):
 
         insert_data["phone"] = form.cleaned_data['phone']
 
-        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != '':
+        if form.cleaned_data['sfirstName'] != '' and form.cleaned_data['spaternalLastName'] != ''\
+            and form.cleaned_data['smaternalLastName'] != '' and form.cleaned_data['sdocument_number'] != ''\
+            and form.cleaned_data['snationality'] != '' and form.cleaned_data['sbirthDate'] != ' '\
+            and form.cleaned_data['sbirthPlace'] != '' and form.cleaned_data['scellPhoneNumber'] != ''\
+            and form.cleaned_data['semail'] != '':
 
             insert_data["sidentity_document_type_id"] = sidentity_document_id
 
