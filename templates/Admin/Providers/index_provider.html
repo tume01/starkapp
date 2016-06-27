@@ -48,7 +48,11 @@ Admin: proveedores
             <h3 class="block-title">Filtros</h3>
         </div>
         <div class="block-content">
+        {% if p_type == 1 %}
             <form class="form" action="{% url 'providers:index' %}" method="get" >
+        {% else %}
+            <form class="form" action="{% url 'providers:index_concesionary' %}" method="get" >
+        {% endif %}
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-lg-4">

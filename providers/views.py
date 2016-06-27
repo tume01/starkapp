@@ -24,6 +24,7 @@ def index(request):
     provider_service = ProvidersService()
 
     filters = getProviderFilters(request)
+    filters['provider_type_id'] = "1"
 
     providers2 = provider_service.filter(filters)
 
