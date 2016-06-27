@@ -7,6 +7,7 @@ from .seed_login import Command as LoginSeed
 from .seed_event_type import *
 from .seed_activity_type import *
 from .seed_product import *
+from .seed_provider_type import *
 
 
 class Command(BaseCommand):
