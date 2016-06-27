@@ -28,8 +28,8 @@ var UserTypeFormValidation = function() {
             },
             messages: {                
                 'description': {
-                    required: 'Por favor ingrese una descripcion',
-                    maxlength: 'La descripcion no puede tener más de 200 caracteres'
+                    required: 'Por favor ingrese una descripción',
+                    maxlength: 'La descripción no puede tener más de 200 caracteres'
                 }
                 /*
                 'val-confirm-password': {

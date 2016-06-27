@@ -69,6 +69,15 @@ Nuevo Invitado
                             {% csrf_token %}
                             <input class="form-control" type="text" id="type" name="type" value="0" style="display: none;" >
                             <input class="form-control" type="text" id="doc_member" name="doc_member" style="display: none;" >
+                            <div class="row" id="photo" style="display: none;">
+                                <div class="col-sm-3">
+                                        <div class="form-group">
+                                             <div class="col-md-10">
+                                            <img src="" id="photo-display"  height="200" width="200" class="img-event-preview">
+                                        </div>
+                                        </div>
+                                    </div>
+                            </div>
                             <div class="row">
                                     <div class="col-lg-4">
                                         <div class="form-group">
@@ -184,16 +193,23 @@ var url= "{% url 'entry:verify_member' %}"
                         if(tipo==1){
                             $('#doc').val(returndata[0].fields.document_number);
                             $('#doc').prop('readonly', true);
+                            $('#photo').show();
+                            $('#photo-display').attr("src","{{ MEDIA_URL }}"+returndata[0].fields.photo);
                         }else if(tipo==2){ 
                         	$('#doc').val(returndata[1].fields.document_number);
                             $('#doc').prop('readonly', true);
+                            $('#photo').show();
+                            $('#photo-display').attr("src","{{ MEDIA_URL }}"+returndata[0].fields.photo);
                         }
+                      
+
                     }else{
                         $('.bloquear input').prop('readonly', false);
                         $('.bloquear input').val('');
                         $('#doc').prop('readonly', false);
                         $('#doc').val('');
                         $('#document_number').val(document_number)
+                        $('#photo').hide();
                         tipo = 0;
                    }
                    $('#type').val(tipo);

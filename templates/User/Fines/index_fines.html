@@ -53,7 +53,7 @@ Lista de multas
                                                     <select class="form-control" id="example-select" name="status" size="1">
                                                         <option value="">Todas</option>
                                                         <option value="Pagada">Pagadas</option>
-                                                        <option value="Por Pagar">Por Pagar</option>
+                                                        <option value="Pendiente de Pago">Pendiente de Pago</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -79,6 +79,8 @@ Lista de multas
                     </div>
             <!-- DataTables init on table by adding .js-dataTable-full class, functionality initialized in js/pages/base_tables_datatables.js -->
             <div class="block-content">
+            <form class="form" id='busqueda' method="post" action='{% url "fine:pay" %}'>
+            {% csrf_token %}
             <table class="table table-bordered table-striped js-dataTable-simple" id='tabla'>
                 <thead>
                     <tr>
@@ -97,11 +99,24 @@ Lista de multas
                             <td class="font-w600">S/. {{fine.price}} </td>
                             <td class="font-w600">{{fine.status}} </td>
                             <td class="text-center">
+                                {% if fine.status == "Pendiente de Pago" %}
+                                    <div class="form-group">
+                                        <div class="btn-group">
+                                            <input type="checkbox" name="check_list[]" value="{{fine.id}}">
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
                 </table>
+                <div class="form-group">                    
+                                    <div class="col-xs-2 col-xs-offset-4">
+                                        <button class="btn btn-success" id='button' type='submit' ><i class="fa fa-check push-5-r"></i> Pagar</button>
+                                    </div>
+                                </div>
+            </form>
             </div>
         </div>
         <!-- END Simple Table Full -->
@@ -144,7 +159,7 @@ Lista de multas
                         status=returndata[key].status;
                         id=returndata[key].id;
                         
-                        $("#tbodyid").append('<tr><td class="font-w600">'+obs+'</td><td class="font-w600">'+reason+'</td><td class="font-w600"> S/. '+price+'</td><td class="font-w600">'+status+'</td><td class="text-center">'+'</td></tr>');
+                        $("#tbodyid").append('<tr><td class="font-w600">'+obs+'</td><td class="font-w600">'+reason+'</td><td class="font-w600"> S/. '+price+'</td><td class="font-w600">'+status+'</td><td class="text-center">'+'<div class="form-group"><div class="btn-group"><input type="checkbox" name="check_list[]" value="'+id+'"></div></div></td></tr>');
                     });  
                     $('#tabla').dataTable({
                             columnDefs: [ { orderable: true, targets: [ 1 ] } ],

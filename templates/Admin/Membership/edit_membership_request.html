@@ -36,108 +36,673 @@ Nueva solicitud de membresía
                     <!-- Mega Form -->
                     <div class="block block-bordered">
                         <div class="block-content">
-                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:edit" %}' method="post" >
+                            <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "membership_application:edit" %}' method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                                 <div class="row">
-                                    <div class="col-lg-6" style="display: none;">
+                                    <div class="col-lg-8" >
                                         <div class="form-group">
-                                            <div class="col-md-6">
+                                        <label class="col-xs-12" for="example-select">(*) Campos necesarios.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                      <input type="hidden" class="form-control" id="example-input1-group1" name="id" value="{{membership_application.id}}"  type="text">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Miembro(*)</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-8" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Solo imagenes de 200 x 200</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <img src="{{ MEDIA_URL }}{{membership_application.photo}}" height="200" width="200" class="img-event-preview">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="photo">Foto</label>
+                                            <input type="file" name="photo" class="form-control, col-xs-12" id="photo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Género(*)</label>
+                                            <div class="col-sm-8">
+                                                    {% if membership_application.gender == 0 %}
+                                                        <input type="radio" name="gender" checked value="0"> Masculino<br>
+                                                        <input type="radio" name="gender" value="1"> Femenino<br>
+                                                    {% endif %}
+                                                    {% if membership_application.gender == 1 %}
+                                                        <input type="radio" name="gender" value="0"> Masculino<br>
+                                                        <input type="radio" name="gender" checked value="1"> Femenino<br>
+                                                    {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Nombres(*)</label>
+                                            <div class="col-sm-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input0-group1" name="id" placeholder="ID"  type="number" value= "{{membership_application.id}}" >
+                                                    <input class="form-control" id="example-input1-group1" name="firstName" value="{{membership_application.firstName}}"  type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3" >
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Apellido paterno(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input2-group1" name="paternalLastName" value="{{membership_application.paternalLastName}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Apellido materno(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input3-group1" name="maternalLastName" value="{{membership_application.maternalLastName}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-select">Doc. de Identificacion(*)</label>
+                                            <div class="col-lg-12">
+                                                   <div class="input-group">
+                                                        <input class="form-control" id="num_doc" name="num_doc" value="{{membership_application.document_number}}" pattern="[0-9]*" >
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                            <label class="col-xs-5" for="example-select">Tipo(*)</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="example-select1" name="identity_document_type" size="1">
+                                                    {% for doc_type in doc_types %}
+                                                        {% if doc_type.id == membership_application.identity_document_type.id %}
+                                                            <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                        {% else %}
+                                                            <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Nacionalidad(*)</label>
+                                            <div class="col-sm-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="nationality" value="{{membership_application.nationality}}"  type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Centro de Trabajo(*)</label>
+                                            <div class="col-sm-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="workPlace" value="{{membership_application.workPlace}}"  type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Puesto de Trabajo(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input2-group1" name="workPlaceJob" value="{{membership_application.workPlaceJob}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Teléfono de Oficina(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input3-group1" name="workPlacePhone" value="{{membership_application.workPlacePhone}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Estado Civil(*)</label>
+                                            <div class="col-sm-12">
+                                               <select class="form-control" id="example-input1-group1" name="maritalStatus" size="1">       
+                                                        {% if membership_application.maritalStatus == "Casado/a" %}
+                                                            <option selected value="Casado/a">Casado/a</option>
+                                                            <option value="Soltero/a">Soltero/a</option>
+                                                            <option value="Divorciado/a">Divorciado/a</option>
+                                                            <option value="Viudo/a">Viudo/a</option>
+                                                        {% else %}
+                                                            {% if membership_application.maritalStatus == "Soltero/a" %}
+                                                                <option value="Casado/a">Casado/a</option>
+                                                                <option selected value="Soltero/a">Soltero/a</option>
+                                                                <option value="Divorciado/a">Divorciado/a</option>
+                                                                <option value="Viudo/a">Viudo/a</option>
+                                                            {% else %}
+                                                                {% if membership_application.maritalStatus == "Divorciado/a" %}
+                                                                    <option value="Casado/a">Casado/a</option>
+                                                                    <option value="Soltero/a">Soltero/a</option>
+                                                                    <option selected value="Divorciado/a">Divorciado/a</option>
+                                                                    <option value="Viudo/a">Viudo/a</option>
+                                                                {% else %}
+                                                                    <option value="Casado/a">Casado/a</option>
+                                                                    <option value="Soltero/a">Soltero/a</option>
+                                                                    <option value="Divorciado/a">Divorciado/a</option>
+                                                                    <option selected value="Viudo/a">Viudo/a</option> 
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Telefono Celular(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input2-group1" name="cellphoneNumber" value="{{membership_application.cellphoneNumber}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Teléfono de Casa(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input3-group1" name="phone" value="{{membership_application.phone}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Especialidad(*)</label>
+                                            <div class="col-sm-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="specialization" value="{{membership_application.specialization}}"  type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento(*)</label>
+                                            <div class="col-sm-12">
+                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="birthDate"  value="{{membership_application.birthDate|date:"d/m/Y"}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Correo(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input3-group1" name="email" value="{{membership_application.email}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input1-group2" name="birthPlace" value="{{membership_application.birthPlace}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Departamento(*)</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="birthDepartment" name="birthDepartment" size="1">
+                                                            {% for x in departments%}
+                                                                {% if x.department == membership_application.birthUbigeo.department %}
+                                                                <option selected value="{{x.department}}">{{x.department}}</option>
+                                                                {% else %}
+                                                                <option value="{{x.department}}">{{x.department}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Provincia(*)</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="birthProvince" name="birthProvince" size="1">
+                                                            {% for y in provincesBirth%}
+                                                                {% if y.province == membership_application.birthUbigeo.province %}
+                                                                    <option selected value="{{y.province}}">{{y.province}}</option>
+                                                                {% else %}
+                                                                    <option value="{{y.province}}">{{y.province}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Distrito(*)</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="birthDistrict" name="birthDistrict" size="1">
+                                                       {% for x in districtsBirth%}
+                                                            {% if x.district == membership_application.birthUbigeo.district %}
+                                                                <option selected value="{{x.district}}">{{x.district}}</option>
+                                                            {% else %}
+                                                                <option value="{{x.district}}">{{x.district}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input2">Dirección(*)</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input1-group2" name="address" value="{{membership_application.address}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Departamento(*)</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="department" name="addressDepartment" size="1">
+                                                            {% for u in departments%}
+                                                                {% if u.department == membership_application.ubigeo.department %}
+                                                                <option selected value="{{u.department}}">{{u.department}}</option>
+                                                                {% else %}
+                                                                <option value="{{u.department}}">{{u.department}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Provincia(*)</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="province" name="addressProvince" size="1">
+                                                            {% for u in provinces%}
+                                                                {% if u.province == membership_application.ubigeo.province %}
+                                                                    <option selected value="{{u.province}}">{{u.province}}</option>
+                                                                {% else %}
+                                                                    <option value="{{u.province}}">{{u.province}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Distrito(*)</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="district" name="addressDistrict" size="1">
+                                                       {% for u in districts%}
+                                                            {% if u.district == membership_application.ubigeo.district %}
+                                                                <option selected value="{{u.district}}">{{u.district}}</option>
+                                                            {% else %}
+                                                                <option value="{{u.district}}">{{u.district}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> Conyuge</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                         {% if membership_application.sphoto  %} 
+                                         <img src="{{ MEDIA_URL }}{{membership_application.sphoto}}"  height="200" width="200" class="iimg-event-preview">
+                                          {% endif %}
+                                        <div class="form-group">                                           
+                                            <label class="col-xs-12" for="photo">Foto</label>
+                                            <input type="file" name="sphoto" class="form-control, col-xs-12" id="photo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Género</label>
+                                            <div class="col-sm-8">
+                                                   {% if membership_application.sgender == 0 %}
+                                                        <input type="radio" name="sgender" checked value="0"> Masculino<br>
+                                                        <input type="radio" name="sgender" value="1"> Femenino<br>
+                                                    {% else %}
+                                                        {% if membership_application.sgender == 1 %}
+                                                            <input type="radio" name="sgender" value="0"> Masculino<br>
+                                                            <input type="radio" name="sgender" checked value="1"> Femenino<br>
+                                                        {% else %}
+                                                            <input type="radio" name="sgender" value="0"> Masculino<br>
+                                                            <input type="radio" name="sgender" value="1"> Femenino<br>
+                                                        {% endif %}
+                                                    {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
                                         <label class="col-xs-8" for="example-number-input">Nombres</label>
                                             <div class="col-sm-12">
                                                <div class="input-group">
-                                                    <input class="form-control" id="example-input1-group1" name="firstName" placeholder="Nombres" value= "{{membership_application.firstName}}" type="text">
+                                                    <input class="form-control" id="example-input1-group1" name="sfirstName" 
+                                                     {% if membership_application.sfirstName  %} 
+                                                    value="{{membership_application.sfirstName}}"
+                                                {% endif %}
+                                                 type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Apellido paterno</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input2-group1" name="lastName" placeholder="Apellido patenro" value= "{{membership_application.paternalLastName}}" type="text">
+                                                <input class="form-control" id="example-input2-group1" name="spaternalLastName" 
+                                                {% if membership_application.spaternalLastName  %} 
+                                                    value="{{membership_application.spaternalLastName}}"
+                                                {% endif %}
+                                                 type="text">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-3">
+                                    <div class="col-lg-4">
                                         <div class="form-group">
                                             <label class="col-xs-8" for="example-number-input">Apellido materno</label>
                                             <div class="col-sm-8">
-                                                <input class="form-control" id="example-input3-group1" name="maternalLastName" placeholder="Apellido materno" value= "{{membership_application.maternalLastName}}" type="text">
+                                                <input class="form-control" id="example-input3-group1" name="smaternalLastName" 
+                                                 {% if membership_application.smaternalLastName  %} 
+                                                    value="{{membership_application.smaternalLastName}}"
+                                                {% endif %}
+                                                 type="text">
                                             </div>
                                         </div>
                                     </div>
-                                </div>          
+                                </div>
                                 <div class="row">
-                                    <div class="col-lg-6" >
+                                    <div class="col-lg-4" >
                                         <div class="form-group">
-                                        <label class="col-xs-12" for="example-select">Doc. de Identificacion</label>
-                                            <div class="row">
-                                                <div class="col-lg-6">
+                                        <label class="col-xs-8" for="example-select">Doc. de Identificacion</label>
+                                            <div class="col-lg-12">
                                                    <div class="input-group">
-                                                        <input class="form-control" id="num_doc" name="num_doc" placeholder="Doc" value="{{membership_application.document_number}}" pattern="[0-9]*" >
+                                                        <input class="form-control" id="num_doc" name="snum_doc" 
+                                                    {% if membership_application.sdocument_number  %} 
+                                                    value="{{membership_application.sdocument_number}}"
+                                                {% endif %}
+                                                pattern="[0-9]*" >
                                                     </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                            <label class="col-xs-5" for="example-select">Tipo</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control" id="example-select1" name="sidentity_document_type" size="1">
+                                                    {% for doc_type in doc_types %}
+                                                        {% if doc_type.id == membership_application.sidentity_document_type.id %}
+                                                            <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                        {% else %}
+                                                            <option value="{{doc_type.id}}">{{doc_type.name}}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Nacionalidad</label>
+                                            <div class="col-sm-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="snationality" 
+                                                {% if membership_application.snationality  %} 
+                                                    value="{{membership_application.snationality}}"
+                                                {% endif %}
+                                                 type="text">
                                                 </div>
-                                                <label class="col-xs-1" for="example-select">Tipo</label>
-                                                <div class="col-sm-4">
-                                                    <select class="form-control" id="example-select" name="identity_document_type" size="1">
-                                                         {% for doc_type in doc_types %}
-                                                            {% if doc_type.id == member.identity_document_type.id %}
-                                                                <option selected value="{{doc_type.id}}">{{doc_type.name}}</option>
-                                                            {% else %}
-                                                                <option value="{{doc_type.id}}">{{doc_type.name}}</option>
-                                                            {% endif %}
-                                                        {% endfor %}
-                                                    </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Especialidad</label>
+                                            <div class="col-sm-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="sspecialization" 
+                                                    {% if membership_application.sspecialization  %} 
+                                                    value="{{membership_application.sspecialization}}"
+                                                {% endif %}
+                                                 type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
-                                            <label class="col-xs-12" for="example-number-input2">Comentarios</label>
-                                            <div class="col-sm-9">
-                                                <input class="form-control" id="example-input1-group2" name="comments" value= "{{membership_application.comments}}" placeholder="Comentarios" type="text">
+                                            <label class="col-xs-8" for="example-daterange1">Fecha de nacimiento</label>
+                                            <div class="col-sm-12">
+                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="sbirthDate" value="{{membership_application.sbirthDate|date:"d/m/Y"}}">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>           
+                                    <br>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Correo</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input3-group1" name="semail" 
+                                                {% if membership_application.semail  %} 
+                                                    value="{{membership_application.semail}}"
+                                                {% endif %}
+                                                 type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-8" for="example-number-input">Centro de Trabajo</label>
+                                            <div class="col-sm-12">
+                                               <div class="input-group">
+                                                    <input class="form-control" id="example-input1-group1" name="sworkPlace" 
+                                                     {% if membership_application.sworkPlace  %} 
+                                                    value="{{membership_application.sworkPlace}}"
+                                                {% endif %}
+                                                 type="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Puesto de Trabajo</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input2-group1" name="sworkPlaceJob" 
+                                                {% if membership_application.sworkPlaceJob  %} 
+                                                    value="{{membership_application.sworkPlaceJob}}"
+                                                {% endif %}
+                                                 type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input">Teléfono de Oficina</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input3-group1" name="sworkPlacePhone" 
+                                                   {% if membership_application.sworkPlacePhone  %} 
+                                                    value="{{membership_application.sworkPlacePhone}}"
+                                                {% endif %}
+                                                 type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="col-xs-8" for="example-number-input2">Lugar de Nacimiento</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input1-group2" name="sbirthPlace"  
+                                                {% if membership_application.sbirthPlace  %} 
+                                                    value="{{membership_application.sbirthPlace}}"
+                                                {% endif %}
+                                                 type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Departamento</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="sbirthDepartment" name="sbirthDepartment" size="1">
+                                                            {% for u in departments%}
+                                                                {% if u.department == membership_application.sbirthUbigeo.department %}
+                                                                <option selected value="{{u.department}}">{{u.department}}</option>
+                                                                {% else %}
+                                                                <option value="{{u.department}}">{{u.department}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Provincia</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="sbirthProvince" name="sbirthProvince" size="1">
+                                                            {% for u in provincesSpouse%}
+                                                                {% if u.province == membership_application.sbirthUbigeo.province %}
+                                                                    <option selected value="{{u.province}}">{{u.province}}</option>
+                                                                {% else %}
+                                                                    <option value="{{u.province}}">{{u.province}}</option>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-lg-6" >
+                                        <div class="form-group">
+                                                <label class="col-xs-6" for="example-select">Distrito</label>
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" id="sbirthDistrict" name="sbirthDistrict" size="1">
+                                                       {% for u in districtsSpouse%}
+                                                            {% if u.district == membership_application.sbirthUbigeo.district %}
+                                                                <option selected value="{{u.district}}">{{u.district}}</option>
+                                                            {% else %}
+                                                                <option value="{{u.district}}">{{u.district}}</option>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+
+
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-4" >
+                                        <div class="form-group">
+                                        <label class="col-xs-12" for="example-select"> General</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="form-group">
+                                            <label class="col-xs-12" for="example-number-input2">Comentarios</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="example-input1-group2" name="comments" value="{{membership_application.comments}}" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                  <div class="row">
                                    <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="col-xs-12" for="example-daterange1">Rango de fechas para objeciones</label>
                                             <div class="col-md-8">
-                                                <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" value= "{{membership_application.initialDate}}" placeholder="Desde">
+                                                <div class="input-daterange input-group" data-date-format="dd/mm/yyyy">
+                                                    <input class="form-control" type="text" id="example-daterange1" name="initialDate" value="{{membership_application.initialDate|date:"d/m/Y"}}">
                                                     <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" value= "{{membership_application.finalDate}}" placeholder="hasta">
+                                                    <input class="form-control" type="text" id="example-daterange2" name="finalDate" value="{{membership_application.finalDate|date:"d/m/Y"}}">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                      <div class="col-lg-6">
-                        <div class="form-group">
-                            <label class="col-xs-12" for="example-select">Seleccione un tipo</label>
-                            <div class="col-sm-10">
-                                <select class="form-control" id="example-select" name="membership_type" size="1">
-                                     {% for type in types %}       
-                                    <option value="{{type.id}}">{{type.name}}</option>
-                                     {% endfor %}
-                                </select>
+
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="col-xs-12" for="example-select">Seleccione un tipo</label>
+                                        <div class="col-sm-6">
+                                            <select class="form-control" id="example-select" name="membership_type" size="1">
+                                                 {% for type in types %}
+                                                    {% if type == membership_application.membership_type%}
+                                                        <option selected value="{{type.id}}">{{type.name}}</option>
+                                                    {% else %}
+                                                        <option value="{{type.id}}">{{type.name}}</option>
+                                                    {% endif %}
+                                                 {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>      
-                                </div>                           
-                                <div class="form-group">                    
+                                <div class="form-group">
                                     <div class="col-xs-2 col-xs-offset-4">
-                                        <button class="btn btn-success" type="submit"><i class="fa fa-check push-5-r"></i> Guardar</button>
+                                        <button class="btn btn-success" id='button' typr='submit' ><i class="fa fa-check push-5-r"></i> Guardar</button>
                                     </div>
                                     <div class="col-xs-2">
                                         <button class="btn btn-danger" type="button" onclick="location.href='{% url "membership_application:index" %}'"><i class="fa fa-remove push-5-r"></i> Cancelar</button>
@@ -164,6 +729,172 @@ Nueva solicitud de membresía
 <script>
 var CSRF_TOKEN = '{{ csrf_token }}';
 var url= "{% url 'membership_application:verify_document_number' %}"
+
+ $(document).ready(function () {
+        $('#department').change(function(){
+        var department = $('#department :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:provincias" %}',
+                data:{department:department, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){ 
+                    $('#province').empty();
+                    //$('#province').append($('<option>', { text : 'Seleccione', value : ''}));
+                    //$('#district').empty();
+                    //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#province').append($('<option>', { 
+                                text : item.province ,
+                                selected : true
+                            }));
+                            $.ajax({
+                                type:'post',
+                                url:'{% url "ubigeo:distritos" %}',
+                                data:{province:item.province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                cache:false,
+                                success: function(returndata){ 
+                                    $('#district').empty();
+                                    //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                                    $.each(returndata, function(i, item) {
+                                        if(i==0){
+                                            $('#district').append($('<option>', { 
+                                                text : item.district ,
+                                                selected : true
+                                            }));
+                                        }else{
+                                            $('#district').append($('<option>', { 
+                                                text : item.district 
+                                            }));
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            $('#province').append($('<option>', { 
+                                text : item.province 
+                            }));
+                        }
+                    });
+                }
+            });
+        }
+        });
+
+        $('#province').change(function(){
+        var province = $('#province :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:distritos" %}',
+                data:{province:province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){ 
+                    $('#district').empty();
+                    //$('#district').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#district').append($('<option>', { 
+                                text : item.district ,
+                                selected : true
+                            }));
+                        }else{
+                            $('#district').append($('<option>', { 
+                                text : item.district 
+                            }));
+                        }
+                    });
+                }
+            });
+        }
+        });
+
+        $('#birthDepartment').change(function(){
+        var birthDepartment = $('#birthDepartment :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:provincias" %}',
+                data:{department:birthDepartment, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#birthProvince').empty();
+                    //$('#birthProvince').append($('<option>', { text : 'Seleccione', value : ''}));
+                    //$('#birthDistrict').empty();
+                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#birthProvince').append($('<option>', {
+                                text : item.province,
+                                selected : true
+                            }));
+                            $.ajax({
+                                type:'post',
+                                url:'{% url "ubigeo:distritos" %}',
+                                data:{province:item.province, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                                cache:false,
+                                success: function(returndata){
+                                    $('#birthDistrict').empty();
+                                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                                    $.each(returndata, function(i, item) {
+                                        if(i==0){
+                                            $('#birthDistrict').append($('<option>', {
+                                                text : item.district,
+                                                selected : true
+                                            }));
+                                        }else{
+                                            $('#birthDistrict').append($('<option>', {
+                                                text : item.district
+                                            }));
+                                        }
+                                    });
+                                }
+                            });
+                        }else{
+                            $('#birthProvince').append($('<option>', {
+                                text : item.province
+                            }));
+                        }
+                    });
+                }
+            });
+            
+        }
+        });
+
+        $('#birthProvince').change(function(){
+        var birthProvince = $('#birthProvince :selected').text();
+        {
+            $.ajax({
+                type:'post',
+                url:'{% url "ubigeo:distritos" %}',
+                data:{province:birthProvince, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                cache:false,
+                success: function(returndata){
+                    $('#birthDistrict').empty();
+                    //$('#birthDistrict').append($('<option>', { text : 'Seleccione', value : ''}));
+                    $.each(returndata, function(i, item) {
+                        if(i==0){
+                            $('#birthDistrict').append($('<option>', {
+                                text : item.district,
+                                selected : true
+                            }));
+                        }else{
+                            $('#birthDistrict').append($('<option>', {
+                                text : item.district
+                            }));
+                        }
+                    });
+                }
+            });
+        }
+        });
+
+        //$('#department').selectedIndex = "1";
+    });
+
 </script>
 
 

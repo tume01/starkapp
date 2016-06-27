@@ -38,6 +38,12 @@ def index(request):
         'identity_document_types': identity_document_types,
     }
 
+    if request.session.has_key('entry_inserted'):
+
+        context.update({'entry_inserted':request.session.get('entry_inserted')})
+
+        del request.session['entry_inserted']
+
     return render(request, 'Admin/Guests/index_entries.html', context)
 
 @login_required
@@ -187,6 +193,8 @@ def insert(request):
     entry_service = EntryService()
 
     entry_service.create(insert_data)
+
+    request.session['entry_inserted'] = "True"
 
     return HttpResponseRedirect(reverse('entry:index'))
 

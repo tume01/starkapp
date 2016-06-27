@@ -7,12 +7,15 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_http_methods
 from adapters.FormValidator import FormValidator
 from .forms import UserForm, UserTypeForm
+from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from services.Membership_ApplicationService import Membership_ApplicationService
 from services.MemberService import MembersService
 from services.AffiliateService import AffiliateService
+from django.core import serializers
+import json
 
 
 #TIPOS DE USUARIO
@@ -206,9 +209,12 @@ def edit_user(request):
      
         group.user_set.add(user)
 
+        request.session['user_edited'] = "True"
+
         return HttpResponseRedirect(reverse('users:index'))
 
-#user
+
+#USER
 @login_required
 @permission_required('dummy.permission_usuario', login_url='login:iniUser')
 @require_http_methods(['POST'])
@@ -217,28 +223,45 @@ def edit_password(request):
     id_edit = request.POST['id']
 
     if FormValidator.validateForm(form,request):
-        
-        user = User.objects.get(id=id_edit)
 
+        user = request.user
         group = user.groups.all()[0].id
-
         context = {
-            'user' : user,
-            'group' : group
+            'user':user,
+            'group':group
         }
         return render(request, 'User/user.html', context)
 	
     else:
-		
-        user = User.objects.get(id=id_edit)
-        
-        user.set_password(form.cleaned_data['password'])
-        user.save()
 
-        user2 = auth.authenticate(username=user.username, password=form.cleaned_data['password'])
-        auth.login(request,user2)
+        user = auth.authenticate(username=request.POST['name'], password=form.cleaned_data['password'])
+		
+        if user is not None and user.is_active:
         
-        return HttpResponseRedirect(reverse('users:show_user'))
+            user.set_password(request.POST['newPassword'])
+            user.save()
+
+            user2 = auth.authenticate(username=user.username, password=request.POST['newPassword'])
+            auth.login(request,user2)
+
+            group = user2.groups.all()[0].id
+            context = {
+                'user':user2,
+                'group':group,
+                'password_changed':True
+            }
+            return render(request, 'User/user.html', context)
+
+        else:
+            user2 = request.user
+            group = user2.groups.all()[0].id
+            context = {
+                'user':user2,
+                'group':group,
+                'wrong_password':True
+            }
+        
+            return render(request, 'User/user.html', context)
 		
 @login_required
 @permission_required('dummy.permission_usuario', login_url='login:iniUser')
@@ -250,8 +273,9 @@ def show_user(request):
 	'user':user,
         'group':group
     }
-    return render(request, 'User/user.html',context)
+    return render(request, 'User/user.html', context)
 		
+#USUARIOS       
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:iniAdmin')
 @require_http_methods(['GET'])
@@ -274,9 +298,9 @@ def create_user(request):
 
     form = UserForm(request.POST)
 
-    request = FormValidator.validateForm(form, request)
+    request2 = FormValidator.validateForm(form, request)
 
-    if not request:
+    if not request2:
 
         name = form.cleaned_data['name']
 
@@ -287,6 +311,8 @@ def create_user(request):
         user = User.objects.create_user(username=name, password=password)
 
         group.user_set.add(user)
+
+        request.session['user_inserted'] = "True"
 
         return HttpResponseRedirect(reverse('users:index'))
 
@@ -316,6 +342,19 @@ def user_index(request):
         'groups' : groups,
     }
 
+    if request.session.has_key('user_inserted'):
+
+        context.update({'user_inserted':request.session.get('user_inserted')})
+
+        del request.session['user_inserted']
+
+    elif request.session.has_key('user_edited'):
+
+        context.update({'user_edited':request.session.get('user_edited')})
+
+        del request.session['user_edited']
+
+
     return render(request, 'Admin/Users/index_user.html', context)
 
 
@@ -330,21 +369,29 @@ def user_index_filter(request):
 
     users = User.objects.all()
 
-    groups = Group.objects.all()
-
     if userType != "Todos":
         users = User.objects.filter(groups__name=userType)
 
     if username != '':
         users = User.objects.filter(username = username)
 
-    context = {
-        'users': users,
-        'groups' : groups,
-    }
+    list = []
 
-    return render(request, 'Admin/Users/index_user.html', context)
+    for user in users: #populate list
+        if(user.groups.all().count() > 1):
+             list.append({'name':user.username, 'group': 'usuario suspendido', 'id':user.id})
 
+        else:
+            group=user.groups.all().values()[0].get('name')
+            list.append({'name':user.username, 'group': group, 'id':user.id})
+
+    recipe_list_json = json.dumps(list) #dump list as JSON
+
+    return HttpResponse(recipe_list_json, 'application/javascript')
+
+
+
+#VERIFICACIONES
 @login_required
 @require_http_methods(['POST'])
 def verify_user(request):
@@ -425,3 +472,4 @@ def verify_user_member(request):
             return  HttpResponse("false")
 
         return  HttpResponse("true")
+

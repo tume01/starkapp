@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block head_title %}
-Admin: sedes
+Admin: Sedes
 {% endblock %}
 
 {% block head_dahsboard %}
@@ -36,7 +36,6 @@ Crear sede
         </div>
         <!-- Block v2 -->
         <div class="block-content">
-            <!--<form class="form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >-->
             <form class="js-validation-bootstrap form-horizontal push-10-t push-10" action='{% url "headquarters:create_insert" %}' method="post" >
             {% csrf_token %}
                 <div class="row">
@@ -203,8 +202,6 @@ Crear sede
         App.initHelpers(['datepicker', 'datetimepicker', 'colorpicker', 'maxlength', 'select2', 'masked-inputs', 'rangeslider', 'tags-inputs']);
     });
 </script>
-
-
 
 <script src='{% static "assets/js/Admin/Headquarters/headquarters_forms_validations.js" %}'></script>
 <script src='{% static "assets/js/tablas.js" %}'></script>
