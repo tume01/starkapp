@@ -4,6 +4,7 @@ from . import views
 app_name = 'members'
 
 urlpatterns = [
+	url(r'^average/punctuation', views.average_punctuation, name='average_punctuation'),
 	url(r'^register/punctuation', views.register_punctuation, name='register_punctuation'),
 	url(r'^calculate/punctuation', views.calculate_punctuation, name='calculate_punctuation'),
     url(r'^filter', views.member_filter, name='filter'),

@@ -513,5 +513,24 @@ def register_punctuation(request):
     member.save()
 
     return HttpResponse(json.dumps(req), content_type='application/json')
+
+
+@login_required
+@require_http_methods(['POST'])
+def average_punctuation(request):
+    req = json.loads( request.body.decode('utf-8') )
+    members_service = MembersService()
+
+    members = members_service.getMembers()
+
+    total = 0
+    for m in members:
+        print(m.punctuation)
+        total += m.punctuation
+
+    req_send = {}
+    req_send["average"] = int(total/members.count())
+
+    return HttpResponse(json.dumps(req_send), content_type='application/json')
     
 

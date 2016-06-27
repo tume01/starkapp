@@ -447,6 +447,10 @@
                                 <li>
                                     <a href='{% url 'members:index' %}'>Miembros</a>
                                 </li>
+
+                                <li>
+                                    <a id='averagePunctuation' href='#' onclick='javascript:averageP();return false;'>Puntuacion</a>
+                                </li>
                             </ul>
                         </li>
                         {% endif %}
@@ -665,6 +669,7 @@
         <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
 
         <script src='{% static "assets/js/plugins/sweetalert/sweetalert.min.js" %}'></script>
+        <script src='{% static "assets/js/punctuation_admin.js" %}'></script>
 
 {% block scripts %}
 {% endblock %}
