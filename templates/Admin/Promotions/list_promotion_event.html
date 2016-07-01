@@ -100,7 +100,7 @@ Lista de promociones
                         </tr>
                     </thead>
                     <tbody id='tbodyid'>
-                        {% for promotion,name in promotions %}         
+                        {% for promotion,name,start,end in promotions %}         
                         <tr>
                             <td class="font-w600">{{name}}</td>
                             <td class="font-w600">{{promotion.percentage}}</td>

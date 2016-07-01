@@ -1,6 +1,9 @@
 from repositories import FieldReservationRepository
 from django.utils import timezone
 import datetime, calendar, time,collections
+import pytz
+from django.utils import timezone
+from starkapp import settings
 
 class FieldReservationService(object):
 
@@ -24,11 +27,16 @@ class FieldReservationService(object):
         return self.__field_reservation_repository.filter(filters)
 
     def getDayAvailableHours(self, courts,courtHeadquarterId, courtTypeId, start, end):
+        timezone.activate(pytz.timezone('America/New_York'))
+
         startDate = datetime.datetime.fromtimestamp(start)
         endDate = datetime.datetime.fromtimestamp(end)
+        dt = datetime.datetime.utcnow()
+        print("UTC")
+        print(dt)
         num_days = (endDate - startDate).days + 1
 
-        hours = [12,13,14,15,16,17,18,19,20,21,22]
+        hours = [5,6,7,8,9,10,11,12,13,14,15]
 
         days = []
 
@@ -58,7 +66,7 @@ class FieldReservationService(object):
         for r in reservations:
             hours = r.reservation_duration
             while hours > 0:
-                current_date = r.reservation_date + datetime.timedelta(hours=hours)
+                current_date = r.reservation_date + datetime.timedelta(hours=hours+1)
                 current_date = datetime.datetime(current_date.year,current_date.month,current_date.day,current_date.hour,current_date.minute,current_date.second)   
                 reservations_list.append(current_date)
                 hours = hours - 1

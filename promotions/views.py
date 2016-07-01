@@ -48,7 +48,7 @@ def index(request):
 
         del request.session['promotion_edited']
 
-    return render(request, 'Admin/Promotions/index_promotion.html', context) 
+    return render(request, 'Admin/Promotions/index_promotion.html', context)
 
 
 @login_required
@@ -59,7 +59,6 @@ def list_promotion_event(request):
 
     event_promotion_service = EventPromotionService()
     promotions = event_promotion_service.getEventPromotion()
-    
 
     promotion_names=[]
     promotion_start=[]
@@ -87,7 +86,7 @@ def list_promotion_bungalow(request):
 
     bungalow_promotion_service = BungalowPromotionService()
     promotions = bungalow_promotion_service.getBungalowPromotion()
-    
+
     promotion_names=[]
     promotion_start=[]
     promotion_end=[]
@@ -121,7 +120,7 @@ def list_promotion_membership(request):
     promotion_end=[]
 
     for promotion in promotions:
-        
+
         promotion_super = promotion_service.getPromotion(promotion.promotion_id)
         promotion_names.append(promotion_super.description)
         promotion_start.append(promotion_super.startDate)
@@ -270,7 +269,7 @@ def index_edit_promotion_bungalow(request):
 
     bungalow_promotion_service = BungalowPromotionService()
 
-    promotion = bungalow_promotion_service.getBungalowPromotion(id_promotion)
+    promotion = bungalow_promotion_service.findBungalowPromotion(id_promotion)
 
     context = {
         'promotion' : promotion_super,
@@ -293,7 +292,7 @@ def index_edit_promotion_event(request):
 
     event_promotion_service = EventPromotionService()
 
-    promotion = bungalow_promotion_service.getEventPromotion(id_promotion)
+    promotion = event_promotion_service.findEventPromotion(id_promotion)
 
     context = {
         'promotion' : promotion_super,
@@ -319,11 +318,7 @@ def delete_promotion(request):
 
     promotion_service.update(id_edit, edit_data)
 
-    request.session['promotion_deleted'] = "True"
-
-    return HttpResponseRedirect(reverse('promotions:index'))
-
-
+    return HttpResponseRedirect(reverse('promotions:list_membership'))
 
 @login_required
 @permission_required('dummy.permission_admin', login_url='login:ini')
@@ -335,7 +330,7 @@ def create_promotion(request):
     insert_data = {}
 
     promotion_start_date = datetime.datetime.strptime(request.POST.get("start_date"),"%m/%d/%Y %H:%M %p").date()
-    
+
     promotion_end_date = datetime.datetime.strptime(request.POST.get("end_date"),"%m/%d/%Y %H:%M %p").date()
 
     insert_data["description"] = request.POST.get('description')
@@ -355,7 +350,7 @@ def create_promotion(request):
     membership_percentage_array = request.POST.getlist('membership_percentage')
 
     membership_id_array = request.POST.getlist('membership_type')
-    
+
 
     #INTERMEDIATE TABLE BUNGALOW, MEMBERSHIP AND PROMOTION
 
@@ -378,13 +373,13 @@ def create_promotion(request):
 
     membership_event_id_array = request.POST.getlist('membership_event_type')
 
-    
+
     #Save promotions for membership
     if  membership_id_array:
 
         membership_promotion_service = MembershipPromotionService()
         insert_promotion_membership = {}
-        
+
         for membership_id,percentage in zip(membership_id_array,membership_percentage_array):
 
             insert_promotion_membership['membership_type_id'] = membership_id
@@ -497,8 +492,8 @@ def edit_promotion_bungalow(request):
         'membership_type_id' : membership_id
     }
 
-    promotion = bungalow_promotion_service.filter(filters)
-        
+    promotions = bungalow_promotion_service.filter(filters)
+
     edit_data = {}
 
     edit_data["percentage"] = request.POST.get('percentage')
@@ -533,7 +528,7 @@ def edit_promotion_event(request):
         'membership_type_id' : membership_id
     }
 
-    promotion = event_promotion_service.filter(filters)
+    promotions = event_promotion_service.filter(filters)
 
     edit_data = {}
 
