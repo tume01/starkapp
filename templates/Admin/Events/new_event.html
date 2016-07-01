@@ -113,9 +113,9 @@ Nueva Inscripción
                                             <label class="col-xs-12" for="environment">Ambientes</label>
                                             <div class="col-md-6">
                                                 <div class="input-group">
-                                                    <span class=""></span>
+                                                    <select multiple="" name="environment">
                                                         {% for environment in environments%}
-                                                            <input type="radio" name="environment" value="{{environment.id}}">{{environment.name}}</input>
+                                                            <option  value="{{environment.id}}">{{environment.name}}</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>

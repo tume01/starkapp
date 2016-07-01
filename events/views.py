@@ -118,7 +118,7 @@ def create_event(request):
 
         insert_data["description"] = form.cleaned_data.get('description')
 
-        #insert_data["environment_id"] = form.cleaned_data.get('environment')
+        environment_list = request.POST.getlist('environment') 
 
         member_service = MembersService()
 
@@ -148,7 +148,10 @@ def create_event(request):
 
         event_service = EventsService()
 
-        event_service.create(insert_data)
+        for enviroment in environment_list:
+            
+            insert_data["environment_id"] = environment
+            event_service.create(insert_data)
 
         return HttpResponseRedirect(reverse('events:index'))
 
