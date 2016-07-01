@@ -1,0 +1,43 @@
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th class="text-center">Hab.</th>
+            <th class="text-center">Socio</th>
+            <th class="text-center">Sede</th>
+            <th class="text-center">Entrada</th>
+        </tr>
+    </thead>
+    <tbody id="table-content">
+        {% for raffle in raffles %}
+            <tr>
+                <td class="text-center" id="reservation_id">{{raffle.bungalow_number}}</td>
+                <td class="text-center">{{ raffle.member_name }}</td>
+                <td class="text-center">{{ raffle.bungalow_headquarter_name }}</td>
+                <td class="text-center">{{ raffle.arrival_date|date:'d/m/Y'}}</td>
+
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-sm-offset-6 col-sm-6">
+        <div class="dataTables_paginate paging_simple_numbers">
+            <ul class="pagination">
+                {% if raffles.has_previous %}
+                <li class="paginate_button" onclick="prevPage()" id="prev-page"><i class="fa fa-angle-left"></i></li>
+                {% else %}
+                <li class="paginate_button" onclick="return false" id="prev-page"><i class="fa fa-angle-left"></i></li>
+                {% endif %}
+
+                <li class="paginate_button active" id="current-page">Página <strong id=page>{{ raffles.number }}</strong> de <strong>{{raffles.paginator.num_pages}}</strong></li>
+
+                {% if raffles.has_next %}
+                <li class="paginate_button" onclick="nextPage()" id="next-page"><i class="fa fa-angle-right"></i></li>
+                {% else %}
+                <li class="paginate_button" onclick="return false" id="next-page"><i class="fa fa-angle-right"></i></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>

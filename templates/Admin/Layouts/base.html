@@ -121,7 +121,10 @@
                                     <a href="{% url 'bungalowReservation:admin_create_index'%}">Reservar Bungalow</a>
                                 </li>
                                 <li>
-                                    <a href="Make_Sorteo.html">Sorteo de bungalows</a>
+                                    <a href="{% url 'bungalowRaffle:admin_index'%}">Sorteo de bungalows</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'bungalowRaffle:admin_create_index'%}">Crear Sorteo de bungalow</a>
                                 </li>
                                 <li>
                                     <a href="Special_Create_Bungalow_Res.html">Reserva especial Bungalows</a>
@@ -296,6 +299,10 @@
                                 <li>
                                     <a href='{% url 'members:index' %}'>Miembros</a>
                                 </li>
+
+                                <li>
+                                    <a id='averagePunctuation' href='#' onclick='javascript:averageP();return false;'>Puntuacion</a>
+                                </li>
                             </ul>
                         </li>
                         {% endif %}
@@ -349,6 +356,17 @@
                                 </li>
                                 <li>
                                     <a href='{% url "fine:create_type_index" %}'>Registrar tipo</a>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+
+                        {% if perms.dummy.permission_admin %}
+                         <li>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-warning"></i><span class="sidebar-mini-hide">Políticas</span></a>
+                            <ul>
+                                <li>
+                                   <a href='{% url 'politics:index' %}'>Ver políticas</a>
                                 </li>
                             </ul>
                         </li>
@@ -514,6 +532,7 @@
         <script src='{% static "assets/js/plugins/jquery-validation/additional-methods.min.js" %}'></script>
 
         <script src='{% static "assets/js/plugins/sweetalert/sweetalert.min.js" %}'></script>
+        <script src='{% static "assets/js/punctuation_admin.js" %}'></script>
 
 {% block scripts %}
 {% endblock %}

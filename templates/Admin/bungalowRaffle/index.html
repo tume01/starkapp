@@ -1,0 +1,69 @@
+{% extends 'Admin/Layouts/base.html' %}
+{% load staticfiles %}
+
+{% block head_title %}
+Admin: Sorteo de bungalows
+{% endblock %}
+
+{% block head_dahsboard %}
+Sorteo de bungalows
+{% endblock %}
+
+{% block function_head_dahsboard %}
+Lista de sorteos
+{% endblock %}
+
+{% block sub_head_dahsboard %}
+Sorteo de bungalows
+{% endblock %}
+
+{% block function_sub_head_dahsboard %}
+List de Sorteos
+{% endblock %}
+
+{% block content %}
+
+<!-- A PARTIR DE AQUÍ ENTRAN A MODIFICAR SU CONTENIDO -->
+
+<!-- Page Content -->
+<div class="content">
+
+    <!-- Table Header (Filters) -->
+    <div class="block">
+        <div class="block-content">
+            <form class="form" id="filters-form" action="{% url 'bungalowRaffle:admin_index' %}" method="post" onsubmit="return false;">
+                {% csrf_token %}
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-xs-12 control-label">Seleccione una sede</label>
+                            <select class="form-control" id="headquarter_id" size="1">
+                                <option value="-1">Todas</option>
+                                {% for headquarter in headquarters %}
+                                <option value="{{headquarter.id}}">{{headquarter.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- END Table Header (Filters) -->
+
+    <!-- Simple Table Full -->
+    <div class="block block-bordered">
+        <div class="block-content" id="table-content">
+            {% include 'Admin/bungalowRaffle/index_table.html' %}
+        </div>
+    </div>
+    <!-- END Simple Table Full -->
+</div>
+<!-- END Page Content -->
+{% endblock %}
+
+{% block scripts %}
+<script src='{% static "assets/js/Admin/bungalowRaffle/index.js" %}'></script>
+
+{% endblock %}

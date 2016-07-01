@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'promotions',
     'bungalow',
     'bungalow_reservation',
+    'bungalow_raffle',
     'bungalow_type',
     'environment',
     'memberships',
