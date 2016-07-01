@@ -58,7 +58,7 @@ def refresh_events(request):
     environment_type = 1 #default for courts
 
     environment_service = EnvironmentService()
-    
+
     courts = environment_service.getEnvironment()
 
     courts = courts.filter(environment_type_id=environment_type)
@@ -135,15 +135,15 @@ def reservate_court(request):
         insert_data['court_name']           = "Cancha de Fútbol"
     elif court_type == 1:
         insert_data['court_name']           = "Cancha de Básquet"
-    else : 
-        insert_data['court_name']           = "Cancha de Voley"
+    else :
+        insert_data['court_name']           = "Cancha de Tenis"
 
     insert_data['reservation_duration']     = request.POST.get('court_duration')
     insert_data['reservation_date']         = datetime.datetime(int(day[0]),int(day[1]),int(day[2]),int(hour[0]),int(hour[1]),int(hour[2]))
-    
+
     member_service                          = MembersService()
-    user                                    = member_service.getMemberByUser(request.user)  
-    
+    user                                    = member_service.getMemberByUser(request.user)
+
     insert_data['member_id']                = user.id
     insert_data['member_membership_name']   = user.membership
     insert_data['member_name']              = user.name
@@ -153,6 +153,12 @@ def reservate_court(request):
     insert_data['status']                   = 1
 
     field_reservation_service               = FieldReservationService()
+
+    filters()
+
+    court = field_reservation_service.filter()
+
+    if(insert_data['reservation_date'] == )
 
     field_reservation_service.create(insert_data)
 
