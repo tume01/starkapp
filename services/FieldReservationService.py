@@ -40,11 +40,10 @@ class FieldReservationService(object):
 
         days = []
 
-
         for delta in range(0,num_days):
             for hour in hours:
                 #print (startDate + datetime.timedelta(days=delta) +  datetime.timedelta(hours=hour))
-                if(startDate + datetime.timedelta(days=delta) +  datetime.timedelta(hours=hour) > datetime.datetime.today()):
+                if(startDate + datetime.timedelta(days=delta) +  datetime.timedelta(hours=hour) > datetime.datetime.today() - datetime.timedelta(hours=5)):
                     days.append(startDate + datetime.timedelta(days=delta) + datetime.timedelta(hours=hour))
 
         reservations = self.getReservations()
