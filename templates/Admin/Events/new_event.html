@@ -76,9 +76,10 @@ Nueva Inscripción
                                             <div class="col-md-6">
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="fa fa-building"></i></span>
-                                                    <input class="form-control" type="number" id="user" name="user" value="" placeholder="Id del usuario" >
+                                                    <input class="form-control" type="number" id="user" data-url="{% url 'members:getMembers' %}"  name="document_number" value="" placeholder="Id del usuario" >
                                                 </div>
                                             </div>
+                                            <label id="user_name"></label>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
