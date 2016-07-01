@@ -1,6 +1,7 @@
 from repositories.BungalowReservationRepository import BungalowReservationRepository
 import datetime, calendar, collections
 from services.BungalowService import BungalowService
+from services.MemberService import MembersService
 
 
 class BungalowReservationService(object):
@@ -33,7 +34,7 @@ class BungalowReservationService(object):
         return cls._repository.find(id)
 
     @classmethod
-    def getMonthAvailableDaysBF(cls, bungalowHeadquarterId, bungalowTypeId, start, end, admin = False):
+    def getMonthAvailableDaysBF(cls, bungalowHeadquarterId, bungalowTypeId, start, end, admin=False):
         startDate = datetime.datetime.fromtimestamp(start)
         endDate = datetime.datetime.fromtimestamp(end)
         num_days = (endDate - startDate).days + 1
@@ -97,6 +98,7 @@ class BungalowReservationService(object):
 
         print(returnValue)
         return returnValue
+
     #
     # @classmethod
     # def getMonthAvailableDays(cls, bungalowHeadquarterId, bungalowTypeId, start, end):
@@ -146,16 +148,62 @@ class BungalowReservationService(object):
     #              } for day in days if (day[1] != 0)]
 
     @classmethod
+    def getDurationPerBungalow(cls, bungalow_id, arrival_date):
+        reservations = cls.getReservations()
+        reservations.filter(bungalow_id=bungalow_id)
+        days = []
+        for day in range(1,5):
+            date = arrival_date + datetime.timedelta(days=day)
+            r = reservations.filter(arrival_date=date)
+            if len(r) == 0:
+                days.append(day)
+            else:
+                break
+
+        return days
+
+    @classmethod
+    def isValidReservation(cls, bungalowId, memberId, arrival_date, departure_date):
+
+        # if not MembersService().getMember(memberId).isActive():
+        #     return False
+
+        d1 = arrival_date
+        d2 = departure_date
+        dd = [d1 + datetime.timedelta(days=d) for d in range((d2 - d1).days + 1)]
+
+        for date in dd:
+            print(date)
+            if cls.isBungalowTaken(bungalowId, date):
+                return False
+
+        return True
+
+    @classmethod
+    def isBungalowTaken(cls, bungalowId, date):
+
+        reservations = cls.getReservations()
+        reservations.filter(bungalow_id=bungalowId)
+        print(date.strftime('%Y%m%d'))
+        for r in reservations:
+            print(r.getReservationDays())
+            if int(date.strftime('%Y%m%d')) in r.getReservationDays():
+                return True
+
+        print("HEEERREEE")
+        return False
+
+
+    @classmethod
     def getReservationsByMember(cls, member_id):
         filter_data = {}
         filter_data['member_id'] = member_id
-        filter_data['status'] = 2 #reservation in use
+        filter_data['status'] = 2  # reservation in use
         return cls._repository.filter(filter_data)
 
     @classmethod
     def getReservationsByBungalow(cls, bungalow_id):
         filter_data = {}
         filter_data['bungalow_id'] = bungalow_id
-        filter_data['status'] = 2 #reservation in use
+        filter_data['status'] = 2  # reservation in use
         return cls._repository.filter(filter_data)
-

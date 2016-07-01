@@ -228,7 +228,7 @@ def admin_create_reserve_index(request):
         'bungalowTypes': bungalowTypes,
         'members': members,
         'headquarters': headquarters,
-        'durationOptions': [1, 2, 3, 4],
+        'durationOptions': BungalowReservationService.getDurationPerBungalow(bungalow_id, date),
         'titulo': 'titulo'
     }
 
@@ -240,7 +240,7 @@ def admin_create_reserve(request):
     bungalow = BungalowService.findBungalow(request.POST['bungalow_id'])
     member = MembersService().getMember(request.POST['member_id'])
     arrival_date = datetime.datetime.strptime(request.POST['arrival_date'], '%d/%m/%Y')
-    departure_date = arrival_date + datetime.timedelta(days=int(request.POST['duration']))
+    departure_date = arrival_date + datetime.timedelta(days=(int(request.POST['duration'])-1))
 
     create_new_reservation(bungalow, member, arrival_date, departure_date)
 
@@ -365,7 +365,7 @@ def user_create_reserve_index(request):
         'reservation': reservation,
         'bungalowTypes': bungalowTypes,
         'headquarters': headquarters,
-        'durationOptions': [1, 2, 3, 4],
+        'durationOptions': BungalowReservationService.getDurationPerBungalow(bungalow_id, date),
         'titulo': 'titulo'
     }
 
@@ -377,7 +377,7 @@ def user_create_reserve(request):
     bungalow = BungalowService.findBungalow(request.POST['bungalow_id'])
     member = MembersService().getMemberByUserId(request.user)
     arrival_date = datetime.datetime.strptime(request.POST['arrival_date'], '%d/%m/%Y')
-    departure_date = arrival_date + datetime.timedelta(days=int(request.POST['duration']))
+    departure_date = arrival_date + datetime.timedelta(days=(int(request.POST['duration'])-1))
 
     bungalow_reservation = create_new_reservation(bungalow, member, arrival_date, departure_date)
 
@@ -387,6 +387,10 @@ def user_create_reserve(request):
 # Helpers
 def create_new_reservation(bungalow, member, arrival_date, departure_date):
     insert_data = {}
+
+    if not BungalowReservationService.isValidReservation(bungalow.id, member.id, arrival_date, departure_date):
+        return None
+
     insert_data["status"] = 0
 
     insert_data["bungalow_id"] = bungalow.id
@@ -407,7 +411,9 @@ def create_new_reservation(bungalow, member, arrival_date, departure_date):
     insert_data["arrival_date"] = arrival_date
     insert_data["departure_date"] = departure_date
 
-    return BungalowReservationService.create(insert_data)
+    BungalowReservationService.create(insert_data)
+
+    return 1
 
 
 # Unimplemented
