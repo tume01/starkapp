@@ -22,65 +22,6 @@ Lista de solicitudes de eventos
 
 {% block content %}
 <div class="content">
-    <form class="form" action="{% url 'events:userSignup_index' %}" method="get">
-        <div class="block">
-            <div class="block-content">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label">Nombre</label>
-                                <input class="form-control" type="text" id="name" name="name">
-                            </div>
-                        </div>
-                        <div class="col-lg-1">
-                            <div class="form-group">
-                                <label class="col-sm-12 control-label">Capacidad</label>
-                                <input class="form-control" type="text" id="attendance" name="attendance">
-                            </div>
-                        </div>
-                        <div class="col-lg-4">
-
-                            <div class="form-group">
-                                <label class="col-xs-12 control-label" for="example-daterange1">Rango de fechas</label>
-                                <div class="col-xs-12">
-                                    <div class="input-daterange input-group" data-date-format="mm/dd/yyyy">
-                                        <input class="form-control input-datetime" type="text" id="start_date" name="start_date" placeholder="Desde">
-                                        <span class="input-group-addon"><i class="fa fa-chevron-right"></i></span>
-                                        <input class="form-control input-datetime" type="text" id="end_date" name="end_date" placeholder="hasta">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="form-group">
-                                <label class="col-xs-12" for="example-select">Tipo de Evento</label>
-                                <div class="col-sm-12">
-                                    <select class="form-control" id="event_type" name="event_type" size="1">
-                                        <option value>Todas los eventos</option>
-                                        {% for event_type in event_types %}
-                                        <option value="{{ event_type.id }}">{{ event_type.name }}</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="block-content">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-lg-3 col-lg-offset-9">
-                            <div class="col-lg-12 text-right">
-                                <button class="btn btn-sm btn-primary" type="submit">Buscar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-<div class="content">
     <div class="block block-bordered">
         <div class="block-content">
             <div class="row">
@@ -88,22 +29,22 @@ Lista de solicitudes de eventos
                     <div class="col-xs-4">
                         <a href="{% url 'events:userEvent_select' event.id %}" class="block block-link-hover2 block-bordered">
                             <div class="block-header">
-                                <h3 class="block-title text-center">{{event.name}}</h3>
+                                <h5 class="block-title text-center">{{event.name}}</h5>
                             </div>
                             <img src="{{image_url}}{{event.photo}}" class="img-responsive img-event-preview">
                             <div class="block-content">
                                 <div class="row items-push text-center">
                                     <div class="col-xs-4">
                                         <div class="push-5"><i class="si si-calendar fa-2x"></i></div>
-                                        <div class="h5 font-w300 text-muted">Inicio: {{event.start_date|date:"d/m/Y H:i"}}</div>
+                                        <div class="font-event font-w300 text-muted">Inicio: {{event.start_date|date:"d/m/Y H:i"}}</div>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="push-5"><i class="fa fa-money fa-2x"></i></div>
-                                        <div class="h5 font-w300 text-muted">Precio Miembro :S/.{{event.price_member}}</div>
+                                        <div class="font-event font-w300 text-muted">Precio Miembro :S/.{{event.price_member}}</div>
                                     </div>
                                     <div class="col-xs-4">
                                         <div class="push-5"><i class="fa fa-money fa-2x"></i></div>
-                                        <div class="h5 font-w300 text-muted">Precio Invitado :S/.{{event.price_invited}}</div>
+                                        <div class="font-event font-w300 text-muted">Precio Invitado :S/.{{event.price_invited}}</div>
                                     </div>
                                 </div>
                             </div>

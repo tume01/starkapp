@@ -3,5 +3,9 @@
 }
 
 .img-event-preview{
-    height: 250px;   
+    height: 250px;
+}
+
+.font-event{
+    font-size: 10px;
 }

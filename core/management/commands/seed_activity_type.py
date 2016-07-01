@@ -29,63 +29,63 @@ def insertActivity():
 
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at1, name='Exposicion de Cometas',
-                        attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                        attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at1, name='Show de globos Aeroestaticos',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at1, name='Busqueda del Tesoro de Verano',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at1, name='Muestra de Pinturas del Curso de Arte',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at1, name='Exposicion botonica',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at2, name='Exposicion de pinturas Curso de Arte 1',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at2, name='Exposicion Curso de Origami',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at2, name='Exposicion Curso de Pintura con las manos',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at3, name='Fiesta Fin de Verano',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at3, name='Fiesta Fin de Finales',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at3, name='Fiesta Aniversario Club',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at4, name='Misturita Verano',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at5, name='Concierto curso de violin 1',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at5, name='Concierto Curso de piano 1',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at5, name='Concierto Curso de bonda 1',
-                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9))
+                    attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
     a1.save()
 
 
