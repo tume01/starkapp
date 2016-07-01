@@ -158,8 +158,6 @@ def reservate_court(request):
 
     court = field_reservation_service.filter()
 
-    if(insert_data['reservation_date'] == )
-
     field_reservation_service.create(insert_data)
 
     context={
