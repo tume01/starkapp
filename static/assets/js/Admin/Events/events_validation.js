@@ -115,5 +115,39 @@ var ProviderFormValidation = function() {
     };
 }();
 
+$(document).ready(function() {
+    $('#user').change(function() {
+        var user_id = $("#user").val();
+        var url = $("#user").data('url');
+        var requestData = {
+            'document_number' : user_id
+        }
+        console.log(url);
+        $.ajax({
+            url : url, // the endpoint
+            type : "POST", // http method
+            data : requestData, // data sent with the post request
+
+            // handle a successful response
+            success : function(data) {
+                if(data)
+                {
+                    console.log(data);
+                    var full_name = data.name + " " + data.lastName + " "+data.secondLastName;
+                    $("#user_name").html(full_name);
+                }
+                else
+                {
+                    $("#user_name").html("No se encuentra el usuario");
+                }
+
+            },
+            error : function(xhr,errmsg,err) {
+                console.log("ERROR"); // another sanity check
+            }
+        });
+    });
+});
+
 // Initialize when page loads
 jQuery(function(){ ProviderFormValidation.init(); });

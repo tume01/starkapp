@@ -120,7 +120,7 @@ def create_event(request):
 
         environment_list = request.POST.getlist('environment') 
 
-        user_id = request.POST.get('user')
+        user_id = request.POST.get('document_number')
 
         filters = {
             'document_number' : user_id
@@ -138,10 +138,7 @@ def create_event(request):
 
             return render(request,'Admin/Events/new_event.html',context)
 
-
-        creator = member_service.getMemberByUser(member)
-
-        insert_data["creator_id"] = creator.id
+        insert_data["creator_id"] = member[0].pk
 
         insert_data["ruc"]  = request.POST.get('ruc')
 
@@ -165,10 +162,11 @@ def create_event(request):
 
         event_service = EventsService()
 
-        for enviroment in environment_list:
+        event = event_service.create(insert_data)
+        
+        for enviroment_id in environment_list:
             
-            insert_data["environment_id"] = environment
-            event_service.create(insert_data)
+            event.environment.add(enviroment_id)
 
         return HttpResponseRedirect(reverse('events:index'))
 
