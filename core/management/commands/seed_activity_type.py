@@ -27,6 +27,8 @@ def insertActivity():
     at5 = ActivityType(name= 'Musical', price= 300, description= 'Actividades musicales')
     at5.save()
 
+    at6 = ActivityType(name= 'Curso', price= 300, description= 'Cursos con pago')
+    at6.save()
 
     a1 = Activity(deleted_at=None, price=100, enviroment=getFirstEnviroment(), activity_type=at1, name='Exposicion de Cometas',
                         attendance=10, start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), photo='activities/actividad1.jpg')
