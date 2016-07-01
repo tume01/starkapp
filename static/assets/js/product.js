@@ -43,7 +43,7 @@ $('#SaveProduct').click(function(){
 		//console.log('form');
 		//console.log($('#selectProductType').val());
 	}
-	else if($('#actualStock').val() <= $('#minStock').val()){
+	else if(parseInt($('#actualStock').val()) <= parseInt($('#minStock').val())){
 		swal({
             title: "",
             text: "El stock actual debe superar al minimo.",
@@ -51,6 +51,70 @@ $('#SaveProduct').click(function(){
         });
 	}
 	else{
+
+		swal({
+                title: "Creacion de producto",
+                text: "Se procedera a crear el producto. ¿Desea continuar?",
+                type: "info",
+                showCancelButton: true,
+                //confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Aceptar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+        },
+        function(){ 
+		    swal({
+                title: "Producto creado!",
+                text: "",
+                type: "success",
+                //showCancelButton: true,
+                //confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Aceptar",
+                //cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){
+            	console.log('ajax');
+				data = {};
+				data.name = $('#name').val();
+				data.actualStock = $('#actualStock').val();
+				data.minStock = $('#minStock').val();
+				data.productType = $('#selectProductType').val();
+				data.description = $('#description').val();
+				data.providers = $('#select2Provider').val();
+				data.price = $('#price').val();
+
+				console.log(data);
+
+				var xhr = $.ajax({
+				    type: "POST", 
+				    url: "/products/create/insert/", //url que procesa
+				    dataType: "text",
+				    data: JSON.stringify(data),
+				    contentType: "application/json; charset=utf-8",
+			    });
+
+				xhr.done(function(data) {
+					console.log('done='+data);
+					window.location = "/products";
+			    });
+
+			    xhr.fail(function(xhr, status, text){
+			        console.log("Error " + xhr.readyState + " " +text);
+
+			    });
+
+			    return xhr;
+            });
+
+            
+		});
+
+
+
+/*
 		console.log('ajax');
 		data = {};
 		data.name = $('#name').val();
@@ -82,6 +146,7 @@ $('#SaveProduct').click(function(){
 	    });
 
 	    return xhr;
+	    */
 	}
 });
 
