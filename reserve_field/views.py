@@ -154,10 +154,6 @@ def reservate_court(request):
 
     field_reservation_service               = FieldReservationService()
 
-    filters()
-
-    court = field_reservation_service.filter()
-
     field_reservation_service.create(insert_data)
 
     context={
