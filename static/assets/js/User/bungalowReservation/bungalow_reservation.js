@@ -140,6 +140,11 @@ $('#SaveExtraServices').click(function(){
 
 });
 
+$('#CancelExtraSaveServices').click(function(){
+    console.log('cancel extra service');
+    window.location = '/bungalowReservations/index';
+});
+
 
 /*CODE FOR AJAX***************************************************/
 function getCookie(c_name){

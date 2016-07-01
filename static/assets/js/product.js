@@ -413,6 +413,10 @@ function shopProduct(id, stock){
 				swal.showInputError("No hay stock suficiente");  
 				return false;   
 			}
+			else if(inputValue < 0){
+				swal.showInputError("Debe ingresar un valor positivo.");  
+				return false;
+			}
 			else{
 				data = {};
 				data.id = id;
