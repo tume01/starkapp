@@ -3,19 +3,23 @@ var ProductFormValidation = function() {
     var initValidationBootstrap = function(){
         jQuery('.js-validation-bootstrap').validate({
             ignore: [],
+            //ignore: '',
             errorClass: 'help-block animated fadeInDown',
             errorElement: 'div',
             errorPlacement: function(error, e) {
+                console.log('error');
                 jQuery(e).parents('.form-group > div').append(error);
             },
             highlight: function(e) {
                 var elem = jQuery(e);
+                console.log('high');
 
                 elem.closest('.form-group').removeClass('has-error').addClass('has-error');
                 elem.closest('.help-block').remove();
             },
             success: function(e) {
                 var elem = jQuery(e);
+                console.log('clean');
 
                 elem.closest('.form-group').removeClass('has-error');
                 elem.closest('.help-block').remove();

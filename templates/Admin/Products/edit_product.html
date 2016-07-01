@@ -52,7 +52,7 @@ Editar producto
                                         <div class="form-group">
                                             <div class="col-xs-12">
                                                 <label class="control-label" for="select2Provider">Proveedor</label> 
-                                                <select class="form-control" multiple="multiple" id="select2Provider" >
+                                                <select class="form-control" name="select2Provider" multiple="multiple" id="select2Provider" >
                                                     {% for p in all_providers %}
                                                         {% if p in product.provider.all %}
                                                         <option selected value="{{p.id}}">{{p.businessName}}</option>

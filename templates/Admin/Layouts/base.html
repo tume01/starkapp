@@ -239,7 +239,7 @@
                         {% endif %}
                         {% if perms.dummy.permission_servicio %}
                         <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos y Servicios</span></a>
+                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="fa fa-map-signs"></i><span class="sidebar-mini-hide">Productos</span></a>
                             <ul>
                                 <li>
                                     <a href='{% url "products:index" %}'>Consultar productos</a>
@@ -249,18 +249,6 @@
                                 </li>
                                 <li>
                                     <a href='{% url "products:index_in_out" %}'>Registro de Ingresos y Salidas</a>
-                                </li>
-                                <li>
-                                    <a href=''>Consultar servicios</a>
-                                </li>
-                                <li>
-                                    <a href=''>Crear servicios</a>
-                                </li>
-                                <li>
-                                    <a href=''>Consultar servicios</a>
-                                </li>
-                                <li>
-                                    <a href=''>Ver solicitudes de servicios</a>
                                 </li>
                             </ul>
                         </li>
@@ -301,7 +289,7 @@
                                 </li>
 
                                 <li>
-                                    <a id='averagePunctuation' href='#' onclick='javascript:averageP();return false;'>Puntuacion</a>
+                                    <a id='averagePunctuation' href='#' onclick='javascript:averageP();return false;'>Puntuación</a>
                                 </li>
                             </ul>
                         </li>

@@ -1,7 +1,24 @@
 $( document ).ready(function() {
 	console.log( "product ready!" );
 
-	$("#select2Provider").select2();
+	$("#select2Provider").select2().on("change", function (e) {
+    	$(this).valid(); //jquery validation script validate on change
+	}).on("select2:open", function() { //correct validation classes (has=*)
+    	if ($(this).parents("[class*='has-']").length) { //copies the classes
+        	var classNames = $(this).parents("[class*='has-']")[0].className.split(/\s+/);
+
+        	for (var i = 0; i < classNames.length; ++i) {
+            	if (classNames[i].match("has-")) {
+                	$("body > .select2-container").addClass(classNames[i]);
+            	}
+        	}
+    	} else { //removes any existing classes
+        	$("body > .select2-container").removeClass (function (index, css) {
+            return (css.match (/(^|\s)has-\S+/g) || []).join(' ');
+        	});            
+    	}
+	});
+
 	$('#f_select2Provider').select2();
     //$(".js-example-basic-multiple").select2();
 
@@ -37,7 +54,8 @@ $('#SaveProduct').click(function(){
 
 	if ($('#name').val() == '' || $('#actualStock').val() == '' || $('#minStock').val() == '' ||
 		$('#price').val() == '' || 
-		$('#selectProductType').val() == '' || $('#selectProductType').val() == null){
+		$('#selectProductType').val() == '' || 
+		$('#select2Provider').val() == null){
 
 		$('#formNewProduct').submit();
 		//console.log('form');
@@ -46,15 +64,15 @@ $('#SaveProduct').click(function(){
 	else if(parseInt($('#actualStock').val()) <= parseInt($('#minStock').val())){
 		swal({
             title: "",
-            text: "El stock actual debe superar al minimo.",
+            text: "El stock actual debe superar al mínimo.",
             type: "info"
         });
 	}
 	else{
 
 		swal({
-                title: "Creacion de producto",
-                text: "Se procedera a crear el producto. ¿Desea continuar?",
+                title: "Creación de producto",
+                text: "Se procederá a crear el producto. ¿Desea continuar?",
                 type: "info",
                 showCancelButton: true,
                 //confirmButtonColor: "#DD6B55",
@@ -157,7 +175,7 @@ $('#EditProduct').click(function(){
 
 	if ($('#name').val() == '' || $('#actualStock').val() == '' || $('#minStock').val() == '' ||
 		$('#price').val() == '' || 
-		$('#selectProductType').val() == '' || $('#selectProductType').val() == null){
+		$('#selectProductType').val() == '' || $('#select2Provider').val() == null){
 
 		$('#formEditProduct').submit();
 		//console.log('form');
@@ -166,14 +184,14 @@ $('#EditProduct').click(function(){
 	else if(parseInt($('#actualStock').val()) <= parseInt($('#minStock').val())){
 		swal({
             title: "",
-            text: "El stock actual debe superar al minimo.",
+            text: "El stock actual debe superar al mínimo.",
             type: "info"
         });
 	}
 	else{
 		swal({
-                title: "Edicion de producto",
-                text: "Se actualizara el producto seleccionado. ¿Desea continuar?",
+                title: "Edición de producto",
+                text: "Se actualizará el producto seleccionado. ¿Desea continuar?",
                 type: "info",
                 showCancelButton: true,
                 //confirmButtonColor: "#DD6B55",
@@ -387,7 +405,7 @@ function shopProduct(id, stock){
 	},
 	function(inputValue){         
 		if (!$.isNumeric(inputValue) || inputValue == "") {     
-			swal.showInputError("Debe ingresar un numero");     
+			swal.showInputError("Debe ingresar un número");     
 			return false;   
 		}
 		else{
@@ -439,9 +457,60 @@ function shopProduct(id, stock){
 	});
 }
 
-/*
-$('#formNewProduct').submit(function(){
-	console.log('form click');
-	SaveProduct();
-});
-*/
+function deleteProduct(id){
+	console.log('click delete');
+
+	swal({
+                title: "Eliminación de producto",
+                text: "Se procederá a eliminar el producto. ¿Desea continuar?",
+                type: "info",
+                showCancelButton: true,
+                //confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Aceptar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+        },
+        function(){ 
+		    swal({
+                title: "Producto eliminado!",
+                text: "",
+                type: "success",
+                //showCancelButton: true,
+                //confirmButtonColor: "#DD6B55",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Aceptar",
+                //cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+            function(){
+				data = {};
+
+				var xhr = $.ajax({
+				    type: "POST", 
+				    url: "/products/delete/update/" + id, //url que procesa
+				    dataType: "text",
+				    data: JSON.stringify(data),
+				    contentType: "application/json; charset=utf-8",
+			    });
+
+				xhr.done(function(data) {
+					console.log('done='+data);
+					window.location = "/products";
+			    });
+
+			    xhr.fail(function(xhr, status, text){
+			        console.log("Error " + xhr.readyState + " " +text);
+
+			    });
+
+			    return xhr;
+			   
+            });
+
+            
+		});
+
+
+}
+
