@@ -62,3 +62,12 @@ class BungalowReservation(models.Model):
 
         print(reserved)
         return reserved
+
+    def getReservationDates(self):
+        d1 = self.arrival_date
+        d2 = self.departure_date
+        dd = [d1 + datetime.timedelta(days=d) for d in range((d2 - d1).days + 1)]
+
+        reserved = [day for day in dd]
+
+        return reserved
