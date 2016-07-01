@@ -160,4 +160,4 @@ def reservate_court(request):
         'success' : 'El evento ha sido registrado de manera correcta'
     }
 
-    return render(request, 'User/courtReservation/index.html', context)
+    return HttpResponseRedirect(reverse('reserve_field:index'))
