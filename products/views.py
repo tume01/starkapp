@@ -23,7 +23,9 @@ def index(request):
     providers_service = ProvidersService()
     product_types_service = ProductTypesService()
 
-    products = product_service.getProducts()
+    filters = {}
+    filters['status'] = "1"
+    products = product_service.filter(filters)
     all_providers = providers_service.getActiveProviders()
     all_product_types = product_types_service.getProductTypes()
 
@@ -134,7 +136,7 @@ def edit_product(request, id):
 
     return HttpResponse(json.dumps(req), content_type='application/json')
 
-@require_http_methods(['GET'])
+@require_http_methods(['POST'])
 def delete_product(request, id):
 
     product_service = ProductsService()

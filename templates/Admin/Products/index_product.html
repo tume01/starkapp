@@ -177,8 +177,10 @@ Lista de productos
                                 <td class="text-center">    
                                     <div class="btn-group">
                                         <a href='{% url "products:edit" p.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Editar Producto"><i class="fa fa-pencil"></i></button></a>
-
+                                        <!--
                                         <a href='{% url "products:delete" p.id %}'><button class="btn btn-xs btn-default" type="button" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button></a>
+                                        -->
+                                        <a href='#'><button class="btn btn-xs btn-default" type="button" onclick="javascript:deleteProduct({{p.id}})" data-toggle="tooltip" title="Borrar Producto"><i class="fa fa-times"></i></button></a>
                                     </div>
                                 </td>
                             </tr>

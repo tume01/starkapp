@@ -15,7 +15,7 @@ $( document ).ready(function() {
     		console.log('entro!');
 
 	    	swal({   
-	    		title: "Puntuacion!",   
+	    		title: "Puntuación!",   
 	    		text: "Brindanos tu support: (1: Malo, 5:Muy Bueno)",   
 	    		type: "input",   
 	    		showCancelButton: true,   
@@ -26,17 +26,17 @@ $( document ).ready(function() {
 	    		if ($.isNumeric(inputValue)) {
 	    			var points = parseInt(inputValue);
 	    			if(points < 0 || points > 5){
-	    				swal.showInputError("Debes colocar una puntuacion del 1 al 5!");     
+	    				swal.showInputError("Debes colocar una puntuación del 1 al 5!");     
 	    				return false;
 	    			}
 	    			else{
 	    				/*Register Punctuation*/
 	    				registerPunctuation(points);
-	    				swal("Muchas gracias!", "Tu puntuacion sera tomada en cuenta.", "success"); 
+	    				swal("Muchas gracias!", "Tu puntuación será tomada en cuenta.", "success"); 
 	    			}
 	    		}
 	    		else{
-	    			swal.showInputError("Debes colocar una puntuacion del 1 al 5!");     
+	    			swal.showInputError("Debes colocar una puntuación del 1 al 5!");     
 	    			return false;
 	    		}     
 	    		

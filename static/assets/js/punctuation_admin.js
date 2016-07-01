@@ -13,7 +13,7 @@ function averageP(){
 
 	xhr.done(function(data) {
 		console.log(data);
-		swal("Puntuacion promedio!", "Hasta este momento: "+data.average, "success")
+		swal("Puntuación promedio!", "Hasta este momento: "+data.average+ " ptos.", "success")
 	});
 
 	xhr.fail(function(xhr, status, text){
