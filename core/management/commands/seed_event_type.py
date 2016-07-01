@@ -27,7 +27,7 @@ def insertEventType():
     sr6 = EventsType(name= 'Cultural', description= "Estos eventos son involucrados al arte", status = 0)
     sr6.save()
 
-    event = Event(event_type=sr1, name="Evento Corporacion Razer",description="Evento destinado para GAMERS", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr1, name="Evento Corporacion Razer",description="Evento destinado para GAMERS", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='events/event1.jpg', creator=getMember(), headquarter=getRandomHeadquarter())
     event.save()
 
     event = Event(event_type=sr1,name="Evento de Aventura", description="Evento para los aventureros", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
