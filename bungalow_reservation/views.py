@@ -93,10 +93,10 @@ def admin_index(request):
     """
     reservation_sales = reservations.aggregate(Sum('bungalow_price'))['bungalow_price__sum']
     reservation_count = reservations.count()
-    reservation_ocup  = reservation_count/bungalows_count*100
+    reservation_ocup  = float("%.2f" % (reservation_count/bungalows_count*100))
 
     finalized_reserv  = BungalowReservationService.filter({'status': 3}).count()
-    reservation_conc  = finalized_reserv/reservation_count
+    reservation_conc  = float("%.2f" % (finalized_reserv/reservation_count*100))
 
     #Se obtiene el tipo de bungalow con mayor y menor demanda
     reserv_group_by_type = reservations.values('bungalow_type_id').annotate(Count('bungalow_type_id')).order_by('-bungalow_type_id__count')

@@ -27,40 +27,40 @@ def insertEventType():
     sr6 = EventsType(name= 'Cultural', description= "Estos eventos son involucrados al arte", status = 0)
     sr6.save()
 
-    event = Event(event_type=sr1, description="Evento Corporacion Razer", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr1, description="Evento Corporacion Razer", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event1.jpg')
     event.save()
 
-    event = Event(event_type=sr1, description="Evento de Aventura", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr1, description="Evento de Aventura", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event1.jpg')
     event.save()
 
-    event = Event(event_type=sr2, description="Fiesta del Pacifico", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr2, description="Fiesta del Pacifico", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event2.jpg')
     event.save()
 
-    event = Event(event_type=sr2, description="Fiesta Rumba", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr2, description="Fiesta Rumba", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event2.jpg')
     event.save()
 
-    event = Event(event_type=sr3, description="Concierto Coldplay", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr3, description="Concierto Coldplay", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event3.jpg')
     event.save()
 
-    event = Event(event_type=sr3, description="Concierto Gorillaz", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr3, description="Concierto Gorillaz", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event3.jpg')
     event.save()
 
-    event = Event(event_type=sr4, description="Exposicion PUCP", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr4, description="Exposicion PUCP", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event4.jpg')
     event.save()
 
-    event = Event(event_type=sr4, description="Exposicion ACM", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr4, description="Exposicion ACM", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event4.jpg')
     event.save()
 
-    event = Event(event_type=sr5, description="Maraton Nocturna", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr5, description="Maraton Nocturna", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event5.jpg')
     event.save()
 
-    event = Event(event_type=sr5, description="Maraton Peliculas de Terror", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr5, description="Maraton Peliculas de Terror", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event5.jpg')
     event.save()
 
-    event = Event(event_type=sr6, description="Yoga", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr6, description="Yoga", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event6.jpg')
     event.save()
 
-    event = Event(event_type=sr6, description="Evento Cultural Japones", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, photo='url', creator=getMember(), headquarter=getRandomHeadquarter())
+    event = Event(event_type=sr6, description="Evento Cultural Japones", start_date=datetime.now(), end_date=datetime.now() + timedelta(hours=9), assistance=10, price_member=10, price_invited=12, status=0, creator=getMember(), headquarter=getRandomHeadquarter(), photo='events/event6.jpg')
     event.save()
 
     print('Data has been inserted\n')
