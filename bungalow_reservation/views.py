@@ -84,7 +84,7 @@ def admin_index(request):
 
     """
     bungalows_types = BungalowTypeService.getBungalowTypes()
-    
+
     bungalows_sales = 0
 
     for bungalow_type in bungalows_types:
@@ -101,7 +101,7 @@ def admin_index(request):
     #Se obtiene el tipo de bungalow con mayor y menor demanda
     reserv_group_by_type = reservations.values('bungalow_type_id').annotate(Count('bungalow_type_id')).order_by('-bungalow_type_id__count')
 
-    #import pdb; pdb.set_trace() 
+    #import pdb; pdb.set_trace()
 
     bungalow_type_top  = BungalowTypeService.findBungalowType(reserv_group_by_type.first()['bungalow_type_id']).name
     bungalow_type_last = BungalowTypeService.findBungalowType(reserv_group_by_type.last()['bungalow_type_id']).name
@@ -381,6 +381,9 @@ def user_create_reserve(request):
 
     bungalow_reservation = create_new_reservation(bungalow, member, arrival_date, departure_date)
 
+    if not bungalow_reservation:
+        return HttpResponseRedirect(reverse('bungalowReservation:user_index'));
+
     if PaymentService.createBungalowReservationProduct(bungalow_reservation, member):
         return HttpResponseRedirect(reverse('checkout:index') + '?product_type=4')
 
@@ -389,7 +392,8 @@ def create_new_reservation(bungalow, member, arrival_date, departure_date):
     insert_data = {}
 
     if not BungalowReservationService.isValidReservation(bungalow.id, member.id, arrival_date, departure_date):
-        return None
+        #return None
+        pass
 
     insert_data["status"] = 0
 
@@ -411,10 +415,7 @@ def create_new_reservation(bungalow, member, arrival_date, departure_date):
     insert_data["arrival_date"] = arrival_date
     insert_data["departure_date"] = departure_date
 
-    BungalowReservationService.create(insert_data)
-
-    return 1
-
+    return BungalowReservationService.create(insert_data)
 
 # Unimplemented
 

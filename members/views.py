@@ -37,7 +37,7 @@ def member_index(request):
         'doc_types' : doc_types
     }
 
-    return render(request, 'Admin/Members/index_members.html', context) 
+    return render(request, 'Admin/Members/index_members.html', context)
 
 
 @login_required
@@ -389,7 +389,7 @@ def get_entry(request):
 
     member = member_service.filter(filter_member)
 
-    if(member):      
+    if(member):
 
         member = serializers.serialize("json", (member[0],))
 
@@ -457,7 +457,7 @@ def getMembers(request):
     member_service = MembersService()
 
     members = member_service.filter(filter_member)
-        
+
     members = list(filter(is_member_not_suspended, members))
 
     for memberX in members:
@@ -479,7 +479,7 @@ def getMembers(request):
         member['userId'] = members[0].id
     else:
         member = None
-        
+
     data = json.dumps(member)
 
     return HttpResponse(data, content_type='application/json')
@@ -506,7 +506,7 @@ def register_punctuation(request):
     members_service = MembersService()
     member = members_service.filter({'user_id':request.user.id}).first()
     req = json.loads( request.body.decode('utf-8') )
-    
+
     print(req["points"])
 
     member.punctuation = int(req["points"])
@@ -532,5 +532,5 @@ def average_punctuation(request):
     req_send["average"] = int(total/members.count())
 
     return HttpResponse(json.dumps(req_send), content_type='application/json')
-    
+
 

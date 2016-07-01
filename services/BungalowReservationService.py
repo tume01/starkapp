@@ -40,6 +40,8 @@ class BungalowReservationService(object):
         num_days = (endDate - startDate).days + 1
         days = [startDate + datetime.timedelta(days=delta) for delta in range(0, num_days)]
 
+
+        print(startDate,endDate)
         reservations = cls.getReservations()
         reservations = reservations.filter(departure_date__gte=startDate, arrival_date__lte=endDate)
         bungalows = BungalowService.getBungalows()
@@ -55,7 +57,8 @@ class BungalowReservationService(object):
             bungalows = bungalows.filter(headquarter__id=bungalowHeadquarterId)
 
             # Get list of reserved bungalows (day, #reservations)
-            # print([(r.bungalow_id,r.bungalow_headquarter.id) for r in reservations])
+        print([(r.bungalow_id,r.bungalow_headquarter_id) for r in reservations])
+
         print(reservations)
         bungalowDay = []
         # for each Bungalow
@@ -76,15 +79,15 @@ class BungalowReservationService(object):
             bungalowDay.append(aBungDay)
             pass
 
-        print(days)
-        print(bungalowDay)
-        print(len(days))
-        print(len(bungalowDay))
+        #print(days)
+        #print(bungalowDay)
+        #print(len(days))
+        #print(len(bungalowDay))
 
         # Compose the url (Worst Approach EVER!)
         url = "admin_" if admin else ""
         url += "create/reserve/?bungalow_id={}&date={}";
-        print("URL >>> ", url, admin)
+        #print("URL >>> ", url, admin)
 
         returnValue = []
         for n in range(len(bungalowDay)):
@@ -96,7 +99,7 @@ class BungalowReservationService(object):
                            }
                 returnValue.append(element)
 
-        print(returnValue)
+        #print(returnValue)
         return returnValue
 
     #
@@ -152,11 +155,11 @@ class BungalowReservationService(object):
         reservations = cls.getReservations()
         reservations.filter(bungalow_id=bungalow_id)
         days = []
-        for day in range(1,5):
+        for day in range(0,5):
             date = arrival_date + datetime.timedelta(days=day)
             r = reservations.filter(arrival_date=date)
             if len(r) == 0:
-                days.append(day)
+                days.append(day+1)
             else:
                 break
 
@@ -173,7 +176,7 @@ class BungalowReservationService(object):
         dd = [d1 + datetime.timedelta(days=d) for d in range((d2 - d1).days + 1)]
 
         for date in dd:
-            print(date)
+            #print(date)
             if cls.isBungalowTaken(bungalowId, date):
                 return False
 
@@ -184,13 +187,13 @@ class BungalowReservationService(object):
 
         reservations = cls.getReservations()
         reservations.filter(bungalow_id=bungalowId)
-        print(date.strftime('%Y%m%d'))
+        #print(date.strftime('%Y%m%d'))
         for r in reservations:
-            print(r.getReservationDays())
+            #print(r.getReservationDays())
             if int(date.strftime('%Y%m%d')) in r.getReservationDays():
                 return True
 
-        print("HEEERREEE")
+        #print("HEEERREEE")
         return False
 
 
