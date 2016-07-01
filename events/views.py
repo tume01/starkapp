@@ -120,9 +120,26 @@ def create_event(request):
 
         environment_list = request.POST.getlist('environment') 
 
+        user_id = request.POST.get('user')
+
+        filters = {
+            'document_number' : user_id
+        }
+
         member_service = MembersService()
 
-        creator = member_service.getMemberByUser(request.user)
+        member = member_service.filter(filters)
+
+        if(member is None):
+
+            contest = {
+                'message' : "El usuario no existe"
+            }
+
+            return render(request,'Admin/Events/new_event.html',context)
+
+
+        creator = member_service.getMemberByUser(member)
 
         insert_data["creator_id"] = creator.id
 
